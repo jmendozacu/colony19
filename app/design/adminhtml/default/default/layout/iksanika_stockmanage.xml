@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout>
+    <adminhtml_stockmanage_index>
+    <!--stockmanage_catalog_product_index-->
+    <!--default-->
+        <reference name="head">
+            <action method="addJs"><js>Iksanika/stockmanage/jquery-1.9.1.min.js</js></action>
+            <action method="addJs"><js>Iksanika/stockmanage/stockmanage.js</js></action>
+            <action method="addJs"><js>Iksanika/stockmanage/stockgrid.js</js></action>
+            <action method="addJs"><js>Iksanika/stockmanage/egsupplemental.js</js></action>
+            <action method="addCss"><css>Iksanika/stockmanage/css/stockmanage.css</css></action>
+            
+            
+<!--            
+            <action method="addJs">
+                <script>Iksanika/stockmanage/jquery-1.9.1.min.js</script>
+            </action>
+            <action method="addJs">
+                <script>Iksanika/stockmanage/stockmanage.js</script>
+            </action>
+            <action method="addJs">
+                <script>Iksanika/stockmanage/stockgrid.js</script>
+            </action> 
+            <action method="addJs">
+                <script>Iksanika/stockmanage/egsupplemental.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>Iksanika/stockmanage/css/stockmanage.css</name>
+            </action>
+-->
+        </reference>
+    </adminhtml_stockmanage_index>
+    <!--/stockmanage_catalog_product_index-->
+    <!--/default-->
+</layout>   

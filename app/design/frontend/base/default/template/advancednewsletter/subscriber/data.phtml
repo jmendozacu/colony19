@@ -1,0 +1,50 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Advancednewsletter
+ * @version    2.4.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php if ($this->displayEmail()): ?>
+    <label for="email_an" class="an-data required"><?php echo $this->__('Email') ?><em>*</em></label>
+    <input name="email" type="text" id="email_an" class="an-data required-entry validate-email"/>
+<?php endif; ?>
+<?php if ($this->displaySalutation()): ?>
+    <?php 
+    $selected0 = $selected1 = '';
+    $this->getSubscriber()->getSalutation() == 1 ? $selected1 = 'selected="selected"' : $selected0 = 'selected="selected"';
+        ?>
+    <label for="salutation_an" class="an-data required"><?php echo $this->__('Salutation') ?><em>*</em></label>
+    <select name="salutation" id="salutation_an" class="an-data required-entry">
+        <option <?php echo $selected0 ?> value="0"><?php echo Mage::getStoreConfig(AW_Advancednewsletter_Block_Subscribe::SALUTATION_FIRST) ?></option>
+        <option <?php echo $selected1 ?> value="1"><?php echo Mage::getStoreConfig(AW_Advancednewsletter_Block_Subscribe::SALUTATION_SECOND) ?></option>
+    </select>
+<?php endif; ?>
+<?php if ($this->displayNames()): ?>
+    <label for="firstname_an" class="an-data required"><?php echo $this->__('First name') ?><em>*</em></label>
+    <input name="first_name" type="text" id="firstname_an" class="an-data required-entry"/>
+    <label for="lastname_an" class="an-data required"><?php echo $this->__('Last name') ?><em>*</em></label>
+    <input name="last_name" type="text" id="lastname_an" class="an-data required-entry"/>
+<?php endif; ?>
+<?php if($this->displayPhone()): ?>
+    <label for="phone_an" class="an-data required"><?php echo $this->__('Phone') ?><em>*</em></label>
+    <input name="phone" type="text" id="phone_an" class="an-data required-entry" value="<?php echo $this->getSubscriber()->getPhone() ?>" />
+<?php endif; ?>

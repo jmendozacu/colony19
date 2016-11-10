@@ -1,0 +1,9 @@
+<div class="menu-vertical-dropdown" id="dropdown-menu">
+	<?php echo $this->getChildHtml() ?>	
+</div>
+<script>
+jQuery('#dropdown-menu').dropdownMenu({
+	trigger: '.menu-vertical-title',
+	dropdown: '.menu-vertical-content',
+})
+</script>

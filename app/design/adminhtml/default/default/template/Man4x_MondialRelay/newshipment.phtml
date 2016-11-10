@@ -1,0 +1,79 @@
+<?php
+/**
+ * Copyright (c) 2013-2015 Man4x
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ * @project     Magento Man4x Mondial Relay Module
+ * @block       MondialRelay_Block_Adminhtml_Newshipment
+ * @author      Emmanuel Catrysse
+ * @license     Emmanuel Catrysse man4x[@]hotmail[.fr]
+ * 
+ * This block is only output for Mondial Relay orders (see _toHtml method)
+ * 
+ * This block is intended to manage new shipment for Mondial Relay orders.
+ * It is added to the new shipment backend form through the <adminhtml_sales_order_shipment_new> handle of the
+ * Man4x_MondialRelay.xml layout
+ * 
+ * Its purpose is double, depending on multipacking availability (considering Mondial Relay specifications for the given method
+ * and destination country) for the current shipment
+ *  - if multipacking is not available, it enables administrator to specify if a web service registration must be performed or not
+ *  - if multipacking is available, it enables to skip the packaging form if administrator simply wants to make a single-parcel shipment
+ * In both case, decision is made through a JS confirmation box.  
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+
+<?php
+/*
+ * Logic here is to replace the [SAVE SHIPMENT] button action (onclick) with our own.
+ * If multipacking is unavailable for the current shipment, the "Create Shipping Label" checkbox (and its label) is made invisible.
+ * As administrator click the submit button, a confirmation box opens:
+ * 
+ *  #1 - if multipacking is unavailable or "Create Shipping Label" checkbox is unset, and OK button is clicked,
+ * shipment with web service registration is automatically processed.
+ * (for this, hidden checkbox is programatically  checked, causing a single defaut package to be set when
+ * requestToShipment method will be called)
+ * 
+ *  #2 - if multipacking is unavailable or "Create Shipping Label" checkbox is unset and Cancel button is clicked, 
+ * shipment is processed without any web service registration.
+ * (since checkbox is unchecked, shipping label won't be created when requestToShipment method will be called)
+ * 
+ *  #3 - if multipacking is available and "Create Shipping Label" checkbox is set and OK button is clicked,
+ * standard process is triggered (with display of the packaging form)
+ * 
+ *  #4 - if multipacking is available and "Create Shipping Label" checkbox is unset and Cancel button is clicked,
+ * same process as #1 occurs .
+ */
+?>
+    var _oldHandle = submitShipment;
+    var _submitBtn = $$('.submit-button')[0];
+    _submitBtn.writeAttribute('onclick', 'confirmSubmitShipment(this)'); 
+    var _createLabelCheckbox = $('create_shipping_label');
+    if (!<?php echo $this->isMultipackAvailable() ?>) {
+        _createLabelCheckbox.hide();
+        $$('label[for=create_shipping_label]')[0].hide();
+    }
+    
+    confirmSubmitShipment = function(btn) {
+        var _doPackages = _createLabelCheckbox.checked;
+        var _msg = _doPackages ?
+            "<?php echo $this->__('Do you want to set packages for this shipment? If you cancel, this shipment will be registered as single parcel.') ?>" :
+            "<?php echo $this->__('Do you want to get a shipping label for this shipment? If you cancel, this order will be flagged as [Shipped] but no web service registration will be processed.') ?>";
+        var _choice = window.confirm(_msg);
+        if (_choice === _doPackages)
+            _oldHandle(btn);
+        else if (validQtyItems()) {
+            if (_choice)
+                _createLabelCheckbox.checked = true;
+            packaging.confirmPackaging();
+        }
+    }
+    
+//]]>
+</script>

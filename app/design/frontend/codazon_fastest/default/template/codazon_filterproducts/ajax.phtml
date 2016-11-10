@@ -1,0 +1,23 @@
+<?php
+    $_productCollection=$this->getProductCollection();
+    $_helper = $this->helper('catalog/output');
+	$_uniqId = ($this->getUniqId())?$this->getUniqId():uniqid('ajax');
+	$data = $this->getDataArray();
+?>
+<div class="codazon-ajax-wrap" id="<?php echo $_uniqId ?>">
+	<div class="codazon-loader-wrap" style="display: none;"><span class="loader"></span></div>
+</div>
+<script type="text/javascript">
+(function( $ ) {
+	$(window).load(function(){
+		var loadProductsUrl = '<?php echo $this->getUrl("filterproducts/filterproducts/loadProductsBlock"); ?>';
+		var postData = <?php echo json_encode($data); ?>;
+		var $productBlock = $('#<?php echo $_uniqId ?>');
+		$productBlock.cdzLoadProductBlock({
+			postData: postData,
+			loadProductsUrl: loadProductsUrl,
+			eventName: '<?php echo $_uniqId ?>'
+		});
+	});
+})( jQuery );
+</script>

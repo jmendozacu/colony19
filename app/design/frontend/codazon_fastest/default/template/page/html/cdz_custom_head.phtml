@@ -1,0 +1,58 @@
+<?php
+$_themeHelper = $this->helper('themeframework');
+
+/* General Config */
+$root = $this->getLayout()->getBlock('root');
+if($_themeHelper->getConfig('codazon_settings/general/boxedwide') == 0)$root->addBodyClass('cdz-boxed');
+if($_themeHelper->getConfig('codazon_settings/general/enable_rtl') == 1)$root->addBodyClass('cdz-rtl');
+?>
+
+<script type="text/javascript">
+if(typeof Codazon == 'undefined'){
+	var Codazon = {};
+}
+Codazon.ajaxCartPro = {
+	enable: <?php echo ($_themeHelper->getConfig('codazon_settings/header/enable_ajaxcart') == 1)?'true':'false' ?>,
+}
+</script>
+
+<link href='https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700' rel='stylesheet' type='text/css'>
+<?php $product = Mage::registry('current_product');
+if ($product): ?>
+<meta property="og:title" content="<?php echo $product->getName(); ?>" />
+<meta property="og:type" content="product" />
+<meta property="og:url" content="<?php echo $this->helper('catalog/product')->getProductUrl($product); ?>" />
+<meta property="og:image" content="<?php echo $this->helper('catalog/image')->init($product, 'image')->resize(300, 300); ?>" />
+<meta property="og:description" content="<?php echo strip_tags($product->getShortDescription()); ?>" />
+<meta property="og:site_name" content="<?php echo Mage::app()->getStore()->getName() ?>" />
+<?php endif; ?>
+
+<?php
+$thumbStyle = ($_themeHelper->getConfig('codazon_settings/product_view/more_view_thumb_style')==1)?'vertical':'horizontal';
+$minWidth = 450;
+$w = max($minWidth,$_themeHelper->getConfig('codazon_settings/product_view/base_image_width'));
+$h = $_themeHelper->getConfig('codazon_settings/product_view/base_image_height');
+?>
+<style type="text/css">
+<?php if($thumbStyle == 'vertical'): ?>
+.royalSlider {height: <?php echo $minWidth*$h/$w ?>px; }
+.no-fullscreen .rsOverflow {max-width: <?php echo $minWidth ?>px !important; float: right;}
+.no-fullscreen .rsImg{width: auto !important; max-width:100%; height: auto !important; margin-left:0px !important;}
+.rsFullscreen .rsImg{height:100vh;}
+<?php else: ?>
+.royalSlider {height: <?php echo $minWidth*$h/$w ?>px }
+.no-fullscreen .rsOverflow {height: <?php echo $minWidth*$h/$w ?>px !important;}
+.rsSlide{display:table !important; width:100%;}
+.rsContent{display:table-cell; vertical-align:middle; text-align:center;}
+.rsImg{display: inline-block; height:auto; width:auto; max-height: 100%; max-width: 100%;}
+.no-fullscreen .rsImg{width: auto !important; max-width:100%; max-height: <?php echo $minWidth*$h/$w ?>px; height: auto !important; margin-left:0px !important;}
+<?php endif ?>
+.rsFullscreen .rsSlide{display:table !important; width:100%;}
+.rsFullscreen .rsContent{display:table-cell; vertical-align:middle; text-align:center;}
+.rsFullscreen .rsImg{display: inline; height:auto; width:auto; max-height: 100vh; max-width: 100%;}
+.rs-inner {display: inline-block; height:auto; width:auto; max-height: 100%; max-width: 100%; position: relative;}
+.map-popup{z-index:10000;} .cdz-qs-view .map-link{float:left;}
+<?php if($_themeHelper->getConfig('codazon_settings/product_view/disable_zoom') == 1): ?>
+.royalSlider .magnify{display:none !important;}
+<?php endif ?>
+</style>

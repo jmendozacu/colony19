@@ -1,0 +1,38 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Advancednewsletter
+ * @version    2.4.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php
+$segments = $this->getSegmentsOnCheckout();
+$emailSegments = $this->getSegmentsCodesByEmail($this->getStoredEmail());
+?>
+<div class="awan-checkoutmultisel">
+    <label for="an-segments"><?php echo $this->__('Select segments to subscribe') ?></label>
+    <select name="segments_select[]" multiple="" id="an-segments">
+        <?php foreach ($segments as $segment): ?>
+            <?php $selected = ((in_array($segment->getCode(), $emailSegments)) || (empty($emailSegments))) ? 'selected="selected"' : ''; ?>
+            <option <?php echo $selected; ?> value="<?php echo $segment->getCode(); ?>"><?php echo $segment->getTitle(); ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>

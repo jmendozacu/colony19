@@ -1,0 +1,23 @@
+<ul class="cdz-top-link">
+    <li class="link wishlist">
+        <a href="<?php echo $this->getUrl('wishlist') ?>"><?php echo $this->__('Wishlist') ?></a>
+    </li>
+    <?php  if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+    <li class="link link-account">
+        <a href="<?php echo $this->getUrl('customer/account') ?>"><?php echo $this->__('My account') ?></a>
+    </li>
+    <li class="link logout">
+        <a href="<?php echo $this->getUrl('customer/account/logout') ?>"><?php echo $this->__('Logout') ?></a>
+    </li>
+    <?php else: ?>
+    <li class="link signup">
+        <a href="<?php echo $this->getUrl('customer/account/create') ?>"><?php echo $this->__('Sign Up') ?></a>
+    </li>
+    <li class="link cdz-top-login cdz-dropdown">
+        <a class="cdz-trigger" href="javascript:void(0)"><?php echo $this->__('Sign in') ?></a>
+        <div class="cdz-dropdown-content" style="display:none;">
+            <?php echo $this->getParentBlock()->getChild('customer_form_mini_login')->setSuffix($this->getSuffix())->toHtml(); ?>                            
+        </div>
+    </li>                        
+    <?php endif ?>
+</ul>

@@ -1,0 +1,75 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Advancednewsletter
+ * @version    2.4.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php
+$helper = Mage::helper('advancednewsletter');
+$syncIsRunning = Mage::getModel('advancednewsletter/cache')->loadCache('aw_advancednewsletter_mailchimp_from_params');
+if (!is_null($syncIsRunning) && $syncIsRunning != ''):
+    ?>
+    <div id="messages">
+        <ul class="messages">
+            <li class="an-working-msg">
+                <ul>
+                    <li>
+                        <?php echo $helper->__('Sync from MailChimp is processing'); ?>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>
+<div class="content-header">
+    <h3><?php echo $helper->__('Synchronization From MailChimp') ?></h3>
+    <button onclick="setLocation('<?php echo $this->getBackUrl() ?>')" class="scalable back" style="float:right">Back</button>
+</div>
+<form action="<?php echo $this->getUrl('*/*/sync', array('type' => AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_FROM_MAILCHIMP)) ?>" method="post" enctype="multipart/form-data" name="apply_sync_to_mailchimp" id="apply_sync_to_mailchimp">
+    <input type="hidden" value="<?php echo $this->getFormKey() ?>" name="form_key">
+    <table class="form-list">
+        <colgroup class="label"></colgroup>
+        <colgroup class="value"></colgroup>
+        <tbody>
+            <tr>
+                <td class="label">
+                    <label for="sync_for"><?php echo $helper->__('Synchronize:'); ?> </label>
+                </td>
+                <td class="value">
+                    <select id="sync_for" name="sync_for">
+                        <option selected="selected" value="<?php echo AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_STATUSES ?>">
+                            <?php echo $helper->__('Update statuses'); ?>
+                        </option>
+                        <option value="<?php echo AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_LIST ?>">
+                            <?php echo $helper->__('Update list'); ?>
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="scope-label">
+                    <button type="submit" class="scalable"><span><?php echo $helper->__('Sync from MailChimp') ?></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

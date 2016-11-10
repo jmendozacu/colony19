@@ -1,0 +1,638 @@
+<?php
+/**
+ * Copyright (c) 2013-2015 Man4x
+ *
+ * @project     Magento Man4x Mondial Relay Pro Module
+ * @desc        Pickup selection form
+ * @block       Man4x_MondialRelay_Block_Pickupselectionform
+ * @author      Emmanuel Catrysse 
+ * @license     Emmanuel Catrysse man4x[@]hotmail[.fr]
+ * 
+ * This block is only output if Mondial Relay pickup shipping method is active (see _toHtml method)
+
+ * It is designed to interface with Mondial Relay WSI3_PointRelais_Recherche webservice in order to get pickups
+ * matching geographic (postcode, city, country) and order-specific (weight) parameters.
+ * If Man4x_MondialRelay is configured to use google map features, these pickups can be displayed on an interactive map.
+ * User-defined queries are enable through a integrated form.
+ * 
+ * This block is used from:
+ *  - frontend checkout (shipping method)
+ *  - admin new order
+ *  - admin view shipment (when creating reverse shipment)
+ * 
+ * This pickup selection form is driven by the Man4xMondialRelayPickupSelectionClass JS class that triggers several specific events:
+ *  - 'man4xpsf:pickup_selection_form_ready' when Man4xMondialRelayPickupSelectionClass is instanced (i.e. google map library loaded)
+ *  - 'man4xpsf:pickup_list_built' when a new pickup list has been built
+ *  - 'man4xpsf:pickup_selected' when a pickup has been selected from the form
+ *  - 'man4xpsf:pickup_selection_form_close' when pickup selection form is closed
+ * These events must be handled by other Man4x JS classes depending on the processing context.
+ * 
+ * Block: Man4x_MondialRelay_Block_Pickupselectionform
+ */
+?>
+<div id="pickup-popup">
+    <div id="pickup-bkg"></div>
+
+    <div id="pickup-selection-form">
+        <div class="pickup-ajax-loading"></div>
+        <div id="pickup-close">&times;</div>
+        <div id="pickup-form">
+            <h2><?php echo $this->__('Pick-up locations search') ?></h2>
+            <p><?php echo $this->__('Please specify where you want to be delivered in order to search for relevant pick-up locations.') ?></p>     
+            <input type="hidden" id="psf-weight" name="psf-weight" value=""/>
+            <ul>
+                <li>
+                    <div class="postcode">
+                        <label for="psf-postcode" class="required"><em>*</em> <?php echo $this->__('Zip/Postal Code') ?></label>
+                        <div>
+                            <input type="text" id="psf-postcode" name="psf-postcode" value="" title="<?php echo $this->__('Zip/Postal Code') ?>" class="input-text validate-zip-international" />
+                        </div>
+                    </div>
+                    <div class="city">
+                        <label for="psf-city"><?php echo $this->__('City') ?></label>
+                        <div>
+                            <input type="text" id="psf-city" name="psf-city" value="" title="<?php echo $this->__('City') ?>" class="input-text" />
+                        </div>
+                    </div>
+                    <div class="country">
+                        <label for="psf-country" class="required"><em>*</em> <?php echo $this->__('Country') ?></label>
+                        <div>
+                            <?php echo $this->getCountryHtmlSelect(false) ?>
+                        </div>
+                    </div>
+                    <div class="btn">
+                        <button id="pickup-search" title="<?php echo $this->__('Search for pick-ups') ?>" class="button"><span></span></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="pickup-results">
+            <div id="pickup-data">
+                <h2 id="pickup-title"></h2>
+                <div id="pickup-result-data"></div>
+            </div>
+            <div id="pickup-map">
+                <!-- notice: this div must not be hidden when loading the map: see http://wphostreviews.com/mappress-faq -->
+                <div id="pickup-map-canvas" style="width: 100%; height: 100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+   
+    Man4xMondialRelayPickupSelectionClass = Class.create();
+    Man4xMondialRelayPickupSelectionClass.prototype =
+    {
+        <?php
+        /**
+         * Properties
+         * ----------
+         *
+         * useMap               Flag set when on-map selection is active
+         * pickupSet            Pickups set returned for latest query (object: pickupSet.id = pickup data)
+         * highlightedPickup    Active highlighted pickup on the map
+         * isSecure             Flag set when store is secure to prevent pickups image display (and security message)
+         * lastQuery            Concatenation of latest query parameters (to prevent running same query twice)
+         * defaultErrorMsg      Generic default error message
+         * googleMap            google.maps.Map
+         * area                 google.maps.LatLngBounds
+         * isMapBuild           Flag set when active pickups set has already been displayed on map
+         * queryUrl             Controlleur URL for gathering pickup
+         */
+        ?>
+        useMap: <?php echo $this->onMapSelection() ?>,
+        pickupSet: null,        
+        highlightedPickup: null,
+        isSecure: <?php echo $this->isStoreSecure() ?>,
+        lastQuery: '',
+        defaultErrorMsg: '<?php echo $this->__('Error: unable to connect to Mondial Relay service') ?>',
+        googleMap: null,
+        area: null,   
+        isMapBuild: false,
+        psfElement: $('pickup-popup'),
+        resultElement: $('pickup-result-data'),
+        queryUrl: '<?php echo $this->getPickupGatheringUrl(); ?>',
+              
+        <?php
+        /**
+         * Initialization
+         * We just create observers for clicks on background, close button, and if on-map selection is active, for
+         * results block and submit button
+         */
+        ?>
+        initialize: function() {
+            $('pickup-bkg').observe('click', this.close.bind(this)); 
+            $('pickup-close').observe('click', this.close.bind(this));
+            if (this.useMap) {
+                $('pickup-popup').addClassName('use-map');
+                this.resultElement.observe('click', this._onResultClick.bind(this));
+                $('pickup-search').observe('click', this._formQueryPickups.bindAsEventListener(this, true));
+            }           
+        },
+        
+        <?php
+        /*
+         * PUBLIC
+         * Open pickup selection form to display pickups list or a given pickup details
+         *  @param int pId - id of pickup to display (info mode)
+         *  @param bool readonly - must form element be hidden ? (i.e. no query possible)
+         *  @param string country - pickup country - mandatory is pickup is likely not to be included in the current pickups set
+         * 
+         * If pId is set, we open the pickup selection form in info mode through CSS class
+         * If no pickup is given, we display pickups on map (if not done already)
+         * Note: we instantiate google map at popup opening because google map must be visible when created
+         * Note: Google map styles: http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html 
+         */
+        ?>
+        open: function(pId, readonly, country) {
+            Boolean(readonly) ? this.psfElement.addClassName('read-only') : this.psfElement.removeClassName('read-only');
+            this.psfElement.addClassName('open');
+            if (this.useMap)
+            {
+                if (! this.googleMap) {
+                    var _mapStyles = [
+                        {
+                            "stylers": [{"visibility": "simplified"}]
+                        },
+                        {   "featureType": "landscape.man_made",
+                            "elementType": "geometry",
+                            "stylers": [{"visibility": "off" }]
+                        }
+                    ];                
+                    var _mapOptions = {
+                        zoom:       5,
+                        minZoom:    5,
+                        center:     new google.maps.LatLng(46.2276, 2.2137),
+                        mapTypeId:  google.maps.MapTypeId.ROADMAD,
+                        styles:     _mapStyles
+                    };                
+                    this.googleMap = new google.maps.Map($('pickup-map-canvas'), _mapOptions);
+                
+                    /* Rename map type label
+                    *
+                    *  this.googleMap.event.addListenerOnce(map,'idle', this.resetLabel.bind(this));
+                    *  function resetLabel() {
+                    *      map.mapTypes.satellite.name='Aerial';
+                    *      map.mapTypes.roadmap.name='Basic';
+                    *      map.setOptions({'mapTypeControl':true});
+                    *      
+                    */
+                }
+                if (!this.isMapBuild)
+                    this._displayPickupSetOnMap();
+                else if (! pId)
+                    this._resetMap(true);
+            }                     
+            if (pId)
+                this._displayPickupInfo(pId, country);            
+        },
+
+        <?php
+        /**
+         * PUBLIC
+         * Run a pickups query
+         *  @param object params: query parameters (weight, store, postcode, city, country, pickup)
+         *  @param bool display: results must be displayed after building pickup set ?
+         * 
+         * When a parameter is set, we update the corresponding form element, when a parameter is missing, we set its value
+         * with the corresponding form element
+         * Return true is query is already the active one.
+         */
+        ?>
+        query: function(params, display) {
+            display = display && this.useMap;           
+            var _params = {weight: '', postcode: '', city: '', country: '', pickup: ''};
+            Object.extend(_params, params);
+            var _query = '';
+            var _f;
+            for (var _p in _params)
+                if (_params.hasOwnProperty(_p)) {
+                    if (_f = $('psf-' + _p)) {
+                        if (_params[_p]) 
+                            _f.setValue(_params[_p]);
+                        else
+                            _params[_p] = _f.getValue();
+                    }
+                    _query = _query + _params[_p];
+                }                                  
+            // [No postcode/city set] -> notification alert
+            if ((_params.pickup === '') && (_params.postcode === '') && (_params.city === '')) {
+                this._alertMsg("<?php echo $this->__('Please enter a postcode or a city to get a pick-up list') ?>");
+                return;
+            }
+            
+            var _activeQuery = (_query === this.lastQuery);           
+            if (! _activeQuery) {           
+                var _this = this;            
+                new Ajax.Request(this.queryUrl, {   
+                    parameters: {   country: _params.country,
+                                    city: _params.city,
+                                    postcode: _params.postcode,
+                                    weight: _params.weight,
+                                    pickup: _params.pickup
+                                },
+                    onCreate:       function() {
+                                        _this.pleaseWait(true);
+                                    },
+                    onSuccess:      function(t) {
+                                        _this.lastQuery = _query;
+                                        _this._onPickupQuerySuccess(t.responseText.evalJSON(true), Boolean(display));
+                                    },
+                    onFailure:      function() {
+                                        _this._onPickupQueryFailure();
+                                    }
+                    }
+                );
+            }
+            else if (display)
+                this.open();           
+            return _activeQuery;
+        },
+        
+        <?php
+        /**
+         * Callback for click on form submit button
+         */
+        ?>
+        _formQueryPickups: function(event) {
+            this.query({}, true);            
+            Event.stop(event);                       
+        },
+    
+        <?php
+        /**
+         * Callback for pickup query failure
+         */
+        ?>
+        _onPickupQueryFailure: function(msg) {
+            msg = msg || this.defaultErrorMsg;
+            this._alertMsg(msg);
+        },
+        
+        <?php
+        /**
+         * Callback for pickup query success
+         *  - result: ajax result
+         *  - display: must results be displayed right after building pickup set ?
+         * We clear results blocks, update title and body with AJAX result and displays pickups or cities list
+         */
+        ?>
+        _onPickupQuerySuccess: function(result, display)  {
+            this._resetMap(false);
+            if (typeof result === 'string')
+                this._onPickupQueryFailure(result);
+            else if (result instanceof Object) {                
+                this.resultElement.update();
+                $('pickup-title').update(result.title);
+                if (typeof result.data === 'string') {
+                    this.resultElement.update(result.data);
+                    if (display)
+                        this.open();
+                }               
+                else switch (result.type) {
+                    case 'pickup-list':                       
+                        this._buildPickupSet(result.data);                       
+                        if (display)                           
+                            this.open();                                                  
+                        break;
+                    case 'city-list':
+                        this._displayCitySet(result.data);
+                        break;
+                }
+            }           
+            this.pleaseWait(false);
+        },
+
+        <?php
+        /*
+         * Build pickups set returned by ajax.
+         * Erase previous list and remove map listeners if required.
+         * Fire pickup-list-built event.
+         * Result block pattern is:
+         *  <div id="pId_######" class="mondialrelayicon icon-#" data-pid="######">
+         *      <h3>Pickup name<a class="info-link" href="javascript:void(0);"></a></h3>
+         *      <p>Pickup address</p>
+         *       // if on-map selection
+         *      <a class="select-link" href="javascript:void(0);">Select this pick-up</a>
+         *      <div id="details-######" class="details">
+         *          (<p>Pickup extra location</p>)
+         *          (<src alt="Pickup name" src="Pickup picture url")
+         *          <table>
+         *              <tr>
+         *                  <td class="day">Day of week</td>
+         *                  <td class="hours">Opening hours</td>
+         *              </tr>
+         *          </table>
+         *      </div>
+         *  </div>
+         */
+        ?>
+        _buildPickupSet: function(ps) {
+            this.isMapBuild = false;
+            this.highlightedPickup = null;
+            if (this.pickupSet) { 
+                for (var _pId in this.pickupSet)
+                    if (this.pickupSet.hasOwnProperty(_pId)) {
+                        var _p = this.pickupSet[_pId];
+                        if (_p.markerEventId) {
+                            google.maps.event.removeListener(_p.markerEventId);
+                            _p.marker.setMap(null);
+                        }                
+                        delete this.pickupSet[_pId];
+                    }
+            }
+            this.pickupSet = {};
+            var _i = 1;        
+            while (ps.length) {
+                var _p = ps.shift();
+                _p.divBlock = this._createPickupBlock(_p, _i);
+                _p.index = _i++;
+                this.resultElement.insert(_p.divBlock);
+                
+                this.pickupSet[_p.id] = _p;                
+            }
+            this.psfElement.fire('man4xpsf:pickup_list_built', this.pickupSet);
+        },
+
+        <?php
+        /*
+         * Pickup div creation
+         */
+        ?>
+        _createPickupBlock: function(p, i) {
+            var _selectLoc = "<?php echo $this->__('Select this pick-up') ?>";
+            var _div = new Element('div', {id: 'pid_' + p.id, 'class': 'mondialrelayicon icon-' + i, 'data-pid': p.id});                
+            var _html = '<a class="info-link"><?php echo $this->__('info') ?></a><h3>' + p.name + '</h3>'
+                        + '<p>' + p.street + '<br/>' + p.postcode + ' ' + p.city + '</p>'
+                        + '<a class="select-link">' + _selectLoc + '</a>'
+                        + '<div id="details-' + p.id + '" class="details">';                
+            if (p.local)
+                _html += '<p>' + p.local + '</p>';            
+            if (p.image) {
+                var imageSrc = p.image;
+                imageSrc = imageSrc.split('://');
+                if (imageSrc.length > 1) {
+                    imageSrc = '//' + imageSrc[1];
+                    _html += '<img src="' + imageSrc + '" alt="' + p.name + '" />';
+                }
+            }
+            _html += '<table>';                                   
+            for (var _day in p.horaires)
+                _html += '<tr><td class="day">' + _day + '</td><td class="hours">' + p.horaires[_day] + '</td></tr>';
+            _html += '</table>';           
+            _div.update(_html);
+            return _div;
+         },
+
+         <?php
+        /*
+         * Callback for click on result block:
+         *  - [Click on city name] -> rerun a pickup search with the given post code
+         *  - [Click on info link] -> display pickup details
+         *  - [Click on select link] -> pickup selection
+         *  - [Click on pickup block] -> highlight pickup
+         */
+         ?>
+        _onResultClick: function(e) {
+            var _e = $(e.findElement());
+            if ('LI' === _e.tagName) {
+                var _city = _e.innerHTML.substring(_e.innerHTML.indexOf('-') + 1).toUpperCase();
+                this.query({postcode: _e.getAttribute('id').substring(2), city: _city}, true);
+                return;
+            }           
+            var _pId = _e.readAttribute('data-pid') || _e.up('div').readAttribute('data-pid');
+            if (_pId in this.pickupSet) {
+                if (_e.hasClassName('info-link'))
+                    this._toggleDetails(_pId);
+                else if (_e.hasClassName('select-link')) {
+                    this._highlightPickup(_pId, true, true);
+                    this._selectPickup(_pId);
+                }
+                else
+                    this._highlightPickup(_pId, true, false);
+            }
+            Event.stop(e);
+        },	
+         
+        <?php
+        /*
+         * Displays cities list
+         */
+        ?>
+        _displayCitySet: function(cities) {
+            // No result
+            if (typeof cities === 'string')
+                this.resultElement.update(cities);
+            else {
+                this.resultElement.insert(new Element('p').update("<?php echo $this->__('Please select a city...') ?>"));         
+                var _ul = new Element('ul', {'class': 'city-list'});           
+                while (cities.length) {
+                    var _c = cities.shift();
+                    _ul.insert(new Element('li', {'id': 'pc' + _c.postcode}).update(_c.postcode + ' - ' + _c.city));
+                }
+                this.resultElement.insert(_ul);
+            }
+        },          
+        
+        <?php
+        /*
+         * Callback for click on pickup block or marker
+         *  - pId: id of the concerned pickup
+         *  - center: must be the map centered on the pickup marker ?
+         *  - scroll: must be the result pickups list be scrolled to show the pickup on top ?
+         */
+        ?>
+        _highlightPickup: function(pId, center, scroll) {
+            if ((pId in this.pickupSet) && (pId !== this.highlightedPickup)) {
+                if (this.highlightedPickup) {
+                    this.pickupSet[this.highlightedPickup].marker.setAnimation(null);
+                    this.pickupSet[this.highlightedPickup].divBlock.removeClassName('active');    
+                }
+                this.pickupSet[pId].marker.setAnimation(google.maps.Animation.BOUNCE);
+                this.pickupSet[pId].divBlock.addClassName('active');
+                if (scroll)                  
+                    $('pickup-data').scrollTop = this.pickupSet[pId].divBlock.positionedOffset()[1];  
+                if (center)   
+                    this.googleMap.panTo(this.pickupSet[pId].marker.position);
+                this.highlightedPickup = pId;                 
+            }
+        },
+        
+        <?php
+        /*
+         * Callback for pickup selection
+         * Close the form and fire 'man4xpsf:pickup_selected' event
+         */
+        ?>
+        _selectPickup: function(pId) {           
+            this.close();
+            if (pId in this.pickupSet) 
+                this.psfElement.fire('man4xpsf:pickup_selected', this.pickupSet[pId]);
+        },
+
+        <?php
+        /*
+         * Show/hide pickup details
+         */
+        ?>
+        _toggleDetails: function(pId) {
+            var _div = $('details-' + pId);
+            if (_div.hasClassName('show'))
+                _div.removeClassName('show');
+            else {
+                _div.addClassName('show');
+                this._highlightPickup(pId, true, true);
+            }
+        },
+                
+        <?php
+        /*
+         * Display pickups set on map as markers
+         */ 
+        ?>
+        _displayPickupSetOnMap: function() {
+            this.area = new google.maps.LatLngBounds();
+            for (var _pId in this.pickupSet)
+                if (this.pickupSet.hasOwnProperty(_pId))
+                    this.pickupSet[_pId] = this._displayPickupOnMap(this.pickupSet[_pId], true);
+            this.isMapBuild = true;
+            this._resetMap();
+        },        
+
+        <?php
+        /*
+         * Display a pickup on map: create marker and attach a listener for highlighting, extend area with its position
+         */
+        ?>
+        _displayPickupOnMap: function(p, highlightable) {
+            var _markerOptions = {
+                map:        this.googleMap,
+                icon:       '<?php echo substr($this->getSkinUrl('images/Man4x_MondialRelay/mondialrelay_mapicon_1.png'), 0, -5); ?>' + p.index + '.png',
+                animation:  google.maps.Animation.DROP,
+                position:   new google.maps.LatLng(p.latitude, p.longitude),
+                pickup:     p
+            };               
+            var _marker = new google.maps.Marker(_markerOptions);
+            if (highlightable) {
+                p.markerEventId = google.maps.event.addListener(_marker, 'click',
+                    (function(marker, obj){return function() {
+                            obj._highlightPickup(marker.pickup.id, false, true);
+                        }})(_marker, this));   
+            }           
+            this.area.extend(_markerOptions.position);
+            p.marker = _marker;           
+            return p;
+        },
+        
+        <?php
+        /*
+         * Display pickup info.
+         * If pickup to display isn't included in the pickups set, we query it.
+         * Otherwise, activate block and if on-map selection is active, update marker visibility and center map on pickup
+         */
+        ?>
+        _displayPickupInfo: function(pId, country) {
+            if (this.pickupSet && pId in this.pickupSet) {
+                this._resetMap(false);
+                this.pickupSet[pId].divBlock.addClassName('active');
+                if (this.useMap) {
+                    this.pickupSet[pId].marker.setVisible(true);
+                    this.pickupSet[pId].marker.setAnimation(google.maps.Animation.BOUNCE);
+                    this.googleMap.setCenter(this.pickupSet[pId].marker.position);
+                    this.googleMap.setZoom(15);
+                }
+            }
+            else
+                this.query({'pickup': pId, 'country': country}, true);
+        },
+        
+        <?php
+        /*
+         * Reset map: recenter map, remove active class for pickup divs, set all markers visible/invisible and remove animation
+         */ 
+        ?>
+        _resetMap: function(visible) {
+            var _nb = 0;
+            var _pos;
+            for (var _pId in this.pickupSet)
+                if (this.pickupSet.hasOwnProperty(_pId)) {
+                    if (this.pickupSet[_pId].marker) {
+                        if (!_nb++)
+                            _pos = this.pickupSet[_pId].marker.position;
+                        this.pickupSet[_pId].marker.setVisible(visible);
+                        this.pickupSet[_pId].marker.setAnimation(null);
+                    }
+                    this.pickupSet[_pId].divBlock.removeClassName('active')
+                }               
+            if (this.useMap && this.isMapBuild) {
+                if (_nb === 1) {
+                    this.googleMap.setCenter(_pos);
+                    this.googleMap.setZoom(15);
+                }
+                else {
+                    this.googleMap.panBy(1, 0);
+                    this.googleMap.fitBounds(this.area);
+                }
+            }
+        },
+
+        <?php
+        /*
+         * PUBLIC
+         * Close pickup selection form and fire 'man4xpsf:pickup_selection_form_close' event
+         */
+        ?>
+        close: function() {
+            this.pleaseWait(false);          
+            this.psfElement.removeClassName('open');
+            this.psfElement.fire('man4xpsf:pickup_selection_form_close');
+        },
+        
+        <?php
+        /*
+         * System error message display
+         */
+        ?>
+        _alertMsg: function(m) {
+            this.pleaseWait(false);
+            m = m || this.defaultErrorMsg;
+            window.alert(m);
+        },
+
+        <?php
+        /*
+         * Show / hide please wait blocks
+         */
+        ?>
+        pleaseWait: function(v) {
+            v ? $(document.body).addClassName('pickup-please-wait') : $(document.body).removeClassName('pickup-please-wait');
+        }
+    };
+
+<?php
+    /*
+     * Initialization
+     * If on-map selection is active and google maps API not loaded yet, we load google map library and create a callback
+     * for instanciate pickup selection form when loading is over..
+     */
+?>
+    window.ongooglemaploaded = function() {
+        Man4xMondialRelayPickupSelection = new Man4xMondialRelayPickupSelectionClass();
+        $('pickup-popup').fire('man4xpsf:pickup_selection_form_ready', Man4xMondialRelayPickupSelection);
+    }
+    
+    // 
+    if (<?php echo $this->onMapSelection() ?> && (typeof google === 'undefined' || typeof google.maps === 'undefined')) {
+        var script = window.document.createElement("script");
+        script.type = "text/javascript";
+        script.src = '<?php echo $this->getGoogleMapUrl() ?>';
+        window.document.body.appendChild(script);    
+    }
+    else
+        window.ongooglemaploaded();
+    
+//]]>
+</script>

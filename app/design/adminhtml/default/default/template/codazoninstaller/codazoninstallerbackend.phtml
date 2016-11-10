@@ -1,0 +1,32 @@
+<?php
+	$designs = $this->getDesigns();
+	$count = 0;
+?>
+<button onclick="setLocation('<?php echo $this->getUrl("admin_codazoninstaller/adminhtml_codazoninstallerbackend/export") ?>')"><?php echo $this->__('Export') ?></button>
+<div class="grid">
+	<table class="data">
+	<?php foreach($designs as $design): ?>
+	<?php 
+		$class = '';
+		$count++;
+		if($count % 2){
+			$class = 'even';
+		}else{
+			$class = 'odd';
+		}
+	?>
+		<tr class="<?php echo $class ?>">
+			<td>
+				<label><?php echo $design['label'] ?></label>
+			</td>
+			<td>
+				<?php if($design['status']): ?>
+				<strong><?php echo $this->__('Imported') ?></strong>
+				<?php else: ?>
+				<button onclick="setLocation('<?php echo $this->getUrl("admin_codazoninstaller/adminhtml_codazoninstallerbackend/import").'?theme='.$design['value'] ?>')"><?php echo $this->__('Import') ?></button>
+				<?php endif ?>
+			</td>
+		</tr>
+	<?php endforeach ?>
+	</table>
+</div>

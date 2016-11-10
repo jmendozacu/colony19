@@ -1,0 +1,68 @@
+<!--@subject Opération de paiement Rappel Échec @-->
+<!--@vars
+{"var reason":"Transaction Failed Reason",
+"var checkoutType":"Checkout Type",
+"var customerEmail":"Customer Email",
+"var customer":"Customer Name",
+"var items":"Shopping Cart Items",
+"var total":"Total",
+"var billingAddress.format('html')":"Billing Address",
+"var shippingAddress.format('html')":"Shipping Address",
+"var shippingMethod":"Shipping Method",
+"var paymentMethod":"Payment Method",
+"var dateAndTime":"Date and Time of Transaction"}
+@-->
+
+<table>
+    <thead>
+    <tr>
+        <th>Transaction de paiement a échoué.</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p>
+                <b>Raison</b><br />
+                {{var reason}}
+            </p>
+            <p>
+                <b>Type de Paiement</b><br />
+                {{var checkoutType}}
+            </p>
+            <p>
+                <b>Client:</b><br />
+                <a href="mailto:{{var customerEmail}}">{{var customer}}</a> &lt;{{var customerEmail}}&gt;
+            </p>
+            <p>
+                <b>Produit</b><br />
+                {{var items}}
+            </p>
+            <p>
+                <b>Total:</b><br />
+                {{var total}}
+            </p>
+            <p>
+                <b>Adresse Facturation:</b><br />
+                {{var billingAddress.format('html')}}
+            </p>
+            <p>
+                <b>Adresse Livraison:</b><br />
+                {{var shippingAddress.format('html')}}
+            </p>
+            <p>
+                <b>Mode Livraison:</b><br />
+                {{var shippingMethod}}
+            </p>
+            <p>
+                <b>Mode de paiement:</b><br />
+                {{var paymentMethod}}
+            </p>
+            <p>
+                <b>Date et heure:</b><br />
+                {{var dateAndTime}}
+            </p>
+        </td>
+    </tr>
+    </tbody>
+</table>

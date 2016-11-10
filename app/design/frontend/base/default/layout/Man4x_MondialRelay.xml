@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <man4x_mondialrelay_default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/Man4x_MondialRelay.css</stylesheet>
+            </action>            
+        </reference>
+        <reference name="before_body_end">
+            <block type="mondialrelay/pickupselectionform" name="pickup_selection_form" template="Man4x_MondialRelay/pickupselectionform.phtml" before="-" />
+            <block type="mondialrelay/shippingmethods" name="mondialrelay_shipping_methods_adapter" as="mondialrelay_shipping_methods_adapter" template="Man4x_MondialRelay/shippingmethods/jsAdapter.phtml" after="pickup_selection_form" />
+        </reference>
+    </man4x_mondialrelay_default>
+    
+    <checkout_onepage_index>
+        <update handle="man4x_mondialrelay_default" />
+        <reference name="mondialrelay_shipping_methods_adapter">
+            <action method="setParams">
+                <value>#co-shipping-method-form,#shipping-method-buttons-container button,#shipping-progress-opcheckout dd address</value>
+            </action>
+        </reference>
+    </checkout_onepage_index>
+    
+    <checkout_onepage_shippingmethod>
+        <reference name="root">
+            <block type="mondialrelay/shippingmethods" name="mondialrelay_shipping_methods_reloader" as="mondialrelay_shipping_methods_reloader" template="Man4x_MondialRelay/shippingmethods/jsReloader.phtml" after="-" output="toHtml" />
+        </reference>
+    </checkout_onepage_shippingmethod>
+
+    <paypal_express_review>
+        <update handle="man4x_mondialrelay_default" />
+        <reference name="mondialrelay_shipping_methods_adapter">
+            <action method="setParams">
+                <value>#shipping_method_form,#review_button,.col-1 address</value>
+            </action>
+        </reference>
+    </paypal_express_review>
+    
+    <!-- Idev OneStepCheckout layout
+    <onestepcheckout_index_index>
+        <update handle="man4x_mondialrelay_default" />
+        <reference name="mondialrelay_shipping_methods_adapter">
+            <action method="setParams">
+                <value>#onestepcheckout-form,#onestepcheckout-place-order,#shipping_address ul li.form-alt</value>
+            </action>
+        </reference>
+    </onestepcheckout_index_index>
+
+    <onestepcheckout_ajax_save_billing>
+        <block type="mondialrelay/shippingmethods" name="mondialrelay_shipping_methods_reloader" as="mondialrelay_shipping_methods_reloader" template="Man4x_MondialRelay/shippingmethods/jsReloader.phtml" output="toHtml" >
+            <action method="setArea"><params>frontend</params></action> 
+        </block>
+    </onestepcheckout_ajax_save_billing>
+    -->
+</layout>

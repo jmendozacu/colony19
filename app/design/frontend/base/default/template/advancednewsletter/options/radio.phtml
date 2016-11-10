@@ -1,0 +1,46 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Advancednewsletter
+ * @version    2.4.7
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php $i=0; ?>
+<?php if ($this->displayLabel()): ?>
+    <label for="an-segments" class="an-data required"><?php echo $this->__('Select lists') ?><em>*</em></label>
+<?php endif; ?>
+<ul class="an-radio an-data" id="an-segments">
+<?php $_notChecked = true;?>
+<?php foreach ($this->getSegments() as $segment): ?>
+    <?php
+        if($segment->isSelected($this->getCategoryId()) && $_notChecked):
+            $checked='checked="checked"';
+            $_notChecked = false;
+        else:
+            $checked='';
+        endif;
+    ?>
+    <li>
+        <input <?php echo $checked; ?> type="radio" name="segments_select[]" id="an-segment-<?php echo $segment->getCode() ?>" value="<?php echo $segment->getCode(); ?>" />
+        <label for="an-segment-<?php echo $segment->getCode() ?>"><?php echo $segment->getTitle(); ?></label>
+    </li>
+<?php endforeach; ?>
+</ul>

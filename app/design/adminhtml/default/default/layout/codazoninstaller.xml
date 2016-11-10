@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <codazoninstaller_adminhtml_codazoninstallerbackend_index>
+	<reference name="content">
+		<block type="codazoninstaller/adminhtml_codazonInstallerBackend" name="codazoninstallerbackend" template="codazoninstaller/codazoninstallerbackend.phtml"/>
+	</reference>
+  </codazoninstaller_adminhtml_codazoninstallerbackend_index>
+</layout>

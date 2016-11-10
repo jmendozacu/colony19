@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_zblocks_zblocks_index>
+        <reference name="content">
+            <block type="zblocks/adminhtml_zblocks" name="zblocks" />
+        </reference>
+    </adminhtml_zblocks_zblocks_index>
+    <adminhtml_zblocks_zblocks_editcontent>
+        <update handle="editor" />
+    </adminhtml_zblocks_zblocks_editcontent>
+    <adminhtml_zblocks_zblocks_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>aw_zblocks/js/backend.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>aw_zblocks/css/style.css</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>mage/adminhtml/rules.js</name>
+                <params/>
+            </action>            
+        </reference>
+    </adminhtml_zblocks_zblocks_edit>
+</layout>

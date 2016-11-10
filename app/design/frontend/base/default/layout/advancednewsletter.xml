@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/aw_advancednewsletter.css</stylesheet></action>
+            <action method="addCss"><stylesheet>css/aw_advancednewsletter_custom.css</stylesheet></action>
+            <action method="addJs"><script>advancednewsletter/advancednewsletter.js</script></action>
+        </reference>
+        <reference name="left">
+            <block type="advancednewsletter/subscribe" name="advancednewsletter.subscribe.block" template="advancednewsletter/subscribe_block.phtml" after="catalog.vertnav">
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.subscribe" template="advancednewsletter/subscribe.phtml">
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.options.checkboxes" template="advancednewsletter/options/checkboxes.phtml" />
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.options.multiselect" template="advancednewsletter/options/multiselect.phtml" />
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.options.radio" template="advancednewsletter/options/radio.phtml" />
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.options.none" template="advancednewsletter/options/none.phtml" />
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.options.select" template="advancednewsletter/options/select.phtml" />
+                    <block type="advancednewsletter/subscribe" name="advancednewsletter.subscriber.data" template="advancednewsletter/subscriber/data.phtml" />
+                </block>
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.subscribe.link" template="advancednewsletter/subscribe_link.phtml" />
+            </block>
+        </reference>
+        <reference name="before_body_end">
+            <block type="core/template" name="advancednewsletter.subscribe.wrapper" after="-" template="advancednewsletter/subscribe_wrapper.phtml" />
+        </reference>
+    </default>
+
+    <advancednewsletter_index_subscribeajax>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>advancednewsletter/ajax.phtml</template>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="advancednewsletter/subscribe" name="advancednewsletter.subscribe" template="advancednewsletter/subscribe_ajax.phtml">
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.options.checkboxes" template="advancednewsletter/options/checkboxes.phtml" />
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.options.multiselect" template="advancednewsletter/options/multiselect.phtml" />
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.options.radio" template="advancednewsletter/options/radio.phtml" />
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.options.select" template="advancednewsletter/options/select.phtml" />
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.subscriber.data" template="advancednewsletter/subscriber/data.phtml" />
+            </block>
+        </reference>
+    </advancednewsletter_index_subscribeajax>
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="advancednewsletter">
+                <name>advancednewsletter</name>
+                <path>advancednewsletter/manage/</path>
+                <label>Newsletter Subscriptions</label>
+            </action>
+        </reference>
+        <remove name="left.newsletter"/>
+    </customer_account>
+    
+    <advancednewsletter_manage_index translate="label">
+        <label>Customer My Account Newsletter Subscriptions</label>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="advancednewsletter/customer_newsletter" name="customer_advancednewsletter"/>
+        </reference>
+    </advancednewsletter_manage_index>
+
+    <customer_account_create>
+        <reference name="content">
+            <block type="core/template" after="customer_form_register" name="advancednewsletter.customer.register.form" template="advancednewsletter/customer/form/register.phtml">
+                <block type="advancednewsletter/subscribe" name="advancednewsletter.options.checkboxes" template="advancednewsletter/options/checkboxes.phtml">
+                    <action method="setDisplayLabel">
+                        <value>false</value>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </customer_account_create>
+
+    <checkout_onepage_review>
+        <reference name="root">
+            <block type="advancednewsletter/checkout_subscribe" name="awancheckout" template="advancednewsletter/checkout/form.phtml">
+                <block type="advancednewsletter/checkout_subscribe" name="awancheckout.checkboxes" template="advancednewsletter/checkout/form/checkboxes.phtml"></block>
+            </block>
+        </reference>
+    </checkout_onepage_review>
+
+    <customer_account_index>
+        <reference name="my.account.wrapper">
+            <block type="advancednewsletter/customer_account_dashboard_info" after="info" name="advancednewsletter.customer.account.dashboard.info" template="advancednewsletter/customer/info.phtml"/>
+        </reference>
+    </customer_account_index>
+</layout>

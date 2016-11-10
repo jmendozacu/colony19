@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2016 Activo Extensions (http://extensions.activo.com)
+ * @license     Commercial
+ */
+-->
+
+<layout>
+    <adminhtml_dashboard_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>activo/advancedsearch/js/charts/loader.js</name>
+            </action>           
+        </reference>
+    </adminhtml_dashboard_index>
+</layout>

@@ -1,0 +1,636 @@
+<?php
+/**
+ * Copyright (c) 2013-2015 Man4x
+ *
+ * @project     Magento Man4x Mondial Relay Module
+ * @block       Man4x_MondialRelay_Block_Shippingmethods_Checkout
+ * @author      Emmanuel Catrysse
+ * @license     Emmanuel Catrysse man4x[@]hotmail[.fr]
+ * 
+ * This template includes the Man4xMondialRelayShippingMethodsClass JS class whose purpose is to add HTML elements and
+ * events to the shipping methods block in checkout process, in order to enable Man4x_MondialRelay logic
+ * (i.e. essentially pickup selection)
+ * 
+ * Depending on the checkout template, these shipping methods may be displayed:
+ *  - as radio buttons (<INPUT> elements) - e.g. onepage checkout, backend order
+ *  - as a listbox (<SELECT> + <OPTION>s) - e.g. paypal express checkout 
+ * 
+ * Pickup selection can be configured on-map (through a Google Map) or on-list.
+ * 
+ * To be effective, this template must be included to the corresponding handle of the checkout layout, in addition to the
+ * pickupselectionform template. If shipping methods block is intended to be AJAX reloaded, jsReloader block must be included
+ * in the AJAX response in order to automatically process the loaded block.
+ * 
+ * Precisely, Man4xMondialRelayShippingMethodsClass:
+ *  - adds short description to Mondial Relay shipping methods
+ * And specifically, for Mondial Relay pickup shipping method:
+ *  - adds HTML elements required by the module logic depending on selection mode (on-map or on-list)
+ *  - handles pickup selection (through the Man4xMondialRelayPickupSelectionClass JS class) 
+ *  - prevents process continuation if a a pickup method is active but no pickup has been actually selected yet
+ *  - handles selected pickup data saving (for latter use with observer linked to <sales_convert_quote_address_to_order>)
+ *  - updates shipping address block in the progress block if a pickup shipping method has been selected (standard shipping address
+ * is replaced with the pickup address for client-side visual display - server-side replacement is actually handled through the
+ * <sales_convert_quote_address_to_order> observer)
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[   
+    Man4xMondialRelayShippingMethodsClass = Class.create();
+    Man4xMondialRelayShippingMethodsClass.prototype =
+    {
+        <?php
+        /**
+         * Properties
+         * ----------
+         *
+         * psfJs                Instance of Man4xMondialRelayPickupSelectionClass. If this instance is not created yet, it can be
+         *                      defined asynchronously when Google map is loaded (through "man4xpsf:pickup_selection_form_ready" event)
+         * pField               Pickup shipping method form element (<INPUT> or <OPTION>)
+         * pFieldName           Pickup shipping method form element name (generally "shipping_method")  
+         * isOnMap              On-map pickup selection (if false: on-list selection)
+         * isInput              Shipping methods are displayed as radio buttons (if false: listbox)
+         * queryParams          Default pickup query parameters (backend-defined)
+         * currentPickup        Current selected pickup (even if pickup shipping method is not the current active method)
+         *                      (i.e. active pickup if pickup shipping method was currently selected)
+         * activeShippingMethod Active shipping method (currently selected)
+         * initSelectors        Selectors for [0] shipping method form [1] process continuations buttons and [2] shipping address block
+         * smForm               Shipping method form
+         * submitBtns           Process continuation elements (array)
+         * sabSel               Shipping address block selector (defined in layout)
+         * sab                  Shipping address block
+         * smPattern            Shipping method element pattern (for on-list selection)
+         * smsDescBlock         Mondial Relay shipping methods description block (for listbox shipping methods)
+         * selPickupBlock       Selected pickup data block
+         * saveInAdminUrl       Controlleur URL for saving pickup data in admin
+         */
+        ?>
+        psfJs: null,
+        pField: null,
+        pFieldName: false,
+        isOnMap: <?php echo $this->onMapSelection() ?>,
+        isInput: true,
+        queryParams: <?php echo $this->getDefaultPickupQueryParameters() ?>,
+        currentPickup: false,
+        activeShippingMethod: "<?php echo $this->getActiveShippingMethod() ?>",
+        initSelectors: [],
+        docBody: $(document.body),       
+        smForm: null,
+        submitBtns: [],
+        sab: null,
+        smPattern: false,
+        smsDescBlock: null,
+        selPickupBlock: null,
+        saveInAdminUrl: '<?php echo $this->getSavePickupinSessionUrl(); ?>',
+        
+        <?php
+        /**
+         * Initialization
+         * Parameters are passed through layout handle
+         *  - [0] shipping methods form selector
+         *  - [1]: form submit button(s) selector (optional)
+         *  - [2]: shipping address block selector (optional)
+         * We use selectors here instead of direct elements because we must be able to retrieve elements when shipping
+         * methods block is AJAX-reloaded
+         * We set observers for Man4xMondialRelayPickupSelection events and plug the shipping method block to the module logic
+         * if pickup selection form is ready
+         */
+        ?>
+        initialize: function(params)
+        {
+            this.initSelectors = params;
+            document.observe('man4xpsf:pickup_selection_form_ready', this.onPsfReady.bindAsEventListener(this))
+                    .observe('man4xpsf:pickup_list_built', this.onPickupListBuild.bindAsEventListener(this))
+                    .observe('man4xpsf:pickup_selected', this.onSelectPickup.bindAsEventListener(this))
+                    .observe('man4xpsf:pickup_selection_form_close', this.onClosePickup.bind(this));                    
+            this.psfJs = typeof Man4xMondialRelayPickupSelection === 'undefined' ? null : Man4xMondialRelayPickupSelection;
+            if (this.psfJs)
+                this.plugBlock();
+        },
+        
+        <?php
+        /**
+         * Plug the instance to shipping methods block.
+         * We detach this code from initialize method since:
+         *  - it may be called asynchronously as soon as pickup selection form is ready ('man4xpsf:pickup_selection_form_ready' event)
+         *  - it is automatically called (through jsReloader block) when shipping method block is AJAX-refreshed
+         * We retrieve elements from initialization selectors, add Mondial Relay shipping methods description and HTML elements
+         * required by module logic, set query mode for pickup selection form
+         */
+        ?>
+        plugBlock: function(params)
+        {
+            this.smForm = $$(this.initSelectors[0])[0];
+            if (!this.smForm) return;
+            this.submitBtns = $$(this.initSelectors[1]);
+            this.pField = this.smForm.down('input[value*=mondialrelaypickup]') || this.smForm.down('option[value*=mondialrelaypickup]');
+            this.isInput = this.pField && (this.pField.tagName === 'INPUT');
+            if (!this.smForm.down('.method-description')) this.addSmsDescription();           
+            // If there's no pickup shipping method, module logic ends here...
+            if (this.pField) {
+                if (params)
+                    this.setQueryParams(params);
+                this.docBody.addClassName(this.isInput ? 'input-selection' : 'listbox-selection')
+                            .addClassName(this.isOnMap ? 'on-map' : 'on-list');
+                this.pFieldName = this.pField.readAttribute('name');
+                this.setShippingMethodPattern();
+                this.processShippingMethods();
+                this.onShippingMethodChange(false);
+            }           
+        },
+                    
+        <?php
+        /**
+         * Set pickup query parameters. If parameters are different as they currently are, we reset currentPickup since it could
+         * be not included in the new query result
+         */
+        ?>
+        setQueryParams: function(params)
+        {
+            if (this.queryParams.postcode !== params.postcode) {
+                this.currentPickup = 0;
+            }
+            this.queryParams = params;
+        },
+                
+        <?php
+        /**
+         * Get pickup query parameters
+         * Generally speaking, these parameters are backed-defined but their value can be overriden here with frontside live
+         * values defined in form elements of the current page
+         */
+        ?>
+        getQueryParams: function()
+        {
+            var _params = this.queryParams;            
+            /*
+             * Add logic here for overriding default parameters with live parameters defined in the current page
+             */             
+            return _params;
+        },
+                
+        <?php
+        /**
+         * Get pickup element (<INPUT> or <SELECT>)
+         */
+        ?>
+        getPickupElement: function()
+        {
+            return this.isInput ? this.pField : this.pField.up('select');
+        },
+                
+        <?php
+        /**
+         * 'man4xpsf:pickup_selection_form_ready' handler
+         * If pickup selection form has just been instanciated, we save it and plug shipping method block
+         */
+        ?>
+        onPsfReady: function(e)
+        {
+            if (! this.psfJs) {
+                this.psfJs = e.memo;
+                this.plugBlock();                
+            }
+        },
+        
+        <?php
+        /**
+         * Add method descriptions (defined in module settings) to Mondial Relay shipping methods:
+         *  - for radio buttons: after the button label
+         *  - for listbox: in a dedicated block after listbox
+         */
+        ?>
+        addSmsDescription: function()
+        {
+            var _mDesc = <?php echo $this->getMethodsDescription() ?>;
+            // [Radio]
+            if (this.isInput) {
+                for (var _m in _mDesc)
+                    if (_mDesc.hasOwnProperty(_m)) {
+                        var _f = this.smForm.down('input[value*="' + _m + '"]');
+                        if (_f) {
+                            var _at = this.smForm.down('label[for="' + _f.readAttribute('id') + '"]') || _f;
+                            if (_at)
+                                _at.insert({after: '<p class="added method-description">' + _mDesc[_m] + '</p>'});
+                        }
+                    }
+            }
+            // [Listbox]
+            else
+            {
+                var _select = this.smForm.down('select option[value*=mondialrelay]');
+                if (_select) _select = _select.up('select');
+                if (!_select) return;
+                this.smsDescBlock = new Element('div', {'class': 'method-description'});
+                for (var _m in _mDesc)
+                    if (_mDesc.hasOwnProperty(_m))
+                        this.smsDescBlock.insert('<p class="added ' + _m + '">' + _mDesc[_m] + '</p>');
+                _select.insert({after: this.smsDescBlock});
+            }
+        },
+
+        <?php
+        /**
+         * Set shipping method pattern for on-list selection:
+         *  - for radio buttons: common ancestor element shared by <INPUT> and its <LABEL>
+         *  - for listbox: the <OPTION> element
+         */
+        ?>
+        setShippingMethodPattern: function()
+        {
+            if (this.isOnMap) return;
+            var _nodeToClone = this.pField;           
+            if (this.isInput) {
+                var _iLine = this.pField.ancestors();
+                var _label = this.smForm.down('label[for="' + this.pField.readAttribute('id') + '"]');
+                if (_label) {
+                    var _lbLine = _label.ancestors();
+                    for (var _i = 0; _i < _lbLine.length; _i++) {
+                        if (_lbLine[_i] === this.smForm)
+                            break;
+                        var _ixlb = _iLine.indexOf(_lbLine[_i]);
+                        if (_ixlb !== -1) {
+                            _nodeToClone = _iLine[_ixlb];
+                            break;
+                        }
+                    }              
+                }
+            }            
+            this.smPattern = _nodeToClone;
+        },
+                
+        <?php
+        /**
+         * Get insertion node to insert module-dependant elements to shipping methods
+         */
+        ?>
+        getInsertionNode: function()
+        {
+            return this.isInput ?
+                this.smForm.down('label[for="' + this.pField.readAttribute('id') + '"]') || this.pField :
+                this.pField.up('select');
+        },
+                
+                
+        <?php
+        /**
+         * Process shipping method blocks to insert elements required by the module logic:
+         *  - add onchange observer for shipping method elements
+         *  - create one shipping method per pickup for on-list selection
+         *  - add a "only-method" class to pickup field (<INPUT> or <SELECT> if pickup if the only shipping method
+         *  - add a "please wait" block to be displayed during ajax calls
+         *  - add a "select-pickup-link" (css-driven visibility)
+         *  - add a "selected-pickup" block to display selected pickup data and links for details / changing choice (css-driven visibility)
+         */
+        ?>
+        processShippingMethods: function()
+        {
+            // Sm onchange observer
+            this.isInput ?
+                this.smForm.on('change', 'input[name="' + this.pFieldName + '"]', this.onShippingMethodChange.bind(this)) :
+                this.pField.up('select').observe('change', this.onShippingMethodChange.bind(this));
+            this.prepareOnListPickupShippingMethods();
+            this.setOnlyMethod();
+            var _insertion = this.getInsertionNode();
+            this.insertPleaseWait(_insertion);            
+            this.insertSelectPickupLink(_insertion);
+            this.createSelectedPickupBlock(_insertion);
+        },
+       
+        <?php
+        /**
+         * add a "only-method" class to pickup field (<INPUT> or <SELECT> if pickup if the only shipping method
+         */
+        ?>
+        setOnlyMethod: function()
+        {
+            var _target = this.getPickupElement();
+            var _sms = this.isInput ?   this.smForm.select('input[name="' + this.pFieldName + '"]') :
+                                        _target.select('option');
+            if (_sms.length === 1)
+                _target.addClassName('only-method');
+        },
+                
+        <?php
+        /**
+         * For on-list pickup selection, query pickups or build list right away if query has been already processed
+         */
+        ?>
+        prepareOnListPickupShippingMethods: function()
+        {
+            if (this.isOnMap) return;
+            if (this.psfJs) {
+                var _params = this.getQueryParams();
+                if (this.psfJs.query(_params, false))
+                    this.buildOnListPickupShippingMethods();
+            }
+        },       
+                
+        <?php
+        /**
+         * Create a "please wait" div
+         */
+        ?>
+        insertPleaseWait: function(insertion)
+        {
+            insertion.insert({after: '<div class="added pickup-ajax-loading"><img src="<?php echo $this->getSkinUrl('images/Man4x_MondialRelay/mondialrelay_ajax_loading_small.gif');?>"/></div>'});   
+        },
+                
+        <?php
+        /**
+         * Create a "select pickup link" (css-driven visibility)
+         */
+        ?>
+        insertSelectPickupLink: function(insertion)
+        {
+                var _this = this;
+                var _link = new Element('a', {'class': 'added', id: "pickup-selection-link"})
+                        .update("<?php echo ($this->__('Click to select your pick-up location')); ?>")
+                        .observe('click', function(e) {_this.psfJs.query(_this.getQueryParams(), true);});
+                insertion.insert({after: _link});
+            //}
+        },
+
+        <?php
+        /**
+         * Create/update selected pickup data block (css-driven visibility)
+         */
+        ?>
+        createSelectedPickupBlock: function(insertion)
+        {
+            var _this = this;
+            this.selPickupBlock = new Element('div', {'class': 'added', id: 'selected-pickup'})
+                    .update('<address><?php echo $this->__('Selected pick-up:')?> <span class="selected-pickup-address"></span></address>');               
+            var _links = new Element('div', {'class': 'links'});
+            var _infolink = new Element('a', {'class': 'selected-info-link'}).update("<?php echo ($this->__('info')); ?>")
+                    .observe('click', this.onPickupDetails.bindAsEventListener(this));
+            _links.insert({bottom: _infolink});               
+            var _changelink = new Element('a', {'class': 'change-link'}).update("<?php echo ($this->__('Select another pick-up')); ?>")
+                    .observe('click', function(e) {if (_this.psfJs) _this.psfJs.open();});
+            _links.insert({bottom: _changelink});
+            this.selPickupBlock.insert({bottom: _links});
+            var _insertion = insertion ? insertion : this.getInsertionNode();
+            _insertion.insert({after: this.selPickupBlock});
+        },
+
+        <?php
+        /**
+         * Update (after creation if required) selected pickup data block
+         */
+        ?>
+        updateSelectedPickupBlock: function(p)
+        {
+            if (!this.selPickupBlock)
+                this.createSelectedPickup();
+            if (p) {
+                var _address =  '<span class="name">' + p.name + '</span> &bull; '
+                            + ' <span class="address">' + p.street + '</span>'
+                            + ' <span class="postcode">' + p.postcode + '</span>'
+                            + ' <span class="city">' + p.city + '</span> (' + p.country + ') ';                              
+                this.selPickupBlock.down('.selected-pickup-address').update(_address);
+                this.selPickupBlock.down('.selected-info-link').writeAttribute('data-pid', p.id);
+            }
+        },
+            
+        <?php
+        /**
+         * 'man4xpsf:pickup_list_built' handler
+         * If a pickup list has just been loaded, we trigger form elements creation for each pickup if on-list selection
+         */
+        ?>
+        onPickupListBuild: function(e)
+        {
+            this.buildOnListPickupShippingMethods();
+        },
+
+        <?php
+        /**
+         * Enable / disable button(s) triggering process continuation
+         * We hide them if pickup shipping method is active but no pickup has been selected yet
+         */
+        ?>
+        updateFormSubmission: function()
+        {
+            var _hide = !this.activeShippingMethod ||
+                    (this.activeShippingMethod.indexOf('mondialrelaypickup') !== -1 && !this.currentPickup);
+            this.submitBtns.each(function(btn) {_hide ? btn.hide() : btn.show();});
+        },
+
+        <?php
+        /**
+         * Build one shipping method form element per pickup for on-list selection, hide generic shipping method radio button
+         * and create an observer for "info links"
+         * Note: we remove from pattern all added elements and "no-display" class (case where there's only one shipping method)
+         * Note: we use an intermediary array to display pickup in the right order
+         */
+        ?>
+        buildOnListPickupShippingMethods: function(e)
+        {
+            if (this.isOnMap) return;
+            var _pattern = this.smPattern.clone(true);
+            _pattern.select('.added').each(function(e) {e.remove();});
+            _pattern.select('*[class~=no-display]').each(function(e) {e.removeClassName('no-display');});
+            var _pickups = [];
+            for (var _id in this.psfJs.pickupSet)
+                if (this.psfJs.pickupSet.hasOwnProperty(_id))
+                    _pickups.push(_id);
+            while (_pickups.length) {
+                    var _p = this.psfJs.pickupSet[_pickups.pop()];
+                    var _clone = this.buildPickupShippingMethod(_pattern, _p);
+                    this.smPattern.insert({after: _clone});
+            }
+            if (this.isInput) this.pField.hide();
+            this.smForm.on('click', '.info-link', this.onPickupDetails.bindAsEventListener(this));
+        },
+       
+        <?php
+        /**
+         * Build a shipping method form element from the pattern for the given pickup
+         */
+        ?>
+        buildPickupShippingMethod: function(pattern, p)
+        {              
+            var _clone = pattern.clone(true);
+            var _e = this.isInput ? _clone.down('input') : _clone;
+            _e.writeAttribute('data-pid', p.id);
+            var _id = _e.readAttribute('id');
+            if (_id)
+                _e.writeAttribute('id', _id + '_' + p.id);
+            var _label = this.isInput ? _clone.down('label') : _clone;
+            if (_label.tagName === 'LABEL')
+                _label.writeAttribute('for', _id + '_' + p.id);
+            _label.update(p.name.toUpperCase() + ' &bull; ' + p.street + ' ' + p.postcode + ' ' + p.city + ' (' + p.country + ') ');           
+            if (this.isInput)
+                _label.insert(Element('a', {'class': 'info-link', 'data-pid': p.id}).update("<?php echo $this->__('Info') ?>"));
+            else 
+                _e.selected = false;
+            return _clone;           
+        },
+
+        <?php
+        /**
+         * Handler for shipping method change:
+         *  - display Mondial Relay shipping method description for listbox
+         *  - set / unset css classes to body element (for css-driven visual updates)
+         *  - update HTML elements (selected-pickup block, shipping address
+         *  - trigger selected pickup backing saving or pickup selection form opening
+         * This method may also be manually called to update elements (in this case, e = false)
+         */
+        ?>
+        onShippingMethodChange: function(e)
+        {
+            var _activeSmElmt = this.isInput ?
+                this.smForm.down('input:checked[name=' + this.pFieldName + ']') :
+                this.pField.up('select').down('option[selected]');
+            var _activeSm = _activeSmElmt ? _activeSmElmt.readAttribute('value') : '';
+            this.activeShippingMethod = _activeSm;           
+            if (!this.isInput)
+                this.smsDescBlock.select('p').each(
+                    function(e) {e.hasClassName(_activeSm) ? e.addClassName('active') : e.removeClassName('active');}
+                );           
+
+            if (this.activeShippingMethod.indexOf('mondialrelaypickup') !== -1) {
+                this.docBody.addClassName('pickup-shipping-method-selected');
+                if (this.currentPickup) {
+                    this.docBody.addClassName('pickup-selected');
+                    this.updateShippingAddressBlock(this.currentPickup);
+                    this.updateSelectedPickupBlock(this.currentPickup);
+                }
+                else
+                    this.docBody.removeClassName('pickup-selected');               
+                if (e) {
+                    if (!this.isOnMap) {
+                        var _pId = _activeSmElmt.readAttribute('data-pid');
+                        this.onSelectPickup({memo: this.psfJs.pickupSet[_pId]});
+                    }
+                    else {
+                        if (this.psfJs && !this.currentPickup)
+                            this.psfJs.query(this.getQueryParams(), true);
+                    }
+                }
+            }
+            else {
+                this.docBody.removeClassName('pickup-shipping-method-selected').removeClassName('pickup-selected');
+            }
+                
+            this.updateFormSubmission();
+        },
+            
+        <?php
+        /**
+         * Handler for click on a "info link"
+         */
+        ?>
+        onPickupDetails: function(e)
+        {
+            var _pId = e.findElement().readAttribute('data-pid');
+            if (this.psfJs)
+                this.psfJs.open(_pId, true);           
+            if (e)
+                Event.stop(e);
+        },
+                               
+        <?php
+        /**
+         * Handler for click on pickup shipping method <OPTION> for on-list selection
+         * This method may also manually called when a pickup has been selected in the pickup selection form (through the
+         * 'man4xpsf:pickup_selected' event)
+         * Save the selected pickup in session
+         */
+        ?>
+        onSelectPickup: function(e)
+        {
+            var _p = e.memo;
+            var _this = this;           
+            if (_p && _p.id !== this.currentPickup.id) {
+                new Ajax.Request(this.saveInAdminUrl,
+                {   
+                    parameters: {   id:         _p.id,
+                                    name:       _p.name,
+                                    street:     _p.street,
+                                    postcode:   _p.postcode,
+                                    city:       _p.city,
+                                    country:    _p.country
+                                },
+                    onCreate:   function() {_this.pleaseWait(true);},
+                    onSuccess:  function(transport) {_this.onSessionSaveSuccess(_p);},
+                    onFailure:  function() {_this.alertMsg("<?php echo $this->__('Network error: unable to save pickup selection.')?>");}
+                    }
+                );
+            }
+        },
+
+        <?php
+        /**
+         * Get shipping address block from its selector
+         * This isn't done at initialization because shipping address block may be not created yet
+         */
+        ?>
+        getShippingAddressBlock: function()
+        {
+            var _address = $$(this.initSelectors[2])[0];
+            if (_address) {
+                _address.addClassName('standard-shipping-address')
+            }
+            return _address;
+        },
+
+        <?php
+        /**
+         * Callback for selected pickup saving in session: current pickup is set and we force click event of the correspondig <INPUT>
+         * element if pickup has been selected through the pickup selection link.
+         * We also hide please-wait block 
+         */
+        ?>
+        onSessionSaveSuccess: function(p)
+        {
+            this.currentPickup = p;                                
+            if (!this.isInput) this.pField.selected = true;
+                else if (this.isOnMap && !this.pField.checked) this.pField.click();               
+            this.onShippingMethodChange(false);               
+            this.pleaseWait(false);
+        },
+
+        <?php
+        /**
+         * Shipping address block updating with the selected pickup data.
+         * This shipping address replacement is only visual; server-side replacement is actually handled through the
+         * <sales_convert_quote_address_to_order> observer)
+         */
+        ?>
+        updateShippingAddressBlock: function(p)
+        {
+            var _saBlock = this.getShippingAddressBlock();
+            if (_saBlock) {
+                var _spoPab = _saBlock.up().down('address.pickup');
+                if (_spoPab) _spoPab.remove();
+                _spoPab = new Element('address', {'class': 'pickup'});
+                _saBlock.insert({after: _spoPab});
+                _spoPab.update( '<span class="pickup-name">' + p.name.toUpperCase() + '</span><br/>' + p.street + '<br/>' + p.postcode + ' ' + p.city + ' (' + p.country + ')');
+            }
+        },
+                
+        <?php
+        /**
+         * Handler for 'man4xpsf:pickup_selection_form_close' event
+         */
+        ?>
+        onClosePickup: function()
+        {
+            this.updateFormSubmission();
+        },
+
+        <?php
+        /**
+         * Show / hide please wait block
+         */
+        ?>
+        pleaseWait: function(v)
+        {
+            v ? this.docBody.addClassName('pickup-please-wait') : this.docBody.removeClassName('pickup-please-wait');
+        }
+    };
+
+    var _params = '<?php echo $this->getParams() ?>'.split(',');
+    Man4xMondialRelayShippingMethods = new Man4xMondialRelayShippingMethodsClass(_params);
+//]]>
+</script>

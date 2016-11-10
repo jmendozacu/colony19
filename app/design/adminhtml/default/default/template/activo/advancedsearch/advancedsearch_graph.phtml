@@ -1,0 +1,54 @@
+<?php
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2016 Activo Extensions (http://extensions.activo.com)
+ * @license     Commercial
+ */
+?>
+<div>
+    <?php
+    $graphData = $this->getGraphData();
+    if (count($graphData) > 0)
+    {
+        $graphDataJson = json_encode($graphData);
+        ?>
+        <div id="chart_div" style="width: 1000px; height: 400px;"></div>
+        <script>
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(<?php echo $graphDataJson; ?>);
+
+                var options = {
+                    title: 'Searches',
+                    hAxis: {title: ''},
+                    vAxis: {title: ''},
+                    legend: {position: 'bottom'},
+                    series: {
+                        0: {color: '#DC3912', type: "line"},
+                        1: {color: '#53A8FB', type: "line"}
+                    },
+                    colors: ['#DC3912', '#53A8FB'],
+                    width: 1000,
+                    height: 400
+                };
+
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+        <?php
+    }
+    else
+    {
+        echo '<div id="no-record" style="width: 100%; height: 400px; text-align: center; margin-top: 50px;">No Data Found</div>';
+    }
+    ?>    
+</div>

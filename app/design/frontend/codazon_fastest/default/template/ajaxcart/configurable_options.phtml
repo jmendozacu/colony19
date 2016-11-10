@@ -1,0 +1,107 @@
+<?php
+$_product = Mage::registry('current_product');
+$_themeHelper = $this->helper('themeframework');
+$w = $_themeHelper->getConfig('codazon_settings/category_view/image_width');
+$h = $_themeHelper->getConfig('codazon_settings/category_view/image_height');
+?>
+
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" 
+      id="product_addtocart_form">
+    <div class="no-display">
+        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+    </div>
+	<div class="row">
+        <div class="col-sm-10 col-xs-6">
+        	<div class="product-image">
+                <img class="img-responsive" id="ajaxcart-img" src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize($w,$h) ?>" />
+            </div>
+        </div>
+    	<div class="col-sm-14 col-xs-18">
+			<div class="product-shop">
+				<?php echo $this->getChildHtml('extrahint') ?> 
+				<?php if ($_product->isSaleable()): ?>
+					<?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+				<?php endif; ?>
+			</div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function(button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            // Remove custom datetime validators
+            for (var methodName in Validation.methods) {
+                if (methodName.match(/^validate-datetime-.*/i)) {
+                    delete Validation.methods[methodName];
+                }
+            }
+
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+    //]]>
+</script>
+<script type="text/javascript">
+if( (typeof spConfig !== 'undefined') && (typeof Product.ConfigurableSwatches !== 'undefined') ){
+	var swatchesConfig = new Product.ConfigurableSwatches(spConfig);
+	swatchesConfig._E.activeConfigurableOptions = [];
+	ConfigurableMediaImages.updateImage = function(el) {
+        var select = $j(el);
+		var label = select.find('option:selected').attr('data-label');
+		var productId = optionsPrice.productId;
+		var selectedLabels = new Array();
+		$j('.product-options .super-attribute-select').each(function() {
+			var $option = $j(this);
+			if($option.val() != '') {
+				selectedLabels.push($option.find('option:selected').attr('data-label'));
+			}
+		});
+		var swatchImageUrl = ConfigurableMediaImages.getSwatchImage(productId, label, selectedLabels);
+		if(!ConfigurableMediaImages.isValidImage(swatchImageUrl)) {
+			return;
+		}
+		var swatchImage = ConfigurableMediaImages.getImageObject(productId, swatchImageUrl);
+		$j(window).trigger('swatchUpdateImage',[swatchImageUrl]);
+    }
+}
+</script>

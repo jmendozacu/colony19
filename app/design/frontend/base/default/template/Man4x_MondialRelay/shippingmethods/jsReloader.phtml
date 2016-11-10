@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright (c) 2013-2015 Man4x
+ *
+ * @project     Magento Man4x Mondial Relay Module
+ * @block       Man4x_MondialRelay_Block_Shippingmethods_Checkout
+ * @author      Emmanuel Catrysse
+ * @license     Emmanuel Catrysse man4x[@]hotmail[.fr]
+ * 
+ * This template is intended to be included to shipping methods block AJAX handle.
+ * The JS code purpose is here to trigger the loaded block processing with Man4xMondialRelayShippingMethodsClass JS class. 
+ * 
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+    if (typeof Man4xMondialRelayShippingMethods !== 'undefined' && !$('pickup-selection-link')) {
+        var _params = <?php echo $this->getDefaultPickupQueryParameters() ?>;
+        Man4xMondialRelayShippingMethods.plugBlock(_params);
+        }
+//]]>
+</script>

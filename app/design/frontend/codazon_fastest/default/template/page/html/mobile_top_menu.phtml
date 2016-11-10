@@ -1,0 +1,41 @@
+<?php
+$html = '';
+
+$children = $menuTree->getChildren();
+$parentLevel = $menuTree->getLevel();
+$childLevel = is_null($parentLevel) ? 0 : $parentLevel + 1;
+$counter = 1;
+$parentPositionClass = $menuTree->getPositionClass();
+$itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
+
+if($hasWrap){
+	$html .= '<nav class="navbar">';
+	$html .= '<ul class="navbar-nav root-parent">';
+}
+if(!isset($options['lv'])){
+	$options['lv'] = 1;
+}else{
+	$options['lv']++;
+}
+
+foreach ($children as $child) {
+    $child->setLevel($childLevel);
+    $outermostClassCode = 'level-'. $options['lv'];
+    $_hasChildren = ($child->hasChildren()) ? 'parent' : '';
+    $html .= '<li class="menu-item '.$_hasChildren.' '.$outermostClassCode.'">';
+    $html .= '<a href="'. $this->getCategoryUrlById($child->getId()) .'" class="menu-link">'. $this->escapeHtml($this->__($child->getName())) .'</a>';
+    $nextChildLevel = $childLevel + 1;
+    if ($child->hasChildren()) {
+		$html .= '<a class="dropdown-toggle"><span class="caret">&nbsp;</span></a>';
+        $html .= '<ul class="'.$childrenWrapClass.'">';
+        $html .=     $this->render($child, $childrenWrapClass,false,'',$options);
+        $html .= '</ul>';
+    }
+    $html .= '</li>';
+}
+if($hasWrap){
+	$html .= '</ul>';	
+	$html .= '</nav>';
+}
+
+return $html;

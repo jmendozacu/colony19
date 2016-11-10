@@ -1,0 +1,196 @@
+<?php $_helper = $this->helper('catalog/output');
+$_product = $this->getProduct();
+?>
+
+<script type="text/javascript">
+	var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view cdz-qs-view row">
+	 <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+	<div class="cdz-qs-image col-sm-14">
+		<div class="col-sm-13 product-view-media product-img-box">
+			<?php echo $this->getChildHtml('media') ?>
+		</div>
+	</div>
+	<div class="col-sm-10 product-view-info">
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+            <div class="product-shop">
+                <div class="product-shop-wrap product-shop-title">
+                    <div class="product-name">
+                        <h1 itemprop="name" class="product-name-h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    </div>
+                    <div class="row product-rating-sku">
+                        <div class="col-sm-24">
+                            <div class="row">
+                            	<div class="col-sm-8">
+	                                <h3 class="product-shop-sku"><span><?php echo $this->__('SKU: ') ?></span><strong><?php echo $this->htmlEscape($_product->getData('sku'));?></strong></h3>
+                                </div>
+                                <div class="col-sm-16">
+                                	<?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-shop-wrap product-shop-price-stock">
+                    	<div itemtype="http://schema.org/Offer" itemscope="" itemprop="offers">
+							<?php echo $this->getChildHtml('product_type_data') ?>
+                            <?php echo $this->getTierPriceHtml() ?>
+                            <?php echo $this->getChildHtml('extrahint') ?> 
+                        </div>
+                    </div>
+                    
+                    <?php echo $this->getChildHtml('alert_urls') ?>
+                </div>
+                <div class="product-shop-wrap product-shop-button">
+					<?php if (!$this->hasOptions()):?>
+                    <div class="add-to-box">
+                        <?php if($_product->isSaleable()): ?>
+                        <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                        <span class="or"><?php echo $this->__('OR') ?></span>
+                        <?php endif; ?>
+                        <?php endif; ?>
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                    <?php elseif (!$_product->isSaleable()): ?>
+                    <div class="add-to-box">
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                
+                <?php echo $this->getChildHtml('other');?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+            </div>
+            
+            <?php
+				$url = urlencode($this->stripTags($_product->getUrl()));
+				$desc = urlencode($this->stripTags($_product->getShortDescription()));
+				$image = urlencode($this->stripTags($this->helper('catalog/image')->init($_product, 'image')));
+				$name = urlencode($this->stripTags($_helper->productAttribute($_product, $_product->getName(), 'name')));
+			?>
+            <div class="product-shop-wrap product-shop-social">
+                    <div class="row">
+                        <div class="col-sm-17">
+                            <ul class="cdz-social-listing">
+                                <li class="cdz-facebook">
+                                    <a onclick='window.open("https://www.facebook.com/sharer/sharer.php?u=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' href="javascript:void(0)" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="Share on Facebook"><i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="twitter">
+                                    <a onclick='window.open("https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' target="_blank" rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="Share on Twitter"><i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="linkedin">
+                                    <a onclick='window.open("https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url ?>&title=<?php echo $name ?>&ro=false&summary=<?php echo $desc ?>&source=","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="Share on LinkedIn"><i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                                <li class="google-plus">
+                                    <a onclick='window.open("https://plus.google.com/share?url=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="Share on Google Plus"><i class="fa fa-google-plus"></i>
+                                </a>
+                                </li>
+                                <li class="pinterest">
+                                <a onclick='window.open("https://www.pinterest.com/pin/create/button/?url=<?php echo $url ?>&media=<?php echo $image ?>&description=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="Pin this"><i class="fa fa-pinterest"></i>
+                                </a>
+                                </li>
+                                <li class="email">
+                                <?php if ($this->canEmailToFriend()): ?>
+                                    <a rel="nofollow" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Email to a Friend') ?>" class="email-to-friend" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><i class="fa fa-envelope"></i></a>
+                                <?php endif; ?>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-7 align-right pull-right">
+                        <?php echo $this->getChildHtml('codazon_product_area01') ?>
+                        </div>
+                    </div>
+                </div>
+            <?php if ($_product->getShortDescription()):?>
+                <div class="product-shop-wrap short-description">
+                	<div class="short-description">
+                        <h2><?php echo $this->__('Quick Overview') ?></h2>
+                        <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                    </div>
+                </div>
+            <?php endif;?>
+            
+            <div class="clearer"></div>
+            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif;?>
+        <script type="text/javascript">
+            //<![CDATA[
+                var productAddToCartForm = new VarienForm('product_addtocart_form');
+                productAddToCartForm.submit = function(button, url) {
+                    if (this.validator.validate()) {
+                        var form = this.form;
+                        var oldUrl = form.action;
+            
+                        if (url) {
+                           form.action = url;
+                        }
+                        var e = null;
+                        try {
+                            this.form.submit();
+                        } catch (e) {
+                        }
+                        this.form.action = oldUrl;
+                        if (e) {
+                            throw e;
+                        }
+            
+                        if (button && button != 'undefined') {
+                            button.disabled = true;
+                        }
+                    }
+                }.bind(productAddToCartForm);
+            
+                productAddToCartForm.submitLight = function(button, url){
+                    if(this.validator) {
+                        var nv = Validation.methods;
+                        delete Validation.methods['required-entry'];
+                        delete Validation.methods['validate-one-required'];
+                        delete Validation.methods['validate-one-required-by-name'];
+                        // Remove custom datetime validators
+                        for (var methodName in Validation.methods) {
+                            if (methodName.match(/^validate-datetime-.*/i)) {
+                                delete Validation.methods[methodName];
+                            }
+                        }
+            
+                        if (this.validator.validate()) {
+                            if (url) {
+                                this.form.action = url;
+                            }
+                            this.form.submit();
+                        }
+                        Object.extend(Validation.methods, nv);
+                    }
+                }.bind(productAddToCartForm);
+            //]]>
+        </script>
+	</div>
+     </form>
+</div>
+<script type="text/javascript">
+if( (typeof spConfig !== 'undefined') && (typeof Product.ConfigurableSwatches !== 'undefined') ){
+	var swatchesConfig = new Product.ConfigurableSwatches(spConfig);
+	swatchesConfig._E.activeConfigurableOptions = [];
+}
+if(typeof ajaxcart != 'undefined') {
+	productAddToCartForm.submit = function(url){
+		if(this.validator && this.validator.validate()){
+			ajaxcart.ajaxCartSubmit(this);
+		}
+	}
+}
+
+</script>

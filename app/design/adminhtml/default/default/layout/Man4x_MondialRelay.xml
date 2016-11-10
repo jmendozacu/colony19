@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <adminhtml_man4x_mondialrelay_default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/Man4x_MondialRelay.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="mondialrelay/pickupselectionform" name="pickup_selection_form" template="Man4x_MondialRelay/pickupselectionform.phtml" before="-">
+                <action method="setArea"><params>frontend</params></action> 
+            </block>   
+        </reference>
+    </adminhtml_man4x_mondialrelay_default>
+    
+    <!-- Mondial Relay backend order -->
+    <adminhtml_sales_order_create_index>
+        <update handle="adminhtml_man4x_mondialrelay_default" />
+        <reference name="before_body_end">
+            <block type="mondialrelay/shippingmethods" name="mondialrelay_shipping_methods_adapter" as="mondialrelay_shipping_methods_adapter" template="Man4x_MondialRelay/shippingmethods/jsAdapter.phtml" after="pickup_selection_form">
+                <action method="setArea"><params>frontend</params></action> 
+                <action method="setParams">
+                    <value>#order-shipping-method-choose,button.save</value>
+                </action>
+            </block>            
+        </reference>
+    </adminhtml_sales_order_create_index>   
+
+    <adminhtml_sales_order_create_load_block_shipping_method>
+        <reference name="shipping_method">
+            <block type="mondialrelay/shippingmethods" name="mondialrelay_shipping_methods_reloader" as="mondialrelay_shipping_methods_reloader" template="Man4x_MondialRelay/shippingmethods/jsReloader.phtml" after="-" output="toHtml" >
+                <action method="setArea"><params>frontend</params></action> 
+            </block>
+        </reference>
+    </adminhtml_sales_order_create_load_block_shipping_method>
+    
+    <!-- New shipment -->
+    <adminhtml_sales_order_shipment_new>
+        <reference name="form">
+            <block type="mondialrelay/adminhtml_shipment_new" name="mondialrelay_bypass" as="mondialrelay_bypass" template="Man4x_MondialRelay/newshipment.phtml" after="-" output="toHtml"/>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+
+    <!-- View shipment -->
+    <adminhtml_sales_order_shipment_view>
+        <update handle="adminhtml_man4x_mondialrelay_default" />
+        <!--
+        <reference name="form">
+            <action method="setTemplate">
+                <template>Man4x_MondialRelay/sales_order_shipment_view/form.phtml</template>
+            </action>
+            <block type="mondialrelay/adminhtml_shipment_view_buttons" name="mondialrelay-buttons" as="mondialrelay-buttons" template="Man4x_MondialRelay/sales_order_shipment_view/buttons.phtml" />
+            -->
+        <block type="mondialrelay/adminhtml_shipment_return_form" name="mondialrelay-reverse-form" as="mondialrelay-reverse-form" template="Man4x_MondialRelay/sales_order_shipment_view/returnform.phtml" output="toHtml"/>
+    </adminhtml_sales_order_shipment_view>
+</layout>

@@ -1,0 +1,514 @@
+<?php
+/**
+ * Copyright (c) 2013-2015 Man4x
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ *
+ * @project     Magento Man4x Mondial Relay Module
+ * @block       MondialRelay_Block_Adminhtml_Shipment_Return_Form
+ * @author      Emmanuel Catrysse
+ * @license     Emmanuel Catrysse man4x[@]hotmail[.fr]
+ */
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-shipping-method mondialrelay"><?php echo $this->helper('mondialrelay')->__('Mondial Relay Re-shipping & Return Shipment') ?></h4>
+    </div>
+    <fieldset>
+        <form name="mr-form" id="mr-form" class="shipping-type-none shipping-method-none" action="" method="post" enctype="multipart/form-data">
+            <?php echo $this->getBlockHtml('formkey')?>
+            <?php $_shippingMethods = $this->getAvailableShippingMethodsToOptions() ?>
+    
+            <select id="type-methods" name="type-method" class="select">
+                <option value="none" selected><?php echo $this->__("Please select a shipping type...") ?></option>
+                <?php if (count($_shippingMethods['reshipping'])): ?>
+                    <option value="reshipping"><?php echo $this->__("Re-shipping") ?></option>
+                <?php endif; ?> 
+                <?php if (count($_shippingMethods['return'])): ?>
+                    <option value="return"><?php echo $this->__("Return") ?></option>   
+                <?php endif; ?>
+            </select>
+    
+            <?php foreach ($_shippingMethods as $_type => $_carriers): ?>
+                <?php if (count($_carriers)): ?>
+                    <select id="<?php echo $_type ?>-methods" name="<?php echo $_type ?>-method" class="<?php echo $_type ?> required-entry select">
+                        <option value="none" selected><?php echo $this->__("Please select a Mondial Relay " . $_type . " method...") ?></option>
+                        <?php foreach ($_carriers as $_carrierTitle => $_modes): ?>
+                            <optgroup label="<?php echo $_carrierTitle ?>">
+                                <?php foreach ($_modes as $_mode => $_data): ?>
+                                    <option value="<?php echo $_data['mode'] ?>">
+                                        <?php echo $this->__($_data['title']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                        <?php endforeach; ?>
+                        </option>
+                    </select>
+                <?php endif; ?>
+            <?php endforeach; ?>
+   
+            <div class="fieldset">                     
+                <p id="mr-message"></p>
+                
+                <div id="mr-data" class="content">
+                    <h4 class="reshipping"><?php echo $this->__('Re-shipping shipment data') ?><span class="required">*</span></h4>
+                    <h4 class="return"><?php echo $this->__('Return shipment data') ?><span class="required">*</span></h4>
+                    <div class="fields">
+                        <label for="mr-weight"><?php echo $this->__('Parcel total weight (in catalog unit)') ?></label>
+                        <input id="mr-weight" name="weight" value="<?php echo $this->getShipmentWeight() ?>" class="required-entry validate-number validate-greater-than-zero narrow" type="text"/>
+                        <label> (= <span id="mr-weight-grams"><?php echo $this->getShipmentWeightInGrams() ?></span> <?php echo $this->__('g') ?>)</label>
+                    </div>
+                    <div class="fields">
+                        <label for="mr-packages"><?php echo $this->__('Number of packages') ?></label>
+                        <input id="mr-packages" name="packages" value="<?php echo $this->getShipmentPackagesNumber() ?>" class="required-entry validate-digits validate-greater-than-zero narrow" type="text" />
+                    </div>
+                    <div class="fields">
+                        <label class="reshipping"><?php echo $this->__('Recipient') ?></label>
+                        <label class="return"><?php echo $this->__('Return sender') ?></label>
+                        <input id="mr-firstname" name="firstname" maxlength="12" value="<?php echo $this->getCustomerFirstname() ?>" class="required-entry" type="text" />
+                        <input id="mr-lastname" name="lastname" maxlength="20" value="<?php echo $this->getCustomerLastname() ?>" class="required-entry" type="text" />
+                    </div>
+                    <div class="fields">
+                        <label class="reshipping"><?php echo $this->__('Recipient phone contact') ?></label>
+                        <label class="return"><?php echo $this->__('Sender phone contact') ?></label>
+                        <input id="mr-phone" maxlength="15" name="phone" value="<?php echo $this->getCustomerPhoneContact() ?>" class="required-entry input-text" type="text" />
+                    </div>
+                    <div class="fields">
+                        <label class="reshipping"><?php echo $this->__('Recipient email contact') ?></label>
+                        <label class="return"><?php echo $this->__('Sender email contact') ?></label>
+                        <input id="mr-email" maxlength="70" name="email" value="<?php echo $this->getCustomerEmailContact() ?>" class="required-entry validate-email input-text" type="text" />
+                    </div>
+                </div>
+        
+                <div id="mondialrelayhome_form" class="content">
+                    <h4 class="reshipping"><?php echo $this->__('Re-shipping address:') ?><span class="required">*</span></h4>
+                    <h4 class="return"><?php echo $this->__('Picking location of returning parcel:') ?><span class="required">*</span></h4>
+                    <input id="mr-address1" maxlength="32" name="address1" value="<?php echo $this->getCustomerAddress(1) ?>" class="required-entry input-text" type="text" />
+                    <input id="mr-address2" maxlength="32" name="address2" value="<?php echo $this->getCustomerAddress(2) ?>" class="input-text" type="text" />
+                    <input id="mr-postcode" name="postcode" value="<?php echo $this->getCustomerPostcode() ?>" class="required-entry input-text" type="text" />
+                    <input id="mr-city" maxlength="26" name="city" value="<?php echo $this->getCustomerCity() ?>" class="required-entry input-text" type="text" />
+                    <?php echo $this->getCountrySelectHtml() ?>
+                    <input id="mr-region" name="region" maxlength="32" value="" class="no-display input-text" type="text" />
+                    <select id="mr-region_id" name="region_id" class="select" style="display:none;">
+                        <option value=""><?php echo $this->__('Please select a province...') ?></option>
+                    </select>
+                </div>
+        
+                <div id="mondialrelaypickup_form" class="content">
+                    <input id="mr-pickup" name="pickup-id" value="" type="hidden" />
+                    <input id="mr-pickup-country" name="pickup-country" value="" type="hidden" />
+                    <input id="mr-pickup-address" name="pickup-address" value="" type="hidden" />
+                    <h4 class="reshipping"><?php echo $this->__('Re-shipping pick-up') ?><span class="required">*</span></h4>
+                    <h4 class="return"><?php echo $this->__('Collection pick-up') ?><span class="required">*</span></h4>
+                    <div class="pickup-ajax-loading">
+                        <img src="<?php echo $this->getSkinUrl('images/Man4x_MondialRelay/mondialrelay_ajax_loading_small.gif');?>"/>
+                    </div>
+                    <a id="pickup-selection-link"><?php echo $this->__('Click to select your pick-up location'); ?></a>
+                    <div id="selected-pickup">
+                        <address>
+                            <span class="selected-pickup-address" id="selected-pickup-address"></span>
+                        </address>
+                        <div class="links">
+                            <a class="selected-info-link" id="selected-info-link"><?php echo ($this->__('info')); ?></a>
+                            <a id="pickup-change-link"><?php echo ($this->__('Select another pick-up')); ?></a>
+                        </div>
+                    </div>
+                </div>
+        
+                <div id="mr-checkboxes" class="content">
+                    <input id="mr-label-download" name="download" type="checkbox" checked />
+                    <label class="reshipping" for="mr-label-download"><?php echo $this->__('Download re-shipping label') ?></label>
+                    <label class="return" for="mr-label-download"><?php echo $this->__('Download return shipping label') ?></label><br />
+                    <input class="return" id="reverse-label-email" name="notify" type="checkbox" checked />
+                    <label class="return" for="reverse-label-email"><?php echo $this->__('Email return shipping label to customer') ?></label><br />
+                </div>
+
+                <div id="mr-buttons" style="text-align: center; margin: 10px 0;">
+                    <button class="reshipping mondialrelay" id="reshipping-button" title="<?php echo $this->__('Create re-shipping label') ?>" type="button" class="scalable submit"><span><span><span><?php echo $this->__('Create re-shipping label') ?></span></span></span></button>
+                    <button class="return mondialrelay" id="return-button" title="<?php echo $this->__('Create return label') ?>" type="button" class="scalable submit"><span><span><span><?php echo $this->__('Create return label') ?></span></span></span></button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    // We replace return&reverse form below tracking chart
+    $('shipment_tracking_info').up('.entry-edit').insert({after: $('mr-form').up('.entry-edit').remove()});
+
+    // If shipment is Mondial Relay, we hide create button (that is handled by reshipping form) 
+    // and print button (that is replaced with tracks link)
+    <?php if ($this->isMondialRelayShipment()): ?>
+        var _print = $$('button[onclick*="printLabel"]');
+        if (_print.length) _print[0].hide();
+        var _packaging = $$('button[onclick="packaging.showWindow();"]');
+        if (_packaging.length) _packaging[0].hide();
+    <?php endif; ?>
+   
+    var _mrNumbers = <?php echo $this->getMondialRelayNumbersAsJson() ?>;
+    $('shipment_tracking_info').select('td:nth-of-type(3) a').each(
+        function(e) {
+            var _text = e.childNodes[0].nodeValue;
+            if (_mrNumbers.indexOf(_text) !== -1) {
+                var _a = new Element('a', {'class': 'mondialrelay', onclick: 'getMondialRelayShippingLabelUrl(' + _text + ');'})
+                        .update("<?php echo $this->__('Print Label') ?>");
+                e.insert({after: _a});
+            }
+        }
+    );
+
+    function getMondialRelayShippingLabelUrl(number) {
+        new Ajax.Request('<?php echo $this->getShippingLabelActionUrl() ?>',
+            {   
+            parameters: {
+                numbers: number,
+                store: <?php echo $this->getShipment()->getStoreId() ?>
+            },
+            onSuccess:  function(t) {
+                if (t.responseText.indexOf('http') !== -1) {window.open(t.responseText);}
+                    else {window.alert(t.responseText);}
+            },
+            onFailure:  function() {window.alert("<?php echo $this->__('Network error: unable to get shipping label.')?>");}
+            }
+        );
+    };
+    
+    var updater = new RegionUpdater('mr-country', 'mr-region', 'mr-region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+
+    Man4xMondialRelayReshippingReverseShipmentClass = Class.create();
+    Man4xMondialRelayReshippingReverseShipmentClass.prototype =
+    {
+        <?php
+        /**
+         * Properties
+         * ----------
+         *
+         * psfJs                Pickup selection form JS object
+         * varienForm           Form (instance of varienForm)
+         * form                 Form (instance of Element)
+         * reshippingUrl        Create reshipping URL (mondialrelay/sales_shipping/createReshipping)
+         * returnUrl            Create return URL (mondialrelay/sales_shipping/createReturn)
+         * shippingMethods      Available reverse shipping methods and their config
+         * currentPickup        Current collection pickup data
+         * defaultQueryParams   Default collection pickup query params
+         * weightRatio          Ratio to multiply catalog unit to get gramms
+         * localeMessages       Locale notification messages for form validation
+         */
+        ?>
+        psfJs: null,
+        varienForm: null,
+        form: null,
+        reshippingUrl: "<?php echo $this->getReshippingActionUrl() ?>",
+        returnUrl: "<?php echo $this->getReturnActionUrl() ?>",
+        shippingMethods: <?php echo $this->getShippingMethodsConfigJson() ?>,
+        currentPickup: false,
+        weightRatio: <?php echo $this->getWeightRatio() ?>,
+        defaultQueryParams: <?php echo $this->getDefaultQueryParamsJson() ?>,
+        localeMessages: <?php echo $this->getLocaleMessagesJson() ?>,
+        
+        <?php
+        /**
+         * Initialization
+         *  - hide reverse form
+         *  - set observers for Man4xMondialRelayPickupSelection events
+         *  - if shipment was pickup, initialize reversePickup with this pickup data
+         *  - trigger visual update
+         * 
+         * @param varienForm vf
+         */
+        ?>
+        initialize: function(vf)
+        {
+            this.varienForm = vf;
+            this.form = $(vf.formId).hide();
+            document.observe('man4xpsf:pickup_selection_form_ready', this.onPsfReady.bind(this))
+                    .observe('man4xpsf:pickup_selected', this.onSelectPickup.bind(this));                    
+            this.psfJs = typeof Man4xMondialRelayPickupSelection === 'undefined' ? null : Man4xMondialRelayPickupSelection;
+            if (this.defaultQueryParams.id) {
+                this.updateSelectedPickupBlock(Object.clone(this.defaultQueryParams));
+            }
+            this.onPsfReady();
+        },
+                
+        <?php
+        /**
+         * Handler for pickup selection form readiness (through event "man4xpsf:pickup_selection_form_ready")
+         * This is also manually called at initialization
+         * 
+         * @param Event | undefined e
+         */
+        ?>
+        onPsfReady: function(e)
+        {
+            if (e && !this.psfJs)
+                this.psfJs = e.memo;              
+            if (this.psfJs)
+                this.processForm();
+        },
+                        
+        <?php
+        /**
+         * Process form insert elements required by the module logic:
+         *  - add observer for
+         *      + 'change' in shipping type (reverse / reshipping) and method
+         *      + 'change' in weight field (recalculate value in grams)
+         *      + 'click' on pickup selection link
+         *      + 'click' on submit buttons
+         *  - add "selected-pickup" block (+ links for details / changing choice)
+         *  - update elements depending on current selected reverse method
+         */
+        ?>
+        processForm: function()
+        {              
+            Event.observe($('type-methods'), 'change', this.onShippingTypeChange.bind(this));
+            Event.observe($('return-methods'), 'change', this.onShippingMethodChange.bind(this));
+            Event.observe($('reshipping-methods'), 'change', this.onShippingMethodChange.bind(this));
+            Event.observe($('mr-weight'), 'change', this.updateWeightInGrams.bind(this));
+            Event.observe($('return-button'), 'click', this.createShipment.bind(this));            
+            Event.observe($('reshipping-button'), 'click', this.createShipment.bind(this));
+            Event.observe($('pickup-selection-link'), 'click', this.onSelectPickupClick.bind(this, true));
+            Event.observe($('pickup-change-link'), 'click', this.onSelectPickupClick.bind(this, false));
+            Event.observe($('selected-info-link'), 'click', this.onPickupDetails.bind(this));
+            this.onShippingTypeChange('none');
+            $(this.varienForm.formId).show();
+        },
+              
+        <?php
+        /**
+         * Handler for shipping type change: update form classes and reset return/reshipping listboxes
+         * 
+         * @param bool | Event
+         */
+        ?>
+        onShippingTypeChange: function(e)
+        {
+            this.form.writeAttribute('class', '').addClassName('shipping-type-' + $F('type-methods'));
+            $('return-methods').setValue('none');
+            $('reshipping-methods').setValue('none');
+            this.onShippingMethodChange('none');
+        },
+                
+        <?php
+        /**
+         * Handler for shipping method change: update form classes and reset error messages block
+         * 
+         * @param string | Event
+         */
+        ?>
+        onShippingMethodChange: function(e)
+        {
+            $('mr-message').update();
+            var _method = (typeof e === 'string') ? e : (e ? Event.element(e).getValue().split('_')[0] : 'none');
+            var _classes = this.form.readAttribute('class').split(' ');
+            for (var _i = 0; _i < _classes.length; _i++) {
+                if (_classes[_i].indexOf('shipping-method-') !== -1 && _classes[_i] !== _method) {
+                    this.form.removeClassName(_classes[_i]);
+                }
+            }
+           this.form.addClassName('shipping-method-' + _method);
+        },
+
+        <?php
+        /**
+         * "Choose pickup" Click handle: query pickups with default / current parameters 
+         * 
+         * @param bool | Event
+         * @param bool def
+         */
+        ?>
+        onSelectPickupClick: function(e, def)
+        {
+            var _params = {
+                weight: $F('mr-weight'),
+                postcode: def ? this.defaultQueryParams.postcode : this.currentPickup.postcode,
+                city: def ? this.defaultQueryParams.city : this.currentPickup.city,
+                country: def ? this.defaultQueryParams.country : this.currentPickup.country,
+                pickup: ''
+            };           
+            this.psfJs.query(_params, true);
+        },
+                        
+        <?php
+        /**
+         * Handler for change in weight field
+         * 
+         */
+        ?>
+        updateWeightInGrams: function()
+        {
+            $('mr-weight-grams').update(this.weightRatio * parseFloat($F('mr-weight')));
+        },       
+
+        <?php
+        /**
+         * Get current selected method and mode 
+         * 
+         * @return array 
+         */
+        ?>
+        getCurrentShippingMethod: function()
+        {
+            var _sm = ($F('reshipping-methods') === 'none') ? $F('return-methods') : $F('reshipping-methods');
+            var _p = _sm.split('_');
+            if (_p.length === 1) return {method: 'none', mode: ''};
+            return {method: _p[0], mode: _p[1]}; 
+        },
+        
+        <?php
+        /**
+         * Handler for weight / packages / country change:
+         *  - define available reverse methods for current data
+         * 
+         * param Event e
+         * @return bool 
+         */
+        ?>
+        checkData: function()
+        {
+            $('mr-message').update();
+            var _msgs = [];
+            var _sm = this.getCurrentShippingMethod();
+            if (_sm.method === 'none') return;
+            if (!this.shippingMethods.hasOwnProperty(_sm.mode)) {_msgs.push(this.getLocaleMessage('missing_method'));}
+            else {
+                if (_sm.method.indexOf('pickup') !== -1 && !$F('mr-pickup')) {_msgs.push(this.getLocaleMessage('no_pickup'));}
+                var _gc = this.shippingMethods[_sm.mode];
+                var _c = _sm.method.indexOf('pickup') !== -1 ? this.currentPickup.country : $F('mr-country');
+                if (!(_c in _gc.cs)) {_msgs.push(this.getLocaleMessage('unavailable_country'));}
+                else {
+                    var _cg = _gc.cs[_c];            
+                    if (parseInt($F('mr-packages')) > 1) {
+                        var _mp = ('multipack' in _cg) ? _cg.multipack : _gc.mp;
+                        if (!_mp) {_msgs.push(this.getLocaleMessage('no_multipack'));}
+                    }
+                    var _mw = ('max_weight' in _cg) ? _cg.max_weight : _gc.mw;
+                    if (this.weightRatio * parseInt($F('mr-weight')) > _mw) {
+                        _msgs.push(this.getLocaleMessage('too_heavy', _mw));
+                    }
+                }
+            }
+            if (_msgs.length)
+                $('mr-message').update(_msgs.join('<br/>'));
+            return !Boolean(_msgs.length);
+        },
+        
+        <?php
+        /**
+         * Get locale notification message
+         * If a variable is set as  parameter, replace '###' in msg with it
+         * 
+         * @param string msg (index of this.localeMessages)
+         * @param mixed v
+         * @return string
+         */
+        ?>
+        getLocaleMessage: function(msg, v)
+        {
+            var _msg = this.localeMessages[msg] || 'Undefined message';
+            if (_msg && v) {
+                _msg = _msg.replace('###', String(v));
+            }
+            return _msg;
+        },
+                    
+        <?php
+        /**
+         * Update selected pickup data block and hidden pickup address/country fields, set currentPickup value
+         * 
+         * @param object p
+         */
+        ?>
+        updateSelectedPickupBlock: function(p)
+        {
+            if (p) {
+                $('pickup-selection-link').hide();
+                $('mr-pickup').setValue(p.id);
+                $('mr-pickup-country').setValue(p.country);
+                var _address =  '<span class="name">' + p.name + '</span> &bull; '
+                                + ' <span class="address">' + p.street + '</span>'
+                                + ' <span class="postcode">' + p.postcode + '</span>'
+                                + ' <span class="city">' + p.city + '</span> (' + p.country + ') ';                              
+                $('selected-pickup-address').update(_address);
+                $('mr-pickup-address').setValue(p.name + ' &bull; ' + p.street + ' ' + p.postcode + ' ' + p.city + ' (' + p.country + ')');
+                $('selected-info-link').writeAttribute('data-pid', p.id);
+                $('selected-pickup').addClassName('selected');
+                this.currentPickup = p;
+            }
+            else {
+                $('pickup-selection-link').show();
+            }
+        },
+            
+        <?php
+        /**
+         * Handler for click on a "info link": open pickup selection form in details mode
+         * Note: we set a country parameter in case query hasn't been already made
+         *          * 
+         * @param Event e
+         */
+        ?>
+        onPickupDetails: function(e)
+        {
+            var _pId = e.findElement().readAttribute('data-pid');
+            this.psfJs.open(_pId, true, this.defaultQueryParams.country);
+            if (e)
+                Event.stop(e);
+        },
+                               
+        <?php
+        /**
+         * Handler for click on the return/reshipping button
+         * If reshipping is pickup, we copy pickup address data into post fields before submiting to be available in controller
+         * If "Download shipping label" is unchecked, we remove form's "target" attribute to prevent new tab opening
+         */
+        ?>
+        createShipment: function(e)
+        {
+            if (this.checkData()) {
+                if ($F('reshipping-methods').indexOf('pickup') !== -1) {
+                    $('mr-address1').setValue(this.currentPickup.name);
+                    $('mr-address2').setValue(this.currentPickup.street);
+                    $('mr-postcode').setValue(this.currentPickup.postcode);
+                    $('mr-city').setValue(this.currentPickup.city);
+                    $('mr-country').setValue(this.currentPickup.country);
+                }
+                this.varienForm.submit($F('type-methods') === 'return' ? this.returnUrl : this.reshippingUrl);                
+            }
+            Event.stop(e);
+        },
+                               
+        <?php
+        /**
+         * Handler for pickup selection in the pickup selection form (through the "man4xpsf:pickup_selected" event)
+         * We update selected pickup block
+         * 
+         * @param Event e
+         */
+        ?>
+        onSelectPickup: function(e)
+        {
+            if (e.memo) {               
+                this.updateSelectedPickupBlock(e.memo);
+            }
+        },
+
+        <?php
+        /**
+         * Show / hide please wait block
+         */
+        ?>
+        pleaseWait: function(v)
+        {
+            v ? this.docBody.addClassName('pickup-please-wait') : this.docBody.removeClassName('pickup-please-wait');
+        }
+    }
+
+    Man4xMondialRelayReshippingReverseShipment = new Man4xMondialRelayReshippingReverseShipmentClass(new varienForm('mr-form'));
+    
+//]]>
+</script>

@@ -1,0 +1,18 @@
+<?php if($this->quickshopEnabled()): ?>
+<?php
+$_themeHelper = $this->helper('themeframework');
+$thumbStyle = ($_themeHelper->getConfig('codazon_settings/product_view/more_view_thumb_style')==1)?'vertical':'horizontal';
+?>
+<script type="text/javascript">
+(function($){
+	$(document).ready(function(e) {
+        $('body').cdzQuickshop({
+			curUrl: '<?php echo $this->helper('core/url')->getCurrentUrl() ?>',
+			afterLoad: function(){
+				setUpMediaSlider('#viewmore-slider','<?php echo $thumbStyle ?>');
+			}
+		});
+    });
+})(jQuery)
+</script>
+<?php endif ?>
