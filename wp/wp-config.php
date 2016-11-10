@@ -85,6 +85,12 @@ $table_prefix  = 'wp_';
 define('WP_DEBUG', false);
 /* Multisite */
 define( 'WP_ALLOW_MULTISITE', true );
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', false);
+define('DOMAIN_CURRENT_SITE', 'colony19.agentom.com');
+define('PATH_CURRENT_SITE', '/wp/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
 /* C’est tout, ne touchez pas à ce qui suit ! */
 
 /** Chemin absolu vers le dossier de WordPress. */
