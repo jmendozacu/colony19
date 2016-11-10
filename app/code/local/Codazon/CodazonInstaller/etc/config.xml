@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Codazon_CodazonInstaller>
+			<version>0.1.0</version>
+		</Codazon_CodazonInstaller>
+	</modules>
+	<global>
+		<helpers>
+			<codazoninstaller>
+				<class>Codazon_CodazonInstaller_Helper</class>
+			</codazoninstaller>
+		</helpers>
+		<blocks>
+			<codazoninstaller>
+				<class>Codazon_CodazonInstaller_Block</class>
+			</codazoninstaller>
+		</blocks>
+		<models>
+			<codazoninstaller>
+				<class>Codazon_CodazonInstaller_Model</class>
+				<resourceModel>codazoninstaller_mysql4</resourceModel>
+			</codazoninstaller>
+			<codazoninstaller_mysql4>
+				<class>Codazon_Slideshow_Model_Mysql4</class>
+			</codazoninstaller_mysql4>
+		</models>
+	</global>
+	<admin>
+		<routers>
+			<codazoninstaller>
+				<use>admin</use>
+				<args>
+					<module>Codazon_CodazonInstaller</module>
+					<frontName>admin_codazoninstaller</frontName>
+				</args>
+			</codazoninstaller>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<themeframework module="slideshow">
+				<title>Codazon Theme</title>
+				<sort_order>100</sort_order>
+				<children>
+					<fastest_theme>
+						<title>Fastest Theme</title>
+						<sort_order>0</sort_order>
+						<children>
+							<codazoninstallerbackend module="codazoninstaller">
+								<title>Theme Installer</title>
+								<sort_order>0</sort_order>
+								<action>admin_codazoninstaller/adminhtml_codazoninstallerbackend</action>
+							</codazoninstallerbackend>
+						</children>
+					</fastest_theme>
+				</children>
+			</themeframework>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<themeframework_setting translate="title" module="slideshow">
+							<title>Codazon Theme</title>
+							<sort_order>1000</sort_order>
+							<children>
+								<fastest_theme>
+									<title>Fastest Theme</title>
+									<sort_order>0</sort_order>
+									<children>
+										<codazoninstallerbackend module="codazoninstaller">
+											<title>Theme Installer</title>
+											<sort_order>0</sort_order>
+										</codazoninstallerbackend>
+									</children>
+								</fastest_theme>
+							</children>
+						</themeframework_setting>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<codazoninstaller>
+					<file>codazoninstaller.xml</file>
+				</codazoninstaller>
+			</updates>
+		</layout>
+	</adminhtml>
+</config>

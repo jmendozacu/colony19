@@ -1,0 +1,8 @@
+a:4:{i:0;s:56:"Module "Codazon_Blogfeatures" requires module "AW_Blog".";i:1;s:947:"#0 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/Config.php(849): Mage::throwException('Module "Codazon...')
+#1 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/Config.php(812): Mage_Core_Model_Config->_sortModuleDepends(Array)
+#2 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/Config.php(315): Mage_Core_Model_Config->_loadDeclaredModules()
+#3 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/App.php(425): Mage_Core_Model_Config->loadModules()
+#4 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/App.php(354): Mage_Core_Model_App->_initModules()
+#5 /home/agentom/domains/colony19.agentom.com/public_html/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#6 /home/agentom/domains/colony19.agentom.com/public_html/index.php(83): Mage::run('', 'store')
+#7 {main}";s:3:"url";s:1:"/";s:11:"script_name";s:10:"/index.php";}

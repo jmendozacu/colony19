@@ -1,0 +1,16 @@
+$space-base : 60px;
+@import "../mixins/theme-custom";
+@import "../variable/outdoor-theme.scss";
+
+
+/*Outdoor Homepage*/
+@import "outdoor_content";
+
+/*Outdoor Header*/
+@import "../header/header-05.scss";
+
+/*Outdoor Footer*/
+@import "../footer/footer-05.scss";
+
+/*Color Important*/
+@import "../global";

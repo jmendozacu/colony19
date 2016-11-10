@@ -1,0 +1,116 @@
+.an-subscribe .block-title
+{
+    min-height: 18px;
+    height:auto!important;
+}
+
+.an-subscribe .block-title strong
+{
+    background: url("../images/i_block-subscribe.gif") 0 0 no-repeat;
+    padding-left: 21px;
+}
+.an-subscribe button span
+{
+    background: none repeat scroll 0 0 #618499;
+    border-color: #406A83;
+}
+.an-subscribe .block-content {
+    padding: 5px 10px;
+}
+
+.an-subscribe .block-content label.an-data
+{
+    font-size: 11px;
+    font-weight: bold;
+}
+.an-data {
+    width: 100% !important;
+}
+
+.an-buttons {
+    margin-top: 5px;
+}
+
+.an-subscribe .block-title img
+{
+    position:absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.an-subscribe label.required em {
+    color: #eb340a;
+}
+
+#advancednewsletter-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1000;
+    background-color:#000;
+    -moz-opacity: 0.3;
+    opacity:.30;
+    filter: alpha(opacity=30);
+}
+#advancednewsletter-overlay[id]{ /* IE6 and below Can't See This */
+    position:fixed;
+}
+#an-content{
+    position: fixed;
+    margin: 10px 0;
+    z-index:9999;
+    text-align:left;
+}
+#subscribe-please-wait
+{
+    background:none repeat scroll 0 0 #FFF4E9;
+    border:2px solid #F1AF73;
+    padding:15px 60px;
+    position: fixed;
+    z-index: 9999;
+    color: black;
+}
+
+#subscribe-please-wait img {
+    margin: 0 auto;
+}
+
+/* subscribe on checkout */
+div.awan-checkoutmultisel{
+    width: 100%;
+    padding-top: 15px;
+}
+div.awan-checkoutmultisel label{
+    color: #666666;
+    float: left;
+    font-weight: bold;
+    position: relative;
+    z-index: 0;
+}
+div.awan-checkoutmultisel select{
+    width: 100%;
+}
+
+
+div.awan-checkoutcheckboxes{
+
+    padding-left: 30px;
+    padding-top: 15px;
+    border-color: #D9DDE3;
+    border-style: solid;
+    border-width: 0 1px;
+
+}
+div.awan-checkoutcheckboxes label.an-data{
+    color: #666666;
+    float: left;
+    font-weight: bold;
+    position: relative;
+    z-index: 0;
+}
+
+#advancednewsletter-form {
+    background: #fff;
+}

@@ -1,0 +1,399 @@
+title,identifier,content
+"Fastest Outdoor - Main Content Top - Slideshow",fastest-outdoor-main-content-top-slideshow,"<div class=""slideshow-banner"">
+<div class=""slideshow-main-content"">
+<div class=""slideshow-container"">{{widget type=""slideshow/slideshow"" slideshow_id=""fastest-outdoor-main-slideshow""}}</div>
+</div>
+</div>"
+"Fastest Outdoor - Main Content Top - Three Banners",fastest-outdoor-main-content-top-three-banners,"<div class=""wrapper-ads07 space-base"">
+	<div class=""row"">
+		<div class=""col-sm-8 hidden-xs"">
+			<a href=""#""><img class=""img-responsive cdz-lazy"" src=""{{skin url='images/blank.png'}}"" data-src=""{{media url='wysiwyg/codazon/outdoor/home/cdz_img_01.jpg'}}"" alt=""cdz_img_01.jpg"" /></a>
+		</div>
+		<div class=""col-sm-8 hidden-xs"">
+			<a href=""#""><img class=""img-responsive cdz-lazy"" src=""{{skin url='images/blank.png'}}"" data-src=""{{media url='wysiwyg/codazon/outdoor/home/cdz_img_02.jpg'}}"" alt=""cdz_img_02.jpg"" /></a>
+		</div>
+		<div class=""col-sm-8 hidden-xs"">
+			<a href=""#""><img class=""img-responsive cdz-lazy"" src=""{{skin url='images/blank.png'}}"" data-src=""{{media url='wysiwyg/codazon/outdoor/home/cdz_img_03.jpg'}}"" alt=""cdz_img_03.jpg"" /></a>
+		</div>
+	</div>
+</div>"
+"Fastest Outdoor - Main Area 01 - New Arrivals",fastest-outdoor-mainarea-01-new-arrivals,"<div class=""cdz-products-wrap space-small-base line-style01 cdz-button-show02"">
+<div class=""cdz-block-title"">
+<p class=""b-title h2""><span>New Arrivals</span></p>
+</div>
+<div class=""cdz-block-content"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" filtertype=""1"" orderby=""entity_id"" order=""desc"" limit=""8"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style06.phtml"" display=""name,image,label,price,rating,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""20"" items_1280=""4"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""1"" show_nav=""1"" lazy_load=""1""}}</div>
+</div>"
+"Fastest Outdoor - Main Area 02 - Banners",fastest-outdoor-mainarea-02-banners,"<div class=""space-base hidden-xs"">
+	<a href=""#""><img class=""img-responsive cdz-lazy"" src=""{{skin url='images/blank.png'}}"" data-src=""{{media url='wysiwyg/codazon/outdoor/home/cdz_img_04.jpg'}}"" alt=""cdz_img_04.jpg"" /></a>
+</div>"
+"Fastest Outdoor - Main Area 03 - Product Tabs",fastest-outdoor-mainarea-03-product-tabs,"<div class=""cdz-products-wrap space-small-base line-style01 cdz-button-show02"">
+<div class=""mobile-nav-tab-dropdown visible-xs"" data-target=""#cdz-nav-tabs-products"">Featured</div>
+<ul id=""cdz-nav-tabs-products"" class=""nav nav-tabs"">
+<li class=""active nav-tab-item""><a class=""data switch"" href=""#products-tab-1"" data-toggle=""tab"">Featured Product</a></li>
+<li class="" nav-tab-item""><a class=""data switch"" href=""#products-tab-2"" data-toggle=""tab"">Bikecycle</a></li>
+<li class="" nav-tab-item""><a class=""data switch"" href=""#products-tab-3"" data-toggle=""tab"">Travel Accessories</a></li>
+</ul>
+<div class="" nav-tab-content tab-content"">
+<div id=""products-tab-1"" class=""tab-pane fade in active"" data-role=""content"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" orderby=""name"" order=""asc"" limit=""4"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style06.phtml"" display=""name,image,label,price,rating,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""20"" items_1280=""4"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""1"" show_nav=""1"" uniq_id=""handbag_products_tab_1""}}</div>
+<div id=""products-tab-2"" class=""tab-pane fade"" data-role=""content"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" filtertype=""1"" orderby=""name"" order=""desc"" limit=""4"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style06.phtml"" display=""name,image,label,price,rating,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""20"" items_1280=""4"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""1"" show_nav=""1"" uniq_id=""handbag_products_tab_2""}}</div>
+<div id=""products-tab-3"" class=""tab-pane fade"" data-role=""content"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" orderby=""name"" order=""asc"" limit=""4"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style06.phtml"" display=""name,image,price,rating,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""20"" items_1280=""4"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""1"" show_nav=""1"" uniq_id=""handbag_products_tab_3""}}</div>
+</div>
+</div>"
+"Fastest Outdoor - Main Content Bottom - From Our Blog",fastest-outdoor-main-content-bottom-from-our-blog,"<div class=""cdz-wapper-blog-03 space-base"">{{widget type=""blogfeatures/codazonblogpostlist"" blog_title=""From Our Blog"" categories=""7"" orderby=""created_time"" order=""desc"" post_count=""3"" desc_length=""100"" use_slider=""1"" items_1280=""3"" items_1024=""3"" items_768=""3"" items_480=""2"" items_320=""1"" items_0=""1"" thumb_width=""380"" thumb_height=""280"" template=""codazon_blogfeatures/grid_style_02.phtml"" show_in_front=""post_image,title,short_content,created_time""}}</div>"
+"Fastest Outdoor - Main Content Bottom - Brands",fastest-outdoor-main-content-bottom-brands,"<div class=""cdz-brand-slider-wrap space-base"">
+	<div class=""cdz-brand-slider"">
+		<div class=""cdz-slider cdz-slider-banners cdz-slider-navigation-icon"" data-items-0=""1"" data-items-320=""3"" data-items-480=""4"" data-items-768=""5""  data-items-1024=""7"" data-items-1280=""7"" data-loop=""true"" data-nav=""true"" data-dots=""false"" data-margin=""20"">
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_01.png'}}"" alt=""cdz_brand_01.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_02.png'}}"" alt=""cdz_brand_02.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_03.png'}}"" alt=""cdz_brand_03.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_04.png'}}"" alt=""cdz_brand_04.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_05.png'}}"" alt=""cdz_brand_05.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_06.png'}}"" alt=""cdz_brand_06.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_01.png'}}"" alt=""cdz_brand_01.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_02.png'}}"" alt=""cdz_brand_02.jpg"" /></a></div>
+			<div class=""cdz-banners-item""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/brands/cdz_brand_03.png'}}"" alt=""cdz_brand_03.jpg"" /></a></div>
+		</div>
+	</div>
+</div>"
+"Fastest Outdoor - Footer 01",fastest-outdoor-footer-01,"<div class=""top-footer-wrapper"">
+    <div class=""container"">
+		<div class=""row"">
+			<div class=""col-sm-12 footer-top-ads text-center"">
+				<div class=""newsletter-container"">{{block type=""newsletter/subscribe"" template=""newsletter/subscribe.phtml""}}</div>
+			</div>
+			<div class=""col-sm-12 footer02-social"">
+				<p class=""footer-social""><a href=""#""><span class=""fa fa-facebook"">&nbsp;</span></a> <a href=""#""><span class=""fa fa-twitter"">&nbsp;</span></a> <a href=""#""><span class=""fa fa-pinterest-p"">&nbsp;</span></a> <a href=""#""><span class=""fa fa-google-plus"">&nbsp;</span></a> <a href=""#""><span class=""fa fa-tumblr"">&nbsp;</span></a> <a href=""#""><span class=""fa fa-vimeo"">&nbsp;</span></a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class=""footer-links"">
+	<div class=""container"">
+		<div class=""row"">
+			<div class=""col-sm-6"">
+				<div class=""footer-box"">
+					<p class=""h5 cdz-toggle-title"" data-cdz-toggle=""#footer-content-1"">CORPORATE</p>
+					<ul id=""footer-content-1"" class=""footer-link"">
+						<li><a href=""{{store url='about-us'}}"">About Us</a></li>
+						<li><a href=""{{store url='sales/guest/form/""}}"">Orders and Returns</a></li>
+						<li><a href=""{{store url='contact'}}"">Afiliates</a></li>
+						<li class=""last""><a href=""#"">Terms of Service</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=""col-sm-6"">
+				<div class=""footer-box"">
+					<p class=""h5 cdz-toggle-title"" data-cdz-toggle=""#footer-content-2"">Your Links</p>
+					<ul id=""footer-content-2"" class=""footer-link"">
+						<li><a href=""{{store url='about-us'}}"">Shipping guide</a></li>
+						<li><a href=""{{store url='sales/guest/form/""}}"">Store location</a></li>
+						<li><a href=""{{store url='contact'}}"">Afiliates</a></li>
+						<li class=""last""><a href=""#"">Customer point policy</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=""col-sm-6"">
+				<div class=""footer-box"">
+					<p class=""h5 cdz-toggle-title"" data-cdz-toggle=""#footer-content-3"">Support</p>
+					<ul id=""footer-content-3"" class=""footer-link"">
+						<li><a href=""#"">FAQ</a></li>
+						<li><a href=""{{store url='about-us'}}"">Our services</a></li>
+						<li><a href=""{{store url='contacts'}}"">Contact Us</a></li>
+						<li class=""last""><a href=""#"">Forum Support</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=""col-sm-6 fototer-contact"">
+				<div class=""footer-box"">
+					<p class=""h5 cdz-toggle-title"" data-cdz-toggle=""#footer-content-4"">Store Location</p>
+					<ul id=""footer-content-4"" class=""footer-link"">
+						<li><a><span class=""fa fa-map-marker""></span>200 Lincoln Ave, Salinas, CA 93901</a></li>
+						<li><a><span class=""fa fa-phone"">&nbsp;</span>Phone: 023 32423 223</a></li>
+						<li><a><span class=""fa fa-envelope"">&nbsp;</span>Email: owner@example.com</a></li>
+						<li class=""last""><a><span class=""fa fa-clock-o""></span>Support 24/7</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>"
+"Fastest Outdoor - Footer 02",fastest-outdoor-footer-02,"<div class=""cdz-footer-bottom-payment"">
+	<img src=""{{media url=""wysiwyg/codazon/cdz-footer-payment_3.png""}}"" alt=""Accept Payment"" />
+</div>"
+"Fastest Outdoor - Horizontal Main Menu",fastest-outdoor-horizontal-main-menu,"<div class=""cdz-main-menu cdz-main-menu-horizontal"">
+	<ul class=""groupmenu"">
+		<li class=""level0 level-top parent nav-home"">
+			<span class=""cdz-menu-toggle"">toggle</span><a class=""menu-link"" href=""{{config path=""web/secure/base_url""}}""><span>&nbsp;</span><span>Home demo</span></a>
+			<div class=""groupmenu-drop"">
+<div class=""groupmenu-drop-content groupmenu-6"">
+<div class=""row"">
+<div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=default'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-fashion.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=default'}}"">Fashion</a></p>
+						</div>
+						<div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=drugpharmacy_english'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-drug.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=drugpharmacy_english'}}"">DrugPharmacy</a></p>
+						</div>
+						<div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=handbag_english'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-handbag.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=handbag_english'}}"">HandBag</a></p>
+						</div>
+						<div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=sportswear_english'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-sportswear.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=sportswear_english'}}"">Sportswear</a></p>
+						</div>
+                        <div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=outdoor_english'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-outdoor.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=outdoor_english'}}"">Outdoor</a></p>
+						</div>
+						<div class=""col-sm-4"">
+							<a  href=""{{store direct_url='?___store=fooddrink_english'}}""><img class=""img-responsive"" alt="""" src=""{{media url='wysiwyg/codazon/menu/home-food.jpg'}}"" /></a>
+							<p class='groupdrop-title text-center'><a  href=""{{store direct_url='?___store=fooddrink_english'}}"">Food & Drink</a></p>
+						</div>
+</div>
+</div>
+</div>
+		</li>
+		<li class=""level0 level-top parent"">
+			<span class=""cdz-menu-toggle"">toggle</span><a class=""menu-link"" href=""{{config path=""web/secure/base_url""}}women.html""><span>Women</span></a>
+			<div class=""groupmenu-drop"">
+				<div class=""groupmenu-drop-content groupmenu-6"" style=""padding-bottom: 150px;"">
+					<div class=""groupdrop-banner-pos""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img02.jpg}}"" /></div>
+					<div class=""row"">
+						<div class=""col-sm-6"">
+							<p class=""groupdrop-title"">Categories pages</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Shop &mdash; Catalog</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; Categories</a></li>
+								<li class=""item""><a href=""#"">Product Category</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; width Sidebar</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item item""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<p class=""groupdrop-title"">Collections</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Handbag</a></li>
+								<li class=""item""><a href=""#"">Shoes men &amp; women</a></li>
+								<li class=""item""><a href=""#"">T-Shirt</a></li>
+								<li class=""item""><a href=""#"">Swimswear</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item last""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<p class=""groupdrop-title"">Features</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Social Login</a></li>
+								<li class=""item""><a href=""#"">Product Labels</a></li>
+								<li class=""item""><a href=""#"">Quick View - Quick Shop</a></li>
+								<li class=""item""><a href=""#"">Multi store design</a></li>
+								<li class=""item""><a href=""#"">Powerfull Setting color</a></li>
+								<li class=""item""><a href=""#"">Slideshow Extension</a></li>
+								<li class=""item""><a href=""#"">Filter Product </a></li>
+								<li class=""item last""><a href=""#"">Support RTL</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class=""level0 level-top parent"">
+			<span class=""cdz-menu-toggle"">toggle</span><a class=""menu-link"" href=""{{config path=""web/secure/base_url""}}men.html""><span>Men</span></a>
+			<div class=""groupmenu-drop"">
+				<div class=""groupmenu-drop-content groupmenu-6"">
+					<div class=""row"">
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img03.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Categories pages</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Shop &mdash; Catalog</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; Categories</a></li>
+								<li class=""item""><a href=""#"">Product Category</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; width Sidebar</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item last""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img04.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Collections</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Handbag</a></li>
+								<li class=""item""><a href=""#"">Shoes men &amp; women</a></li>
+								<li class=""item""><a href=""#"">T-Shirt</a></li>
+								<li class=""item""><a href=""#"">Swimswear</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item last""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img05.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Features</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Social Login</a></li>
+								<li class=""item""><a href=""#"">Product Labels</a></li>
+								<li class=""item""><a href=""#"">Quick View - Quick Shop</a></li>
+								<li class=""item""><a href=""#"">Multi store design</a></li>
+								<li class=""item""><a href=""#"">Powerfull Setting color</a></li>
+								<li class=""item""><a href=""#"">Slideshow Extension</a></li>
+								<li class=""item""><a href=""#"">Filter Product </a></li>
+								<li class=""item last""><a href=""#"">Support RTL</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img06.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Features</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Social Login</a></li>
+								<li class=""item""><a href=""#"">Product Labels</a></li>
+								<li class=""item""><a href=""#"">Quick View - Quick Shop</a></li>
+								<li class=""item""><a href=""#"">Multi store design</a></li>
+								<li class=""item""><a href=""#"">Powerfull Setting color</a></li>
+								<li class=""item""><a href=""#"">Slideshow Extension</a></li>
+								<li class=""item""><a href=""#"">Filter Product </a></li>
+								<li class=""item last""><a href=""#"">Support RTL</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class=""level0 level-top parent"">
+			<span class=""cdz-menu-toggle"">toggle</span><a class=""menu-link"" href=""{{config path=""web/secure/base_url""}}accessories.html""><span>Kids</span></a>
+			<div class=""groupmenu-drop"">
+				<div class=""groupmenu-drop-content groupmenu-6"">
+					<div class=""row"">
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img07.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Categories pages</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Shop &mdash; Catalog</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; Categories</a></li>
+								<li class=""item""><a href=""#"">Product Category</a></li>
+								<li class=""item""><a href=""#"">Shop &mdash; width Sidebar</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item last""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img08.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Collections</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Handbag</a></li>
+								<li class=""item""><a href=""#"">Shoes men &amp; women</a></li>
+								<li class=""item""><a href=""#"">T-Shirt</a></li>
+								<li class=""item""><a href=""#"">Swimswear</a></li>
+								<li class=""item""><a href=""#"">Shopping Cart</a></li>
+								<li class=""item""><a href=""#"">Checkout</a></li>
+								<li class=""item""><a href=""#"">Wishlist</a></li>
+								<li class=""item last""><a href=""#"">Order Tracking</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner space-s""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img09.jpg}}"" /></a></div>
+							<p class=""groupdrop-title"">Features</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Social Login</a></li>
+								<li class=""item""><a href=""#"">Product Labels</a></li>
+								<li class=""item""><a href=""#"">Quick View - Quick Shop</a></li>
+								<li class=""item""><a href=""#"">Multi store design</a></li>
+								<li class=""item""><a href=""#"">Powerfull Setting color</a></li>
+								<li class=""item""><a href=""#"">Slideshow Extension</a></li>
+								<li class=""item""><a href=""#"">Filter Product </a></li>
+								<li class=""item last""><a href=""#"">Support RTL</a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-6"">
+							<div class=""groupdrop-banner""><a href=""#""><img class=""img-responsive"" alt="""" src=""{{media url=""wysiwyg/codazon/menu/menu-img10.jpg}}"" /></a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class=""level0 level-top parent"">
+			<a class=""menu-link"" href=""#""><span>Running</span></a>
+			<div class=""groupmenu-drop"">
+				<div class=""groupmenu-drop-content groupmenu-1"">
+					<div class=""row"">
+						<div class=""col-sm-24"">
+							<p class=""groupdrop-title"">Sub page</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""#"">Login Page</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}customer/account/create/"">Register page</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}customer/account/login/"">Forgot Password</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}about-us"">About us </a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}contacts"">Contact us</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}privacy-policy-cookie-restriction-mode"">Privacy Policy</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}wishlist"">Wishlist</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class=""level0 level-top parent"">
+			<a class=""menu-link"" href=""#""><span>Category-Product </span></a>
+			<div class=""groupmenu-drop"">
+				<div class=""groupmenu-drop-content groupmenu-2"">
+					<div class=""row"">
+						<div class=""col-sm-12"">
+							<p class=""groupdrop-title"">Category page</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}men.html"">Categories One Column</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}women.html"">Categories Two Column</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}accessories.html"">Categories Three Column</a></li>
+								<li class=""item last""><a href=""{{config path=""web/secure/base_url""}}men.html"">Demo New Filter product </a></li>
+							</ul>
+						</div>
+						<div class=""col-sm-12"">
+							<p class=""groupdrop-title"">Product page</p>
+							<ul class=""groupdrop-link"">
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}aviator-sunglasses.html"">Simple Product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}"">Configurable product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}pearl-dress-lady.html"">Group Product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}fashion-on-and-one-1-year.html"">Ticket - Virtual Product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}colorswatch-configurable-product.html"">Demo Color Swatch</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}colorswatch-configurable-product.html"">Product One Column</a></li>
+								<li class=""item last""><a href=""{{config path=""web/secure/base_url""}}product-page-2-column-right.html"">Product Two Column</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li class=""level0 level-top last""><a class=""menu-link"" href=""{{config path=""web/secure/base_url""}}blog""><span>Our Blog</span></a></li>
+	</ul>
+</div>"
+"Fastest Outdoor - Popup Area - Newsletter Popup",fastest-outdoor-popup-newsletter-popup,"<div class=""cdz-popup-newsletter"">
+	<div class=""cdz-popup-newsletter-left"">
+		<div class=""popup-banner"">
+			<div class=""banner""><a href=""#""><img class=""img-responsive"" src=""{{media url='wysiwyg/codazon/outdoor/home/banner-newsletter.jpg'}}"" alt=""Banner 01"" /></a></div>
+		</div>
+	</div>
+	<div class=""cdz-popup-newsletter-right"">
+		<div class=""popup-title"">
+			<h3 class=""text-uppercase""><span>Sign up Newsletter</span></h3>
+		</div>
+		<div class=""popup-content"">
+			<div class=""popup-content-ads"">
+				<p class=""popup-content-title h3"">Join YourStore's squad for 20% off</p>
+				<p class=""popup-content-desc"">and get all the latest news, trends and offs and offers straight to your inbox. Or get 15% off using code SQUAD15</p>
+				<div class=""popup-content-newsletter"">{{block type=""newsletter/subscribe"" template=""newsletter/subscribe.phtml"" suffix=""_popup""}}</div>
+				<p class=""popup-content-small"">1 UK only; 2. Offar expiras 23:59(GMT) 10/02/16; 3.</p>
+			</div>
+		</div>
+	</div>
+</div>"

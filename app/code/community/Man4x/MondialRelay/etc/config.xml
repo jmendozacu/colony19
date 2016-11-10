@@ -1,0 +1,249 @@
+﻿<?xml version="1.0"?>
+<config>
+    <modules>
+        <Man4x_MondialRelay>
+            <version>2.1.5</version>	
+            <depends>
+                <Mage_Adminhtml />
+                <Mage_Shipping />
+            </depends>
+        </Man4x_MondialRelay>
+    </modules>
+    <global>
+        <models>
+            <mondialrelay>
+                <class>Man4x_MondialRelay_Model</class>
+            </mondialrelay>
+        </models>
+        <blocks>
+            <mondialrelay>
+                <class>Man4x_MondialRelay_Block</class>
+            </mondialrelay>
+        </blocks>
+        <helpers>
+            <mondialrelay>
+                <class>Man4x_MondialRelay_Helper</class>
+            </mondialrelay>
+        </helpers>
+        <template>
+            <email>
+                <carriers_mondialrelay_reverse_template translate="label" module="mondialrelay">
+                    <label>Reverse Shipment</label>
+                    <file>Man4x_MondialRelay/reverse_shipment.html</file>
+                    <type>html</type>
+                </carriers_mondialrelay_reverse_template>
+            </email>
+        </template>
+        <sales>
+            <shipping>
+                <carriers>
+                    <mondialrelay>
+                        <class>Man4x_MondialRelay_Model_Carrier_Abstract</class>
+                    </mondialrelay>                    
+                    <mondialrelay_pickup>
+                        <class>Man4x_MondialRelay_Model_Carrier_Pickup</class>
+                    </mondialrelay_pickup>                    
+                    <mondialrelay_home>
+                        <class>Man4x_MondialRelay_Model_Carrier_Home</class>
+                    </mondialrelay_home>                    
+                </carriers>
+            </shipping>            
+        </sales>
+        <events>
+            <sales_convert_quote_address_to_order>
+                <observers>
+                    <update_order_with_pickup_address>
+                        <type>singleton</type>
+                        <class>Man4x_MondialRelay_Model_Observer</class>
+                        <method>replaceShippingAddress</method>
+                    </update_order_with_pickup_address>
+                </observers>
+            </sales_convert_quote_address_to_order>
+            <!--
+            <checkout_controller_onepage_save_shipping_method>
+                <observers>
+                    <register_mondialrelay_pickup_code>
+                        <type>singleton</type>
+                        <class>Man4x_MondialRelay_Model_Observer</class>
+                        <method>registerPickup</method>
+                    </register_mondialrelay_pickup_code>                    
+                </observers>
+            </checkout_controller_onepage_save_shipping_method>
+            -->
+        </events>
+    </global>
+    <frontend>
+        <routers>
+            <mondialrelay>
+                <use>standard</use>
+                <args>
+                    <module>Man4x_MondialRelay</module>
+                    <frontName>mondialrelay</frontName>
+                </args>
+            </mondialrelay>
+        </routers>
+        <layout>
+            <updates>
+                <mondialrelay>
+                    <file>Man4x_MondialRelay.xml</file>
+                </mondialrelay>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Man4x_MondialRelay>
+                    <files>
+                        <default>Man4x_MondialRelay.csv</default>
+                    </files>
+                </Man4x_MondialRelay>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <!-- Pre SUPEE-6788 route 
+            <mondialrelay>
+                <use>admin</use>
+                <args>
+                    <module>Man4x_MondialRelay</module>
+                    <frontName>mondialrelay</frontName>
+                </args>
+            </mondialrelay>
+            -->
+            
+            <!-- update due to Magento patch SUPEE-6788
+            cf https://info2.magento.com/rs/318-XBX-392/images/SUPEE-6788-Technical Details.pdf
+            -->           
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Man4x_MondialRelay after="Mage_Adminhtml">Man4x_MondialRelay_Adminhtml</Man4x_MondialRelay>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <events>
+            <sales_order_shipment_track_save_after>
+                <observers>
+                    <register_mondialrelay_track_number>
+                        <type>singleton</type>
+                        <class>Man4x_MondialRelay_Model_Observer</class>
+                        <method>registerMondialRelayTrackNumber</method>
+                    </register_mondialrelay_track_number>
+                </observers>
+            </sales_order_shipment_track_save_after>          
+            <!--
+            <sales_order_shipment_save_before>
+                <observers>
+                    <add_mondialrelay_shipping_code>
+                        <type>singleton</type>
+                        <class>Man4x_MondialRelay_Model_Observer</class>
+                        <method>registerShipment</method>
+                    </add_mondialrelay_shipping_code>
+                </observers>
+            </sales_order_shipment_save_before>
+            -->
+        </events>
+        <layout>
+            <updates>
+                <mondialrelay>
+                    <file>Man4x_MondialRelay.xml</file>
+                </mondialrelay>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Man4x_MondialRelay>
+                    <files>
+                        <default>Man4x_MondialRelay.csv</default>
+                    </files>
+                </Man4x_MondialRelay>
+            </modules>
+        </translate> 
+    </adminhtml>
+    <default>
+        <carriers>
+            <mondialrelay>
+                <active>0</active>
+                <model>Man4x_MondialRelay_Model_Carrier_Abstract</model>
+                <title>Mondial Relay</title>
+                <!--<company>BDTEST13</company>-->
+                <!--<company_ref_ws>BD</company_ref_ws>-->
+                <key_ws>PrivateK</key_ws>
+                <url_ws>http://www.mondialrelay.fr/WebService/Web_Services.asmx?WSDL</url_ws>
+                <company_ref_tracking>BDTEST1311</company_ref_tracking>
+                <!--<key_tracking>PrivateK</key_tracking>-->
+                <url_tracking>http://www.mondialrelay.fr/lg_fr/espaces/url/popup_exp_details.aspx?cmrq=</url_tracking>
+                <!--<auto_ws>1</auto_ws>-->
+                <!--<collection_mode>CCC</collection_mode>-->
+                <display_weight>0</display_weight>
+                <label_size>A4</label_size>
+                <!--
+                <sender_address>EXPEDITEUR
+Adresse
+Adresse (complément)
+Adresse (complément)</sender_address>
+                <sender_postcode>75000</sender_postcode>
+                <sender_city>Paris</sender_city>
+                <sender_country>FR</sender_country>
+                <sender_phone>0123456789</sender_phone>
+                <sender_mobile>0612345678</sender_mobile>
+                <sender_email>test@test.com</sender_email>
+                -->
+                <rate_condition>package_weight</rate_condition>
+                <catalog_weight_unit>kg</catalog_weight_unit>
+                <!-- <max_weight_per_box>0</max_weight_per_box>-->
+                <!--<sendemail>1</sendemail>-->
+                <allowed_reverse_modes>mondialrelaypickup_REL,mondialrelayhome_CDR,mondialrelayhome_CDS</allowed_reverse_modes>
+                <return_to_origin>1</return_to_origin>
+                <reverse_template>carriers_mondialrelay_reverse_template</reverse_template>
+                <debug_mode>1</debug_mode>
+            </mondialrelay>
+            <mondialrelaypickup>
+                <active>1</active>
+                <allowed_modes>24R,24L,24X,DRI</allowed_modes>
+                <table_rate><![CDATA[FR;*;*;4.5<0.5,5.2<1,5.9<2,6.7<3,7.9<5,10.4<7,12.6<10,15.2<15,18.9<30
+BE;*;*;4.5<0.5,5.2<1,5.9<2,6.7<3,7.9<5,10.4<7,12.6<10,15.2<15,18.9<30
+LU;*;*;4.5<0.5,5.2<1,5.9<2,6.7<3,7.9<5,10.4<7,12.6<10,15.2<15,18.9<30
+ES;*;*;8.4<0.5,9<1,9.5<2,10.5<3,12.8<5,15.2<7,17.4<10,22.8<15,27.5<30]]></table_rate>
+                <franco>0</franco>
+                <model>Man4x_MondialRelay_Model_Carrier_Pickup</model>
+                <carrier_title>Mondial Relay - Livraison en relais</carrier_title>
+                <!--<active_colisdrive>1</active_colisdrive>-->
+                <title>Livraison dans le Points Relais® de votre choix</title>
+                <desc>Une fois votre colis arrivé dans votre Points Relais®, vous êtes averti(e) par SMS ou par email et disposez de 10 jours pour le récupérer.</desc>
+                <map_selection>1</map_selection>
+                <api_key>AIzaSyDnW7R2m60HChHBSuYaWB0KGzAR7HUwJTA</api_key>
+                <relay_count>10</relay_count>
+            </mondialrelaypickup>
+            <mondialrelayhome>
+                <active>1</active>
+                <allowed_modes>HOM,LD1,LD2</allowed_modes>
+                <table_rate><![CDATA[DE;*;*;9.5<1,10.2<2,10.9<3,12.3<5,13.7<7,15.8<10,19.3<15,29.8<30
+BE;*;*;9.5<1,10.2<2,10.9<3,12.3<5,13.7<7,15.8<10,19.3<15,29.8<30
+LU;*;*;9.5<1,10.2<2,10.9<3,12.3<5,13.7<7,15.8<10,19.3<15,29.8<30
+GB;*;*;10.2<1,11.3<2,12.4<3,14.6<5,16.08<7,20.1<10,25.6<15,36.6<30
+ES;*;*;10.2<1,11.3<2,12.4<3,14.6<5,16.08<7,20.1<10,25.6<15,36.6<30
+AT;*;*;11.2<1,12.3<2,13.4<3,15.6<5,17.8<7,21.1<10,26.6<15,37.6<30
+IT;*;*;11.2<1,12.3<2,13.4<3,15.6<5,17.8<7,21.1<10,26.6<15,37.6<30
+PT;*;*;11.2<1,12.3<2,13.4<3,15.6<5,17.8<7,21.1<10,26.6<15,37.6<30
+FR;*;*;9.99<30]]></table_rate>
+                <franco>0</franco>
+                <model>Man4x_MondialRelay_Model_Carrier_Home</model>
+                <carrier_title>Mondial Relay - Livraison à domicile</carrier_title>
+                <title>Sans rendez-vous</title>
+                <desc>Livraison sur le pas de votre porte/immeuble.</desc>
+                <!--<active_comfort>1</active_comfort>-->
+                <!--<title_comfort>Formule confort</title_comfort>-->
+                <title_ld>Livraison sur rendez-vous</title_ld>
+                <desc_ld>Livraison sur le pas de votre porte/immeuble.</desc_ld>
+                <!--<desc_comfort>Livraison sur rendez-vous, sur le pas de votre porte/immeuble.</desc_comfort>-->
+                <!--<active_premium>1</active_premium>-->
+                <!--<title_premium>Formule "gros colis"</title_premium>-->
+                <!--<desc_premium>Livraison sur rendez-vous, sur le pas de votre porte/immeuble.</desc_premium>-->
+           </mondialrelayhome>
+        </carriers>
+    </default>
+</config>

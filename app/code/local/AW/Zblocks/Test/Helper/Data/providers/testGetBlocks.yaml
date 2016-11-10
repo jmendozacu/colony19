@@ -1,0 +1,89 @@
+-
+  - test_id: test_1
+    product_id: 0
+    category_id: 2
+    category_path:
+      - 1
+      - 2
+    block_position: catalog-menu-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_2
+    product_id: 0
+    category_id: 3
+    category_path:
+      - 1
+      - 2
+      - 3
+    block_position: catalog-menu-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_3
+    product_id: 0
+    category_id: 1
+    category_path:
+      - 1
+    block_position: catalog-menu-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_4
+    product_id: 0
+    category_id: 5
+    category_path:
+      - 1
+      - 5
+    block_position: catalog-menu-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_5
+    product_id: 0
+    category_id: 2
+    category_path:
+      - 1
+      - 2
+    block_position: catalog-sidebar-right-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_6
+    product_id: 0
+    category_id: 3
+    category_path:
+      - 1
+      - 2
+      - 3
+    block_position: catalog-sidebar-right-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_7
+    product_id: 2
+    category_id: 5
+    category_path:
+      - 1
+      - 5
+    block_position: product-sidebar-right-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1
+-
+  - test_id: test_8
+    product_id: 3
+    category_id: 2
+    category_path:
+      - 1
+      - 2
+    block_position: product-sidebar-right-top
+    custom_position:
+    customer_group_id: 1
+    website_id: 1

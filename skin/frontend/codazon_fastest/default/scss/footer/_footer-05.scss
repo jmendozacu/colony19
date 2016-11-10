@@ -1,0 +1,73 @@
+.page-footer.cdz-footer-style-05{
+	background-image: url(../images/bg-footer.jpg);
+	background-position: center top;
+	background-repeat: no-repeat;
+	.top-footer-wrapper{
+		padding:20px 0;
+		.block-subscribe{
+			.block-title{display:none;}
+			.block-content{
+				padding:0;
+				position:relative;
+				.input-box{padding:0;}
+				input{
+					border-width:1px;
+					padding-right:80px;
+					text-transform: none;
+					text-transform: uppercase;
+					background:transparent;
+					.cdz-rtl &{
+						padding-right:30px;
+						padding-left:80px;
+					}
+				}
+				.actions{
+					position:absolute;
+					right:0;
+					top:0;
+					margin:0;
+					.cdz-rtl &{
+						left:0;
+						right:auto;
+					}
+					button.button{margin:0; padding:10px 15px;border-width:1px;}
+				}
+			}
+		}
+		.footer-social{
+			padding:0;
+			margin:0 -10px;
+			margin-top:10px;
+			a{
+				margin-bottom:10px;
+				float:right;
+				.cdz-rtl &{
+					float:left;
+					margin-left:0;
+					margin-right:10px;
+				}
+			}
+		}
+	}
+	.footer-links{
+		padding:55px 0px 20px;
+		p.h5{margin-bottom:22px;}
+		ul li{
+			border-top:1px solid;
+			&:first-child{
+				border-top:none;
+			}
+		}
+	}
+	.bottom-footer-wrapper{
+		border:none;
+		padding:30px 0 10px
+	}
+}
+
+@media (max-width: 767px){
+	.footer02-social{text-align:center;}
+	.page-footer.cdz-footer-style-05 .top-footer-wrapper .footer-social{
+		display:inline-block
+	}
+}

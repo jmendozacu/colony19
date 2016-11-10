@@ -1,0 +1,4 @@
+block_name,is_allowed
+core/template,1
+catalog/product_new,1
+newsletter/subscribe,1

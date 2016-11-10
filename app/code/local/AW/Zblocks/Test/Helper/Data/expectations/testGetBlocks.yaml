@@ -1,0 +1,16 @@
+test_1:
+  amount: 1
+test_2:
+  amount: 1
+test_3:
+  amount: 0
+test_4:
+  amount: 0
+test_5:
+  amount: 1
+test_6:
+  amount: 0
+test_7:
+  amount: 1
+test_8:
+  amount: 0

@@ -1,0 +1,660 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <carriers>
+            <groups>
+                <mondialrelay translate="label" module="mondialrelay">
+                    <label>Mondial Relay: Generic Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>888</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <module_info translate="label">
+                            <label>Module information</label>
+                            <frontend_model>mondialrelay/adminhtml_system_config_form_field_informations</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>                            
+                        </module_info>
+                        <!--
+                        Deprecated after 2.0: retrievable from company_ref_tracking
+                        <company translate="label comment">
+                            <label>Company Name</label>
+                        </company>                       
+                        <Deprecated after 2.0: unused
+                        <company_ref_ws translate="label comment">
+                            <label>Company Reference (Web service)</label>
+                        </company_ref_ws>
+                        -->
+                        <company_ref_tracking translate="label comment">
+                            <label>Company Reference</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>10 chars max - Provided by Mondial Relay</comment>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </company_ref_tracking>
+                        <key_ws translate="label comment">
+                            <label>Private key</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>8 chars max - Provided by Mondial Relay</comment>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </key_ws>
+                        <url_ws translate="label comment">
+                            <label>Web Service URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Provided by Mondial Relay</comment>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </url_ws>
+                        <!--
+                        Deprecated after 2.0: replaced with key_ws
+                        <key_tracking translate="label comment">
+                            <label>Key (Tracking)</label>
+                        </key_tracking>
+                        -->                 
+                        <url_tracking translate="label comment">
+                            <label>Tracking URL</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Provided by Mondial Relay</comment>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </url_tracking>
+                        <!--
+                        Deprecated from 2.0: confirmation box at new shipment                       
+                        <auto_ws translate="label">
+                            <label>Web service registration for single shipment</label>
+                        </auto_ws> 
+                        -->
+                        <!--                      
+                        Deprecated from 2.0: always 'CCC' for shipments (but not for returns)
+                        <collection_mode translate="label">
+                            <label>Parcels collection mode</label>
+                        </collection_mode>
+                        <collection_pickup translate="label">
+                            <label>Collection pick-up</label>
+                        </collection_pickup>
+                        -->
+                        <label_size translate="label">
+                            <label>Label size</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mondialrelay/system_config_source_labelsize</source_model>
+                            <sort_order>188</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </label_size>
+                        <display_weight translate="label">
+                            <label>Add order weight to shipping method title</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_weight>
+                        <!--
+                        Deprecated after 2.0: Replace with data available at Sales > Shipping settings                       
+                        <sender_address translate="label">
+                            <label>Sender Address</label>
+                        </sender_address>
+                        <sender_postcode translate="label">
+                            <label>Sender Post Code</label>
+                        </sender_postcode>
+                        <sender_city translate="label">
+                            <label>Sender City</label>
+                        </sender_city>
+                        <sender_country translate="label">
+                            <label>Sender Country Code</label>
+                        </sender_country>
+                        <sender_phone translate="label">
+                            <label>Sender Phone</label>
+                        </sender_phone>
+                        <sender_mobile translate="label">
+                            <label>Sender Mobile</label>
+                        </sender_mobile>
+                        <sender_email translate="label">
+                            <label>Sender E-mail</label>
+                        </sender_email>
+                        -->
+                        <rate_condition translate="label">
+                            <label>Rate Condition</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mondialrelay/system_config_source_condition</source_model>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rate_condition>
+                        <catalog_weight_unit translate="label">
+                            <label>Catalog Weight Unit</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mondialrelay/system_config_source_weightunit</source_model>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </catalog_weight_unit>
+                        <!--
+                        Deprecated from 2.0: packages can now be manually set when shipping
+                        <max_weight_per_box translate="label">
+                            <label>Maximal Weight per Box for Light Shipments</label>
+                        </max_weight_per_box>
+                        -->
+                        <!--
+                        Deprecated from 2.0: replaced with a massaction checkbox
+                        <sendemail translate="label">
+                            <label>Send Email when Mass Shipping</label>
+                        </sendemail>
+                        -->
+                        <allowed_reverse_modes>
+                            <label>Allowed return modes</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>500</sort_order>
+                            <source_model>mondialrelay/system_config_source_reversemodes</source_model>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                                                              
+                        </allowed_reverse_modes>                        
+                        <return_to_origin translate="label comment">
+                            <label>Returns are shipped to origin?</label>
+                            <comment>As set in Configuration > Sales > Shipping settings > Origin</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>600</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_to_origin>
+                        <return_recipient translate="label comment">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return recipient</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Max. 32 chars</comment>
+                            <sort_order>605</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_recipient>
+                        <return_address1 translate="label comment">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return recipient address</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Max. 32 chars</comment>
+                            <sort_order>610</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_address1>
+                        <return_address2 translate="label comment">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return recipient address</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Max. 32 chars</comment>
+                            <sort_order>612</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_address2>
+                        <return_postcode translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return postcode</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>620</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_postcode>
+                        <return_city translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return city</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>630</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_city>
+                        <country_id translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return country</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>countries</frontend_class>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <sort_order>640</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </country_id>
+                        <region_id translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return region/state</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>645</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </region_id>
+                        <return_phone translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return contact phone</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>650</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_phone>
+                        <return_email translate="label">
+                            <depends>
+                                <return_to_origin>0</return_to_origin>
+                            </depends>
+                            <label>Return contact email</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-email</validate>
+                            <sort_order>660</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </return_email>
+                        <reverse_template translate="label">
+                            <label>Return Shipment Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </reverse_template>
+                        <debug_mode translate="label comment">
+                            <label>Debug Mode</label>
+                            <comment>If enabled, log file is located at /var/log/man4x_mondialrelay_debug.log</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>999</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debug_mode>
+                    </fields>
+                </mondialrelay>                    
+                <mondialrelaypickup translate="label" module="mondialrelay">
+                    <label>Mondial Relay: Pickup Delivery</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>889</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label" module="mondialrelay">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                                  
+                        </active>
+                        <allowed_modes translate="label" module="mondialrelay">
+                            <label>Allowed modes</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>15</sort_order>
+                            <source_model>mondialrelay/system_config_source_pickupmodes</source_model>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                                  
+                        </allowed_modes>
+                        <!--
+                        Deprecated after 2.0: use "Mondial Relay" for all (as set in <default>)
+                        <title translate="label">
+                            <label>Carrier Title</label>
+                        </title>
+                        -->
+                        <table_rate translate="label comment">
+                            <label>Rates Schedule</label>
+                            <frontend_type>textarea</frontend_type>
+                            <backend_model>mondialrelay/system_config_validation_tablerate</backend_model>
+                            <comment>Shipping rates for pickup deliveries</comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                     
+                        </table_rate>
+                        <franco translate="label comment">
+                            <label>Order Total for Free Shipping</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </franco>
+                        <!--
+                        Deprecated from 2.0: colisdrive mode is now activated through allowed_modes
+                        <active_colisdrive translate="label">
+                            <label>Drive-Pickup Delivery Enabled</label>
+                        </active_colisdrive>
+                        -->
+                        <methodtitle translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methodtitle>
+                        <desc translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </desc>
+                        <xitems translate="label comment">
+                            <label>Banned Items</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated ID values</comment>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                      
+                        </xitems>
+                        <map_selection translate="label">
+                            <label>Pick-up selection on map</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                            
+                        </map_selection>
+                        <relay_count translate="label comment">
+                            <label>Number of pickup spots displayed on request</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Minimum: 1 - Maximum: 10</comment>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>405</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </relay_count>
+                        <!--
+                        Deprecated after 2.0: unused in Mondial Relay shipping model classes
+                        <allowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                        </allowspecific>
+                        -->
+                        <specificcountry translate="label comment">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>910</sort_order>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <source_model>mondialrelay/system_config_source_pickupcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show Method If Not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>920</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showmethod>
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>930</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>940</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mondialrelaypickup>
+                <mondialrelayhome translate="label" module="mondialrelay">
+                    <label>Mondial Relay: Home Delivery</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>890</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label" module="mondialrelay">
+                            <label>Active</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                                  
+                        </active>
+                        <allowed_modes translate="label" module="mondialrelay">
+                            <label>Allowed modes</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>15</sort_order>
+                            <source_model>mondialrelay/system_config_source_homemodes</source_model>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                                                  
+                        </allowed_modes>
+                        <!--
+                        Deprecated after 2.0: use "Mondial Relay" for all (as set in <default>)
+                        <title translate="label">
+                            <label>Carrier Title</label>
+                        </title>
+                        -->
+                        <table_rate translate="label comment">
+                            <label>Rates Schedule</label>
+                            <frontend_type>textarea</frontend_type>
+                            <backend_model>mondialrelay/system_config_validation_tablerate</backend_model>
+                            <comment>Shipping rates for pickup deliveries</comment>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                     
+                        </table_rate>
+                        <franco translate="label comment">
+                            <label>Order Total for Free Shipping</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </franco>
+                        <methodtitle translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>205</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methodtitle>
+                        <desc translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </desc>
+                        <!--
+                        Deprecated after 2.0: franco can be set through table rate or cart rule
+                        <franco translate="label comment">
+                            <label>Order Total for Free Shipping</label>
+                        </franco>
+                        -->
+                        <xitems translate="label comment">
+                            <label>Banned Items</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated ID values</comment>
+                            <sort_order>230</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                      
+                        </xitems>
+                        <!--
+                        Deprecated after 2.0: see allowed_modes
+                        <active_comfort translate="label comment">
+                            <label>Comfort Method Enabled</label>
+                        </active_comfort>
+                        -->                       
+                        <!-- 
+                        Deprecated after 2.0: replaced with XXX_ld parameters
+                        <methodtitle_comfort translate="label">
+                            <label>Title</label>
+                        </methodtitle_comfort>
+                        <desc_comfort translate="label">
+                            <label>Description</label>
+                        </desc_comfort>
+                        <extrafee_comfort translate="label comment">
+                            <label>Extra Fee</label>
+                        </extrafee_comfort>
+                        -->                        
+                        <methodtitle_ld translate="label">
+                            <label>Title for scheduled home delivery</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>305</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methodtitle_ld>
+                        <desc_ld translate="label">
+                            <label>Description for scheduled home delivery</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                     
+                        </desc_ld>
+                        <extrafee_ld translate="label comment">
+                            <label>Extra fee for scheduled home delivery</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Enter an extra fee or percentage. Leave 0 to use basic table rate</comment>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                     
+                        </extrafee_ld>
+                        <!--
+                        Deprecated after 2.0: replaced with xitems_ld
+                        <xitems_comfort translate="label comment">
+                            <label>Banned Items</label>
+                        </xitems_comfort>
+                        -->
+                        <xitems_ld translate="label comment">
+                            <label>Banned items for scheduled home delivery</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated ID values</comment>
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                      
+                        </xitems_ld>
+                        <!--
+                        Deprecated after 2.0: replaced with XXX_ld
+                        <active_premium translate="label comment">
+                            <label>Premium Method Enabled</label>
+                        </active_premium>
+                        <methodtitle_premium translate="label">
+                            <label>Title</label>
+                        </methodtitle_premium>
+                        <desc_premium translate="label">
+                            <label>Description</label>
+                        </desc_premium>
+                        <extrafee_premium translate="label comment">
+                            <label>Extra Fee</label>
+                        </extrafee_premium>
+                        <franco_premium translate="label comment">
+                            <label>Order Total for Free Shipping</label>
+                        </franco_premium>
+                        <xitems_premium translate="label comment">
+                            <label>Banned Items</label>
+                        </xitems_premium>
+                        -->
+                        <!--
+                        Deprecated from 2.0: unused in Mondial Relay shipping model subclasses
+                        <allowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                        </allowspecific>
+                        -->
+                        <specificcountry translate="label comment">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>510</sort_order>
+                            <comment>Check your Mondial Relay contract</comment>
+                            <source_model>mondialrelay/system_config_source_homecountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show Method If Not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showmethod>
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>530</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <sort_order translate="label">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>540</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mondialrelayhome>
+            </groups>
+        </carriers>
+    </sections>
+</config>

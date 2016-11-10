@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2016 Activo Extensions (http://extensions.activo.com)
+ * @license     Commercial
+ */
+-->
+<config>
+    <tabs>
+        <activo translate="label">
+            <label>Activo Extensions</label>
+            <sort_order>101</sort_order>
+        </activo>
+    </tabs>
+    <sections>
+        <activo_advancedsearch translate="label" module="advancedsearch">
+            <class>separator-top</class>
+            <label>Advanced Search</label>
+            <tab>activo</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>53</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <autocomplete translate="label">
+                    <label>Search Auto Complete (Auto complete while typing in frontend)</label>
+                    <sort_order>110</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Auto Complete?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Select Yes if you wish to show suggested search results to the user as they type.</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <maxresults translate="label">
+                            <label>Max Auto Complete Results</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The maximum number of results showing as Auto Complete in front end.</comment>
+                        </maxresults>
+                        <maxwords translate="label">
+                            <label>Max Words in Phrases</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The maximum number of words in a phrase. This affects indexing and what auto complete phrases show up in front end.</comment>
+                        </maxwords>
+                        <instockonly translate="label">
+                            <label>In Stock Only?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Select Yes if you wish to restrict index to in-stock products.</comment>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </instockonly>
+                        <attributes translate="label">
+                            <label>Attributes to Index</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>40</sort_order>
+                            <source_model>advancedsearch/adminhtml_system_source_searchableattributes</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </attributes>
+                        <stopwords translate="label">
+                            <label>Stop Words</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>A comma separated list of words that will not be used in auto complete.</comment>
+                        </stopwords>
+                        <cron_daily>
+                            <label>Daily Re-indexing Time</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>advancedsearch/adminhtml_system_source_crontimes</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cron_daily>
+                    </fields>
+                </autocomplete>
+                <searchsuggest translate="label">
+                    <label>Search Auto Suggest (Did you mean...?)</label>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Auto Suggest?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Select Yes if you wish to search corrections or alternatives to the user as they type.</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <alwayson translate="label">
+                            <label>Always Suggest Terms?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>If Yes, the suggested terms will always show. If No, only when there is no direct match it will suggest the closest term(s).</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </alwayson>
+                        <correctmax translate="label">
+                            <label>Max Corrections</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The maximum number of corrections to a misspelled search word.</comment>
+                        </correctmax>
+                        <attributes translate="label">
+                            <label>Attributes to Index</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>40</sort_order>
+                            <source_model>advancedsearch/adminhtml_system_source_searchableattributes</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </attributes>
+                        <stopwords translate="label">
+                            <label>Stop Words</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>A comma separated list of words that will not be used in auto suggest.</comment>
+                        </stopwords>
+                        <cron_daily>
+                            <label>Daily Re-indexing Time</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>advancedsearch/adminhtml_system_source_crontimes</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cron_daily>
+                    </fields>
+                </searchsuggest>
+                <serp translate="label">
+                    <label>Search Results Options</label>
+                    <sort_order>130</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <weighted_attributes translate="label">
+                            <label>Weighted Attributes</label>
+                            <frontend_model>advancedsearch/adminhtml_form_field_weightedattr</frontend_model>
+                            <backend_model>advancedsearch/system_config_backend_weightedattr</backend_model>
+                            <comment>Weight must be an integer between 1 and 1000. Higher is more important. Weights are relative to each other.</comment>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                       </weighted_attributes>
+                        <enablerefinement translate="label">
+                            <label>Enable Search Refinement?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>When enabled, searching for multiple terms will return a narrower result set of the search terms. Typically how search engines work, more accurate.</comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enablerefinement>
+                        <enablesimilarity translate="label">
+                            <label>Enable Search Similarity?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Select Yes if you wish to show search results for similar search terms as well. when turned on, this option will cover most plural/singular and typo similarities.</comment>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enablesimilarity>
+                        <similaritylevel translate="label">
+                            <label>Search Similarity Level</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>advancedsearch/adminhtml_system_source_similaritylevels</source_model>
+                            <comment>Select the desired search similarity level. Available values are between 1 and 5. Level 1 offers a smaller result set with more similar results while 5 offers a wider result set with a bit less similar result.</comment>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </similaritylevel>
+                        <charommit translate="label">
+                            <label>Characters to Omit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>A comma separated list of characters which will be omitted to try and get a better result set when similarity is enabled.</comment>
+                        </charommit>
+                        <stopwords translate="label">
+                            <label>Stop Words</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>A comma separated list of words that will be ignored from the catalog search.</comment>
+                        </stopwords>
+                    </fields>
+                </serp>
+            </groups>
+        </activo_advancedsearch>
+    </sections>
+</config>

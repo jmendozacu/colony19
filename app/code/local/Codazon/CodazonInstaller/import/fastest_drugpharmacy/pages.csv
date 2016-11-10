@@ -1,0 +1,366 @@
+title,root_template,meta_keywords,meta_description,identifier,content_heading,content,is_active
+"404 Not Found",one_column,"Page keywords","Page description",no-route,,"<p><img src=""{{media url=""wysiwyg/404-banner-3.jpg""}}"" alt=""404bannerimage"" /></p>
+<h1 style=""text-align:center;margin-top: 20px;"">OOPS!</h1>
+<p style=""text-align:center;""><strong style=""font-size:18px;"">404 Page not found.</strong> You might want to check that URL again or head over to our <a href=""{{config path=""web/unsecure/base_url""}}"">homepage.</a></p>
+<br/>
+<br/>
+<h2 style=""text-align: center;"">WERE YOU LOOKING FOR SOMETHING SPECIAL?</h2>
+<p style=""text-align: center;"">Here are some suggestions that you might like....</p>
+<style type=""text/css"">
+    /* Reset the .std styles */
+    .std ul.products-grid li {
+        list-style: none;
+        margin-left: 0;
+    }
+    .std ul.products-grid li .product-info {
+        padding-bottom: 0 !important;
+        min-height: 0 !important;
+    }
+    .widget-new-products h2 {
+        text-align: center;
+    }
+</style>
+",1
+"About Us",one_column,,,about-us,,"<div class=""page-head"">
+<h1>OUR STORY</h1>
+</div>
+<div class=""main-about-us"">
+<div class=""content-seperator"">
+<div class=""about-us-content"">
+<div style=""float: right; width: 40%; margin: 0 0 20px 20px;"">
+<p><img class=""img-responsive"" style=""float: right;"" alt=""about-usimage"" src=""{{media url=""wysiwyg/about_us.jpg""}}"" /></p>
+<p>&nbsp;</p>
+<h3 style=""text-align: center;"">&nbsp;</h3>
+</div>
+<p>Madison Island is...</p>
+<p>...a breath of fresh air.<br /> &hellip;a mecca for style savvy travellers. <br /> &hellip;a curator of gorgeous sartorial design. <br /> &hellip;a curator of designed with cosmopolitan appeal. <br /> &hellip;a world class concept store.</p>
+<div class=""std"">
+<p>Uniquely designed with cosmopolitan appeal, Madison Island gives couture-conscious frequent flyers exactly what they want&mdash;unprecedented access to the latest looks of the season, style solutions for easy international jet setting, and convenient worldwide delivery.</p>
+<p style=""margin-top: 13px;"">With its website relaunch in 2013, Madison Island has solidified its standing as the new essential luxury. Its pages are filled with exquisite finds for fashion and home.</p>
+<p><strong>The History:</strong></p>
+<p>Formed by London College of Fashion graduates Holly Wang and her team in 2009, Miss Patina has continued to grow rapidly due to the fact it fills a niche in the fashion world for good quality vintage inspired goods.</p>
+<p><strong>The Concept</strong></p>
+<p>Miss Patina&rsquo;s design concept&nbsp;is to create individual clothing with elements of vintage glamour, whilst focusing on intricate details, such as lace or mesh overlays, brocade and embroidery.&nbsp;&nbsp;Inspirations for design are taken from previous iconic fashions and fused with today&rsquo;s catwalk trends. Inspired by vintage and a love for art, design and culture, there are many styles that Miss Patina caters to.</p>
+<p><a href=""http://misspatina.com/wp-content/uploads/2013/03/Miss-Patina-LOGO-Shell-Small.jpg"" target=""_blank""><img class=""size-full wp-image-8735 aligncenter"" style=""display: block; margin-left: auto; margin-right: auto;"" alt=""Miss Patina LOGO Shell Small"" src=""http://misspatina.com/wp-content/uploads/2013/03/Miss-Patina-LOGO-Shell-Small.jpg"" height=""90"" width=""120"" /></a></p>
+<p><em>Logo</em>: Our scalloped shell is inspired by the birth of Venus, and its reference to the setting sun. The scalloped shell is uniquely feminine and elegant and is frequently displayed in the designs of Miss Patina clothing.</p>
+<p><em>Patina Green</em>: &nbsp;The sheen produced on surfaces through age, represents our influence from past decades, whilst the colour is associated with rococo art, and represents our highly decorative nature. Patina is the beauty of time and comes from a life lived.<strong>&nbsp;</strong></p>
+<p><strong>Today:</strong></p>
+<p>Miss Patina has frequently been featured in many fashion publications including Vogue, Grazia, Look, Company, Glamour and Cosmopolitan, and has been worn by fashion favourites, such as Taylor Swift, Elle Fanning, British actress Sienna Miller, Emilia Clarke, Jenna Coleman, singer Pixie Lott, Una Foden, model Suki Waterhouse, and UK TV presenter Caroline Flack, Alice Levine and Alex Jones.</p>
+<p>With more than 100 stores and boutiques around the world &nbsp;including 11 Topshop concessions and stockists throughout the UK, Europe, Asia, and USA, Miss Patina is continually catching the attention of vintage and fashion enthusiasts around the world.</p>
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</div>",1
+"Customer Service",two_columns_left,,,customer-service,,"<div class=""page-title"">
+<h1>Customer Service</h1>
+</div>
+<!-- p style=""border-bottom: 1px solid #E6E6E6; margin-bottom: 20px; *margin-bottom: 90px; padding-bottom: 43px;""><br></p -->
+<ul id=""accordion"" style=""padding-left: 0;"">
+<li class=""plusimage"" style=""font-style: normal; margin-bottom: 6px; line-height: 16px !important;"">
+<h2>SHIPPING &amp; DELIVERY</h2>
+<div class=""customerservice_content"" style=""border-bottom: 1px solid #e6e6e6; margin-bottom:18px; *padding-bottom:18px"">
+<p style=""padding-bottom: 18px; padding-top: 10px;"">
+    Shipping and Delivery is the charge for Internet order processing, item selection, packaging, transport and handling. Delivery times are not guaranteed, but are our best approximation and will vary with specific requests. Shipments and deliveries only occur on weekdays. Shipping and Delivery is subject to change and will be determined at the time of order.
+    <br><br>Estimated delivery time assumes orders are placed before 12:00 noon (PST).  Orders placed late on Friday or on Saturday will not be processed until Monday.  Additional charges may accrue on Priority, Overnight and International shipping if multiple attempts are made for delivery.
+    <br><br>Shipping addresses in Alaska, Hawaii, Puerto Rico, and Guam should add an additional $5.00 charge for standard Shipping &amp; Delivery. Orders arrive in 7 to 9 business days when ordered before 12:00 noon (PST).
+</p>
+ <table cellpadding=""0"" cellspacing=""0"" border=""0"" width=""100%"" style="" font:14px Georgia,Times New Roman,Times,serif italic "" class=""data-table"">
+ 	<tr>
+    	<th width=""156"" style=""text-align:center"">&nbsp;</th>
+        <th width=""156"" style=""text-align:center"">Standard</th>
+        <th width=""156"" style=""text-align:center"">Priority</th>
+        <th width=""156"" style=""text-align:center"">Overnight</th>
+        <th width=""156"" style=""text-align:center"">International</th>
+    </tr>
+    <tr>
+    	<td style=""text-align:center"">&nbsp;</td>
+        <td>Package arrives 5 to 7 business days after processing if ordered by 12:00 noon (PST). </td>
+        <td>Package arrives 2 to 3 business days after processing if ordered by 12:00 noon (PST).</td>
+        <td>Package arrives the next business day if ordered before 12:00 noon (PST). </td>
+        <td>Order should arrive 3-9 business days after processing.  Flat rate does not include duties and taxes.</td>
+    </tr>
+   
+    <tr>
+    	<th colspan=""5"">Merchandise Total *</th>
+        
+    </tr>
+    <tr>
+    	<td>Up to $200</td>
+        <td style=""text-align:center"">$16 </td>
+        <td style=""text-align:center"">$26</td>
+        <td style=""text-align:center"">$33</td>
+        <td style=""text-align:center"">$80 (flat rate) excludes duties and taxes</td>
+    </tr>
+    <tr>
+    	<td>$200.01—500.00</td>
+        <td style=""text-align:center"">$21 </td>
+        <td style=""text-align:center"">$31</td>
+        <td style=""text-align:center"">$38</td>
+        <td style=""text-align:center"">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td>$500.01—1000.00</td>
+        <td style=""text-align:center"">$29 </td>
+        <td style=""text-align:center"">$39</td>
+        <td style=""text-align:center"">$46</td>
+        <td style=""text-align:center"">&nbsp;</td>
+    </tr>
+    <tr>
+    	<td>Over $1000.00</td>
+        <td style=""text-align:center"">$34 </td>
+        <td style=""text-align:center"">$44</td>
+        <td style=""text-align:center"">$51</td>
+        <td style=""text-align:center"">&nbsp;</td>
+    </tr>
+    <tr><td colspan=""5"" style=""text-align:center"">*before tax and additional charges</td></tr>
+ </table>
+</div>
+</li>
+
+<li class=""plusimage"" style=""font-style: normal; margin-bottom: 6px; line-height: 16px !important;"">
+<h2>RETURNS &amp; REPLACEMENTS</h2>
+<div class=""customerservice_content"">
+<p style=""border-bottom: 1px solid #e6e6e6; padding-bottom: 18px; padding-top: 10px;""><b>We want you to be completely happy with your order. </b> If for any reason you are not satisfied, we will gladly accept your timely return of unworn, unwashed, or defective merchandise. Used merchandise cannot be returned unless defective. Returned merchandise should include the vendor packaging and tags and be in the same condition as when it was received. A pickup and/or restock fee may apply.
+Merchandise must be returned within 30 days of receipt of merchandise.
+<br><br>
+
+<b>GIFTS</b><br>
+When returning a gift, a Madison Island Anytime Anyplace Gift Card will be issued to the gift recipient for the amount of the returned merchandise. The card can be used for purchases from any Madison Island or affiliate store, and online. In compliance with Federal law, for gifts valued at more than $2,000.00, the recipient will receive a check rather than an Anytime Anyplace Gift Card.<br><br>
+
+<b>RETURNING MERCHANDISE BY MAIL</b><br>
+On the back of the packing slip enclosed with your order, please note the reason(s) for return and whether you wish to exchange the item(s) or receive a credit/refund (depending on the original form of payment). Enclose the return section of the packing slip with your item(s). Please use one of the return labels provided on the front of your packing slip to ensure proper return address and credit information.<br><br>
+
+<b>OTHER ITEMS</b><br>
+All cosmetic and bath items must be unused, unopened, and in original packaging for a credit/refund or exchange to be issued. Restricted items must be returned using ground transportation.<br><br>
+
+<b>Please allow 10 to 14 days for the processing of your return.</b>
+
+</p>
+</div>
+</li>
+</ul>
+",1
+"Enable Cookies",one_column,,,enable-cookies,,"<div class=""std"">
+    <ul class=""messages"">
+        <li class=""notice-msg"">
+            <ul>
+                <li>Please enable cookies in your web browser to continue.</li>
+            </ul>
+        </li>
+    </ul>
+    <div class=""page-title"">
+        <h1><a name=""top""></a>What are Cookies?</h1>
+    </div>
+    <p>Cookies are short pieces of data that are sent to your computer when you visit a website. On later visits, this data is then returned to that website. Cookies allow us to recognize you automatically whenever you visit our site so that we can personalize your experience and provide you with better service. We also use cookies (and similar browser data, such as Flash cookies) for fraud prevention and other purposes. If your web browser is set to refuse cookies from our website, you will not be able to complete a purchase or take advantage of certain features of our website, such as storing items in your Shopping Cart or receiving personalized recommendations. As a result, we strongly encourage you to configure your web browser to accept cookies from our website.</p>
+    <h2 class=""subtitle"">Enabling Cookies</h2>
+    <ul class=""disc"">
+        <li><a href=""#ie7"">Internet Explorer 7.x</a></li>
+        <li><a href=""#ie6"">Internet Explorer 6.x</a></li>
+        <li><a href=""#firefox"">Mozilla/Firefox</a></li>
+        <li><a href=""#opera"">Opera 7.x</a></li>
+    </ul>
+    <h3><a name=""ie7""></a>Internet Explorer 7.x</h3>
+    <ol>
+        <li>
+            <p>Start Internet Explorer</p>
+        </li>
+        <li>
+            <p>Under the <strong>Tools</strong> menu, click <strong>Internet Options</strong></p>
+            <p><img src=""{{skin url=""images/cookies/ie7-1.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Click the <strong>Privacy</strong> tab</p>
+            <p><img src=""{{skin url=""images/cookies/ie7-2.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Click the <strong>Advanced</strong> button</p>
+            <p><img src=""{{skin url=""images/cookies/ie7-3.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Put a check mark in the box for <strong>Override Automatic Cookie Handling</strong>, put another check mark in the <strong>Always accept session cookies </strong>box</p>
+            <p><img src=""{{skin url=""images/cookies/ie7-4.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Click <strong>OK</strong></p>
+            <p><img src=""{{skin url=""images/cookies/ie7-5.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Click <strong>OK</strong></p>
+            <p><img src=""{{skin url=""images/cookies/ie7-6.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Restart Internet Explore</p>
+        </li>
+    </ol>
+    <p class=""a-top""><a href=""#top"">Back to Top</a></p>
+    <h3><a name=""ie6""></a>Internet Explorer 6.x</h3>
+    <ol>
+        <li>
+            <p>Select <strong>Internet Options</strong> from the Tools menu</p>
+            <p><img src=""{{skin url=""images/cookies/ie6-1.gif""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Click on the <strong>Privacy</strong> tab</p>
+        </li>
+        <li>
+            <p>Click the <strong>Default</strong> button (or manually slide the bar down to <strong>Medium</strong>) under <strong>Settings</strong>. Click <strong>OK</strong></p>
+            <p><img src=""{{skin url=""images/cookies/ie6-2.gif""}}"" alt="""" /></p>
+        </li>
+    </ol>
+    <p class=""a-top""><a href=""#top"">Back to Top</a></p>
+    <h3><a name=""firefox""></a>Mozilla/Firefox</h3>
+    <ol>
+        <li>
+            <p>Click on the <strong>Tools</strong>-menu in Mozilla</p>
+        </li>
+        <li>
+            <p>Click on the <strong>Options...</strong> item in the menu - a new window open</p>
+        </li>
+        <li>
+            <p>Click on the <strong>Privacy</strong> selection in the left part of the window. (See image below)</p>
+            <p><img src=""{{skin url=""images/cookies/firefox.png""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>Expand the <strong>Cookies</strong> section</p>
+        </li>
+        <li>
+            <p>Check the <strong>Enable cookies</strong> and <strong>Accept cookies normally</strong> checkboxes</p>
+        </li>
+        <li>
+            <p>Save changes by clicking <strong>Ok</strong>.</p>
+        </li>
+    </ol>
+    <p class=""a-top""><a href=""#top"">Back to Top</a></p>
+    <h3><a name=""opera""></a>Opera 7.x</h3>
+    <ol>
+        <li>
+            <p>Click on the <strong>Tools</strong> menu in Opera</p>
+        </li>
+        <li>
+            <p>Click on the <strong>Preferences...</strong> item in the menu - a new window open</p>
+        </li>
+        <li>
+            <p>Click on the <strong>Privacy</strong> selection near the bottom left of the window. (See image below)</p>
+            <p><img src=""{{skin url=""images/cookies/opera.png""}}"" alt="""" /></p>
+        </li>
+        <li>
+            <p>The <strong>Enable cookies</strong> checkbox must be checked, and <strong>Accept all cookies</strong> should be selected in the &quot;<strong>Normal cookies</strong>&quot; drop-down</p>
+        </li>
+        <li>
+            <p>Save changes by clicking <strong>Ok</strong></p>
+        </li>
+    </ol>
+    <p class=""a-top""><a href=""#top"">Back to Top</a></p>
+</div>
+",1
+"Privacy Policy",two_columns_right,,,privacy-policy-cookie-restriction-mode,"Privacy Policy","<p style=""border-bottom: 1px solid #e6e6e6; padding-bottom: 18px; padding-top: 10px;"">This website (""website"") is operated by Madison Island Inc., which includes Madison Island stores, and Madison Island Private Sales. This privacy policy only covers information collected at this website, and does not cover any information collected offline by Madison Island. All Madison Island websites are currently covered by this privacy policy.</p><h2>SECURITY</h2><p>Personal information provided on the website and online credit card transactions are transmitted through a secure server.  We are committed to handling your personal information with high standards of information security. We take appropriate physical, electronic, and administrative steps to maintain the security and accuracy of personally identifiable information we collect, including limiting the number of people who have physical access to our database servers, as well as employing electronic security systems and password protections that guard against unauthorized access. Our website uses encryption technology, like Secure Sockets Layer (SSL), to protect your personal information during data transport. SSL encrypts ordering information such as your name, address, and credit card number. Our Customer Care center and stores also operate over a private, secure network. Please note that email is not encrypted and is not considered to be a secure means of transmitting credit card information.</p><h2>PRIVACY POLICY</h2><p>To help us achieve our goal of providing the highest quality products and services, we use information from our interactions with you and other customers, as well as from other parties. Because we respect your privacy, we have implemented procedures to ensure that your personal information is handled in a safe, secure, and responsible manner.<br>We have posted this privacy policy in order to explain our information collection practices and the choices you have about the way information is collected and used.</p><p>As we continue to develop our website and take advantage of advances in technology to improve the services we offer, this privacy policy likely will change. We therefore encourage you to refer to this policy on an ongoing basis so that you understand our current privacy policy.</p><h2>THE INFORMATION WE COLLECT</h2><p>Generally, you may browse the website without providing any personally identifiable information. However, we may ask you to provide personally identifiable information at various times and places on this website. In some cases, if you choose not to provide us with the requested information, you may not be able to access all parts of this website or participate in all of its features.
+</p><p>We receive and store any personally identifiable information you enter on the website, whenever you shop with Madison Island—online, through our catalogs, or in our stores, or information you give us in any other way, such as by subscribing to our catalogs, email, or mobile messaging. For example, we may collect the following personally identifiable information: your name, address, telephone number, mobile telephone number, driver's license number, birth date, and email address. If you use a credit or debit card or pay by check, we will also include your account number.</p><p>If you use one of our services, or participate in one of our surveys, promotions, or sweepstakes, we may ask for additional information, such as your age, interests, or product preferences.</p><p>From your purchases and other interactions with us, we obtain information concerning the specific products or services you purchase or use.<br><br>When you visit this website, our web server automatically collects anonymous information such as log data and IP addresses, and may collect general information concerning your location. We may use the automatically collected information for a number of purposes, such as improving our site design, product assortments, customer service, and special promotions.</p>
+<h2>HOW WE USE THE INFORMATION WE COLLECT</h2><p>We use the information we collect for various purposes, including:<ul><li>To complete your purchase transactions</li><li>To provide the services you request</li><li>To send you our catalogs and other offerings by mail</li><li>To identify your product and service preferences, so we can notify you of new or additional products, services, and promotions that might be of interest to you.</li><li>To notify you of product recalls or provide other information concerning products you have purchased</li><li>To improve our merchandise selections, customer service, and overall shopping experience</li></ul></p><h2>OTHERS WITH WHOM WE SHARE YOUR INFORMATION</h2><p><b>The Madison Island Group</b>: All of the above information that we collect, as described above, may be shared among all Madison Island entities, including Madison Island stores, website and Private Sales.</p>
+<p><b>Service Providers</b>: We also may disclose information to outside companies that help us bring you the products and services we offer. For example, we may work with an outside company to: (a) manage a database of customer information; (b) assist us in distributing emails; (c) assist us with direct marketing and data collection; (d) provide us storage and analysis; (d) provide fraud prevention; and (e) provide other services designed to assist us in maximizing our business potential. We require that these outside companies agree to keep confidential all information we share with them and to use the information only to perform their obligations in our agreements with them.</p>
+<p><b>Other Companies</b>: We may provide information to carefully selected outside companies when we believe their products or services may be of interest to you.</p><p><b>Business Transitions</b>: We may transfer or share a copy of personal information about you in the event that Madison Island or one of its properties, affiliates, or subsidiaries goes through a business transition, such as a merger, being acquired by another company, or selling a portion of its assets. You will be notified via email or prominent notice on our website prior to a change of ownership or control of your personal information, if your personal information will be used contrary to this policy. However, nothing in this Privacy Policy is intended to interfere with the ability of Madison Island to transfer all or part of its business and/or assets to an affiliate or independent third party at any time, for any purpose, without any limitation whatsoever. Madison Island specifically reserves the right to transfer or share a copy of personally identifiable information collected from its websites to the buyer of that portion of its business relating to that information.
+</p><p><b>Compliance with Law:</b> We may provide access to information when legally required to do so, to cooperate with police investigations or other legal proceedings, to protect against misuse or unauthorized use of our website, to limit our legal liability, and to protect our rights or to protect the rights, property, or safety of visitors of this website or the public.<br><br>Madison Island partners with advertising companies to place our advertising on publisher websites on the Internet. These advertising companies collect anonymous information about your visits to our web site. This technology involves the use of third party cookies which allow them to develop personalized advertising so that it directly relates to offers that may be of interest to you. You may choose to opt-out of this service we have with our third-party advertising partner. We may also use Madison Island cookies to provide similar enhanced online marketing to you based on your interests and preferences. You may also choose to opt out of these enhanced online marketing ads. </p><h2>YOUR CHOICES REGARDING USE OF THE INFORMATION WE COLLECT</h2><p>We provide you with a number of choices regarding our handling of your nonpublic personally identifiable information.<br><br><b>Direct Mail or Telephone Marketing</b>: If you shop at the Madison Island or Private Sales stores and wish to be removed from the list of customers that receive direct mail or telemarketing calls, please either <b>write</b> to Madison Island Customer Care at 112 West 34th Street, 18th Flr. New York, NY 10120 <b>or call</b> +1 212 268-4500. If you choose to write to us, please include your name, address, and credit card account number (if you have one), and state one of the following:<br>
+""NO MAIL OFFERS"" (if you don't want to receive offers by mail);<br>
+""NO PHONE OFFERS"" (if you don't want to receive offers by phone); or<br>
+""NO PHONE OR MAIL OFFERS"" (if you don't want to receive either).</p>
+
+<p>
+Because customer lists often are prepared well in advance of an offering (sometimes a few months before the offer is made), you may continue to receive some offers after you send us a request not to use your information for specified marketing purposes. We appreciate your patience and understanding in giving us time to carry out your request.
+</p>
+<h2>YOUR CALIFORNIA PRIVACY RIGHTS</h2><p>
+Under California Civil Code sections 1798.83-1798.84, California residents are entitled to ask us for a notice describing what categories of personal customer information we share with third parties or corporate affiliates for those third parties or corporate affiliates' direct marketing purposes. That notice will identify the categories of information shared and will include a list of the third parties and affiliates with which it was shared, along with their names and addresses. If you are a California resident and would like a copy of this notice, please submit a written request to the following address: Madison Island Customer Care, 112 West 34th Street, 18th Floor, New York, NY 10120. Please allow 30 days for a response.
+</p>
+<h2>COOKIES, WEB BEACONS, AND HOW WE USE THEM</h2><p>
+A ""cookie"" is a small data file stored by your Web browser on your computer or mobile device [hard drive]. It allows us to recognize your computer (but not specifically who is using it) upon entering our site by associating the identification numbers in the cookie with other customer information you have provided us. That customer information is stored on our secured database. A ""web beacon"" or ""pixel tag"" or ""clear gif"" is typically a one-pixel image, used to pass information from your computer or mobile device to a website.<br><br>
+We use cookies and web beacons to keep track of what you have in your shopping cart and to remember you when you return to the website as well as to identify the pages you click on during your visit to our site and the name of the website you visited immediately before clicking to the Madison Island website. We use this information to improve our site design, product assortments, customer service, and special promotions. You can, of course, disable cookies and web beacons on your computer by indicating this in the preferences or options menus in your browser. However, it is possible that some parts of our website will not operate correctly if you disable cookies. We may also use web beacons, and other technologies, to help track whether our communications are reaching you, to measure their effectiveness, or to collect certain non-personal information about your computer, device, or browser in order to allow us to better design future communications to you.</p><p>
+
+We may contract with third parties who may use cookies and web beacons and collect information on our behalf or provide services such as credit card processing, shipping, promotional services, or data management. We call them our Customer Care Partners. These third parties are prohibited by our contract with them from sharing that information with anyone other than us or our other Customer Care Partners.</p>
+
+<h2>ONLINE ACCOUNT REGISTRATION</h2><p>
+To make online shopping faster and easier, you may register on the Madison Island website. As a registered customer, you only have to enter your shipping addresses and billing information once; they will be securely stored with us for your future use. Using your name and a password of your choice, you may access your account online at any time to add, delete, or change information.</p><p>
+If you are using a public computer, we strongly encourage you to LOG OUT at the conclusion of your session. Your information will still be stored with us but it will not be accessible to anyone else from that computer.</p>
+
+<h2>EMAILS</h2><p>
+You will receive promotional emails from us only if you have asked to receive them. If you do not want to receive email from Madison Island or its affiliates you can click on the ""Unsubscribe"" link at the bottom of any email communication sent by us. Please allow us 3 business days from when the request was received to complete the removal, as some of our promotions may already have been in process before you submitted your request.
+</p>
+<h2>ACCEPTANCE</h2><p>
+By using this website, you accept the policies set forth in this Privacy Policy.
+</p>
+<h2>ANY QUESTIONS?</h2><p>
+We'll be happy to provide additional information or answer any questions. Please:<br>
+<b>Call</b> 1.212.268.4500<br>
+<b>Write</b>:<br>
+Customer Care<br>
+112 West 34th Street, 18th Flr<br>
+New York, NY 10120<br>
+</p>",1
+"503 Service Unavailable",one_column,,,service-unavailable,,"<div class=""page-title""><h1>We're Offline...</h1></div>
+<p>...but only for just a bit. We're working to make the Magento Demo a better place for you!</p>",1
+"Welcome to our Exclusive Online Store",one_column,,,private-sales,,"<div class=""private-sales-index"">
+<div class=""box"">
+<div class=""content"">
+<h1>Welcome to our Exclusive Online Store</h1>
+<p>If you are a registered member, please <a href=""{{store url=""customer/account/login""}}"">log in here</a>.</p>
+<p class=""description"">Magento is the leading hub for exclusive specialty items for all your home, apparel and entertainment needs!</p>
+</div>
+</div>
+</div>",1
+"Reward Points",two_columns_left,,,reward-points,"Reward Points","<p>The Reward Points Program allows you to earn points for certain actions you take on the site. Points are awarded based on making purchases and customer actions such as submitting reviews.</p>
+
+<h2>Benefits of Reward Points for Registered Customers</h2>
+<p>Once you register you will be able to earn and accrue reward points, which are then redeemable at time of purchase towards the cost of your order. Rewards are an added bonus to your shopping experience on the site and just one of the ways we thank you for being a loyal customer.</p>
+
+<h2>Earning Reward Points</h2>
+<p>Rewards can currently be earned for the following actions:</p>
+<ul>
+<li>Making purchases — every time you make a purchase you earn points based on the price of products purchased and these points are added to your Reward Points balance.</li>
+<li>Registering on the site.</li>
+<li>Subscribing to a newsletter for the first time.</li>
+<li>Sending Invitations — Earn points by inviting your friends to join the site.</li>
+<li>Converting Invitations to Customer — Earn points for every invitation you send out which leads to your friends registering on the site.</li>
+<li>Converting Invitations to Order — Earn points for every invitation you send out which leads to a sale.</li>
+<li>Review Submission — Earn points for submitting product reviews.</li>
+<li>New Tag Submission — Earn points for adding tags to products.</li>
+</ul>
+
+<h2>Reward Points Exchange Rates</h2>
+<p>The value of reward points is determined by an exchange rate of both currency spent on products to points, and an exchange rate of points earned to currency for spending on future purchases.</p>
+
+<h2>Redeeming Reward Points</h2>
+<p>You can redeem your reward points at checkout. If you have accumulated enough points to redeem them you will have the option of using points as one of the payment methods.  The option to use reward points, as well as your balance and the monetary equivalent this balance, will be shown to you in the Payment Method area of the checkout.  Redeemable reward points can be used in conjunction with other payment methods such as credit cards, gift cards and more.</p>
+
+
+<h2>Reward Points Minimums and Maximums</h2>
+<p>Reward points may be capped at a minimum value required for redemption.  If this option is selected you will not be able to use your reward points until you accrue a minimum number of points, at which point they will become available for redemption.</p>
+<p>Reward points may also be capped at the maximum value of points which can be accrued. If this option is selected you will need to redeem your accrued points before you are able to earn more points.</p>
+
+<h2>Managing My Reward Points</h2>
+<p>You have the ability to view and manage your points through your <a href=""{{store url=""customer/account""}}"">Customer Account</a>. From your account you will be able to view your total points (and currency equivalent), minimum needed to redeem, whether you have reached the maximum points limit and a cumulative history of points acquired, redeemed and lost. The history record will retain and display historical rates and currency for informational purposes. The history will also show you comprehensive informational messages regarding points, including expiration notifications.</p>
+
+
+<h2>Reward Points Expiration</h2>
+<p>Reward points can be set to expire. Points will expire in the order form which they were first earned.</p>
+<p><strong>Note</strong>: You can sign up to receive email notifications each time your balance changes when you either earn, redeem or lose points, as well as point expiration notifications. This option is found in the <a href=""{{store url=""reward/customer/info""}}"">Reward Points section</a> of the My Account area.</p>
+",1
+Company,two_columns_left,,,company,,"<div class=""page-head"">
+<h3>OUR STORY</h3>
+</div>
+<div class=""col2-set content-seperator"">
+<div class=""col-1"">
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+</div>
+<div class=""col-2"">
+<p><a href=""http://www.varien.com/""><img title=""Varien"" src=""{{skin url='images/media/aboutus.png'}}"" alt=""Varien"" /></a></p>
+<h2 style=""text-align: center;"">Lorem ipsum dolor sit amet, consectetur <br /> adipisicing elit, sed do eiusmod tempor</h2>
+<p style=""margin-top: 13px;"">adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id</p>
+</div>
+<p style=""float: left; width: 100%; border-bottom: 1px solid #e6e6e6; padding-bottom: 18px; margin-top: 38px; text-align: center;""><img title=""Varien"" src=""{{skin url='images/media/dottedcms.png'}}"" alt=""Varien"" /></p>
+</div>
+<div class=""std"">
+<h1 style=""margin-bottom: 9px; margin-top: 13px; text-align: center;"">LOREM IPSUM</h1>
+<p>dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>
+<p style=""float: left; margin-top: 7px;""><iframe src=""http://player.vimeo.com/video/48910332?badge=0"" frameborder=""0"" width=""560"" height=""315""></iframe></p>
+<p style=""float: left; width: 100%; margin-top: 24px; text-align: center; margin-bottom: 44px;""><img title=""Varien"" src=""{{skin url='images/media/dottedcms.png'}}"" alt=""Varien"" /></p>
+</div>",1
+"Fastest Fashion Homepage",one_column,,,fastest-fashion-homepage,,"<div style=""display: none;"">&nbsp;</div>",1
+"Fastest DrugPharmacy - Homepage",one_column,,,fastest-drungpharmacy-homepage,,"<div style=""display: none;"">&nbsp;</div>",1

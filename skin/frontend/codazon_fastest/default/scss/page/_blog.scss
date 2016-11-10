@@ -1,0 +1,368 @@
+/* ============================================ *
+ * Codazon_Blog
+ * ============================================ */
+.cdz_wapper-blog01{
+	.cdz-post {
+	  background-color: #ffffff;
+	}
+	.blog-title {
+		margin: 0px 0 10px;
+		font: $f_h5;
+		a {
+			color: #282828;
+			text-decoration: none;
+			font: $f_h5;
+			&:visited {
+			  color: #282828;
+			  text-decoration: none;
+			}
+			&:hover,&:active {
+			  color: #fc7070;
+			  text-decoration: none;
+			}
+		}
+	}
+	.blog-text-link a {
+		display: inline-block;
+		margin-top: 10px;
+		position: relative;
+		&:before {
+			margin-right: 5px;
+			@include abs-iconfont('\f101', 12px)
+		}
+	}
+	.cdz-blog-bottom {
+		padding: 20px;
+		.blog-author{
+			display:none;		  
+		}
+	}
+	.blog-desc {
+		color: #999999;
+		font: 400 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+	}
+	.blog-text-link{margin:0}
+	.cdz-blog-top {
+		position: relative;
+		overflow: hidden;
+		.blog-date {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+			background: #fff;
+			color: #333333;
+			padding: 7px 10px;
+			color: #999999;
+			font: 400 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+			float: left;
+			&:before {
+				@include abs-iconfont('\f073', 16px);
+				margin-right: 5px;
+			}
+		}
+		a img {
+			-webkit-transform: scale(1);
+			-moz-transform: scale(1);
+			-ms-transform: scale(1);
+			-o-transform: scale(1);
+			-moz-transition: all 500ms ease;
+			-webkit-transition: all 500ms ease;
+			-o-transition: all 500ms ease;
+			transition: all 500ms ease;
+			-moz-backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+		}
+		&:hover a img {
+			-webkit-transform: scale(1.05, 1.05);
+			-moz-transform: scale(1.05, 1.05);
+			-ms-transform: scale(1.05, 1.05);
+			-o-transform: scale(1.05, 1.05);
+		}
+	}
+	.owl-theme.owl-carousel{
+		.owl-controls {margin:0}
+		.owl-nav {
+			position: absolute;
+			top: -20px;
+			left: 0;
+			width: 100%;
+			margin-top: 0;
+			[class*='owl-'] {
+				width: 40px;
+				height: 40px;
+				text-align: center;
+				font-size: 0;
+				margin: 0 5px!important;
+				padding: 0;
+				border: 2px solid;
+				-webkit-border-radius: 0;
+				-moz-border-radius: 0;
+				border-radius: 0;
+				-moz-transition: all 500ms ease;
+				-webkit-transition: all 500ms ease;
+				-o-transition: all 500ms ease;
+				transition: all 500ms ease;
+				-moz-backface-visibility: hidden;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				display: inline-block;
+				left: calc((100% - 100px)/2);
+				left: -webkit-calc((100% - 100px)/2);
+				left: -o-calc((100% - 100px)/2);
+				left: -moz-calc((100% - 100px)/2);
+				right: auto;
+				top: auto;
+				&:before {
+					-webkit-font-smoothing: antialiased;
+					font-size: 30px;
+					line-height: 34px;
+					content: '\f104';
+					font-family: FontAwesome;
+					vertical-align: middle;
+					display: inline-block;
+					font-weight: normal;
+					overflow: hidden;
+					speak: none;
+					text-align: center;
+				}
+				&.owl-next{
+					left: calc((100% - 0px)/2);
+					left: -webkit-calc((100% - 0px)/2);
+					left: -o-calc((100% - 0px)/2);
+					left: -moz-calc((100% - 0px)/2);
+					&:before {
+						content: '\f105';
+					}
+				}
+				&.disabled {
+					-webkit-opacity: 0.2;
+					-moz-opacity: 0.2;
+					opacity: 0.2;
+				}
+			}		
+		}	
+	}
+}
+
+.cdz_wapper-blog01 {
+  background-color: transparent;
+}
+.cdz_wapper-blog01 .owl-carousel .owl-stage-outer{padding-top:50px;}
+
+
+/*AW Blog List and Post detail*/
+.postTitle{
+	border:0!important;	
+	overflow:hidden;
+	h2{
+		text-transform:uppercase;
+		a{
+		color:$main_text;
+		font:$f_h3;
+		}
+	}
+	.postTitle-blog{
+		float:left;
+		width:80%;
+	}
+	.addthis_toolbox{
+		float:right;
+	}
+	.blog-date{
+		color:$main_note_text
+	}
+	
+}
+.post-image{
+	position:relative;
+	.blog-date {
+		position: absolute;
+		bottom: 10px;
+		left: 20px;
+		background: #fff;
+		color: #333333;
+		padding: 7px 10px;
+		color: #999999;
+		font: 400 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+		float: left;
+		width:55px;
+		text-align:center
+	}
+}
+.postContent{
+	.aw-blog-read-more{
+		display:block;
+		color:$main_text;
+		font:$f_h6;
+		margin-top:10px;
+		text-transform:uppercase;
+		text-decoration:underline;
+	}
+}
+.postDetails{
+	color:$main_text;
+	font:$f_note;
+	text-transform:uppercase;
+	color:$main_note_text;
+	clear:left;
+}
+.postContent {
+	.separator img{}
+}
+.block-blog  .block-content .menu-recent UL LI,
+.block-blog  .block-content .menu-categories UL LI{
+	margin-left:0
+}
+.block-blog .block-title strong{
+	background:none!important;
+	padding-left:0!important;
+}
+.block-blog{
+	.block-content{
+		.menu-categories,.menu-recent{
+			ul{
+				li{
+					border-top: 1px dashed $main_border;
+					padding-top: 10px;
+					margin-top: 10px;
+					a{
+						font:$f_h6;
+					}
+					
+				}
+				li:first-child{
+					padding-top:0;
+					border:0;
+					margin-top:0;
+				}
+			}
+		}
+	}
+	
+}
+.postContent img {
+	max-width: 100%;
+	height: auto;
+}
+.menu-tags, .menu-categories, .menu-recent{
+	padding:0;
+	margin:0!important
+}
+.blog-post-view{
+	.post-image{
+		margin-bottom:20px;
+		img{
+			width:100%;
+		}
+		.blog-date {
+			position: absolute;
+			bottom: auto;
+			top:10px;
+			left: 10px;
+		}		
+	}
+	.postDetails{
+		font:$f_note;
+		h4{font:$f_note;color:$main_hover_text}
+		a{line-height:normal}
+	}
+	.postContent{
+		clear:left;
+	}
+	.postTitle{
+		overflow:hidden
+	}
+}
+.blog-index-list .toolbar{display:none}
+.postWrapper:last-child{padding-bottom:0}
+
+
+/* ============================================ *
+ * Codazon_Blog style 2 - Home Handbag
+ * ============================================ */
+ .cdz-wapper-blog-02{
+	 .post-items{
+		.owl-nav{
+			 margin:0;
+			 display:none;
+			 @include transition1();
+		 }
+		 &:hover{
+			 .owl-nav{
+				 margin:0;
+				 display:block
+			 }
+		 }
+	 }
+	 
+	 .owl-item{
+		 h5.blog-title {
+			 padding:20px 10px 0;
+			 a{
+			 }
+		 }
+		 .cdz-blog-right{
+			 text-align:left;
+			 .cdz-rtl &{
+				text-align:right;
+			 }
+		 }
+		.blog-author{
+			font-size:80%;
+			padding:0 10px 20px;
+		}
+		.blog-desc{
+			padding:0 10px 20px;
+		}
+		.blog-date{
+			position: absolute;
+			height: 45px;
+			width: 45px;
+			right: 10px;
+			top: 0;
+			padding: 5px 10px;
+			font-size:11px
+		}
+		.blog-text-link{
+			text-align:center;
+			margin: 0 0 10px -10px;
+			a{
+				border: 1px solid;
+				box-sizing: border-box;
+				vertical-align: middle;
+				display: inline-block;
+				padding: 10px 20px;
+				span{
+					text-transform: uppercase;
+					font-size: 80%;
+				}
+				&:hover{
+				}
+			}
+		}
+	 }
+ }
+/* ============================================ *
+ * Codazon_Blog style 2 - Home Handbag
+ * ============================================ */
+ /* ============================================ *
+ * Codazon_Blog style 3 - Home Outdoor
+ * ============================================ */
+.cdz-wapper-blog-03{
+	.cdz-block-title{
+		border-bottom-width: 2px;
+		border-bottom-style: solid;
+		margin-bottom:50px;
+	}
+	.cdz-post{
+		text-align:center;
+		.cdz-blog-top{
+			padding:2rem;
+			.blog-date{
+				text-transform:uppercase;
+				margin-bottom:1rem;
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Wfs_DisableCompare</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license>MageryThemes custom license</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Wfs_DisableCompare extension can help you to disable compare functionality in Magento</summary>
+    <description>This extension from MageryThemes allows to disable compare products functionality.</description>
+    <notes>Stable release</notes>
+    <authors><author><name>WebFlakeStudio</name><user>WebFlakeStudio</user><email>webflakestudio@gmail.com</email></author></authors>
+    <date>2016-11-01</date>
+    <time>11:45:53</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="Wfs_DisableCompare.xml" hash="c05e9ecb00491596c363a550acfe1b3c"/></dir></target><target name="magecommunity"><dir name="Wfs"><dir name="DisableCompare"><dir name="Helper"><file name="Compare.php" hash="18b2b926887b306892f7c8c1b6afefb7"/><file name="Data.php" hash="88f891bcd6c8769bff446873e8723cf0"/></dir><dir name="etc"><file name="config.xml" hash="e1a364894c51391ef12f0ed3aadcf27c"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><dir name="wfs"><file name="disablecompare.xml" hash="37be63664999eb815ecf19bdea9cf026"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

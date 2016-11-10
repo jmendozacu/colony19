@@ -1,0 +1,21 @@
+/*Contact form*/
+.contacts-index-index{
+	.col-main-containter .col-main .col-wrapper-main {
+		@include abs_none_main_background_shadow;
+		#contactForm{
+			@include abs_main_background_shadow;
+			textarea.input-text{min-height:300px}
+		}
+	}
+	#cdz-google-map{
+		height: 458px!important;
+	}
+	.contact-adress{
+		margin-top: 20px;
+		padding:20px 20px 1px;
+		background:$main_block_background;
+		-webkit-box-shadow: 1px 3px 1px rgba(50, 50, 50, 0.04);
+		-moz-box-shadow: 1px 3px 1px rgba(50, 50, 50, 0.04);
+		box-shadow: 1px 3px 1px rgba(50, 50, 50, 0.04);
+	}
+}

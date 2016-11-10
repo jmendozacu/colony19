@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2016 Activo Extensions (http://extensions.activo.com)
+ * @license     Commercial
+ */
+-->
+<config>
+    <modules>
+        <Activo_AdvancedSearch>
+            <version>3.2.0</version>
+        </Activo_AdvancedSearch>
+    </modules>
+    
+    <frontend>
+        <translate>
+            <modules>
+                <Activo_AdvancedSearch>
+                    <files>
+                        <default>Activo_AdvancedSearch.csv</default>
+                    </files>
+                </Activo_AdvancedSearch>
+            </modules>
+        </translate>
+        <events>
+            <controller_action_predispatch_catalogsearch_result_index>
+                <observers>
+                    <catalog_search_trigger>
+                        <class>advancedsearch/observer</class>
+                        <method>catalogSearchEvent</method>
+                    </catalog_search_trigger>
+                </observers>
+            </controller_action_predispatch_catalogsearch_result_index>
+        </events>
+    </frontend>
+    
+    <adminhtml>
+        <layout>
+            <updates>
+                <advancedsearch>
+                    <file>activo/advancedsearch/advancedsearch.xml</file>
+                </advancedsearch>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Activo_AdvancedSearch>
+                    <files>
+                        <default>Activo_AdvancedSearch.csv</default>
+                    </files>
+                </Activo_AdvancedSearch>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <global>
+        <blocks>            
+            <advancedsearch>
+                <class>Activo_AdvancedSearch_Block</class>
+            </advancedsearch>
+            <catalogsearch>
+                <rewrite>
+                    <autocomplete>Activo_AdvancedSearch_Block_Autocomplete</autocomplete>
+                </rewrite>
+            </catalogsearch>
+            <adminhtml>
+                <rewrite>
+                    <dashboard_diagrams>Activo_AdvancedSearch_Block_Adminhtml_Dashboard_Diagrams</dashboard_diagrams>
+                    <dashboard>Activo_AdvancedSearch_Block_Adminhtml_Dashboard</dashboard>
+                </rewrite>                
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <advancedsearch>
+                <class>Activo_AdvancedSearch_Helper</class>
+            </advancedsearch>
+            <catalogsearch>
+                <rewrite>
+                    <data>Activo_AdvancedSearch_Helper_Search</data>
+                </rewrite>
+            </catalogsearch>
+        </helpers>
+        <models>
+            <advancedsearch>
+                <class>Activo_AdvancedSearch_Model</class>
+                <resourceModel>advancedsearch_resource</resourceModel>
+            </advancedsearch>
+            <advancedsearch_resource>
+                <class>Activo_AdvancedSearch_Model_Resource</class>
+<!--                <deprecatedNode>advancedsearch_mysql4</deprecatedNode>-->
+                <entities>
+                    <word>
+                        <table>activo_advancedsearch_word</table>
+                    </word>
+                    <dictionary>
+                        <table>activo_advancedsearch_dictionary</table>
+                    </dictionary>
+                    <ngram>
+                        <table>activo_advancedsearch_ngram</table>
+                    </ngram>
+                    <weighted_search>
+                        <table>activo_advancedsearch_weighted_search</table>
+                    </weighted_search>
+                </entities>
+            </advancedsearch_resource>
+            
+            <catalogsearch_resource>
+                <rewrite>
+                    <fulltext>Activo_AdvancedSearch_Model_Resource_Fulltext</fulltext>
+                </rewrite>
+            </catalogsearch_resource>
+            
+            <catalogsearch_mysql4>
+                <rewrite>
+                    <fulltext>Activo_AdvancedSearch_Model_Mysql4_Fulltext</fulltext>
+                </rewrite>
+            </catalogsearch_mysql4>
+            
+            <catalogsearch>
+                <rewrite>
+                    <indexer_fulltext>Activo_AdvancedSearch_Model_Indexer_Fulltext</indexer_fulltext>
+                </rewrite>
+            </catalogsearch>
+        </models>
+        <index>
+            <indexer>
+                <advancedsearch_complete>
+                    <model>advancedsearch/indexer_complete</model>
+                </advancedsearch_complete>
+                <advancedsearch_suggest>
+                    <model>advancedsearch/indexer_suggest</model>
+                </advancedsearch_suggest>
+            </indexer>
+        </index>
+        <resources>
+            <advancedsearch_setup>
+                <setup>
+                    <module>Activo_AdvancedSearch</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </advancedsearch_setup>
+            <advancedsearch_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </advancedsearch_write>
+            <advancedsearch_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </advancedsearch_read>
+        </resources>
+    </global>
+    
+    <crontab>
+        <jobs>
+            <advancedsearch_complete_reindex_all>
+                <schedule>
+                    <config_path>activo_advancedsearch/autocomplete/cron_daily</config_path>
+                </schedule>
+                <run>
+                    <model>advancedsearch/cron::reindexAutoComplete</model>
+                </run>
+            </advancedsearch_complete_reindex_all>
+            <advancedsearch_suggest_reindex_all>
+                <schedule>
+                    <config_path>activo_advancedsearch/searchsuggest/cron_daily</config_path>
+                </schedule>
+                <run>
+                    <model>advancedsearch/cron::reindexAutoSuggest</model>
+                </run>
+            </advancedsearch_suggest_reindex_all>
+        </jobs>
+    </crontab>
+
+    <default>
+        <activo_advancedsearch>
+            <autocomplete translate="stopwords" module="advancedsearch">
+                <enabled>1</enabled>
+                <maxresults>10</maxresults>
+                <maxwords>3</maxwords>
+                <instockonly>1</instockonly>
+                <attributes>name,short_description</attributes>
+                <stopwords>a,all,and,any,as,for,from,how,i'm,i.e.,in,is,isn't,it,it's,its,of,that,that's,the,this,to,was,wasn't,what,what's,when,where,who,who's,will,with</stopwords>
+                <cron_daily>30 1 * * *</cron_daily>
+            </autocomplete>
+            <searchsuggest translate="stopwords" module="advancedsearch">
+                <enabled>1</enabled>
+                <alwayson>0</alwayson>
+                <correctmax>3</correctmax>
+                <attributes>name,short_description</attributes>
+                <stopwords>a,all,and,any,as,for,from,how,i'm,i.e.,in,is,isn't,it,it's,its,of,that,that's,the,this,to,was,wasn't,what,what's,when,where,who,who's,will,with</stopwords>
+                <cron_daily>45 1 * * *</cron_daily>
+            </searchsuggest>
+            <serp translate="stopwords" module="advancedsearch">
+                <weighted_attributes></weighted_attributes>
+                <enablerefinement>1</enablerefinement>
+                <enablesimilarity>0</enablesimilarity>
+                <similaritylevel>1</similaritylevel>
+                <charommit>-,',_</charommit>
+                <stopwords>a,all,and,any,as,for,from,how,i'm,i.e.,in,is,isn't,it,it's,its,of,that,that's,the,this,to,was,wasn't,what,what's,when,where,who,who's,will,with</stopwords>
+            </serp>
+        </activo_advancedsearch>
+    </default>
+</config>

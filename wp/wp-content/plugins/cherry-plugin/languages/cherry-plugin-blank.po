@@ -1,0 +1,1055 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Cherry Framework\n"
+"POT-Creation-Date: 2013-11-06 12:20+0200\n"
+"PO-Revision-Date: 2013-11-06 12:20+0200\n"
+"Last-Translator: \n"
+"Language-Team: Cherry Framework Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ./\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: ../admin/shortcodes/dialog.php:21
+msgid "Shortcode Options"
+msgstr ""
+
+#: ../admin/shortcodes/dialog.php:31
+msgid "Cancel"
+msgstr ""
+
+#: ../admin/shortcodes/dialog.php:32 ../admin/shortcodes/editor_plugin.php:703
+msgid "Insert Shortcode"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:709
+msgid "Posts"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:710
+msgid "Posts Grid"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:711
+msgid "Posts List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:712
+msgid "Mini Posts Grid"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:713
+msgid "Mini Posts List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:714
+msgid "Recent Posts"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:715
+msgid "Recent Testimonials"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:716
+msgid "Basic"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:717
+msgid "Banner"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:718
+#: ../includes/shortcodes/posts_list.php:161
+#: ../includes/shortcodes/posts_list.php:162
+#: ../includes/shortcodes/post_cycle.php:141
+msgid "Comments"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:719
+msgid "Post Cycle"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:720
+msgid "Carousel (Elasti)"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:721
+msgid "Carousel (OWL)"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:722
+msgid "Roundabout"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:723
+msgid "Service Box"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:724
+msgid "Hero Unit"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:725
+msgid "Categories"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:726
+#: ../includes/shortcodes/posts_list.php:281
+msgid "Tags"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:727
+msgid "Columns"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:742
+msgid "Fluid Column"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:751
+msgid "2 Columns"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:755
+msgid "3 Columns"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:760
+msgid "4 Columns"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:762
+msgid "Elements"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:763
+msgid "Label"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:764
+msgid "Text Highlight"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:765
+msgid "Button"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:766
+msgid "Drop Cap"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:767
+msgid "Blockquote"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:768
+msgid "Icon"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:769
+msgid "Frame"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:770
+msgid "Horizontal Rule"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:771
+msgid "Small Horizontal Rule"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:772
+msgid "Vertical Rule"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:773
+msgid "Spacer"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:774
+msgid "Progressbar"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:775
+msgid "Address"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:776
+msgid "Clear"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:777
+msgid "Extra Wrap"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:778
+msgid "Lists"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:779
+msgid "Unstyled"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:780
+msgid "Check List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:781
+msgid "Check 2 List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:782
+msgid "Arrow List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:783
+msgid "Arrow 2 List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:784
+msgid "Star List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:785
+msgid "Plus List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:786
+msgid "Minus List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:787
+msgid "Custom List"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:788
+msgid "Misc"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:789
+msgid "Alert Box"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:790
+msgid "Close icon"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:791
+msgid "Well"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:792
+msgid "Small"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:793
+#: ../includes/widgets/my-comment-widget.php:139
+#: ../includes/widgets/my-facebook-widget.php:79
+#: ../includes/widgets/my-flickr-widget.php:57
+#: ../includes/widgets/my-posts-type-widget.php:205
+#: ../includes/widgets/my-recent-posts.php:126
+#: ../includes/widgets/my-recent-posts.php:148
+#: ../includes/widgets/my-social-widget.php:132
+#: ../includes/widgets/my-vcard-widget.php:151
+msgid "Title"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:794
+msgid "Template URL"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:795
+msgid "Sitemap"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:796
+msgid "Video Preview"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:797
+msgid "Tabs"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:798
+msgid "Accordion"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:799
+msgid "Table"
+msgstr ""
+
+#: ../admin/shortcodes/editor_plugin.php:800
+#: ../includes/widgets/my-vcard-widget.php:156
+msgid "Google Map"
+msgstr ""
+
+#: ../includes/shortcodes/carousel.php:18
+#: ../includes/shortcodes/hero_unit.php:13 ../includes/shortcodes/html.php:25
+#: ../includes/shortcodes/posts_grid.php:22
+#: ../includes/shortcodes/posts_list.php:19
+#: ../includes/shortcodes/post_cycle.php:19
+#: ../includes/shortcodes/service_box.php:15
+#: ../includes/widgets/my-posts-type-widget.php:145
+#: ../includes/widgets/my-recent-posts.php:87
+msgid "Read more"
+msgstr ""
+
+#: ../includes/shortcodes/carousel.php:173
+#: ../includes/shortcodes/carousel_owl.php:95
+#: ../includes/shortcodes/posts_list.php:152
+msgid "by "
+msgstr ""
+
+#: ../includes/shortcodes/media.php:82 ../includes/shortcodes/media.php:205
+#: ../includes/shortcodes/media.php:216
+#: ../includes/shortcodes/shortcodes.php:211
+#: ../includes/shortcodes/shortcodes.php:309
+#: ../includes/shortcodes/shortcodes.php:320
+msgid "Play"
+msgstr ""
+
+#: ../includes/shortcodes/media.php:83 ../includes/shortcodes/media.php:217
+#: ../includes/shortcodes/shortcodes.php:212
+#: ../includes/shortcodes/shortcodes.php:321
+msgid "Pause"
+msgstr ""
+
+#: ../includes/shortcodes/media.php:84 ../includes/shortcodes/media.php:218
+#: ../includes/shortcodes/shortcodes.php:214
+#: ../includes/shortcodes/shortcodes.php:322
+msgid "Stop"
+msgstr ""
+
+#: ../includes/shortcodes/media.php:90 ../includes/shortcodes/media.php:224
+#: ../includes/shortcodes/shortcodes.php:220
+#: ../includes/shortcodes/shortcodes.php:328
+msgid "Mute"
+msgstr ""
+
+#: ../includes/shortcodes/media.php:91 ../includes/shortcodes/media.php:225
+#: ../includes/shortcodes/shortcodes.php:221
+#: ../includes/shortcodes/shortcodes.php:329
+msgid "Unmute"
+msgstr ""
+
+#: ../includes/shortcodes/media.php:96 ../includes/shortcodes/media.php:229
+#: ../includes/shortcodes/shortcodes.php:226
+#: ../includes/shortcodes/shortcodes.php:333
+msgid "Update Required."
+msgstr ""
+
+#: ../includes/shortcodes/media.php:96 ../includes/shortcodes/media.php:229
+#: ../includes/shortcodes/shortcodes.php:226
+#: ../includes/shortcodes/shortcodes.php:333
+msgid ""
+"To play the media you will need to either update your browser to a recent "
+"version or update your "
+msgstr ""
+
+#: ../includes/shortcodes/media.php:96 ../includes/shortcodes/media.php:229
+#: ../includes/shortcodes/shortcodes.php:226
+#: ../includes/shortcodes/shortcodes.php:333
+msgid "Flash plugin"
+msgstr ""
+
+#: ../includes/shortcodes/posts_list.php:128
+#: ../includes/shortcodes/posts_list.php:137
+msgid "Posted in"
+msgstr ""
+
+#: ../includes/shortcodes/post_cycle.php:168
+msgid "Client"
+msgstr ""
+
+#: ../includes/shortcodes/post_cycle.php:169
+#: ../includes/widgets/my-comment-widget.php:90
+#: ../includes/widgets/my-recent-posts.php:147
+msgid "Date"
+msgstr ""
+
+#: ../includes/shortcodes/post_cycle.php:170
+msgid "Info"
+msgstr ""
+
+#: ../includes/shortcodes/post_cycle.php:171
+msgid "Launch Project"
+msgstr ""
+
+#: ../includes/shortcodes/shortcodes.php:210
+msgid "Previous"
+msgstr ""
+
+#: ../includes/shortcodes/shortcodes.php:213
+msgid "Next"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:13
+msgid "Add 125x125 ads."
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:17
+msgid "Cherry - 125x125 Ads."
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:60
+msgid "Ad 1"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:62
+#: ../includes/widgets/my-banners-widget.php:71
+#: ../includes/widgets/my-banners-widget.php:80
+#: ../includes/widgets/my-banners-widget.php:89
+msgid "Image Ad Link:"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:66
+#: ../includes/widgets/my-banners-widget.php:75
+#: ../includes/widgets/my-banners-widget.php:84
+#: ../includes/widgets/my-banners-widget.php:93
+msgid "Ad Link:"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:69
+msgid "Ad 2"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:78
+msgid "Ad 3"
+msgstr ""
+
+#: ../includes/widgets/my-banners-widget.php:87
+msgid "Ad 4"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:4
+msgid "Cherry - Recent Comments"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:11
+#: ../includes/widgets/my-comment-widget.php:126
+msgid "My Recent Comments"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:71
+msgid "Comment in"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:80
+#: ../includes/widgets/widgets-manager.php:478
+#: ../includes/widgets/widgets-manager.php:486
+msgid "Author"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:98
+msgid "Go to this comment"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:140
+msgid "Number of comments to show"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:141
+msgid "Display avatar"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:142
+msgid "Avatar size (px)"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:151
+msgid "Display the comment author"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:152
+msgid "Display the comment date"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:153
+msgid "Display post title"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:154
+#: ../includes/widgets/my-vcard-widget.php:191
+msgid "Meta format"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:156
+#: ../includes/widgets/my-vcard-widget.php:193
+#: ../includes/widgets/widgets-manager.php:505
+msgid "None"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:157
+#: ../includes/widgets/my-social-widget.php:209
+#: ../includes/widgets/my-vcard-widget.php:194
+msgid "Icons"
+msgstr ""
+
+#: ../includes/widgets/my-comment-widget.php:158
+#: ../includes/widgets/my-social-widget.php:210
+#: ../includes/widgets/my-vcard-widget.php:195
+msgid "Labels"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:4
+msgid "Cherry - Facebook Like Box Widget"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:9
+msgid "My Facebook Page"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:84
+msgid "Facebook page url"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:86
+msgid "The Like Box only works with "
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:86
+msgid "Facebook Pages."
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:90
+#: ../includes/widgets/my-posts-type-widget.php:347
+msgid "Width"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:95
+#: ../includes/widgets/my-posts-type-widget.php:352
+msgid "Height"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:100
+msgid "Color Scheme"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:102
+msgid "Light"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:103
+msgid "Dark"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:109
+msgid "Display header"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:113
+msgid "Display faces"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:117
+msgid "Display stream"
+msgstr ""
+
+#: ../includes/widgets/my-facebook-widget.php:121
+msgid "Display border"
+msgstr ""
+
+#: ../includes/widgets/my-flickr-widget.php:6
+msgid "Cherry - Flickr"
+msgstr ""
+
+#: ../includes/widgets/my-flickr-widget.php:59
+msgid "Flickr ID"
+msgstr ""
+
+#: ../includes/widgets/my-flickr-widget.php:60
+msgid "Images count"
+msgstr ""
+
+#: ../includes/widgets/my-flickr-widget.php:61
+#: ../includes/widgets/my-posts-type-widget.php:325
+#: ../includes/widgets/my-posts-type-widget.php:372
+#: ../includes/widgets/my-recent-posts.php:158
+msgid "Link Text"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:7
+msgid "Show custom posts"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:9
+msgid "Cherry - Advanced Cycle"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:152
+msgid "View all"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:212
+msgid "Posts type"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:229
+msgid "Number of posts to show"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:236
+msgid "Sort by"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:250
+msgid "Reverse sort order (ascending)"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:256
+msgid "Show number of comments"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:263
+msgid "Show meta"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:269
+msgid "Container class"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:270
+msgid "default: \"featured_custom_posts\""
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:275
+msgid "Post title"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:279
+msgid "Show post title"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:285
+msgid "Date as title "
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:292
+msgid "Excerpt"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:296
+msgid "Show post excerpt"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:301
+#: ../includes/widgets/my-recent-posts.php:156
+msgid "Excerpt length (words)"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:308
+msgid "Excerpt as link"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:315
+msgid "More link"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:319
+msgid "Show \"More link"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:326
+msgid "default: \"Read more\""
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:331
+msgid "Link class"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:332
+msgid "default: \"link\""
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:337
+msgid "Thumbnail dimensions"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:342
+msgid "Show post thumbnail"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:358
+msgid "Thumbnail as link"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:363
+msgid "Link to all posts"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:367
+msgid "Show global link to all posts"
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:373
+msgid "default: \"View all\""
+msgstr ""
+
+#: ../includes/widgets/my-posts-type-widget.php:378
+#: ../includes/widgets/my-recent-posts.php:160
+msgid "Link URL"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:6
+msgid "Cherry - Recent Posts"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:76
+msgid "Permanent Link to"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:128
+msgid "Category Slug"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:130
+msgid "Post format"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:133
+msgid "Standard"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:134
+msgid "Aside"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:135
+msgid "Quote"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:136
+msgid "Link"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:137
+msgid "Image"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:138
+msgid "Gallery"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:139
+msgid "Audio"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:140
+msgid "Video"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:144
+msgid "Post order"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:149
+msgid "Comment count"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:150
+msgid "Random"
+msgstr ""
+
+#: ../includes/widgets/my-recent-posts.php:154
+msgid "Posts per page"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:6
+msgid "Link to your social networks."
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:7
+msgid "Cherry - Social Networks"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:136
+msgid "Facebook"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:138
+msgid "Facebook URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:141
+msgid "Facebook label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:146
+msgid "Twitter"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:147
+msgid "Twitter URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:149
+msgid "Twitter label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:154
+msgid "Flickr"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:155
+msgid "Flickr URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:157
+msgid "Flickr label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:162
+#: ../includes/widgets/my-social-widget.php:163
+msgid "RSS feed"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:165
+msgid "RSS label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:170
+msgid "Linkedin"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:171
+msgid "Linkedin URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:173
+msgid "Linkedin label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:178
+msgid "Delicious"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:179
+msgid "Delicious URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:181
+msgid "Delicious label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:186
+msgid "Youtube"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:188
+msgid "Youtube URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:191
+msgid "Youtube label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:197
+msgid "Google+"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:199
+msgid "Google+ URL"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:202
+msgid "Google+ label"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:208
+msgid "Display"
+msgstr ""
+
+#: ../includes/widgets/my-social-widget.php:211
+msgid "Both"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:4
+msgid "Use this widget to add a vCard"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:5
+msgid "Cherry - vCard"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:32
+msgid "vCard"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:51
+#: ../includes/widgets/my-vcard-widget.php:167
+msgid "Street Address"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:52
+#: ../includes/widgets/my-vcard-widget.php:171
+msgid "City/Locality"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:53
+#: ../includes/widgets/my-vcard-widget.php:175
+msgid "State/Region"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:54
+#: ../includes/widgets/my-vcard-widget.php:179
+msgid "Zipcode/Postal Code"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:55
+#: ../includes/widgets/my-vcard-widget.php:183
+msgid "Telephone"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:56
+#: ../includes/widgets/my-vcard-widget.php:187
+msgid "Email"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:158
+msgid "Display map"
+msgstr ""
+
+#: ../includes/widgets/my-vcard-widget.php:161
+msgid "HTML map code"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:457
+msgid "Custom CSS class"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:459
+msgid "Visibility"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:462
+msgid "Visible at"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:464
+msgid "All pages"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:465
+msgid "All pages expecting"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:466
+msgid "No pages expecting"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:470
+msgid "Select page to add"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:472
+msgid "Homepage"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:473
+msgid "Page"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:474
+msgid "Post"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:475
+#: ../includes/widgets/widgets-manager.php:477
+msgid "Archive"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:476
+msgid "Tag"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:479
+msgid "Search page"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:480
+msgid "404 page"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:482
+msgid "Page ID/Title/slug"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:483
+msgid "Post ID/Title/slug"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:484
+msgid "Category ID/Name/slug"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:485
+msgid "Tag ID/Name"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:487
+msgid "Add page"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:490
+msgid "Selected pages"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:491
+msgid "No pages"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:509
+msgid "All devices"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:510
+msgid "Desktops"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:511
+msgid "Tablets"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:512
+msgid "Phones"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:513
+msgid "Desktops/Tablets"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:514
+msgid "Tablets/Phones"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:515
+msgid "Desktops/Phones"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:518
+msgid "Visible on"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:527
+msgid "All users"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:528
+msgid "Only guests"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:529
+msgid "Only registered users"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:530
+msgid "Only administrator"
+msgstr ""
+
+#: ../includes/widgets/widgets-manager.php:533
+msgid "Visible for"
+msgstr ""

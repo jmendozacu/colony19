@@ -1,0 +1,192 @@
+/*============== Hover Alternative Images ===============*/
+@mixin hover-alt-img(){
+	.alternative-img{
+			position:absolute;
+			left:0;
+			top:0;
+			opacity: 0!important;
+			filter: alpha(opacity=0)!important;
+			-moz-transition: all 500ms ease;
+			-webkit-transition: all 500ms ease;
+			-o-transition: all 500ms ease;
+			transition: all 500ms ease;
+			-moz-backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+		}
+		&:hover{
+			img{
+				opacity: 0!important;
+				filter: alpha(opacity=0)!important;
+				-moz-transition: all 500ms ease;
+				-webkit-transition: all 500ms ease;
+				-o-transition: all 500ms ease;
+				transition: all 500ms ease;
+				-moz-backface-visibility: hidden;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			img.alternative-img{
+				opacity: 1!important;
+				filter: alpha(opacity=100)!important;
+			}
+		}
+}
+.item{
+	a.product-image{
+		@include hover-alt-img();
+	}
+}
+
+.cdz-best-seller-wrap{
+	.item:not(.width-2){@include hover-alt-img();}
+	&.cdz-best-seller-wrap-hover{
+		.item{@include hover-alt-img();}
+	}
+}
+
+
+@media (min-width: 992px){
+/*button show01 Home Sport*/
+	.cdz-button-show01{
+		.products-grid .product-item-info {
+			.product-item-details{
+				-moz-transition: all 500ms ease;
+				-webkit-transition: all 500ms ease;
+				-o-transition: all 500ms ease;
+				transition: all 500ms ease;
+				-moz-backface-visibility: hidden;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				.configurable-swatch-list{
+					height: 0; 
+					@include abs-opacity(0);
+					-moz-transition: all 500ms ease;
+					-webkit-transition: all 500ms ease;
+					-o-transition: all 500ms ease;
+					transition: all 500ms ease;
+					-moz-backface-visibility: hidden;
+					-webkit-backface-visibility: hidden;
+					backface-visibility: hidden;
+				}
+				.cdz-buttons-container{
+					height:0;
+					margin-top:0;
+					display:block;
+					@include abs-opacity(0);
+					-moz-transition: all 500ms ease;
+					-webkit-transition: all 500ms ease;
+					-o-transition: all 500ms ease;
+					transition: all 500ms ease;
+					-moz-backface-visibility: hidden;
+					-webkit-backface-visibility: hidden;
+					backface-visibility: hidden;
+					.cdz-buttons-inner{display:inline-block;}
+					.action,
+					button.btn-cart,
+					.qs-button{
+						@include border-radius(100%);
+					}
+				}
+				
+			}
+			&:hover{	
+				.product-item-details{				
+					margin-top:-85px;
+					.cdz-buttons-container{
+						height:40px;
+						@include abs-opacity(1);				
+					}
+					.configurable-swatch-list{height: 100%;@include abs-opacity(1);}
+					/*.product-name{
+						margin-bottom: 12px;
+					}*/
+				}
+			}
+		}
+	}
+	.products-grid{
+		.product-item-info{
+			.cdz-product-bottom {
+				position: absolute;
+				left: 0;
+				top: 0;
+				-webkit-transform: scale(0, 0);
+				-moz-transform: scale(0, 0);
+				-ms-transform: scale(0, 0);
+				-o-transform: scale(0, 0);
+				width: 100%;
+				height: 100%;
+				z-index: 2;
+				-moz-transition: all 500ms ease;
+				-webkit-transition: all 500ms ease;
+				-o-transition: all 500ms ease;
+				transition: all 500ms ease;
+				-moz-backface-visibility: hidden;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			.cdz-buttons-container {
+				text-align: center;
+				display: table;
+				height: 100%;
+				width: 100%;
+				margin-bottom:10px;
+				form {
+					display: inline-block;
+				}
+				.cdz-buttons-inner {
+					display: table-cell;
+					vertical-align: middle;
+					.configurable-swatch-list{display:block;}
+				}
+			}	
+			&:hover .cdz-product-bottom {
+				-webkit-transform: scale(1, 1);
+				-moz-transform: scale(1, 1);
+				-ms-transform: scale(1, 1);
+				-o-transform: scale(1, 1);
+				.cdz-buttons-container {
+					.qs-button {
+						transform: translate(0, 0);
+					}
+					button.tocart.primary {
+						transform: translate(0, 0);
+					}
+				}
+			}
+		}
+	}
+
+	/*button show 02 Home Outdoor*/
+	.cdz-button-show02{
+		.products-grid .product-item-info {
+			.cdz-buttons-container{
+				position:relative;
+				button.btn-cart{
+					width:100%;
+					font-size: inherit;
+					&:before{display:none;}
+				}
+				.qs-button{
+					position:absolute;
+					left:0;
+					top:0;
+				}
+				a.action{
+					position:absolute;
+					right:0;
+					top:0;
+				}
+			}
+		}
+	}
+}
+@media (max-width: 991px){
+	.cdz-best-seller-wrap .products-grid .cdz-product-bottom{padding-top:10px;}
+}
+.products-grid .product-item-info .cdz-buttons-inner .configurable-swatch-list{display:none;}
+.products-grid .product-item-info .cdz-buttons-container .cdz-buttons-inner.actions{
+	font-size:0;
+	a,button.button{margin:0 3px;}
+}

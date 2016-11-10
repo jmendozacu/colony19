@@ -1,0 +1,244 @@
+.menu-vertical-title{
+	@include border-radius(5px 5px 0 0);
+	padding: 8px 10px 8px 20px;
+	margin-bottom: -2px;
+	position: relative;
+	z-index: 3;
+	h3{margin:0;padding:0;
+		&:before{
+			@include font-awesome(\f03a,17px);
+			margin-right:10px;
+			line-height:18px
+		}	
+	}
+}
+
+.menu-vertical{
+	position:relative;
+	z-index:2;	
+	.cdz-nav-wrap{
+		@include border-radius(5px);
+		[class*='vertical-level']{
+			.dropdown-toggle{
+				display:none!important
+			}
+		}
+		li.first.vertical-level1 a.menu-link{
+			@include border-radius(5px .5px 0 0);
+		}
+		li.last.vertical-level1 a{
+			@include border-radius(0 0 5px 5px);
+		}
+		li.vertical-level1:hover a.menu-link{
+			margin:0 -1px;
+		}
+		li.first.vertical-level1:hover a.menu-link{
+			@include border-radius(0);
+		}
+		.parent{position:relative;}
+		[class*='vertical-level']{
+			a.menu-link{
+				padding: 12px 17px;
+				line-height: 17px;
+				display:block;
+			}
+			&:hover{
+				a.vertical-level1{
+				}
+			}
+			
+			.cdz-sub-cat{
+				right: 0;
+				min-width: 100%;
+				position: absolute;
+				top: 0;
+				left: 100%;
+				margin: 0;
+				display:none;
+				padding:0;
+				@include border-radius(0px 5px 5px 0);
+				-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+				box-shadow: 0 6px 12px rgba(0,0,0,.175);
+				border-bottom:0;
+				.cdz-rtl &{
+					right:auto;
+					left:-100%;
+					@include border-radius(0px );
+				}
+				.menu-vertical-right &{
+					right:auto;
+					left:-100%;
+					@include border-radius(0px );
+				}
+				li{
+					[class*='vertical-level']{
+					display:block;
+					position:relative;
+					}
+					&.parent:after{
+						top:7px;
+					}
+					
+				}
+			}
+		}
+		.parent{
+			&:hover{			
+				> .cdz-sub-cat{
+					display:block;
+					@include transition1();
+				}
+			}
+			&:after{
+				@include font-awesome(\f054,12px);
+				text-align:right;
+				position:absolute;
+				right:10px;
+				top:15px;
+				.menu-vertical-right &{
+					content:"\f053";
+				}
+			}
+			.parent .cdz-sub-cat{top:-5px;}
+		}
+		.view-all{
+			a{
+				padding: 12px 17px;
+				line-height: 17px;
+				display:block;
+				&:before{
+					@include font-awesome(\f196,17px);
+					float:right;
+					
+				}
+			}
+		}
+	}
+}
+
+ @media (max-width: 991px){
+	.menu-vertical-title{
+		h3{
+			font:$f_h6;
+		}
+		h3:before{
+			display:none
+		}
+	}
+	.menu-vertical{
+		.cdz-nav-wrap{
+			[class*='vertical-level']{
+				a.menu-link{
+					font:$f_h6;
+					padding:10px 17px
+				}
+			}
+			li.view-all{
+				a{
+					font:$f_h6;
+					&:before{
+						@include font-awesome(\f196,12px);
+					}
+				}
+			}
+		}
+	} 
+	
+	
+}	 
+
+/*menu vertical style home Sportwear*/
+.menu-vertical-style02{
+	.nav.nav-tabs{
+		border:none;
+		.nav-tab-item{
+			margin:0;
+			float:left;
+			width:50%;
+			.switch{
+				padding: 15px 10px!important;
+				height: auto;
+				margin: 0;
+				border: none!important;
+				text-transform:uppercase;
+				@include border-radius(0px);
+				font-weight:700;
+			}
+		}
+	}
+	.nav-tab-content{
+		padding:1px 0 0;
+		.cdz-nav-wrap li.vertical-level1 a.vertical-level1{
+			padding:11px 17px;
+		}
+	}
+}
+/*Sub page*/
+.menu-vertical-subpage{
+	position:relative;
+	z-index:1;
+	.menu-vertical-title{
+		@include border-radius(5px);
+		cursor:pointer;
+		h3:after{
+			@include font-awesome(\f105,23px);
+			float:right;
+			@include transition1();
+		}
+	}
+	.space-base{
+		margin:0
+	}
+	.menu-vertical-dropdown{
+		.menu-vertical-content{
+			position:absolute;
+			display:none;
+			@include transition1();
+			width:100%;
+			-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+			box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		}
+		&.dd-open{
+			.menu-vertical-content{
+				position:absolute;
+			}
+			.menu-vertical-title{
+				@include border-radius(5px 5px 0px 0px);
+				h3:after{
+					@include font-awesome(\f107,23px);
+				}
+			}
+		}
+	}
+}
+.menu-breadcrumbs{
+	.breadcrumbs{
+		background:#f9f9f9;
+		display:block;
+		border:0;
+		padding:10px 10px 0 30px;
+		height:35px;
+		@include border-radius(0 5px 5px 0px);
+		margin:0 0 0 -30px;
+	}
+}
+
+/*=================== RTL ==================*/
+.cdz-rtl{
+	.menu-vertical .cdz-nav-wrap{
+		.parent:after{
+			left: 10px;
+			right: auto;
+			content: "\f053";
+		}
+		.view-all a:before{
+			float:left;
+		}
+		
+	}
+	.menu-vertical-title h3:before{
+		float:left;
+	}
+}
+
+

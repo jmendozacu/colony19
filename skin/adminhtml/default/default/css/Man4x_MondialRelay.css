@@ -1,0 +1,423 @@
+
+/* Pickup flags */
+.mondialrelayicon {
+    padding-left: 25px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+
+}
+.mondialrelayicon.icon-1 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_1.png");}
+.mondialrelayicon.icon-2 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_2.png");}
+.mondialrelayicon.icon-3 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_3.png");}
+.mondialrelayicon.icon-4 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_4.png");}
+.mondialrelayicon.icon-5 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_5.png");}
+.mondialrelayicon.icon-6 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_6.png");}
+.mondialrelayicon.icon-7 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_7.png");}
+.mondialrelayicon.icon-8 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_8.png");}
+.mondialrelayicon.icon-9 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_9.png");}
+.mondialrelayicon.icon-10 {background-image: url("../images/Man4x_MondialRelay/mondialrelay_mapicon_10.png");}
+
+/* 
+    Shipping methods block 
+*/
+
+#pickup-selection-link {
+    display: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* We display pickup selection link only for on-map selection, when there's only one shipping method
+or if pickup shipping method is currently active but no pickup has been selected */
+body.on-map:not(.pickup-selected) .only-method ~ #pickup-selection-link,
+body.on-map.pickup-shipping-method-selected:not(.pickup-selected) #pickup-selection-link
+{display: block;}
+
+#selected-pickup {
+    position: relative;
+    display: none;
+    margin: 10px 0 5px; padding: 10px;
+    border: 2px solid #EEE;
+    border-radius: 10px;
+    background-color: #FFF;
+}
+body.pickup-selected.on-map #selected-pickup,
+body.pickup-selected.listbox-selection #selected-pickup {display: block;}
+body.on-list.radio-selection #selected-pickup {display: none;}
+body.on-list #selected-pickup .change-link {display: none;}
+#selected-pickup address {font-style: normal; line-height: 1.1;}
+#selected-pickup .selected-pickup-address {
+    display: block;
+    margin-bottom: 2px 0 5px;
+    font-weight: bold; color: #AD004A;
+}
+#selected-pickup .links {text-align: right; cursor: pointer;}
+
+/* Checkout */
+.sp-methods label.mondialrelayicon {
+    display: inline-block;
+    line-height: 40px;
+}
+
+.method-description {
+    font-style: italic;
+    line-height: 1.2;
+}
+div.method-description {
+    margin-up: 1em;
+}
+div.method-description > p {display: none;}
+div.method-description > p.active {display: block;}
+
+
+/* 
+    Pickup Selection Form
+*/
+
+#pickup-popup {
+    display: none;
+    position: fixed;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    z-index: 999999;
+    text-align: left;
+}
+#pickup-popup.open {display: block;}
+
+#pickup-bkg {
+    width: 100%; height: 100%;
+    position: absolute; z-index: 0;
+    top: 0; left: 0;
+    -khtml-opacity: .8; -moz-opacity: .8; filter: alpha(opacity=80); opacity: .8; background: #000;   
+}
+
+.pickup-ajax-loading {
+    display: none;
+    margin: 10px;
+    text-align: center;
+    color: #AD004A;
+}
+body.pickup-please-wait .pickup-ajax-loading {
+    display: block;
+}
+
+
+#pickup-selection-form {
+    box-sizing: border-box;
+    position: absolute; z-index: 1;
+    display: table;
+    left: 50%; top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
+    width: 80%; height: 80%;
+    max-width: 1024px;
+    min-height: 400px; max-height: 800px;
+    border: 5px solid #AD004A; padding: 10px;
+    border-radius: 20px;
+    -khtml-opacity: 1; -moz-opacity: 1; filter: alpha(opacity=100); opacity: 1; background: #FFF;   
+}
+#pickup-popup:not(.use-map) #pickup-selection-form{
+    max-width: 450px;    
+    height: auto;
+}
+
+#pickup-close {
+    background-color: #AD004A;
+    position: absolute; right: 10px; top: 10px; z-index: 999;
+    text-align: center;
+    height: 20px; width: 20px;
+    line-height: 20px; 
+    cursor: pointer;
+    color: #FFF; font-weight: bold;
+    border-radius: 5px;
+}
+
+#pickup-selection-form .pickup-ajax-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    -khtml-opacity: 0.8; -moz-opacity: 0.8; filter: alpha(opacity=80); opacity: 0.8; background: #FFF; 
+    width: 100%;
+    height: 100%;
+    background: #FFF url("../images/Man4x_MondialRelay/mondialrelay_ajax_loading.gif") no-repeat 50% 50%;
+    margin: 0;
+}
+
+/* Pickup form */
+#pickup-form {display: table-row;} 
+#pickup-popup:not(.use-map) #pickup-form {display: none;}
+#pickup-form:after {clear: both;}
+#pickup-form h2 {font-size: 20px; color: #AD004A; font-weight: bold; margin: 0;}
+#pickup-form h2 + p {font-size: 11px; margin-bottom: 2px;}
+#pickup-form ul {margin: 10px 0 20px;}
+#pickup-form li > div {display: inline-block; vertical-align: middle;}
+#pickup-form li > div.btn {vertical-align: bottom;}
+#pickup-form label {color: #AD004A;}
+#pickup-form input,
+#pickup-form select {width: 90%; font-size: 18px;}
+#pickup-form .postcode {width: 10%;}
+#pickup-form .city {width: 30%;}
+#pickup-form .country {width: 20%;}
+#pickup-form .postcode {width: 20%;}
+
+#pickup-form .btn button {
+    vertical-align: bottom;
+    background-color: #3399CC;
+    border-radius: 5px;
+}
+#pickup-form .btn span {
+    display: block;
+    width: 32px; height: 26px;
+    border: none;
+    background: transparent url("../images/Man4x_MondialRelay/btn_search.png") no-repeat 50% 50%;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;
+    font-size: 18px;
+}
+
+#pickup-form .btn button:hover {background-color: #AD004A;}
+
+/* Pickup results */
+#pickup-results {
+    display: table-row;
+    height: 100%;
+    text-align: left;
+}
+#pickup-popup:not(.use-map) #pickup-results {height: 100%;}
+
+#pickup-map {
+    width: 49%; height: 100%;
+    float: right;
+    border: 3px solid #CCC;
+    border-radius: 10px;
+}
+#pickup-popup:not(.use-map) #pickup-map {display: none;}
+
+#pickup-data {
+    position: relative;
+    float: left;
+    height: 100%; width: 50%;
+    overflow-y: auto;    
+}
+#pickup-popup:not(.use-map) #pickup-data {
+    float: none;
+    width: 100%;
+}
+
+#pickup-title {font-size: 20px; color: #AD004A; font-weight: bold; margin-bottom: 15px;}
+
+#pickup-result-data {
+    position: absolute;
+    width: 100%;
+    overflow-y: auto;
+    padding-right: 10px;
+    cursor: pointer;
+}
+#pickup-result-data > p {cursor: default;font-style: italic;}
+
+#pickup-result-data .city-list {font-size: 14px;}
+
+#pickup-result-data > div {
+    position: relative;
+    padding: 5px 20px 5px 30px; margin: 0 0 15px 0;
+    border: 3px solid #EEE; 
+    border-radius: 10px;
+    background-color: #EEE;
+    /* Prevent font-awesome partial 'icon' selector */
+    display: block;
+    background-repeat: no-repeat;
+}
+#pickup-result-data > div.mondialrelayicon {background-position: 5px 5px;}
+#pickup-result-data > div.active {border-color: #ad004a;}
+#pickup-result-data h3 {
+    margin: 0 0 5px 0;
+    line-height: 1;
+    font-size: 18px; font-weight: bold;
+    color: #AD004A;
+}
+#pickup-result-data > div p {margin-bottom: 0; line-height: 1;}
+#pickup-result-data .select-link {display: block; text-align: right; font-style: italic;}
+
+#pickup-result-data .info-link,
+#selected-pickup .selected-info-link
+{
+    position: absolute;
+    top: 5px; right: 5px;
+    padding: 1px 8px;
+    background-color: #CCC;
+    border-radius: 10px;
+    color: #FFF; font-weight: bold;
+}
+#pickup-result-data .info-link:hover,
+#selected-pickup .selected-info-link:hover {
+    background-color: #39C;
+    text-decoration: none;
+}
+body.on-list.listbox-selection #pickup-result-data .select-link {
+    display: none;
+}
+
+#pickup-result-data .details {display: none;}
+#pickup-result-data .details.show {display: block;}
+#pickup-result-data .details p {line-height: 1; margin: 10px 0;}
+#pickup-result-data .details table {width: 100%;}
+#pickup-result-data .details table .day {font-weight: bold;}
+#pickup-result-data .details img {
+    display: block;
+    margin: 10px auto;
+    border: 1px solid #CCC;
+    padding: 2px;
+    max-width: 90%;
+}
+
+
+/* Read-only mode */
+#pickup-popup.read-only #pickup-selection-form {height: 50%;}
+#pickup-popup.read-only #pickup-results {height: 100%;}
+#pickup-popup.read-only #pickup-form,
+#pickup-popup.read-only #pickup-title,
+#pickup-popup.read-only .select-link,
+#pickup-popup.read-only .info-link,
+#pickup-popup.read-only #pickup-result-data > div
+{
+    display: none;
+}
+#pickup-popup.read-only #pickup-result-data {cursor: default;}
+#pickup-popup.read-only #pickup-result-data > div.active,
+#pickup-popup.read-only #pickup-result-data > div.active .details
+{
+    background-color: transparent;
+    display: block;
+}
+
+/* Shipping Address Block
+[Pickup selected] : hide default shipping address
+[Pickup selected]: show pickup address as shipping address
+*/
+address.pickup .pickup-name {
+    color: #AD004A;
+    font-weight: bold;
+    font-size: 15px;
+}
+address.pickup .pickup-name::before {
+    display: inline-block;
+    content: "";
+    width: 20px; height: 20px;
+    margin-right: 4px;
+    vertical-align: middle;
+    background: url("../images/Man4x_MondialRelay/logo_mondialrelay_20.gif") 100% 50% no-repeat;
+}
+
+/* One Step Checkout */
+body.pickup-selected #shipping-progress-opcheckout address,
+#shipping-progress-opcheckout address.pickup {
+    display: none;
+    padding: 10px;
+    border: 2px solid #EEE;
+    border-radius: 10px;
+}
+body.pickup-selected #shipping-progress-opcheckout address.pickup {display: block;}
+
+/* Paypal Express */
+.paypal-express-review.pickup-selected address:not(.pickup),
+.paypal-express-review address.pickup {
+    display: none;
+}
+.paypal-express-review.pickup-selected address.pickup {
+    background-position: 0 50%;
+    padding-left: 30px;
+}
+.paypal-express-review.pickup-selected #selected-pickup address,
+.paypal-express-review.pickup-selected address.pickup {
+    display: block !important;
+}
+
+/* Media query for devices < 800px */
+@media screen and (max-width: 800px) {
+    #pickup-selection-form h2 + p {display: none;}
+}
+
+/* Media query for devices < 640px */
+@media screen and (max-width: 640px) {
+    #pickup-selection-form {width: 90%; height: auto; border: none; padding: 10px;}
+    #pickup-form label {font-size: 9px;}
+    #pickup-map {float: none; width: 100%; height: 200px; margin-bottom: 10px;}
+    #pickup-data {float: none; width: 100%; height: 200px; margin-bottom: 10px;}
+    #pickup-result-data {margin: auto;}
+    
+    #pickup-popup.read-only #pickup-selection-form {height: auto;}
+    #pickup-popup.read-only #pickup-data {height: auto;}
+}
+
+/* Media query for devices < 420px */
+@media screen and (max-width: 420px) {
+    #pickup-form h2, #pickup-title {font-size: 16px;}
+    #pickup-form .postcode, #pickup-form .city {width: 40%;}
+    #pickup-form .country {width: 50%;}
+    #pickup-popup.read-only #pickup-result-data {position: relative;}
+}
+
+/* BACKEND */
+.mondialrelay {
+    height: 32px;
+}
+#shipment_tracking_info a.mondialrelay,
+.adminhtml-sales-order-shipment-view .mondialrelay span span span,
+.head-shipping-method.mondialrelay {
+    padding-left: 25px !important;
+    background: url("../images/Man4x_MondialRelay/logo_mondialrelay_20.gif") 0% 50% no-repeat !important;
+    display: inline-block !important;
+    height: 26px; line-height: 26px !important;
+}
+#shipment_tracking_info a.mondialrelay {margin-left: 2em; cursor: pointer;}
+
+/* Pickup selection form */
+/* To countercat the lack of boxmodel in the admin */
+#pickup-search,
+#pickup-search:hover {background: transparent;}
+#pickup-data {width: 50%;}
+#pickup-map {width: 48%;}
+
+/* Reshipping/reverse block */
+#mr-form {display: block; margin: 1em 0 2em;}
+#mr-form:not(.shipping-type-reshipping) #reshipping-methods,
+#mr-form:not(.shipping-type-return) #return-methods {display: none;}
+#mr-form.shipping-type-none .fieldset,
+#mr-form.shipping-method-none .fieldset {display: none;}
+
+#mr-form.shipping-type-return .reshipping,
+#mr-form.shipping-type-reshipping .return {display: none;}
+
+#mr-form.shipping-method-mondialrelaypickup #mondialrelayhome_form,
+#mr-form.shipping-method-mondialrelayhome #mondialrelaypickup_form {display:none;}
+
+#mr-form .fieldset {overflow: auto;}
+#mr-form #mr-message {color: red; font-weight: bold;}
+#mr-form .content {clear: both; margin: 1em;}
+#mr-form .content h4 {font-weight: bold; border-bottom: 1px solid #CCC;}
+#mr-form input,
+#mr-form textarea,
+#mr-form select {float: none; margin: 2px; padding: 2px 5px;}
+#mr-form select {width: auto !important;}
+#mr-form input[type="checkbox"] {width: auto;}
+#mr-data label {display: inline-block; width: 250px;}
+#mr-data input.narrow  {float: none; display: inline-block; width: 50px !important;}
+
+#mr-form #mr-weight,
+#mr-form #mr-packages {text-align: center;}
+#mr-form #mr-firstname,
+#mr-form #mr-lastname {width: 120px;}
+#mr-form #mr-postcode,
+#mr-form #mr-phone {width: 80px;}
+#mr-form #mr-city {clear: none; width: 204px;}
+#mr-form #mr-country,
+#mr-form #mr-email {width: 150px;}
+#mr-form #mr-region,
+#mr-form #mr-region_id {clear: none; width: 150px;}
+
+#mr-form #mr-pickup,
+#mr-form #pickup-selection-link {display: block;}
+#mr-form #selected-pickup.selected {display: block;}

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2016 Activo Extensions (http://extensions.activo.com)
+ * @license     Commercial
+ */
+-->
+<config>
+<!--    <menu>
+        <catalog>
+            <children>
+                <advancedsearch translate="title" module="advancedsearch">
+                    <title>Advanced Search</title>
+                    <action>adminhtml/advancedsearch/</action>
+                    <sort_order>233</sort_order>
+                </advancedsearch>
+            </children>
+        </catalog>
+    </menu>-->
+    <acl>
+        <resources>
+            <admin>
+                <children>
+<!--                    <catalog>
+                        <children>
+                            <advancedsearch translate="title" module="advancedsearch">
+                                <title>Advanced Search</title>
+                            </advancedsearch>
+                        </children>
+                    </catalog>-->
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <activo_advancedsearch>
+                                        <title>Advanced Search</title>
+                                    </activo_advancedsearch>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

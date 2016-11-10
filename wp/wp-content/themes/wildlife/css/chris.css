@@ -1,0 +1,232 @@
+.border{
+	border:1px solid black;
+}
+
+@font-face {
+	font-family: 'Myriad-Pro';src: url('fonts/Myriad-Pro.eot');
+	src: url('fonts/Myriad-Pro.eot?#iefix') format('embedded-opentype'),url('fonts/Myriad-Pro.woff') format('woff'),url('fonts/Myriad-Pro.ttf') format('opentype');
+}
+
+@font-face {
+	font-family: 'Myriad-Pro-Bold';src: url('fonts/Myriad-Pro-Bold.eot');
+	src: url('fonts/Myriad-Pro-Bold.eot?#iefix') format('embedded-opentype'),url('fonts/Myriad-Pro-Bold.woff') format('woff'),url('fonts/Myriad-Pro-Bold.ttf') format('opentype');
+}
+
+@font-face {
+	font-family: 'Myriad-Pro-Bolder';src: url('fonts/Myriad-Pro-Bolder.eot');
+	src: url('fonts/Myriad-Pro-Bolder.eot?#iefix') format('embedded-opentype'),url('fonts/Myriad-Pro-Bolder.woff') format('woff'),url('fonts/Myriad-Pro-Bolder.ttf') format('opentype');
+}
+
+
+body{
+	background-image: none;
+	background-color:#50A208;
+}
+
+/* Pour le footer importé depuis le site original */
+ul{
+	margin:0px;
+	padding:0px;
+	list-style-type: none;
+}
+
+.form-language.phonenumbers{
+	float:right;
+}
+/* Pour le footer importé depuis le site original */
+
+.menu{
+	margin-top:10px;
+	padding-bottom:10px;
+	list-style-type: none;
+	margin-left:5px;
+	border-bottom:2px dotted silver;
+}
+
+.menu li{
+	display:inline-block;
+	font-size:1.2em;
+	margin-right: 10px;
+}
+
+.menu li a{
+	padding:10px;
+	display:block;
+	transition:all 0.4s ease;
+}
+
+.menu li a:hover{
+	color:white;
+	background-color: #288310;
+	text-decoration: none;
+}
+
+
+
+.title-section{
+	padding-top: 0px;
+}
+
+#sidebar-search h3{
+	margin-bottom:10px;
+}
+
+#s{
+	border:1px solid silver;
+}
+
+#s:focus{
+	border:1px solid #50A208;
+}
+
+.breadcrumb{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+
+input{
+	height:auto;
+}
+
+
+
+
+
+
+
+
+
+.Post-Title{
+	/*font-family: "Six Caps";*/
+	color:#68AF27;
+	font-size:3em;
+	line-height: 2em;
+	margin-top:30px;
+}
+
+.Post-Title:hover{
+	color:#346806;
+}
+
+.Post-Title:link,
+.Post-Title:focus,
+.Post-Title:active,
+.Post-Title:visited{
+	color:#68AF27;
+}
+
+
+
+.Post-Content{
+	background-color:#ECECEC;
+	padding:20px;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+.article-zone{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding:50px;
+	-moz-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-o-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	background-color: white;
+}
+
+.zone{
+	-moz-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-o-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	background-color: white;
+}
+
+.zone-title{
+	/*font-family: "Six Caps";*/
+	font-family: 'Myriad-Pro';
+	font-size: 3em;
+	color:#50A208;
+	padding: 20px;
+	text-align: center;
+}
+
+
+
+#Contact p{
+	margin-bottom: 10px;
+	margin-left:5%;
+	width:80%;
+}
+
+#Contact p input,
+#Contact p textarea{
+	border:1px solid silver;
+}
+
+#Contact p input:focus,
+#Contact p textarea:focus{
+	border-color:#50A208;
+}
+
+#Contact p textarea{
+	width:100%;
+}
+
+#Contact input[type="submit"]{
+	background-color: #50A208;
+	border:0px;
+	color:white;
+	/*font-family: "Six Caps";*/
+	padding:10px;
+	height:auto;
+	font-size: 2em;
+
+
+}
+
+/*Pour les flèches du slider */
+.camera_prev {
+    left: 0;
+}
+.camera_next{
+	right:0;
+}
+
+#galImages{
+
+}
+
+.fadein { 
+	position:relative;  
+	height: 250px;
+}
+.fadein img { 
+	position:absolute; 
+	left:0; 
+	top:0;
+}
+
+
+/* Modules */
+#Slider, #Contact, #selectedProducts, #galImages, #lastArticles, #Utilities, #lastVideos, #Utilities, #Page, #Footer{
+	margin-top:20px;
+	margin-bottom:20px;
+	-moz-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	-o-box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	box-shadow: 5px 5px 50px 0px rgba(0,0,0,0.25);
+	background-color: white;
+	border-bottom:4px solid #64AA25;
+	border-top:2px solid #64AA25;
+}
+/* Spécification sur certain modules */
+#Page, #Footer{
+	padding:20px;
+}
+
+
+

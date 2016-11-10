@@ -1,0 +1,21 @@
+.cdz-rtl{
+	/*custom rtl default*/
+	.cdz-col-left{float:right;}
+	.cdz-col-right{float:left;}
+	
+	/*codazon menu*/
+	.cdz-main-menu{
+		.groupmenu-drop{
+			right: -9999px;
+			left: auto
+		}
+	}
+	.block:not(.block-static-block) .block-content{
+		text-align:right;
+		clear:right;
+	}
+	.logo{
+		float:right;
+	}
+	.configurable-swatch-list li{float:right;}
+}

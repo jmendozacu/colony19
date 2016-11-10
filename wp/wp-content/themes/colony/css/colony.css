@@ -1,0 +1,295 @@
+
+
+
+
+
+/* Header ================================================================================ */
+.logo { float:left; padding:0px;}
+.header-container { border-top:2px solid #50a208; padding-top:5px;}
+.header { text-align:right; position:relative; z-index:10; }
+.header .logo { float:left; margin:3px 0 0px 0px; text-decoration:none !important; }
+.header .logo strong { position:absolute; top:-999em; left:-999em; width:0; height:0; font-size:0; line-height:0; text-indent:-999em; overflow:hidden; }
+.header h1.logo { margin:0; }
+.header .quick-access { padding:10px 0 0 0px;}
+.header .welcome-msg { margin:0; color:#fff; text-align:right; }
+.header .welcome-msg a { color:#ebbc58; }
+.header .form-search { width: 347px;height: 31px;float: left;padding:7px 0 0;margin-bottom: 15px;margin-right: 20px; }
+.header .form-search label { display: none;}
+.header .form-search input.input-text { border: 1px solid #B9B9B9;border-radius: 3px;width: 300px;height: 6px;margin: 0px;padding-right: 32px;color: #B9B9B9;padding-left: 12px;float: left; }
+.header .form-search button.button { float:left; width: 33px;margin-left: -33px;height: 31px;background: url('images/theme/recherche.png');border:0px;}
+.header .form-search button.button span { background: none;border: none;padding:0px;display: none; }
+.header .form-search button.button span span {  }
+.header .form-search .search-autocomplete { z-index:999; left:283px !important; top:46px !important; }
+.header .form-search .search-autocomplete ul { border:1px solid #5c7989; background-color:#f9f5f0; }
+.header .form-search .search-autocomplete li { text-align:left; border-bottom:1px solid #f4eee7; padding:2px 8px 1px 8px; cursor:pointer; }
+.header .form-search .search-autocomplete li .amount { float:right; font-weight:bold; }
+.header .form-search .search-autocomplete li.odd { background-color:#fffefb; }
+.header .form-search .search-autocomplete li.selected { background-color:#f7e8dd; }
+.header .form-language,.footer .form-language { text-align: left;height: 21px;}
+.header .form-language a,.footer ul.form-language li a { padding-left: 27px;color: #888888;text-decoration: none; background: none 4px 3px no-repeat transparent;}
+.header .form-language a.fr,.footer ul.form-language li a.fr{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/fr.gif);}
+.header .form-language a.en,.footer ul.form-language li a.en{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/en.gif);}
+.header .form-language a.be,.footer ul.form-language li a.be{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/be.gif);}
+.header .form-language a.ch,.footer ul.form-language li a.ch{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/ch.gif);/*padding-left: 20px;*/}
+.header .form-language a.it,.footer ul.form-language li a.it{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/it.gif);}
+.header .form-language a.es,.footer ul.form-language li a.es{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/es.gif);}
+.footer ul.form-language li {float:left;margin-right:10px;}
+.footer ul.form-language li.es{margin-left:3px;}
+.footer ul.form-language li.es.first{margin-left:0px;}
+.footer .partie1 li ul li a.mailto{color: #888888;margin-left:10px;}
+
+.header .phonenumbers{ /*float:right;*/ float:none; margin: 0; width:auto;}
+.footer .phonenumbers { float:left; margin: 0 0px 25px 0;padding:0 10px 0 0; }
+.header .phonenumbers li , .footer .phonenumbers li { float:left; font-size:14px; padding:0 5px 0 0; color:#464646;text-decoration:none;}
+.header .phonenumbers span, .footer .phonenumbers span{margin-left:2px;}
+.header .phonenumbers li.first, .footer .phonenumbers  li.first {padding-left: 0 !important;}
+.header .phonenumbers li.last, .footer .phonenumbers  li.last {padding-right: 0 !important;}
+
+.header .links { /*float:right;*/ float:none; width:auto; }
+.header .links li { float:left; font-size:14px; padding:0 15px 0 0px; }
+.header .links a { color:#51A208;text-decoration:none;letter-spacing:1px;font-family: 'Myriad-Pro';}
+.header-container .top-container { clear:both; padding:5px 10px 0 12px; text-align:right; }
+.header-container .top-container a { font-size:11px; color:#ebbc58; }
+
+
+/********** < Navigation */
+.nav-container { }
+#nav { width: 1063px;margin:0 auto; font-size:13px; padding:0 19px;height: 80px;}
+
+/* All Levels */ /* Style consistent throughout all nav levels */
+#nav li { position:relative; text-align:left; }
+#nav li.over { z-index:998;}
+#nav li.level0.over {color:#51A208; border:1px solid rgba(200, 200, 200, 0.5);border-bottom:none;-moz-border-radius-topleft: 10px;-webkit-border-top-left-radius: 10px; border-top-left-radius: 10px;-moz-border-radius-topright: 10px;-webkit-border-top-right-radius: 10px;border-top-right-radius: 10px;}
+#nav a,
+#nav a:hover { display:block; line-height:12px; text-decoration:none;font-size:14px;padding-bottom:5px;width: 60px; }
+#nav .level1 a,
+#nav .level1 a:hover{width:160px;text-align:left;line-height: 12px;}
+#nav a {font-weight: bold;color:#51A208;}
+#nav .level-top a.level-top{color:#51A208;margin-left: -20px;font-weight:normal;
+padding-left: 20px;
+padding-right: 20Px;
+margin-right: -20px;
+/*background: url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/fleche-sous-menu.png) no-repeat 80px 16px;*/
+}
+#nav a:hover { color:#51A208;}
+#nav li.level0.nav-2 a.level-top{width: 100px;background-position:100px 16px;}
+
+#nav span {display: block;line-height: 30px;vertical-align: bottom;margin-bottom:7px;margin-top:-40px;}
+#nav span img{vertical-align:bottom;}
+#nav li ul span {white-space:normal; }
+
+
+/* 0 Level */
+#nav li { float:left;width:58px;padding:0px 45px;text-align:center; border:1px solid white;}
+#nav li.level0.nav-2{width: 100px;padding: 0px 25px;}
+#nav li.active a.level-top{ font-weight:bold; }
+#nav li a.level-top:hover{ font-weight:bold; }
+#nav li.level0.parent,#nav li.level0.level-top{
+	height:27px;
+	margin-top:35px;
+	padding-top:5px;
+}
+
+#nav li.level0.parent:hover{background-color:#FFF;} 
+#nav li.level0.parent:hover ul{}
+
+#nav li.level0.parent ul.level0{border: 1px solid rgba(200, 200, 200, 0.5);-webkit-box-shadow:3px 3px 5px rgba(50, 50, 50, 0.75);-moz-box-shadow:3px 3px 5px rgba(50, 50, 50, 0.75);box-shadow:3px 3px 5px rgba(50, 50, 50, 0.75);}
+
+#nav li.level0.nav-2 ul.shown-sub{left: -1px;}
+#nav li.level0.nav-1 ul.shown-sub{left: -1px;}
+#nav li.level0.nav-3 ul.shown-sub{left: -183px;}
+#nav li.level0.nav-4 ul.shown-sub{left: -333px;}
+#nav li.level0.nav-5 ul.shown-sub{left: -483px;}
+#nav li.level0.nav-6 ul.shown-sub{left: -633px;}
+#nav li.level0.nav-7 ul.shown-sub{left: -783px;}
+
+#nav li.level0 ul.shown-sub ul{left: 0!important;padding: 0!important;}
+#nav li.level0 ul.shown-sub li.parent{list-style-type:none;float:left;}
+
+#nav li a.level-top .blanc{background-color: white;display: none;height: 6px;margin: 0 0 0 -45px;position: absolute;width: 148px; z-index: 100000;}
+#nav li.level0.nav-2 a.level-top .blanc{margin: 0 0 0 -25px;width: 150px;}
+#nav li.over a.level-top span.blanc{display: block;}
+
+/* 1st Level */
+#nav ul li,
+#nav ul li.active {margin:0; background:#FFF;border:1px solid #FFF; width:160px;padding:0px;margin:0 5px 5px 10px;list-style-type:disc ;color:#F09900;line-height:12px;}
+#nav ul li span{padding:0px;}
+#nav ul li span img{width:100px;}
+#nav ul li.last { }
+
+#nav ul a,
+#nav ul a:hover { float:none; padding:0; background:none; }
+#nav ul li a { font-weight:normal !important; }
+
+/* 2nd Level */
+#nav ul, 
+#nav div { position:absolute; width:160px; left:-10000px;background: #FFF; padding: 5px 5px;}
+#nav div ul { position:static; width:auto; border:none; } 
+
+
+
+/* 3rd+ Level */
+#nav ul ul,
+#nav ul div { top:5px; display: block;    left: 0;    position: relative;}
+
+#nav ul li a { }
+#nav ul li a:hover { } 
+#nav ul li a{ color:#51A208; }
+#nav ul li a:hover { color:#F09900; }
+#nav ul span,
+#nav ul li.last li span { padding:3px 15px 4px 15px; }
+
+#nav li.level0 ul.shown-sub li.parent .parent_title,#nav li.level0 ul.shown-sub li.parent .parent_title a{color:#F09900;line-height:12px; text-decoration:none;font-size:14px;width:160px;font-weight:bold !important;text-align:left;margin:0 5px 5px 5px;padding:0 5px 5px 5px;top:0;}
+
+/* Show menu */
+#nav li ul.shown-sub,
+#nav li div.shown-sub { left:0px; z-index:999;padding:15px; }
+#nav li .shown-sub ul.shown-sub,
+#nav li .shown-sub li div.shown-sub { left:100px; }
+/********** Navigation > */
+/* ======================================================================================= */
+tr td{
+	padding-right:20px !important;
+	border:0px !important;
+}
+
+tr td img{
+	border:1px solid silver;
+}
+
+
+
+
+
+
+
+/* Footer ================================================================================ */
+.footer-container {  }
+.footer { width:962px; margin:0 auto; padding:10px 60px 0px; background: url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/separateurfooter.png) no-repeat top center;}
+.footer .store-switcher { display:inline; margin:0 5px 0 0; color:#fff; }
+.footer .store-switcher label { font-weight:bold; vertical-align:middle; }
+.footer .store-switcher select { padding:0; vertical-align:middle; }
+.footer a { color:#fff; text-decoration:none; }
+.footer a:hover { text-decoration:underline; }
+.footer .bugs { margin:13px 0 0; color:#ecf3f6; }
+.footer .bugs a { color:#ecf3f6; text-decoration:underline; }
+.footer .bugs a:hover { text-decoration:none; }
+.footer address { margin:0 0 20px; color:#ecf3f6; }
+.footer address a { color:#ecf3f6; text-decoration:underline; }
+.footer address a:hover { text-decoration:none; }
+.footer ul { display:inline; }
+.footer ul.links { display:block; }
+.footer li { display:inline; padding:0 7px 0 4px; }
+.footer li.last { background:none !important; padding-right:0 !important; }
+.footer-container .bottom-container { margin:0 0 5px; }
+
+.footer .partie1{display:block;}
+.footer .partie1 li{padding: 0px;margin: 3px 0px 0px 1px;float: left;text-align: left;font-size: 22px;width: 168px;}
+.footer .partie1 li.col3{width:158px;}
+.footer .partie1 li.col4{width:165px;}
+.footer .partie1 li.col5, .footer .form-language{width:288px;}
+.footer .partie1 li.col5 li{width:auto;}
+.footer .partie1 li ul{padding-top: 2px;float: left;}
+.footer .partie1 li ul li{display: block;margin-top: 7px;font-size: 14px;padding: 0px;float: none;margin-left: 0px;}
+.footer .partie1 li ul li a{color:#2f2f2f;}
+.footer .partie1 #newsletter-validate-detail #newsletter{background:none;border: 1px solid #D8D8D8;margin-top: 2px;width: 213px;height: 28px;border-radius: 4px;color: #000000;float: left;padding-right: 40px;margin-bottom: 2px;}
+.footer .partie1 #newsletter-validate-detail button{margin-left: -34px;width: 34px;float: left;background: url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/ok-newsletter.png);height: 34px;margin-top: 2px;}
+.footer .partie1 #newsletter-validate-detail button span{display:none;}
+.footer .partie2{display:block;clear: both;width: 100%;height: 1px;padding-top: 18px;background: url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/separateurfooter.png) no-repeat center 13px;}
+.footer .partie2 li{padding: 0px;margin: 9px 20px 0px 2px;float: left;text-align: left;font-size: 22px;width: auto;}
+.footer .partie3{float:right;}
+.footer .partie3{padding-top: 16px;}
+.footer .partie3 a { padding-left: 25px;color: #B9B9B9;text-decoration: none; background: none 4px 1px no-repeat transparent;width: 0px;height: 13px;display: inline-block;}
+.footer .partie3 a.fr{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/fr.gif);}
+.footer .partie3 a.en{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/en.gif);}
+.footer .partie3 a.it{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/it.gif);}
+.footer .partie3 a.es{background-image:url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/flags/es.gif);}
+
+.footer .partie4{display:block;clear: both;width: 100%;height: 1px;padding-top: 9px;background: url(http://www.colony-perroquet.fr/skin/frontend/colony/default/images/separateurfooter.png) no-repeat center 9px;}
+.footer .partie4 li{padding: 0px;margin: 9px 15px 0px 2px;float: left;text-align: left;font-size: 22px;width: auto;}
+.footer .partie4 li img{margin-top:6px;}
+.footer-link > p{clear: both;text-align: left;font-size: 14px;padding-top: 25px;color: #68676A;}
+.footer-link > a{float: right;color: #68676A;}
+.footer-container{border-bottom:1px solid #d8d8d8;}
+
+
+
+
+@media (max-width: 480px){
+
+.footer {
+    background: rgba(0, 0, 0, 0) url("http://www.colony-perroquet.fr/skin/frontend/colony/default/images/separateurfooter.png") no-repeat scroll center top;
+    margin: 0 auto;
+    padding: 10px 60px 0;
+    width: 480px;
+}
+
+.zblock .zblock-menu-bottom {
+    width: 803px;
+}
+
+.header .quick-access .form-search input.input-text {
+
+    margin: auto;
+    width: auto;
+
+  }  
+#search_mini_form{
+width: auto;
+
+
+
+}
+
+.header .form-search {
+    float: inherit;
+    margin:auto;
+    width: auto;
+}
+
+.header .links {
+    float: left;
+    width: auto;
+}
+
+.header .links li {
+    float: left;
+    font-size: 16px;
+    margin-top: 15px;
+    padding: 1px 45px 0 0;
+}
+
+
+
+
+.header .quick-access {
+    padding: 10%;
+    width: auto;
+}
+
+
+
+.header .logo{
+    float:none;
+}
+
+
+.header h1.logo {
+    margin: 0;
+    text-align: center;
+}
+}
+
+
+@media (max-width: 992px){
+.footer {
+    background: rgba(0, 0, 0, 0) url("http://www.colony-perroquet.fr/skin/frontend/colony/default/images/separateurfooter.png") no-repeat scroll center top;
+    margin: 0 auto;
+    padding: 10px 60px 0;
+   
+}
+
+.zblock .zblock-menu-bottom {
+    width: 803px;
+}
+}

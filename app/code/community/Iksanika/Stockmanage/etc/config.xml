@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Iksanika_Stockmanage>
+            <version>1.2.1</version>
+        </Iksanika_Stockmanage>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <!--stockmanage after="Mage_Adminhtml">Iksanika_Stockmanage</stockmanage-->
+                        <stockmanage after="Mage_Adminhtml">Iksanika_Stockmanage_Adminhtml</stockmanage>
+                    </modules>
+                </args>
+            </adminhtml>
+<!--            
+            <routers>
+                <adminhtml>
+                    <args>
+                        <modules>
+                            <customgrid after="Mage_Adminhtml">BL_CustomGrid</customgrid>
+                        </modules>
+                    </args>
+                </adminhtml>
+            </routers>
+-->
+            <!--
+            <admin>
+                <routers>
+                    <adminhtml>
+                        <args>
+                            <modules>
+                                <custom_module
+                                    after="Mage_Adminhtml">Adminhtml</custom_module>
+                            </modules>
+                        </args>
+                    </adminhtml>
+                </routers>
+            </admin>
+            -->
+            <!--
+            <stockmanage>
+                < ! - - should be set to "admin" when overloading admin stuff (?) - - >
+                <use>admin</use>
+                <args>
+                    <module>Iksanika_Stockmanage</module>
+                    < ! - - This is used when "catching" the rewrite above - - >
+                    <frontName>stockmanage</frontName>
+                </args>
+            </stockmanage>
+            -->
+        </routers>
+    </admin>
+    <global>
+        <blocks>
+            <stockmanage>
+                <class>Iksanika_Stockmanage_Block</class>
+            </stockmanage>
+        </blocks>
+        <helpers>
+            <stockmanage>                                                                                                     
+                <class>Iksanika_Stockmanage_Helper</class>                                                                         
+            </stockmanage>                                                                                                    
+        </helpers>                                                                                                             
+        <blocks>                                                                                                               
+            <adminhtml>                                                                                                          
+                <rewrite>
+                    <!-- widget_grid_column>Iksanika_Stockmanage_Block_Widget_Grid_Column</widget_grid_column -->
+                </rewrite>                                                                                                         
+            </adminhtml>                                                                                                         
+        </blocks>
+        <models>
+            <catalog_resource_eav_mysql4>
+                <rewrite>
+                    <product_collection>Iksanika_Stockmanage_Model_Resource_Eav_Mysql4_Product_Collection</product_collection>
+                </rewrite>
+            </catalog_resource_eav_mysql4>
+        </models>
+                                                                                                                           
+    <!-- Relate Stuff -->                                                                                                  
+    </global>    
+    <adminhtml>                                                                                                            
+        <layout>                                                                                                           
+            <updates>                                                                                                      
+                <stockmanage>                
+                    <file>iksanika_stockmanage.xml</file>                                                                      
+                </stockmanage>                                                                                            
+            </updates>                                                                                                     
+        </layout>
+        <menu>                                                                                                             
+            <catalog module="stockmanage">                                                                    
+                <children>                                                                                         
+                    <stockmanage module="stockmanage">                                               
+                        <title>Stock Inventory Manager</title>                                  
+                        <sort_order>0</sort_order>
+                        <!--
+                        <action>stockmanage/catalog_product</action>
+                        -->
+                        <action>adminhtml/stockmanage/index</action>
+                    </stockmanage>                                                                    
+                </children>                                                                                
+            </catalog>                                                                                         
+        </menu>    
+    </adminhtml>                                                                                                            
+    <adminhtml>                                                                                                            
+        <acl>                                                                                                              
+            <resources>                                                                                                      
+                <all>                                                                                              
+                    <title>Allow Everything</title>                                                            
+                </all>                                                                                             
+                <admin>                                                                                                        
+                    <children>                                                                                                   
+                        <catalog>                                                                                                
+                            <children>                                                                                         
+                                <stockmanage>                                                                     
+                                    <title>Stock Inventory Manager</title>                                                         
+                                </stockmanage>                                                                    
+                            </children>                                                                                
+                        </catalog>                                                                                               
+                        <system>                                                                                                 
+                            <children>                                                                                           
+                                <config>                                                                                           
+                                    <children>                                                                                       
+                                        <stockmanage>                                                                                 
+                                            <title>Stock Invetory Manager Config</title>                                                          
+                                        </stockmanage>                                                                                
+                                    </children>                                                                                      
+                                </config>                                                                                          
+                            </children>                                                                                          
+                        </system>                                                                                                
+                    </children>                                                                                                  
+                </admin>                                                                                                       
+            </resources>                                                                                                     
+        </acl>                                                                                                             
+    </adminhtml>        
+</config>

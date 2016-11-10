@@ -1,0 +1,89 @@
+/*Header 06 - BigMarket*/
+.cdz-header-style-06{
+	position:relative;
+	.cdz-header-cart{
+		
+	}
+	.menu-vertical-block{margin:0;}
+	.sticky-menu:not(.active){
+		.cdz-main-menu .groupmenu li.level0 > a.menu-link{
+			padding:20px;
+		}
+		.cdz-left-menu{
+			.menu-vertical-title{
+				padding:20px 20px;
+			}
+		}
+		.cdz-top-cart{display:inline-block;}
+		h1.logo{margin-top:8px;}
+		.block-search{
+			width:100%;
+			margin-top:8px;
+		}
+		.cart-icon{
+			position:relative;
+			display:inline-block;
+			float:right;
+			padding-left:60px;
+			&:before{
+				background-position: 12px -27px;
+				width: 56px;
+				min-height: 54px;
+				border-radius:100%;
+				border:2px solid;
+				float:left;
+				position:absolute;
+				top:0;
+				left:0;
+			}
+			.cart-label{
+				display:block;
+				text-transform:uppercase; 
+				font-size:120%; 
+				float:right; 
+				margin-left:20px;
+				margin-top: 7px;
+			}
+			.cart-subtotal{
+				float:right; 
+				clear:right;
+				.price{
+					min-height:1px;
+					padding: 0px 0 0px 15px;
+				}
+			}
+			.cart-qty{
+				top:-2px;
+				font-weight:normal;
+				right:auto;
+				left:35px;
+				height: 20px;
+				line-height: 23px;
+				font-size: 13px;
+				padding: 0 7px;
+			}
+		}
+	}
+	.menu-vertical{display:none;}
+	.cdz-left-menu{
+		position:relative;
+		&:hover .menu-vertical{
+			display:block;
+			position:absolute;
+			left:0;
+			width:100%;
+		}
+	}
+	.cms-index-index &{
+		.cdz-left-menu:hover .menu-vertical{display:none;}
+		.sticky-menu.active{
+			.cdz-left-menu{
+				position:relative;
+				&:hover .menu-vertical{
+					display:block;
+				}
+			}
+		}
+	}
+}
+

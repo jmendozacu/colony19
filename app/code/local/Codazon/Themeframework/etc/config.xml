@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+		<Codazon_Themeframework>
+			<version>0.1.0</version>
+		</Codazon_Themeframework>
+	</modules>
+	<global>
+		<rewrite>
+			<category_url>
+				<from><![CDATA[/themeframework\/category\/(.*)/]]></from>
+				<to><![CDATA[themeframework/category/index/id/$1/]]></to>
+				<complete>1</complete>
+			</category_url>
+		</rewrite>
+		<cache>
+			<types>
+				<codazon_themeframework>
+					<label>Codazon Theme</label>
+					<description>Themeframework Cache</description>
+					<tags>codazon_themeframework</tags>
+				</codazon_themeframework>
+			</types>
+		</cache>
+		<helpers>
+			<themeframework>
+				<class>Codazon_Themeframework_Helper</class>
+			</themeframework>
+		</helpers>
+		<blocks>
+			<themeframework>
+				<class>Codazon_Themeframework_Block</class>
+			</themeframework>
+		</blocks>
+		<models>
+			<themeframework>
+				<class>Codazon_Themeframework_Model</class>
+			</themeframework>
+		</models>
+	</global>
+	<frontend>
+		<routers>
+			<themeframework>
+                <use>standard</use>
+                <args>
+                    <module>Codazon_Themeframework</module>
+                    <frontName>themeframework</frontName>
+                </args>
+            </themeframework>
+		</routers>
+		<layout>
+            <updates>
+                <themeframework module="Codazon_Themeframework">
+                    <file>codazon_themeframework.xml</file>
+                </themeframework>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Codazon_Themeframework>
+                    <files>
+                        <default>Codazon_Themeframework.csv</default>
+                    </files>
+                </Codazon_Themeframework>
+            </modules>
+        </translate>
+	</frontend>
+	<adminhtml>
+		<layout>
+            <updates>
+                <themeframework module="Codazon_Themeframework">
+                    <file>codazon_themeframework.xml</file>
+                </themeframework>
+            </updates>
+        </layout>
+		<menu>
+			<themeframework module="themeframework">
+				<title>Codazon Theme</title>
+				<sort_order>100</sort_order>
+				<children>
+					<fastest_theme>
+						<title>Fastest Theme</title>
+						<sort_order>0</sort_order>
+						<children>
+							<themeframework_setting module="themeframework">
+								<title>Theme Settings</title>
+								<sort_order>10</sort_order>
+								<action>adminhtml/system_config/edit/section/codazon_settings</action>
+							</themeframework_setting>
+						</children>
+					</fastest_theme>
+				</children>
+			</themeframework>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<themeframework_setting translate="title" module="themeframework">
+							<title>Codazon Theme</title>
+							<sort_order>1000</sort_order>
+							<children>
+								<fastest_theme>
+									<title>Fastest Theme</title>
+									<sort_order>10</sort_order>
+									<children>
+										<themeframework_setting module="themeframework">
+											<title>Theme Settings</title>
+											<sort_order>0</sort_order>
+										</themeframework_setting>
+									</children>
+								</fastest_theme>
+							</children>
+						</themeframework_setting>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<default>
+		<codazon_settings>
+			<general>
+				<boxedwide>1</boxedwide>
+				<enable_rtl>0</enable_rtl>
+			</general>
+			<header>
+				<enable_ajaxcart>1</enable_ajaxcart>
+				<use_default_menu>0</use_default_menu>
+				<enable_sticky>1</enable_sticky>
+				<category_search>0</category_search>
+				<category>2</category>
+				<category_levels>1</category_levels>
+			</header>
+			<category_view>
+				<alternative_image>1</alternative_image>
+				<alternative_image_type>image</alternative_image_type>
+				<keep_image_aspect_ratio>0</keep_image_aspect_ratio>
+				<image_width>300</image_width>
+				<image_height>375</image_height>
+				<show_compare_wishlist>1</show_compare_wishlist>
+				<show_rating>1</show_rating>
+				<show_description>1</show_description>
+				<show_label>1</show_label>
+				<label_type><![CDATA[new,sale]]></label_type>
+				<enable_hover_effect>1</enable_hover_effect>
+				
+				<products_per_row_desktop_1>5</products_per_row_desktop_1>
+				<products_per_row_tablet_landscape_1>4</products_per_row_tablet_landscape_1>
+				<products_per_row_tablet_portrait_1>3</products_per_row_tablet_portrait_1>
+				<products_per_row_mobile_1>2</products_per_row_mobile_1>
+				
+				<products_per_row_desktop_2>4</products_per_row_desktop_2>
+				<products_per_row_tablet_landscape_2>3</products_per_row_tablet_landscape_2>
+				<products_per_row_tablet_portrait_2>2</products_per_row_tablet_portrait_2>
+				<products_per_row_mobile_2>2</products_per_row_mobile_2>
+				
+				<products_per_row_desktop_3>3</products_per_row_desktop_3>
+				<products_per_row_tablet_landscape_3>2</products_per_row_tablet_landscape_3>
+				<products_per_row_tablet_portrait_3>2</products_per_row_tablet_portrait_3>
+				<products_per_row_mobile_3>2</products_per_row_mobile_3>
+			</category_view>
+			<product_view>
+				<keep_image_aspect_ratio>0</keep_image_aspect_ratio>
+				<base_image_width>1000</base_image_width>
+				<base_image_height>1231</base_image_height>
+				<more_view_image_width>95</more_view_image_width>
+				<more_view_image_height>117</more_view_image_height>
+				<more_view_thumb_style>1</more_view_thumb_style>
+				<disable_zoom>0</disable_zoom>
+			</product_view>
+			<custom_tabs>
+				<show_custom_tabs>1</show_custom_tabs>
+				<show_block_tab_1>1</show_block_tab_1>
+				<show_block_tab_2>1</show_block_tab_2>
+				<show_block_tab_3>0</show_block_tab_3>
+				<custom_tab_title_1>Custom Tab 1</custom_tab_title_1>
+				<custom_tab_title_2>Custom Tab 2</custom_tab_title_2>
+				<custom_tab_title_3>Custom Tab 3</custom_tab_title_3>
+				<cms_block_tab_1><![CDATA[fastest-default-product-custom-tab-1]]></cms_block_tab_1>
+				<cms_block_tab_2><![CDATA[fastest-default-product-custom-tab-2]]></cms_block_tab_2>
+				<cms_block_tab_3><![CDATA[fastest-default-product-custom-tab-3]]></cms_block_tab_3>
+			</custom_tabs>
+			<newsletter_popup>
+				<enable_newsletter_popup>1</enable_newsletter_popup>
+				<newsletter_static_block_id>fastest-all-popup-newsletter-popup</newsletter_static_block_id>
+			</newsletter_popup>
+			<contact_us>
+				<show_google_map>1</show_google_map>
+				<latitude><![CDATA[45.6107667]]></latitude>
+				<longtitude><![CDATA[-73.6108024]]></longtitude>
+				<map_height>300</map_height>
+				<zoom>10</zoom>
+				<address><![CDATA[6505 boulevard Henri-Bourassa, Montréal, Quebec, H1G2V5]]></address>
+				<contact_info><![CDATA[
+					<p><strong>Adress:</strong> 6505 boulevard Henri-Bourassa, Montréal, Quebec, H1G2V5</p>
+					<p><strong>Phone Number:</strong> (514) 955-9337</p>
+				]]></contact_info>
+			</contact_us>
+		</codazon_settings>
+	</default>
+</config>

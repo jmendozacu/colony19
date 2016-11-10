@@ -1,0 +1,15 @@
+.awzblock-mss-image img {
+    width: 200px;
+    height: 200px;
+}
+
+.awzblock-mss-notice {
+    padding-left: 10px;
+    width: 500px;
+    text-align: justify;
+}
+
+#awzb_categories_error,
+#awzb_products_error {
+    font-weight: bold;
+}
