@@ -99,5 +99,3 @@ if ( !defined('ABSPATH') )
 
 /** Réglage des variables de WordPress et de ses fichiers inclus. */
 require_once(ABSPATH . 'wp-settings.php');
-
-update_option('home', 'http://colony19.agentom.com/blog-colony');
