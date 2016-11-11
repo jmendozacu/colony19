@@ -16883,6 +16883,10 @@ body {
   visibility: inherit;
 }
 
+.cdz-main-menu .groupmenu li {position:relative;}
+.cdz-main-menu.default-menu .groupmenu .groupmenu-drop li.parent:hover > .groupmenu-drop {left:100%; top:-15px;}
+.cdz-main-menu.default-menu .groupmenu .groupmenu-drop li{margin:5px 0;}
+
 .cms-index-index .cdz-main-menu .groupmenu li.level0.nav-home > a.menu-link {
   cursor: pointer;
 }
@@ -17027,7 +17031,7 @@ body {
   display: inline-block;
   float: left;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link {
   text-transform: uppercase;
   -moz-transition: all 500ms ease;
   -webkit-transition: all 500ms ease;
@@ -17046,7 +17050,7 @@ body {
   color: white;
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link:visited, .cdz-main-menu .groupmenu li.level0 a.menu-link:hover, .cdz-main-menu .groupmenu li.level0 a.menu-link:active {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:visited, .cdz-main-menu .groupmenu li.level0 > a.menu-link:hover, .cdz-main-menu .groupmenu li.level0 > a.menu-link:active {
   color: white;
   text-decoration: none;
 }
@@ -17393,7 +17397,7 @@ body {
 .cdz-main-menu .groupmenu li.level0 > .dropdown-toggle {
   display: none;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link {
   text-transform: uppercase;
   -moz-transition: all 500ms ease;
   -webkit-transition: all 500ms ease;
@@ -17412,9 +17416,9 @@ body {
   color: white;
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link:hover,
-.cdz-main-menu .groupmenu li.level0 a.menu-link:active,
-.cdz-main-menu .groupmenu li.level0 a.menu-link:visited {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:hover,
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:active,
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:visited {
   color: white;
   text-decoration: none;
 }
@@ -24205,11 +24209,11 @@ button:hover {
   font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
-.cdz-main-menu .groupmenu li.level0 a.menu-link {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link {
   color: white;
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link:visited, .cdz-main-menu .groupmenu li.level0 a.menu-link:hover, .cdz-main-menu .groupmenu li.level0 a.menu-link:active {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:visited, .cdz-main-menu .groupmenu li.level0 > a.menu-link:hover, .cdz-main-menu .groupmenu li.level0 > a.menu-link:active {
   color: white;
 }
 .cdz-main-menu .groupmenu li.level0:hover > a.menu-link {
@@ -24267,13 +24271,13 @@ button:hover {
     color: white;
   }
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link {
   color: white;
   font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
-.cdz-main-menu .groupmenu li.level0 a.menu-link:hover,
-.cdz-main-menu .groupmenu li.level0 a.menu-link:active,
-.cdz-main-menu .groupmenu li.level0 a.menu-link:visited {
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:hover,
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:active,
+.cdz-main-menu .groupmenu li.level0 > a.menu-link:visited {
   color: white;
 }
 .cdz-main-menu .groupmenu li.level0.parent:hover:after {
