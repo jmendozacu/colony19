@@ -199,6 +199,7 @@
     border: 0;
     box-shadow: inherit;
     padding: 0;
+    width: 100%;
   }
   .cdz-mobile-header-menu .cdz-top-link #remember-me-box a.link-tip {
     display: inline-block;
@@ -374,7 +375,7 @@
   .cdz-mobile-header-menu .block-cart.cdz-dropdown-content {
     right: 0;
     left: auto;
-    min-width: 350px;
+    min-width: 300px;
   }
   .cdz-mobile-header-menu .block-cart.cdz-dropdown-content .empty {
     text-align: center;
@@ -1288,6 +1289,11 @@
   .cdz-onestepcheckout li.section {
     width: auto;
     margin: 0 10px;
+  }
+
+  #my-orders-table {
+    display: inline-block;
+    overflow-x: auto;
   }
 }
 /* ============================================ *

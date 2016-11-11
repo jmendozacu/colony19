@@ -2,7 +2,20 @@
 	dd{margin:0 0 20px;}
 }
 .checkout-cart-index .col-main{}
-.cart .page-title h1{border:0;border-bottom: none; margin-top: 10px;margin-right: 10px;line-height: 30px;margin-bottom:0}
+.cart{
+	.page-title h1{	
+		border:0;border-bottom: none; margin-top: 10px;margin-right: 10px;line-height: 30px;margin-bottom:0;
+		.cdz-rtl &{
+			float:right;
+			margin-left: 10px;
+			margin-right: 0px;
+		}
+	}
+	.cdz-rtl &{
+		.checkout-types{float:left;}
+		.button.btn-continue{float: left;}
+	}
+}
 
 .cart .page-title{border:0;border-bottom: none;margin:0 -10px;padding:10px 10px 15px}
 .cart  form fieldset{

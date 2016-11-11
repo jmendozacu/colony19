@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.2
+ * @package    AW_Blog
+ * @version    1.3.16
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -49,7 +49,10 @@ class AW_All_Block_Additional_Website extends Mage_Adminhtml_Block_Abstract
     public function getMagentoCronStatusToHtml($fieldName = 'scheduled_at')
     {
         $scheduleCollection = Mage::getModel('cron/schedule')->getCollection();
-        $scheduleCollection->setOrder($fieldName);
+        $scheduleCollection
+            ->setOrder($fieldName)
+            ->setPageSize(1)
+            ->setCurPage(1);
         $scheduleModel = $scheduleCollection->getFirstItem();
 
         $result = sprintf(self::ERROR_RESULT, $this->__('Never'));
@@ -173,8 +176,8 @@ class AW_All_Block_Additional_Website extends Mage_Adminhtml_Block_Abstract
     public function getWebsiteThemesParams()
     {
         $result = array();
-        $storeCollection = Mage::getModel('core/store')->getCollection();
-        foreach ($storeCollection as $storeModel) {
+        $stores = Mage::app()->getStores();
+        foreach ($stores as $storeModel) {
             $storeDesignModel = Mage::getModel('core/design_package')->setStore($storeModel);
             $_designRules = Mage::getModel('core/design')->loadChange($storeModel->getId());
 

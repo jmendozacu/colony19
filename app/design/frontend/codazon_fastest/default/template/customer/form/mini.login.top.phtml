@@ -37,11 +37,11 @@ $suffix = $this->getSuffix();
         <div class="block-content">
 			<div class="form-list">
 				<div class="field">
-					<label for="mini-login"><?php echo $this->__('Email:') ?></label>
+					<label id="top-mini-login" for="mini-login"><?php echo $this->__('Email:') ?></label>  <!-- fix Bug validate html -->
 					<input type="text" name="login[username]" id="mini-login<?php echo $suffix ?>" class="input-text" />
 				</div>
 				<div class="field">
-					<label for="mini-password"><?php echo $this->__('Password:') ?></label>
+					<label id="top-mini-login" for="mini-password"><?php echo $this->__('Password:') ?></label>  <!-- fix Bug validate html -->
 					<input type="password" name="login[password]" id="mini-password<?php echo $suffix ?>" class="input-text" />
 				</div>
 			<ul class="remember-me">

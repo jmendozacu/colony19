@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.2
+ * @package    AW_Blog
+ * @version    1.3.16
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -62,7 +62,8 @@ class AW_All_Block_Additional_Main extends Mage_Adminhtml_Block_Abstract
                 }
 
                 if (array_key_exists($_sortOrder, $this->_plugins)) {
-                    $_sortOrder = key(asort($this->_plugins)) + 1;
+                    asort($this->_plugins);
+                    $_sortOrder = key($this->_plugins) + 1;
                 }
                 $this->_plugins[$_sortOrder] = $_render;
             }

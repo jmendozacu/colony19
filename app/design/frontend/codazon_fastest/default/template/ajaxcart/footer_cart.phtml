@@ -1,5 +1,5 @@
 <?php
-$_cartQty = $this->getSummaryCount();
+$_cartQty = Mage::getSingleton('checkout/cart')->getQuote()->getItemsQty();
 ?>
 <div class="cart-footer-inner" id="cart-footer-inner">
     <a href="javascript:void(0)" class="cart-trigger">

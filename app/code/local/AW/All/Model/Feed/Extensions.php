@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.2
+ * @package    AW_Blog
+ * @version    1.3.16
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -141,6 +141,14 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
             $Node = $this->getFeedData();
             if (!$Node) return false;
             foreach ($Node->children() as $ext) {
+                if (strripos((string)$ext->display_name,'Community')) {
+                    if (AW_All_Helper_Versions::getPlatform() != AW_All_Helper_Versions::CE_PLATFORM)
+                        continue;
+                }
+                if (strripos((string)$ext->display_name,'Enterprise')) {
+                    if (AW_All_Helper_Versions::getPlatform() != AW_All_Helper_Versions::EE_PLATFORM)
+                        continue;
+                }
                 $exts[(string)$ext->name] = array(
                     'display_name' => (string)$ext->display_name,
                     'version' => (string)$ext->version,
@@ -197,8 +205,10 @@ class AW_All_Model_Feed_Extensions extends AW_All_Model_Feed_Abstract
 
     public function disableExtensionOutput($extensionName)
     {
-        $coll = Mage::getModel('core/config_data')->getCollection();
-        $coll->getSelect()->where("path='advanced/modules_disable_output/$extensionName'");
+        $coll = Mage::getModel('core/config_data')
+            ->getCollection()
+            ->addFieldToFilter('path', "advanced/modules_disable_output/".$extensionName);
+
         $i = 0;
         foreach ($coll as $cd) {
             $i++;

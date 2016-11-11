@@ -213,7 +213,7 @@ title,identifier,content
 <div class=""row no-margin"">
 <div class=""col-sm-6 col-md-5 no-padding hidden-xs""><a class=""effect"" href=""#""><img class=""img-responsive"" alt=""img03"" src=""{{media url='wysiwyg/codazon/bigmarket/home/img03.jpg'}}"" /></a></div>
 <div class=""col-sm-18 col-md-19 text-center cdz-products no-padding"">
-<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""105"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
+<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""105"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""220"" thumb_height=""220"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
 </div>
 </div>
 </div>
@@ -247,7 +247,7 @@ title,identifier,content
 <div class=""row no-margin"">
 <div class=""col-sm-6 col-md-5 no-padding hidden-xs""><a class=""effect"" href=""#""><img class=""img-responsive"" alt=""img04"" src=""{{media url='wysiwyg/codazon/bigmarket/home/img04.jpg'}}"" /></a></div>
 <div class=""col-sm-18 col-md-19 text-center cdz-products no-padding"">
-<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""106"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
+<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""106"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""220"" thumb_height=""220"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
 </div>
 </div>
 </div>
@@ -281,7 +281,7 @@ title,identifier,content
 <div class=""row no-margin"">
 <div class=""col-sm-6 col-md-5 no-padding hidden-xs""><a class=""effect"" href=""#""><img class=""img-responsive"" alt=""img05"" src=""{{media url='wysiwyg/codazon/bigmarket/home/img05.jpg'}}"" /></a></div>
 <div class=""col-sm-18 col-md-19 text-center cdz-products no-padding"">
-<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
+<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""98"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""8"" columns_count=""2"" thumb_width=""220"" thumb_height=""220"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn,compare_btn"" use_slider=""1"" margin=""-1"" items_1280=""4"" items_1024=""4"" items_768=""3"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
 </div>
 </div>
 </div>
@@ -307,7 +307,7 @@ title,identifier,content
 </div>
 <div class=""col-sm-12 no-padding line-left line-right"">
 <div class=""text-center cdz-products no-padding-left"">
-<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""104"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""6"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn"" use_slider=""1"" margin=""-1"" items_1280=""3"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" show_nav=""1""}}</div>
+<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""104"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""6"" columns_count=""2"" thumb_width=""220"" thumb_height=""220"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn"" use_slider=""1"" margin=""-1"" items_1280=""3"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" show_nav=""1""}}</div>
 </div>
 </div>
 <div class=""col-sm-6 no-padding  box-right"">
@@ -337,7 +337,7 @@ title,identifier,content
 </div>
 <div class=""col-sm-12 no-padding line-left line-right"">
 <div class=""text-center cdz-products no-padding-left"">
-<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""103"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""6"" columns_count=""2"" thumb_width=""300"" thumb_height=""300"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn"" use_slider=""1"" margin=""-1"" items_1280=""3"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
+<div class=""box-products"">{{widget type=""filterproducts/codazonfilterproducts"" categories=""103"" filtertype=""1"" orderby=""name"" order=""asc"" limit=""6"" columns_count=""2"" thumb_width=""220"" thumb_height=""220"" use_ajax=""1"" custom_template=""codazon_filterproducts/home_grid_style09.phtml"" display=""name,image,label,price,addtocart_btn,wishlist_btn"" use_slider=""1"" margin=""-1"" items_1280=""3"" items_1024=""3"" items_768=""2"" items_480=""2"" items_320=""2"" items_0=""2"" show_nav=""1""}}</div>
 </div>
 </div>
 <div class=""col-sm-6 no-padding box-right"">

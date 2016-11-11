@@ -16,9 +16,19 @@ if(typeof Codazon == 'undefined'){
 		$(list).each(function(){
 			var $input = $(this);
 			var $parent = $input.parents('.field,.wide,li').first();
-			if($input.val() != ''){
-				$parent.addClass('active');	
-			}
+			$parent.addClass('active');
+			var eventId = Math.round(Math.random()*100000);
+			$('body').on('click.input_'+eventId,function(e){
+				if( !$(e.target).is($input) ){
+					if($input.val() != ''){
+						$parent.addClass('active');	
+					}else{
+						$parent.removeClass('active');
+					}
+					$('body').off('click.input_'+eventId);
+				}
+			});
+			
 			$input.focus(function () {
 				$parent.addClass('active');
 			}).blur(function() {

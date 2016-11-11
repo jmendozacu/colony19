@@ -425,6 +425,7 @@ caption {
   font-weight: normal;
   font-style: normal;
   text-align: left;
+  .cdz-rtl &{text-align: right;}
 }
 
 address {
@@ -1970,6 +1971,9 @@ body.customer-account .data-table .show-details .summary-collapse:hover:before {
 .a-right,
 .align-right {
   text-align: right;
+  .cdz-rtl &{
+	text-align: left;
+  }
 }
 
 .no-display {
@@ -3444,9 +3448,18 @@ body.catalogsearch-result-index .page-title h1 {
   float: left;
   min-width: 100px;
   margin-bottom:0;
+  .cdz-rtl &{
+	float:right;
+  }
 }
 .mini-products-list .product-details {
   margin-left: 110px;
+  .btn-remove,.btn-edit{
+	.cdz-rtl &{
+		float:left;
+		&:before{left:0!important;right:auto!important;}
+	}
+  }
 }
 .mini-products-list .product-details .product-name {
   padding-top: 10px;
@@ -4980,6 +4993,9 @@ body.catalogsearch-result-index .page-title h1 {
 }
 .cart-table .btn-empty {
   float: left;
+  .cdz-rtl &{
+	float:right;
+  }
 }
 .cart-table .product-cart-total,
 .cart-table .product-cart-price {

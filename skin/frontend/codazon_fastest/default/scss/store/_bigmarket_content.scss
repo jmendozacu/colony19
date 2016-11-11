@@ -420,3 +420,24 @@
 		}
 	}
 }
+.block-crosssell.block .block-title{color:#000 !important;}
+
+.shipping #co-shipping-method-form .sp-methods dd .radio+label{background-color:#fff;border:none;}
+.category-products{
+ 	.products-list{
+		> li .cdz-product-left{width:33.33333%;position:relative;float:left;}
+		> li .cdz-product-left .product-image{width:100%;}
+		.add-to-links {
+			vertical-align: top;
+			> li{
+				position:relative;
+				> a{
+					position:absolute; top:0; left:0; width:100%; height:100%;
+				}	
+			}
+		}
+	}
+	.products-list.cdz-block-product01 .product-item .cart-wrapper .cart-qty{
+		.qty-ctl button,input[type=text].qty{width: 30px; height: 30px !important;}
+	}
+}

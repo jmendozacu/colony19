@@ -139,9 +139,11 @@ var ajaxcart = {
                 } else {
                     //use ajax
 					
+					
 					if( obj.form.id == 'product_addtocart_form_from_popup'){
 						obj.form = $('product_addtocart_form');
 					}
+
 					var url	 = 	obj.form.action,
 					data =	obj.form.serialize();
                     	
@@ -162,7 +164,12 @@ var ajaxcart = {
                             // Handle the response content...
                             try{
                                 var res = response.responseText.evalJSON();
-
+								if(typeof document.activeElement.href !== 'undefined'){
+									if(document.activeElement.href.search('paypal') !== -1){
+										document.location.href = document.activeElement.href;
+										return false;
+									}
+								}
                                 if(res) {
                                     if(res.r == 'success') {
                                         if(res.message) {

@@ -29,6 +29,13 @@ class Codazon_Themeframework_Helper_Data extends Mage_Core_Helper_Abstract
 			return 'codazon/owl.carousel/owl.carousel.rtl.min.js';
 		}
 	}
+	public function productOptionsJsFile(){
+		if(version_compare(Mage::getVersion(), '1.9.3.0', '>=')){
+			return 'varien/product_options.js';
+		}else{
+			return null;
+		}
+	}
 	
 	protected function _getLabelBlock($template){
 		if(!$this->_labelBlock){

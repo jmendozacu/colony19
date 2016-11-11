@@ -29,7 +29,7 @@
                 	
                        
                         <?php if ($isVisibleProduct): ?>
-                        <a href="<?php echo $this->getConfigureUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('OK')) ?>" class="btn-edit"><?php echo $this->__('OK')?></a>
+                        <button onclick="document.location.href = '<?php echo $this->getConfigureUrl() ?>';" title="<?php echo Mage::helper('core')->quoteEscape($this->__('OK')) ?>" class="btn-edit"><?php echo $this->__('OK')?></button>
                         <?php endif ?>
 						 <a href="<?php echo $this->getDeleteUrl() ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove This Item')) ?>" onclick="return confirm('<?php echo Mage::helper('core')->quoteEscape($this->__('Are you sure you would like to remove this item from the shopping cart?'), true) ?>');" class="btn-remove"><?php echo $this->__('Remove Item') ?></a>
 				

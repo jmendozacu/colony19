@@ -794,11 +794,19 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 		padding:15px 0 0;margin:0
 	}
 	.summary{font:$f_h6;color:$main_text;text-transform:uppercase;float:left;width:100%;margin:0 0 20px;padding:0 20px;
-		.cart-total-title{float:left;
+		.cart-total-title{
+			float:left;
+			.cdz-rtl &{
+				float:right;
+			}
 			h4{margin-bottom:10px;font:$f_h6;color:$main_text;}
 			p{margin:0;font:$f_h6;color:$main_text;font-weight:600}
 		}
-		.subtotal{float:right;text-align:right;
+		.subtotal{
+			float:right;text-align:right;
+			.cdz-rtl &{
+				float:left;
+			}
 			.sub-total-label{margin-bottom:10px;font-weight:600}
 			.price{display:block}
 		}
@@ -853,8 +861,22 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 	}
 	.btn-remove:after{display:none}
 	.mini-products-list .product-image{min-width:50px}
-	.mini-products-list .product-details{position:relative;margin-left:70px;}
-	.product-details-name{float:left;margin-right:30px}
+	.mini-products-list .product-details{
+		position:relative;
+		margin-left:70px;
+		.cdz-rtl &{
+			margin-left:0px;
+			margin-right:70px;
+		}
+	}
+	.product-details-name{
+		float:left;margin-right:30px;
+		.cdz-rtl &{
+			float:right;
+			margin-right:0px;
+			margin-left:30px;
+		}
+	}
 	.mini-products-list .product-details .product-name{padding:0;margin:0}
 	.mini-products-list li.item{margin-bottom:20px;}
 	.mini-products-list li.item.last{margin-bottom:0}
@@ -935,20 +957,55 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 			top:0;
 			right:0;
 			border-left:1px solid #dfdfdf;
+			.cdz-rtl &{
+				float:left;
+				left:0;
+				right:auto;
+				border-left:0;
+				border-right:1px solid #dfdfdf;
+			}
 			.summary{
 				float:left;
 				width:190px;
+				.cdz-rtl &{
+					float:right;
+				}
 				.cart-total-title{
 					display:inline-block;
 					width:100%;
-					h4{float:left; margin:0; margin-right:10px;}
-					.amount{float:right;margin:0;}
+					h4{
+						float:left; margin:0; margin-right:10px;
+						.cdz-rtl &{
+							float:right;
+							margin-left:10px;
+							margin-right:0px;
+						}
+					}
+					.amount{
+						float:right;
+						margin:0;
+						.cdz-rtl &{
+							float:left;
+						}
+					}
 				}
 				.subtotal{
 					display:inline-block;
 					width:100%;
-					.sub-total-label{float:left; margin-right:10px;}
-					.price{float:right;font-weight:700;}
+					.sub-total-label{
+						float:left; margin-right:10px;
+						.cdz-rtl &{
+							float:right;
+							margin-right:0px;
+							margin-left:10px;
+						}
+					}
+					.price{
+						float:right;font-weight:700;
+						.cdz-rtl &{
+							float:left;
+						}
+					}
 				}
 			}
 			.actions{
@@ -958,6 +1015,13 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
  				border-left: 1px solid #dfdfdf;
  				padding: 20px 0;
 				padding-left: 20px;
+				.cdz-rtl &{
+				    float: left;
+					padding-left: 0;
+					padding-right: 20px;
+					border-left: 0;
+					border-right: 1px solid #dfdfdf;
+				}
 				button.button{
 					padding: 10px 20px;
 					&:before{
@@ -972,9 +1036,18 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 			padding-left:20px;
 			width: calc(100% - 420px);
 			overflow-x: auto;
-			
+			.cdz-rtl &{
+				float:right;
+				padding-left:0px;
+				padding-right:20px;
+			}
 			.cart-items-inner{display:block;overflow-x:auto;}
- 			.cart-products-list{float:left;    white-space: nowrap; font-size:0;}
+ 			.cart-products-list{
+				float:left;    white-space: nowrap; font-size:0;
+				.cdz-rtl &{
+					float:right;
+				}
+			}
 			.product{
 				position:relative;
 				cursor: pointer;
@@ -1081,6 +1154,14 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 							display: table-cell;
 							vertical-align: middle;
 						}
+					}
+					.cdz-rtl &{
+						left:auto;
+						right:100%;
+						-moz-transform: translateX(30px);
+						-webkit-transform: translateX(30px);
+						-o-transform: translateX(30px);
+						transform: translateX(30px);
 					}
 				}
 				&.active .product-details{

@@ -362,9 +362,9 @@ title,identifier,content
 							<p class=""groupdrop-title"">Product page</p>
 							<ul class=""groupdrop-link"">
 								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}aviator-sunglasses.html"">Simple Product</a></li>
-								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}"">Configurable product</a></li>
-								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}pearl-dress-lady.html"">Group Product</a></li>
-								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}fashion-on-and-one-1-year.html"">Ticket - Virtual Product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}chelsea-tee-429.html"">Configurable product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}pearl-necklace-set-test.html"">Group Product</a></li>
+								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}around-the-world-in-80-days.html"">Ticket - Virtual Product</a></li>
 								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}colorswatch-configurable-product.html"">Demo Color Swatch</a></li>
 								<li class=""item""><a href=""{{config path=""web/secure/base_url""}}colorswatch-configurable-product.html"">Product One Column</a></li>
 								<li class=""item last""><a href=""{{config path=""web/secure/base_url""}}product-page-2-column-right.html"">Product Two Column</a></li>

@@ -237,13 +237,14 @@
 	.pager{
 		margin:10px 0 10px;
 		.amount{
-			margin:7px 10px 0 0;
+			margin:1px 10px 0 0;
 			font-weight:normal;
 			strong{ font-weight:500}
 		}
 		.limiter{
-			margin:0;
-			label{ font-size:100%;}
+			margin:0 0 5px;
+			label{ font-size:100%; margin-top:2px;}
+			select{ height:30px; padding:0 10px;}
 		}
 	}
 }

@@ -22,7 +22,7 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
 	}
 	protected function _toHtml(){
 		$default = array_replace( array(
-			'id_path' => 'category/2',
+			'id_path' => 'category/'.Mage::app()->getStore()->getRootCategoryId(),
 			'template' => 'codazon_themeframework/widget/categoriesmenu.phtml',
 			'children_wrap_class' => 'cdz-sub-cat',
 			'has_wrap' => true,
