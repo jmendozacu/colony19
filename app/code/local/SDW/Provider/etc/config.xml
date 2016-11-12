@@ -1,0 +1,149 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Provider>
+			<version>0.1.0</version>
+		</SDW_Provider>
+	</modules>
+
+	<global>
+		<blocks>
+			<provider>
+				<class>SDW_Provider_Block</class>
+			</provider>
+		</blocks>
+
+		<helpers>
+            <provider>
+                <class>SDW_Provider_Helper</class>
+            </provider>
+        </helpers>
+
+		<models>
+			<provider>
+				<class>SDW_Provider_Model</class>
+				<resourceModel>provider_mysql4</resourceModel>
+			</provider>
+			<provider_mysql4>
+				<class>SDW_Provider_Model_Mysql4</class>
+				<entities>
+					<provider>
+						<table>sdw_provider</table>
+					</provider>
+				</entities>
+			</provider_mysql4>
+		</models>
+		
+		<template>
+            <email>
+                <provider_email_email_template>
+                    <label>Provider email alert</label>
+                    <file>provider.html</file>
+                    <type>html</type>
+                </provider_email_email_template>
+            </email>
+        </template>
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<provider_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</provider_write>
+			<!-- connection pour lire-->
+			<provider_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</provider_read>
+		</resources>
+		<!-- -/- -->
+
+		
+	</global>
+	
+	<default>
+        <provider>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>general</sender_email_identity>
+                <email_template>provider_email_email_template</email_template>
+            </email>
+        </provider>
+    </default>
+
+	<admin>
+		<routers>
+			<provider>
+				<use>admin</use>
+				<args>
+					<module>SDW_Provider</module>
+					<frontName>provider</frontName>
+				</args>
+			</provider>
+		</routers>
+	</admin>
+	 
+	<adminhtml>
+		<translate>
+			<modules>
+				<provider>
+					<files>
+						<default>SDW_Provider.csv</default>
+					</files>
+				</provider>
+			</modules>
+		</translate>
+		
+		<layout>
+			<updates>
+				<provider>
+					<file>provider.xml</file>
+				</provider>
+			</updates>
+		</layout>
+		
+		<menu>
+			<sales>
+				<children>
+					<provider translate="title" module="adminhtml">
+						<title>Provider</title>
+						<sort_order>80</sort_order>
+						<action>provider/adminhtml_listing</action>
+					</provider>
+				</children>
+			</sales>			
+		</menu>
+		
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <provider translate="title" module="provider">
+                                            <title>Provider</title>
+                                        </provider>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+	</adminhtml>
+	
+	<crontab>
+        <jobs>
+            <provider_send>
+                <schedule><cron_expr>0 4 * * *</cron_expr></schedule>
+                <run><model>provider/observer::sendMail</model></run>
+            </provider_send>
+        </jobs>
+    </crontab>
+</config>

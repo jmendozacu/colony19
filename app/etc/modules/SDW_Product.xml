@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SDW_Product>
+            <active>true</active>
+            <codePool>local</codePool>
+        </SDW_Product>
+    </modules>
+</config>

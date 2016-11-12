@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Produitsedit>
+			<version>0.1.0</version>
+		</SDW_Produitsedit>
+	</modules>
+
+	<global>
+		<blocks>
+			<produitsedit>
+				<class>SDW_Produitsedit_Block</class>
+			</produitsedit>
+		</blocks>		
+	</global>
+
+
+	<admin>
+		<routers>
+			<produitsedit>
+				<use>admin</use>
+				<args>
+					<module>SDW_Produitsedit</module>
+					<frontName>produitsedit</frontName>
+				</args>
+			</produitsedit>
+		</routers>
+	</admin>
+	 
+	<adminhtml>		
+		<layout>
+			<updates>
+				<produitsedit>
+					<file>produitsedit.xml</file>
+				</produitsedit>
+			</updates>
+		</layout>
+		
+		<menu>
+			<catalog>
+				<children>
+					<produitsedit translate="title" module="adminhtml">
+						<title>Prix Produits</title>
+						<sort_order>80</sort_order>
+						<action>produitsedit/adminhtml_listing</action>
+					</produitsedit>
+				</children>
+			</catalog>			
+		</menu>
+	</adminhtml>
+
+</config>

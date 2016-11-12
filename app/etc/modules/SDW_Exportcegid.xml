@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SDW_Exportcegid>
+            <active>true</active>
+            <codePool>local</codePool>
+        </SDW_Exportcegid>
+    </modules>
+</config> 

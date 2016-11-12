@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<config>
+	<modules>
+		<SDW_AdminPayment>
+			<version>0.1.0</version>
+		</SDW_AdminPayment>
+	</modules>
+	<global>
+		<models>
+			<adminpayment>
+				<class>SDW_AdminPayment_Model</class>
+			</adminpayment>
+		</models>
+		<helpers>
+			<adminpayment>
+				<class>SDW_AdminPayment_Helper</class>
+			</adminpayment>
+		</helpers>
+		<resources>
+			<adminpayment_setup>
+				<setup>
+					<module>SDW_AdminPayment</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</adminpayment_setup>
+			<adminpayment_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</adminpayment_write>
+			<adminpayment_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</adminpayment_read>
+		</resources>
+        
+        <events>
+            <sales_order_invoice_register>
+                <observers>
+                    <adminpayment_observer>
+                        <type>singleton</type>
+                        <class>adminpayment/observer</class>
+                        <method>sales_order_invoice_register</method>
+                    </adminpayment_observer>
+                </observers>
+            </sales_order_invoice_register>
+        </events>
+	</global>
+	<adminhtml>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<SDW_AdminPayment>
+							<title>Méthode de paiement admin</title>
+							<sort_order>10</sort_order>
+						</SDW_AdminPayment>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<default>
+		<payment>
+            <adminpayment1>
+                <active>0</active>
+                <model>adminpayment/adminPayment1</model>
+                <order_status>pending</order_status>
+                <title>Méthode de paiement 1</title>
+                <payment_action>authorize</payment_action>
+                <capture_auto>1</capture_auto>
+                <shipment_auto>0</shipment_auto>
+            </adminpayment1>
+            <adminpayment2>
+                <active>0</active>
+                <model>adminpayment/adminPayment2</model>
+                <order_status>pending</order_status>
+                <title>Méthode de paiement 2</title>
+                <payment_action>authorize</payment_action>
+                <capture_auto>1</capture_auto>
+                <shipment_auto>0</shipment_auto>
+            </adminpayment2>
+		</payment>
+	</default>
+</config>

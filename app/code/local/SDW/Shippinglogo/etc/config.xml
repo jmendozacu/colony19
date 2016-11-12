@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SDW_Shippinglogo>
+            <version>2.5.14</version>
+            <depends>
+                <Owebia_Shipping2 />
+            </depends>
+        </SDW_Shippinglogo>
+    </modules>
+    <global>
+        <models>
+            <sales>
+                <rewrite>
+                    <quote_address_rate>SDW_Shippinglogo_Sales_Model_Quote_Address_Rate</quote_address_rate>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+</config>
+ 

@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Export>
+			<version>0.1.0</version>
+		</SDW_Export>
+	</modules>
+
+	<global>
+		<models>
+			<export>
+				<class>SDW_Export_Model</class>
+			</export>
+		</models>
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<export_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</export_write>
+			<!-- connection pour lire-->
+			<export_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</export_read>
+		</resources>
+		<!-- -/- -->
+	</global>
+
+	<crontab>
+        <jobs>
+            <export_articles>
+                <schedule><cron_expr>0 5,11 * * *</cron_expr></schedule>
+                <run><model>export/observer::articlesExport</model></run>
+            </export_articles>
+			<export_kits>
+                <schedule><cron_expr>0 5,11 * * *</cron_expr></schedule>
+                <run><model>export/observer::kitsExport</model></run>
+            </export_kits>
+			<export_entetes_commandes>
+                <schedule><cron_expr>0 11 * * *</cron_expr></schedule>
+                <run><model>export/observer::entetesCommandesExport</model></run>
+            </export_entetes_commandes>
+			<export_details_commandes>
+                <schedule><cron_expr>0 11 * * *</cron_expr></schedule>
+                <run><model>export/observer::detailsCommandesExport</model></run>
+            </export_details_commandes>            
+			<export_entetes_commandes_pm>
+                <schedule><cron_expr>50 23 * * *</cron_expr></schedule>
+                <run><model>export/observer::entetesCommandesExport</model></run>
+            </export_entetes_commandes_pm>
+			<export_details_commandes_pm>
+                <schedule><cron_expr>50 23 * * *</cron_expr></schedule>
+                <run><model>export/observer::detailsCommandesExport</model></run>
+            </export_details_commandes_pm>            
+			<export_commandes_fournisseurs>
+                <schedule><cron_expr>0 0 * * *</cron_expr></schedule>
+                <run><model>export/observer::commandesFournisseursExport</model></run>
+            </export_commandes_fournisseurs>
+			<import_stocks>
+                <schedule><cron_expr>30 0 * * *</cron_expr></schedule>
+                <run><model>export/observer::stocksImport</model></run>
+            </import_stocks>
+			<import_mouvements_stock>
+                <schedule><cron_expr>30 0 * * *</cron_expr></schedule>
+                <run><model>export/observer::mouvementsStockImport</model></run>
+            </import_mouvements_stock>
+        </jobs>
+    </crontab>
+</config>

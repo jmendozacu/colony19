@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <carriers>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <owebiashipping1 translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </owebiashipping1>
+                <owebiashipping2 translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </owebiashipping2>
+                <owebiashipping3 translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </owebiashipping3>
+                <owebiashipping4 translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </owebiashipping4>
+                <customshipprice translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </customshipprice>
+                <freeshipping translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </freeshipping>
+                <flatrate translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </flatrate>
+                <tablerate translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </tablerate>
+                <pointsrelais translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </pointsrelais>
+                <pointsrelaiscd translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </pointsrelaiscd>
+                <pointsrelaisld1 translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </pointsrelaisld1>
+                <pointsrelaislds translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </pointsrelaislds>
+                <ups translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </ups>
+                <usps translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </usps>
+                <fedex translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </fedex>
+                <dhl translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </dhl>
+                <dhlint translate="label" module="shipping">
+                    <fields>
+                        <logo>
+                            <label>Logo</label>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_image</backend_model>
+                            <upload_dir config="system/filesystem/media" scope_info="0">shippinglogo</upload_dir>
+                            <base_url type="media" scoope_info="0">shippinglogo</base_url>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                    </fields>
+                </dhlint>
+            </groups>
+        </carriers>
+    </sections>
+</config>
+

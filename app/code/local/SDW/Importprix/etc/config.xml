@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Importprix>
+			<version>0.1.0</version>
+		</SDW_Importprix>
+	</modules>
+
+	<admin>
+		<routers>
+			<importprix>
+				<use>admin</use>
+				<args>
+					<module>SDW_Importprix</module>
+					<frontName>importprix</frontName>
+				</args>
+			</importprix>
+		</routers>
+	</admin>
+	 
+	<adminhtml>		
+		<menu>
+			<catalog>
+				<children>
+					<importprix translate="title" module="adminhtml">
+						<title>Importer</title>
+						<sort_order>80</sort_order>
+						<action>importprix/adminhtml_index</action>
+					</importprix>
+				</children>
+			</catalog>			
+		</menu>
+	</adminhtml>
+
+</config>

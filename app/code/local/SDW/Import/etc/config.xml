@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Import>
+			<version>0.1.0</version>
+		</SDW_Import>
+	</modules>
+
+	<global>
+		<models>
+			<import>
+				<class>SDW_Import_Model</class>
+			</import>
+		</models>
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<import_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</import_write>
+			<!-- connection pour lire-->
+			<import_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</import_read>
+		</resources> 
+		<!-- -/- -->		
+	</global>
+ 
+	<crontab>
+        <jobs>
+			<import_stocks>
+			<schedule><cron_expr>35 0,11 * * *</cron_expr></schedule>
+			<run><model>import/observer::stocksImport</model></run>
+		</import_stocks>
+			<import_mouvements_stock>
+                <schedule><cron_expr>30 1,11 * * *</cron_expr></schedule>
+                <run><model>import/observer::mouvementsStockImport</model></run>
+            </import_mouvements_stock>
+			<import_tracking>
+                <schedule><cron_expr>45 18 * * *</cron_expr></schedule> 
+                <run><model>import/observer::trackingImport</model></run>
+            </import_tracking>
+        </jobs>
+    </crontab>
+</config>

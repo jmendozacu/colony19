@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_invoice_view>SDW_Sales_Block_Adminhtml_Sales_Order_Invoice_View</sales_order_invoice_view>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <models>
+            <sales>
+                <rewrite>
+                    <order_invoice>SDW_Sales_Model_Order_Invoice</order_invoice>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <SDW_Sales>
+                    <files>
+                        <default>SDW_Sales.csv</default>
+                    </files>
+                </SDW_Sales>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <use>admin</use>
+                <args>
+                    <modules>
+                        <SDW_Sales before="Mage_Adminhtml">SDW_Sales</SDW_Sales>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

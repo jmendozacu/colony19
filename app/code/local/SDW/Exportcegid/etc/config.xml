@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <SDW_Exportcegid>
+            <version>0.1.0</version>
+        </SDW_Exportcegid>
+    </modules>
+    
+    <global>
+        <resources>
+            <sdw_exportcegid_setup>
+                <setup>
+                    <module>SDW_Exportcegid</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+            </sdw_exportcegid_setup>
+        </resources>
+        
+        <blocks>
+            <exportcegid>
+                <class>SDW_Exportcegid_Block</class>
+            </exportcegid>
+        </blocks>
+        
+        <helpers>
+            <exportcegid>
+                <class>SDW_Exportcegid_Helper</class>
+            </exportcegid>
+        </helpers>
+    </global>
+    
+    <admin>
+        <routers>
+            <exportcegid>
+                <use>admin</use>
+                <args>
+                    <module>SDW_Exportcegid</module>
+                    <frontName>exportcegid</frontName>
+                </args>
+            </exportcegid>
+        </routers>
+    </admin>
+    
+    <adminhtml>     
+        <layout>
+            <updates>
+                <exportcegid>
+                    <file>exportcegid.xml</file>
+                </exportcegid>
+            </updates>
+        </layout>
+        
+        <menu>
+            <sales>
+                <children>
+                    <exportcegid translate="title" module="adminhtml">
+                        <title>Export ISAGRI</title>
+                        <sort_order>80</sort_order>
+                        <action>exportcegid/view</action>
+                    </exportcegid>
+                </children>
+            </sales>          
+        </menu>
+    </adminhtml>
+</config>

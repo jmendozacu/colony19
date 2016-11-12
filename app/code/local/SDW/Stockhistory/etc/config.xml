@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Stockhistory>
+			<version>0.1.0</version>
+		</SDW_Stockhistory>
+	</modules>
+
+	<global>
+		<blocks>
+			<stockhistory>
+				<class>SDW_Stockhistory_Block</class>
+			</stockhistory>
+		</blocks>
+		
+		<helpers>
+		   <stockhistory>
+				  <class>SDW_Stockhistory_Helper</class>
+			</stockhistory>
+		</helpers>
+
+
+		<models>
+			<stockhistory>
+				<class>SDW_Stockhistory_Model</class>
+				<resourceModel>stockhistory_mysql4</resourceModel>
+			</stockhistory>
+			<stockhistory_mysql4>
+				<class>SDW_Stockhistory_Model_Mysql4</class>
+				<entities>
+					<stockhistory>
+						<table>sdw_history_stock_ads</table>
+					</stockhistory>
+				</entities>
+			</stockhistory_mysql4>
+		</models>
+		
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<stockhistory_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</stockhistory_write>
+			<!-- connection pour lire-->
+			<stockhistory_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</stockhistory_read>
+		</resources>
+		<!-- -/- -->
+
+		
+	</global>
+	
+	<admin>
+		<routers>
+			<stockhistory>
+				<use>admin</use>
+				<args>
+					<module>SDW_Stockhistory</module>
+					<frontName>stockhistory</frontName>
+				</args>
+			</stockhistory>
+		</routers>
+	</admin>
+	 
+	<adminhtml>
+		<translate>
+			<modules>
+				<stockhistory>
+					<files>
+						<default>SDW_Stockhistory.csv</default>
+					</files>
+				</stockhistory>
+			</modules>
+		</translate>
+		
+		<layout>
+			<updates>
+				<stockhistory>
+					<file>stockhistory.xml</file>
+				</stockhistory>
+			</updates>
+		</layout>
+		
+		<menu>
+			<report>
+				<children>
+					<stockhistory translate="title" module="adminhtml">
+						<title>Stock File history</title>
+						<sort_order>80</sort_order>
+						<action>stockhistory/adminhtml_listing</action>
+					</stockhistory>
+				</children>
+			</report>			
+		</menu>
+		
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <stockhistory translate="title" module="stockhistory">
+                                            <title>Stock File history</title>
+                                        </stockhistory>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+	</adminhtml>
+</config>

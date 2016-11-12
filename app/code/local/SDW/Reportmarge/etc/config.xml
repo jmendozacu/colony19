@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Reportmarge>
+			<version>0.1.0</version>
+		</SDW_Reportmarge>
+	</modules>
+
+	<global>
+		<blocks>
+			<reportmarge>
+				<class>SDW_Reportmarge_Block</class>
+			</reportmarge>
+		</blocks>
+
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<reportmarge_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</reportmarge_write>
+			<!-- connection pour lire-->
+			<reportmarge_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</reportmarge_read>
+		</resources>
+		<!-- -/- -->
+
+
+	</global>
+
+
+	<admin>
+		<routers>
+			<reportmarge>
+				<use>admin</use>
+				<args>
+					<module>SDW_Reportmarge</module>
+					<frontName>reportmarge</frontName>
+				</args>
+			</reportmarge>
+		</routers>
+	</admin>
+
+	<adminhtml>
+		<translate>
+			<modules>
+				<reportmarge>
+					<files>
+						<default>SDW_Reportmarge.csv</default>
+					</files>
+				</reportmarge>
+			</modules>
+		</translate>
+
+		<layout>
+			<updates>
+				<reportmarge>
+					<file>reportmarge.xml</file>
+				</reportmarge>
+			</updates>
+		</layout>
+
+		<menu>
+			<sales>
+				<children>
+					<reportmarge translate="title" module="adminhtml">
+						<title>Reportmarge</title>
+						<sort_order>80</sort_order>
+						<action>reportmarge/adminhtml_listing</action>
+					</reportmarge>
+				</children>
+			</sales>
+		</menu>
+
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <reportmarge translate="title" module="reportmarge">
+                                            <title>Reportmarge</title>
+                                        </reportmarge>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+	</adminhtml>
+
+	<crontab>
+        <jobs>
+            <reportmarge_send>
+                <schedule><cron_expr>0 4 * * *</cron_expr></schedule>
+                <run><model>reportmarge/observer::sendMail</model></run>
+            </reportmarge_send>
+        </jobs>
+    </crontab>
+</config>

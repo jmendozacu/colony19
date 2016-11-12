@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<config>
+	<modules>
+		<SDW_Weighthistory>
+			<version>0.1.0</version>
+		</SDW_Weighthistory>
+	</modules>
+
+	<global>
+		<blocks>
+			<weighthistory>
+				<class>SDW_Weighthistory_Block</class>
+			</weighthistory>
+		</blocks>
+		
+		<helpers>
+		   <weighthistory>
+				  <class>SDW_Weighthistory_Helper</class>
+			</weighthistory>
+		</helpers>
+
+		<!-- permet au module de lire et ecrire -->
+		<resources>
+			<!-- connection pour ecrire -->
+			<weighthistory_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</weighthistory_write>
+			<!-- connection pour lire-->
+			<weighthistory_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</weighthistory_read>
+		</resources>
+		<!-- -/- -->
+
+		
+	</global>
+	
+	<admin>
+		<routers>
+			<weighthistory>
+				<use>admin</use>
+				<args>
+					<module>SDW_Weighthistory</module>
+					<frontName>weighthistory</frontName>
+				</args>
+			</weighthistory>
+		</routers>
+	</admin>
+	 
+	<adminhtml>
+		<translate>
+			<modules>
+				<weighthistory>
+					<files>
+						<default>SDW_Weighthistory.csv</default>
+					</files>
+				</weighthistory>
+			</modules>
+		</translate>
+		
+		<layout>
+			<updates>
+				<weighthistory>
+					<file>weighthistory.xml</file>
+				</weighthistory>
+			</updates>
+		</layout>
+		
+		<menu>
+			<report>
+				<children>
+					<weighthistory translate="title" module="adminhtml">
+						<title>Weight history</title>
+						<sort_order>100</sort_order>
+						<action>weighthistory/adminhtml_listing</action>
+					</weighthistory>
+				</children>
+			</report>			
+		</menu>
+		
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <weighthistory translate="title" module="weighthistory">
+                                            <title>Weight history</title>
+                                        </weighthistory>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+	</adminhtml>
+</config>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SDW_Lowstockemailalert>
+            <version>1.0</version>
+        </SDW_Lowstockemailalert>
+    </modules>
+    <global>
+        <models>
+            <lowstockemailalert>
+                <class>SDW_Lowstockemailalert_Model</class>
+            </lowstockemailalert>
+        </models>
+        <helpers>
+            <lowstockemailalert>
+                <class>SDW_Lowstockemailalert_Helper</class>
+            </lowstockemailalert>
+        </helpers>
+        <resources>
+            <lowstockemailalert_setup>
+                <setup>
+                    <module>SDW_Lowstockemailalert</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </lowstockemailalert_setup>
+        </resources>
+        <template>
+            <email>
+                <lowstockemailalert_email_email_template translate="label" module="lowstockemailalert">
+                    <label>Low stock email alert</label>
+                    <file>lowstockemailalert.html</file>
+                    <type>html</type>
+                </lowstockemailalert_email_email_template>
+            </email>
+        </template>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <lowstockemailalert translate="title" module="lowstockemailalert">
+                                            <title>Lowstockemailalert</title>
+                                        </lowstockemailalert>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <lowstockemailalert>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>general</sender_email_identity>
+                <email_template>lowstockemailalert_email_email_template</email_template>
+            </email>
+        </lowstockemailalert>
+    </default>
+    <crontab>
+        <jobs>
+            <lowstockemailalert_send_mail>
+                <schedule><cron_expr>0 * * * *</cron_expr></schedule>
+                <run><model>lowstockemailalert/observer::sendMail</model></run>
+            </lowstockemailalert_send_mail>
+        </jobs>
+    </crontab>
+</config>
