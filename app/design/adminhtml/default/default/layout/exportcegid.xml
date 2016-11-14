@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <exportcegid_view_index>
+        <reference name="content">
+            <block type="exportcegid/view" template="exportcegid/form.phtml" />
+        </reference>
+    </exportcegid_view_index>
+    
+    <exportcegid_view_preview>
+        <reference name="content">
+            <block type="exportcegid/view" template="exportcegid/form.phtml" />
+            <block type="exportcegid/view" template="exportcegid/result.phtml" />
+        </reference>
+    </exportcegid_view_preview> 
+</layout>

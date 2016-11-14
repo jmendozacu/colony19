@@ -1,0 +1,105 @@
+
+
+<form id="filter_form" action="<?php echo $this->getUrl('*/*/export') ?>" method="get">
+    <input name="from" value="<?php echo $this->getGetValue("from"); ?>" type="hidden" />
+    <input name="to" value="<?php echo $this->getGetValue("to"); ?>" type="hidden" />
+    <input name="store" value="<?php echo $this->getGetValue("store"); ?>" type="hidden" />
+   
+                                    
+    <div>
+        <div>
+            <table cellspacing="0" class="actions">
+                <tbody>
+                    <tr>
+                        <td class="export a-right">
+                            <img src="/skin/adminhtml/default/default/images/icon_export.gif" alt="" class="v-middle">
+                            <button title="Export CSV" type="submit" class="scalable task" style="">
+                                <span><span><span>Export CSV</span></span></span>
+                            </button>
+                        </td>
+                        <td class="filter-actions a-right">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid">
+                <div class="hor-scroll">
+                    <table cellspacing="0" class="data">
+                        <colgroup>
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                            <tr class="headings">
+                                <th class=" no-link"><span class="nobr">JournalCode</span></th>
+                                <th class=" no-link"><span class="nobr">JournalLib</span></th>
+                                <th class=" no-link"><span class="nobr">EcritureNum</span></th>
+                                <th class=" no-link"><span class="nobr">EcritureDate</span></th>
+                                <th class=" no-link"><span class="nobr">CompteNum</span></th>
+                                <th class=" no-link"><span class="nobr">CompteLib</span></th>
+                                <th class=" no-link"><span class="nobr">CompAuxNum</span></th>
+                                <th class=" no-link"><span class="nobr">CompAuxLib</span></th>
+                                <th class=" no-link"><span class="nobr">PieceRef</span></th>
+                                <th class=" no-link"><span class="nobr">PieceDate</span></th>
+                                <th class=" no-link"><span class="nobr">EcritureLib</span></th>
+                                <th class=" no-link"><span class="nobr">Debit</span></th>
+                                <th class=" no-link"><span class="nobr">Credit</span></th>
+                                <th class=" no-link"><span class="nobr">EcritureLet</span></th>
+                                <th class=" no-link"><span class="nobr">DateLet</span></th>
+                                <th class=" no-link"><span class="nobr">ValidDate</span></th>
+                                <th class=" no-link"><span class="nobr">MontantDevise</span></th>
+                                <th class=" no-link last"><span class="nobr">Idevise</span></th>
+                                <th class=" no-link"><span class="nobr">Delta</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $rows=$this->exportData();
+                                $totalDebit=0;
+                                $totalCredit=0;
+                                $i=0;
+                            ?>
+                            <?php if(count($rows)): ?>
+                                <?php foreach($rows as $row): ?>
+                                    <?php
+                                        $i++;
+                                        $totalCredit+=$row["Credit"];
+                                        $totalDebit+=$row["Debit"];
+                                    ?>
+                                    <tr class="<?php echo ($i%2)?"even":"odd"; ?>">
+                                        <?php foreach($row as $cell): ?>
+                                            <td><?php echo $cell; ?></td>
+                                        <?php endforeach; ?>
+                                        <td><?php echo round($totalDebit-$totalCredit,4); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr class="even">
+                                    <td class="empty-text a-center" colspan="19">Aucun élément trouvé.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="11">&nbsp;</td>
+                                <td><?php echo $totalDebit; ?></td>
+                                <td><?php echo $totalCredit; ?></td>
+                                <td colspan="5">&nbsp;</td>
+                                <td><?php echo round($totalDebit-$totalCredit,4); ?></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

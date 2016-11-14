@@ -1,0 +1,86 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width:50%;"><h3 class="icon-head head-report-sales-sales">Export Cegid</h3></td>
+                <td class="form-buttons"><button title="Afficher le rapport" type="button" class="scalable " onclick="filterFormSubmit()" style=""><span><span><span>Afficher le rapport</span></span></span></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <div class="entry-edit">
+        <form id="filter_form" action="<?php echo $this->getUrl('*/*/preview') ?>" method="get">
+            <div></div>
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-edit-form fieldset-legend">Filtre</h4>
+                <div class="form-buttons"></div>
+            </div>
+            
+            <div class="fieldset " id="sales_report_base_fieldset">
+                <div class="hor-scroll">
+                    <table cellspacing="0" class="form-list">
+                        <tbody>
+                            <tr>
+                                <td class="label"><label for="sales_report_store">Afficher le rapport pour</label></td>
+                                <td class="value">
+                                    <select id="sales_report_store" name="store" class=" select">
+                                        <?php foreach($this->getStoreTree() as $option): ?>
+                                            <option value="<?php echo implode(",",$option[0]); ?>" <?php if($this->getGetValue("store")==implode(",",$option[0])): ?>selected="selected"<?php endif; ?>><?php echo $option[1]; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="sales_report_from">De <span class="required">*</span></label></td>
+                                <td class="value">
+                                    <input name="from" id="sales_report_from" value="<?php echo $this->getGetValue("from"); ?>" title="De" type="text" class=" required-entry input-text" style="width:110px !important;"> <img src="/skin/adminhtml/default/default/images/grid-cal.gif" alt="" class="v-middle" id="sales_report_from_trig" title="Select Date" style="">
+                                    <script type="text/javascript">
+                                    //<![CDATA[
+                                        Calendar.setup({
+                                            inputField: "sales_report_from",
+                                            ifFormat: "%d/%m/%Y",
+                                            showsTime: false,
+                                            button: "sales_report_from_trig",
+                                            align: "Bl",
+                                            singleClick : true
+                                        });
+                                    //]]>
+                                    </script>            
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label"><label for="sales_report_to">À <span class="required">*</span></label></td>
+                                <td class="value">
+                                    <input name="to" id="sales_report_to" value="<?php echo $this->getGetValue("to"); ?>" title="À" type="text" class=" required-entry input-text" style="width:110px !important;"> <img src="/skin/adminhtml/default/default/images/grid-cal.gif" alt="" class="v-middle" id="sales_report_to_trig" title="Select Date" style="">
+                                    <script type="text/javascript">
+                                    //<![CDATA[
+                                        Calendar.setup({
+                                            inputField: "sales_report_to",
+                                            ifFormat: "%d/%m/%Y",
+                                            showsTime: false,
+                                            button: "sales_report_to_trig",
+                                            align: "Bl",
+                                            singleClick : true
+                                        });
+                                    //]]>
+                                    </script>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    function filterFormSubmit()
+    {
+        $("filter_form").submit();
+    }
+//]]>
+</script>
