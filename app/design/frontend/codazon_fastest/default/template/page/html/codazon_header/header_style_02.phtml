@@ -57,7 +57,11 @@
 						<div class="cdz-header-menu">
 							<div class="row cdz-header-menu-content">
 									<div class="col-sm-17 cdz-content-megamenu">
-										<?php echo $this->getChildHtml('topMenu') ?>
+										<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+											<?php echo $this->getChildHtml('topMenuDefault'); ?>
+										<?php else: ?>
+											<?php echo $this->getChildHtml('topMenu') ?>
+										<?php endif ?>
 										<?php //echo $this->getChildHtml('topContainer'); ?>
 									</div>
 									<div class="col-sm-7 pull-right search-wrapper">
