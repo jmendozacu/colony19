@@ -68,11 +68,11 @@
 										</div>
 										<?php echo $this->getChildHtml('cart_sidebar') ?>
 									</div>
-								<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
-									<?php echo $this->getChildHtml('topMenuDefault'); ?>
-								<?php endif ?>
 							</div>
 						</div>
+						<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+							<?php echo $this->getChildHtml('topMenuDefault'); ?>
+						<?php endif ?>
 					</div>
 				</div>
 			</div>
