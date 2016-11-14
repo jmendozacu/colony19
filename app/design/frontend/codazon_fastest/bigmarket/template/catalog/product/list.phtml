@@ -1,0 +1,279 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+
+<?php
+	$_themeHelper = $this->helper('themeframework');
+	$w = $_themeHelper->getConfig('codazon_settings/category_view/image_width');
+	$h = $_themeHelper->getConfig('codazon_settings/category_view/image_height');
+	$_qsHelper = $this->helper('quickshop');
+	
+	$_imgHelper = $this->helper('catalog/image');
+?>
+
+<div class="category-products">
+    <?php echo $this->getToolbarHtml() ?>
+    <?php // List mode ?>
+    <?php if($this->getMode()!='grid'): ?>
+    <?php $_iterator = 0; ?>
+    <ol class="products-list cdz-block-product01" id="products-list">
+    <?php foreach ($_productCollection as $_product): ?>
+        <li class="item product-item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+			<div class="product-item-info">
+            <?php // Product Image ?>
+            <div class="cdz-product-left">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image <?php echo ($_themeHelper->getConfig('codazon_settings/category_view/alternative_image'))?'':'no-alt-img'; ?>">
+                    <?php echo $_themeHelper->getProductLabel($_product) ?>
+                    <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($w,$h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" id="product-collection-image-<?php echo $_product->getId(); ?>" class="img-responsive" />
+                    <?php if($alt_img = $_themeHelper->getConfig('codazon_settings/category_view/alternative_image')): ?>
+                    <img src="<?php echo (string)$_imgHelper->init($_product,'thumbnail')->resize($w, $h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="alternative-img img-responsive" />
+                    <?php endif ?>
+                </a>
+                <div class="qs-button-icon">
+                    <?php echo $_qsHelper->getQuickshopHtml($_product) ?>
+                </div>
+            </div>
+            <?php // Product description ?>
+            <div class="product-shop cdz-product-right">
+                <div class="f-fix">
+                    <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                    
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+					<?php if($_product->getRatingSummary()): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                    <?php endif; ?>
+                    
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                    <?php
+						if ($this->getChild('name.after')) {
+							$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+							foreach ($_nameAfterChildren as $_nameAfterChildName) {
+								$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+								$_nameAfterChild->setProduct($_product);
+								echo $_nameAfterChild->toHtml();
+							}
+						}
+					?>
+					<div class="product-list-button">
+                    	<div class="cart-wrapper">
+							<?php if($_product->isSaleable()): ?>
+                            	<div class="cart-qty">
+                                    <div class="qty-ctl">
+                                        <button title="decrease" onclick="changeCartQty(this,-1); return false;" class="decrease">decrease</button>
+                                    </div>
+                                    <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+                                    <div class="qty-ctl">
+                                        <button title="increase" onclick="changeCartQty(this,1); return false;" class="increase">increase</button>
+                                    </div>
+                                </div>
+                                <button data-toggle="tooltip" data-original-title="<?php echo $this->__('Add to Cart') ?>" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart"
+                                    onclick="setLocation('<?php echo $this->getAddToCartUrl($_product,array('has_qty' => 1)) ?>?options=cart')"
+                                ><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+							<?php else: ?>
+								<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+							<?php endif; ?>
+
+
+                        	
+                            <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_compare_wishlist') == 1): ?>
+							<ul class="add-to-links">
+								<?php if ($this->helper('wishlist')->isAllow()) : ?>
+									<li class="wishlist" data-toggle="tooltip" title="<?php echo $this->__('Add to Wishlist') ?>" ><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+								<?php endif; ?>
+								<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+									<li data-toggle="tooltip" title="<?php echo $this->__('Add to Compare') ?>" class="compare"><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+								<?php endif; ?>
+							</ul>
+                            <?php endif ?>
+						</div>
+					</div>
+					
+                    
+                </div>
+            </div>
+			</div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    <?php else: ?>
+
+    <?php // Grid Mode ?>
+
+	<?php
+    	$itemClass = array();
+		$template = $this->getLayout()->getBlock('root')->getTemplate();
+		switch($template){
+			case 'page/2columns-left.phtml':
+			case 'page/2columns-right.phtml':
+				$type = 2;
+				break;
+			case 'page/3columns.phtml':
+				 $type = 3; break;
+			case 'page/1column.phtml':
+			default:
+				$type = 1;
+		}
+		$itemClass[] = 'col-desktop-'.$_themeHelper->getConfig('codazon_settings/category_view/products_per_row_desktop_'.$type);
+		$itemClass[] = 'col-tablet-l-'.$_themeHelper->getConfig('codazon_settings/category_view/products_per_row_tablet_landscape_'.$type);
+		$itemClass[] = 'col-tablet-p-'.$_themeHelper->getConfig('codazon_settings/category_view/products_per_row_tablet_portrait_'.$type);
+		$itemClass[] = 'col-mobile-'.$_themeHelper->getConfig('codazon_settings/category_view/products_per_row_mobile_'.$type);
+	?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+    <div class="products-grid cdz-block-product01">
+        <ul class="same-height row">
+        <?php $i=0; foreach ($_productCollection as $_product): ?>
+                <li class="item product-item <?php echo implode(' ', $itemClass); ?>">
+                    <div class="product-item-info">
+                    <div class="cdz-hover-section">
+                        <div class="cdz-product-top">
+                            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image <?php echo ($_themeHelper->getConfig('codazon_settings/category_view/alternative_image'))?'':'no-alt-img'; ?>">
+                            <img src="<?php echo (string)$_imgHelper->init($_product, 'small_image')->resize($w, $h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="img-responsive" id="product-collection-image-<?php echo $_product->getId(); ?>" />
+                            <?php if($alt_img = $_themeHelper->getConfig('codazon_settings/category_view/alternative_image')): ?>
+                            <img src="<?php echo (string)$_imgHelper->init($_product,'thumbnail')->resize($w, $h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="alternative-img img-responsive" />
+                            <?php endif ?>
+                            </a>
+                        </div>
+                        <?php echo $_themeHelper->getProductLabel($_product) ?>
+						<div class="qs-button-icon">
+							<?php echo $_qsHelper->getQuickshopHtml($_product) ?>
+                        </div>
+						<?php if($_themeHelper->getConfig('codazon_settings/category_view/show_compare_wishlist') == 1): ?>
+                        <div class="cdz-product-wishlist">
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <div class="actions-secondary" data-toggle="tooltip" title="<?php echo $this->__('Add to Wishlist') ?>"><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="action link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php endif ?>
+                    </div>
+                        
+                    <div class="product-item-details">
+                        <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                        <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_description')): ?>
+                        <?php
+                        $desc = $this->stripTags($_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description'));
+                        if(strlen($desc)>80) {
+                            $strCutTitle = substr($desc, 0, 80);
+                            $desc = substr($strCutTitle, 0, strrpos($strCutTitle, ' '))."&hellip;";
+                        }
+                        ?>
+                        <div class="desc product-item-description"><?php echo $desc; ?></div>
+                        <?php endif ?>
+                        <?php echo $this->getPriceHtml($_product, true) ?>
+                        <?php
+							$_nameAfterChildHtml = '';
+							if ($this->getChild('name.after')) {
+								$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+								foreach ($_nameAfterChildren as $_nameAfterChildName) {
+									$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+									$_nameAfterChild->setProduct($_product);
+									$_nameAfterChildHtml .= $_nameAfterChild->toHtml();
+								}
+							}
+							echo $_nameAfterChildHtml;
+						?>
+                        <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_rating')): ?>
+						<?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                        <?php endif; ?>
+                        <?php endif ?>
+                        <div class="<?php echo ($_themeHelper->getConfig('codazon_settings/category_view/enable_hover_effect'))?'cdz-product-bottom':'cdz-bottom-no-effect' ?>">
+                            <div class="cdz-buttons-container">
+                                <div class="cdz-buttons-inner actions">
+									<?php echo $_nameAfterChildHtml; ?>
+                                    <div class="cart-wrapper">
+                                    <?php if($_product->isSaleable()): ?>
+                                    <div class="cart-qty">
+                                        <div class="qty-ctl">
+                                            <button title="decrease" onclick="changeCartQty(this,-1); return false;" class="decrease">decrease</button>
+                                        </div>
+                                        <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+                                        <div class="qty-ctl">
+                                            <button title="increase" onclick="changeCartQty(this,1); return false;" class="increase">increase</button>
+                                        </div>
+                                    </div>
+                                    <button data-toggle="tooltip" data-original-title="<?php echo $this->__('Add to Cart') ?>" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart"
+                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product,array('has_qty' => 1)) ?>?options=cart')"
+                                    ><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                    <?php else: ?>
+                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                    <?php endif; ?>
+                                    <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_compare_wishlist') == 1): ?>
+                                    <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                    <a data-toggle="tooltip" title="<?php echo $this->__('Add to Compare') ?>" href="<?php echo $_compareUrl ?>" class="action link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                                    <?php endif; ?>
+                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach ?>
+            </ul>
+        </div>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>
+<?php endif; ?>
+<?php
+// Provides a block where additional page components may be attached, primarily good for in-page JavaScript
+if ($this->getChild('after')) {
+    $_afterChildren = $this->getChild('after')->getSortedChildren();
+    foreach ($_afterChildren as $_afterChildName) {
+        $_afterChild = $this->getChild('after')->getChild($_afterChildName);
+        //set product collection on after blocks
+        $_afterChild->setProductCollection($_productCollection);
+        echo $_afterChild->toHtml();
+    }
+}
+?>
