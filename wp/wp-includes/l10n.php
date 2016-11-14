@@ -169,9 +169,13 @@ function translate_with_gettext_context( $text, $context, $domain = 'default' ) 
  *                       Default 'default'.
  * @return string Translated text.
  */
-function __( $text, $domain = 'default' ) {
-	return translate( $text, $domain );
+if (!function_exists('__')) {
+	function __( $text, $domain = 'default' ) {
+		return translate( $text, $domain );
 }
+}
+
+
 
 /**
  * Retrieve the translation of $text and escapes it for safe use in an attribute.
