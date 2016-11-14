@@ -74,9 +74,12 @@
 				</div>
 			</div>
 		</div>
-		<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
-			<?php echo $this->getChildHtml('topMenuDefault'); ?>
-		<?php endif ?>
+        <div class="cdz-header-bottom col-sm-24">
+            <?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+                <?php echo $this->getChildHtml('topMenuDefault'); ?>
+            <?php endif ?>
+        </div>
+
     </div>
     <div class="mobile-header visible-xs">
         <div class="cdz-mobile-header-menu">
