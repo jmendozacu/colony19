@@ -28,92 +28,72 @@
  */
 ?>
 <?php $_themeHelper = $this->helper('themeframework'); ?>
-<div class="header-container cdz-header-style-05">
+<div class="header-container cdz-header-style-04">
     <div class="header hidden-xs">
         <div class="cdz-header-top">
 			<div class="cdz-header-top-content container">
 				<div class="row">
-					<div class="col-sm-24">
-						<div class="cdz-col-right pull-right" id="cdz-pc-account">
-							<div class="cdz-pc-stores pull-right" id="cdz-pc-stores">
-								<?php echo $this->getChildHtml('store_language_style_01') ?>
-								<?php echo $this->getChildHtml('currency_style_01') ?>
-								<?php echo $this->getChildHtml('store_switcher_style_01') ?>
-							</div>
-							<ul class="cdz-top-link">
-								<li class="link wishlist">
-									<a href="<?php echo $this->getUrl('wishlist') ?>"><?php echo $this->__('Wishlist') ?></a>
-								</li>
-								<?php  if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-								<li class="link logout">
-									<a href="<?php echo $this->getUrl('customer/account/logout') ?>"><?php echo $this->__('Logout') ?></a>
-								</li>
-								<?php else: ?>
-								<li class="link signup">
-									<a href="<?php echo $this->getUrl('customer/account/create') ?>"><?php echo $this->__('Sign up') ?></a>
-								</li>
-								<?php endif ?>
-							</ul>
-						</div>
+					<div class="col-sm-12 cdz-col-left" id="cdz-pc-stores">
+						<?php echo $this->getChildHtml('store_switcher_style_01') ?>
+						<?php echo $this->getChildHtml('store_language_style_01') ?>
+						<?php echo $this->getChildHtml('currency_style_01') ?>
+					</div>
+					<div class="col-sm-12 cdz-col-right" id="cdz-pc-account">
+						<?php echo $this->getChildHtml('topLinks') ?>
+						<?php echo $this->getChildHtml('cdzTopLinks') ?>
 					</div>
 				</div>
 			</div>
         </div>
         <div class="cdz-header-bottom no-padding sticky-menu <?php echo ($_themeHelper->getConfig('codazon_settings/header/enable_sticky') == 1)?'has-sticky-menu':'' ?>">
+			<div class="container">
 			<div class="cdz-header-bottom-content">
 				<div class="cdz-bottom-logo-cart">
-					<div class="container">
-						<div class="row">
-							<div class="col-sm-7 cdz-header-logo"><h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1></div>
-							<div class="search-wrapper col-sm-9 col-sm-push-1">
-								<div class="search-content block block-search">
-									<div class="search-form-container" id="cdz-pc-search-form">
-										<?php
-										echo $this->getChild('topSearch')->addData(array(
-												'has_category_search' => ($_themeHelper->getConfig('codazon_settings/header/category_search') == 1),
-												'category_id' => $_themeHelper->getConfig('codazon_settings/header/category'),
-												'category_levels' => $_themeHelper->getConfig('codazon_settings/header/category_levels')
-											))->toHtml()
-										?>
+					<div class="row">
+						<div class="col-sm-8 cdz-header-logo"><h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1></div>
+                        <div class="search-wrapper col-sm-9 col-sm-push-1">
+                            <div class="search-content block block-search">
+                                <div class="search-form-container" id="cdz-pc-search-form">
+									<?php
+									echo $this->getChild('topSearch')->addData(array(
+											'has_category_search' => ($_themeHelper->getConfig('codazon_settings/header/category_search') == 1),
+											'category_id' => $_themeHelper->getConfig('codazon_settings/header/category'),
+											'category_levels' => $_themeHelper->getConfig('codazon_settings/header/category_levels')
+										))->toHtml()
+									?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 cart-wrapper col-sm-push-1">
+						<div class="cdz-header-cart">							
+							<?php echo $this->getChildHtml('cart_sidebar') ?>
+                        	<div class="link cdz-top-login cdz-dropdown pull-right">
+								<?php  if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+									<a class="cdz-trigger" href="<?php echo $this->getUrl('customer/account') ?>"><?php echo $this->__('My account') ?></a>
+								<?php else: ?>
+									<a class="cdz-trigger" href="javascript:void(0)"><?php echo $this->__('Sign in') ?></a>
+									<div class="cdz-dropdown-content" style="display:none;">
+										<?php echo $this->getChild('customer_form_mini_login')->setSuffix('_02')->toHtml(); ?>                            
 									</div>
-								</div>
-							</div>
-							<div class="col-sm-8 cart-wrapper">
-								<div class="cdz-header-cart">							
-									<?php echo $this->getChildHtml('cart_sidebar') ?>
-									<div class="link cdz-top-login cdz-dropdown pull-right">
-										<?php  if(Mage::getSingleton('customer/session')->isLoggedIn()): ?>
-											<a class="cdz-trigger" href="<?php echo $this->getUrl('customer/account') ?>"><?php echo $this->__('Account') ?></a>
-										<?php else: ?>
-											<a class="cdz-trigger" href="javascript:void(0)"><?php echo $this->__('Sign in') ?></a>
-											<div class="cdz-dropdown-content" style="display:none;">
-												<?php echo $this->getChild('customer_form_mini_login')->setSuffix('_02')->toHtml(); ?>                            
-											</div>
-										<?php endif ?>
-									</div>
+								<?php endif ?>
+                            </div>
+                        </div>
+                        </div>
+					</div>
+					</div>
+				<div class="cdz-header-menu">
+					<div class="row">
+						<div class="cdz-header-menu-content  cdz-fix-left">
+							<div class="col-sm-24">
+								<div class="cdz-content-megamenu">
+									<?php echo $this->getChildHtml('topMenu') ?>
+									<?php //echo $this->getChildHtml('topContainer'); ?>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="cdz-header-menu">
-					<div class="container">
-						<div class="row">
-							<div class="cdz-header-menu-content  cdz-fix-left">
-								<div class="col-sm-24">
-									<div class="cdz-content-megamenu">
-                                	<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
-									<?php echo $this->getChildHtml('topMenuDefault'); ?>
-                                    <?php else: ?>
-									<?php echo $this->getChildHtml('topMenu') ?>
-                                    <?php endif ?>
-									<?php //echo $this->getChildHtml('topContainer'); ?>
-								</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>				
+			</div>				
 			</div>
 		</div>
     </div>

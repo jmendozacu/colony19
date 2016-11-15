@@ -86,7 +86,18 @@
 						<div class="cdz-header-menu-content  cdz-fix-left">
 							<div class="col-sm-24">
 								<div class="cdz-content-megamenu">
+                                	<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+									<?php echo $this->getChildHtml('topMenuDefault'); ?>
+                                    <?php else: ?>
+
+
+
+
 									<?php echo $this->getChildHtml('topMenu') ?>
+                                    <?php endif ?>
+
+
+
 									<?php //echo $this->getChildHtml('topContainer'); ?>
 								</div>
 							</div>
