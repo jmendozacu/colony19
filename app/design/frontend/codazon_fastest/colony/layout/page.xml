@@ -104,7 +104,7 @@ Default layout, loads most of the pages
 				<block type="page/switch" name="store_switcher" as="store_switcher_style_01" template="page/switch/stores_style_01.phtml"/>
                 <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
                     <label>Navigation Bar</label>
-                    <!--block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/-->
+                    <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>
                 </block>
 				<block type="core/text_list" name="top.menu.default" as="topMenuDefault" translate="label">
 					<block type="themeframework/widget_categoriesmenu" template="page/html/top_menu.phtml" name="default.catalog.topnav" />
