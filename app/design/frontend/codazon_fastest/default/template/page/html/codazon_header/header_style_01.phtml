@@ -62,11 +62,7 @@
 						<div class="cdz-header-menu-content">
 							<div class="row cdz-fix-left">
 								<div class="col-sm-18 cdz-content-megamenu">
-                                	<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
-									<?php echo $this->getChildHtml('topMenuDefault'); ?>
-                                    <?php else: ?>
 									<?php echo $this->getChildHtml('topMenu') ?>
-                                    <?php endif; ?>
 									<?php //echo $this->getChildHtml('topContainer'); ?>
 								</div>
 								<div class="col-sm-6 pull-right search-wrapper">
@@ -80,6 +76,11 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="cdz-header-bottom col-sm-24">
+				<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+					<?php echo $this->getChildHtml('topMenuDefault'); ?>
+				<?php endif ?>
 			</div>
 		</div>
     </div>
