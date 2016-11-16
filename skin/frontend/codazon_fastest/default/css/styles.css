@@ -10505,7 +10505,7 @@ button {
   backface-visibility: hidden;
   text-transform: uppercase;
   background-image: none;
-  border: 3px solid;
+  border: 1px solid;
   cursor: pointer;
   display: inline-block;
   font: 500 14px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
