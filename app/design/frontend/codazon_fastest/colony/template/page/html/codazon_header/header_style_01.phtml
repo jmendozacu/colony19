@@ -33,15 +33,18 @@
         <div class="cdz-header-top">
 			<div class="cdz-header-top-content container">
 				<div class="row">
-					<div class="col-sm-12 cdz-col-left" id="cdz-pc-stores">
+					<div class="col-sm-8 cdz-col-left" id="cdz-pc-stores">
 						<?php echo $this->getChildHtml('store_switcher_style_01') ?>
 						<?php echo $this->getChildHtml('store_language_style_01') ?>
 						<?php echo $this->getChildHtml('currency_style_01') ?>
 					</div>
-					<div class="col-sm-12 cdz-col-right" id="cdz-pc-account">
+					<div class="col-sm-8 cdz-col-right" id="cdz-pc-account">
 						<?php echo $this->getChildHtml('topLinks') ?>
 						<?php echo $this->getChildHtml('cdzTopLinks') ?>
 					</div>
+                                        <div class="col-sm-8 cdz-header-cart">
+                                            <?php echo $this->getChildHtml('cart_sidebar') ?>
+					</div>  
 				</div>
 			</div>
         </div>
@@ -50,22 +53,19 @@
 				<div class="cdz-bottom-logo-cart">
 					<div class="container">
 					<div class="row">
-						<div class="col-sm-6 cdz-header-logo"><h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1></div>
-                                                <div class="col-sm-6">
+						<div class="col-sm-8 cdz-header-logo"><h1 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1></div>
+                                                <div class="col-sm-8">
                                                     <?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
 							<?php echo $this->getChildHtml('topMenu') ?>
                                                     <?php endif ?>
                                                 </div>  
-                                                <div class="col-sm-6 pull-right search-wrapper">
+                                                <div class="col-sm-8 pull-right search-wrapper">
                                                     <div class="search-content block block-search">
                                                         <div class="search-form-container" id="cdz-pc-search-form">
                                                             <?php echo $this->getChildHtml('topSearch') ?>
 							</div>
                                                     </div>
-						</div>
-                                                <div class="col-sm-6 cdz-header-cart">
-							<?php echo $this->getChildHtml('cart_sidebar') ?>
-						</div>      
+						</div>                                                    
 					</div>
 					</div>
 				</div>
