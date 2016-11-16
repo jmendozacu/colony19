@@ -3287,10 +3287,14 @@ button:hover {
  * Codazon_Menu Megamenu
  * ============================================ */
 .cms-index-index .cdz-main-menu .groupmenu li.level0.nav-home > a.menu-link {
-  color: white;
-  background-color: #b0d235;
-  border-color: white;
+  color: #639537;
+  background-color: #FFF;
+  border-radius: 30px;
+  border: 1px solid #E0E0E0;
+  padding: 8px 15px 6px 15px;
+  margin: 0 auto;
   font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  text-decoration: none;
 }
 
 .cdz-main-menu .groupmenu li.level0 a.menu-link {
