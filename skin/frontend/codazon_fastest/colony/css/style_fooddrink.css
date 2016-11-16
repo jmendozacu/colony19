@@ -2117,6 +2117,7 @@ fieldset[disabled] .block-search .button {
 
 .isotope-wrap .products-grid .product-item-info .product-name {
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  text-align: left;
 }
 .isotope-wrap .products-grid .product-item-info .cdz-product-wishlist .action:before {
   color: white;
@@ -2192,7 +2193,7 @@ fieldset[disabled] .block-search .button {
 }
 
 .product-item .price {
-  font: 500 14px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 500 18px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   color: #282828;
 }
 
