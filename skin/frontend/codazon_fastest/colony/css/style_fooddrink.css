@@ -665,7 +665,7 @@ input.input-text,
   color: white;
 }
 .page-footer.cdz-footer-style-02 .footer-link li {
-  border-bottom: 1px solid #444444;
+  border-bottom: 0px;
 }
 .page-footer.cdz-footer-style-02 .bottom-footer-wrapper {
   background: #444444;
@@ -1247,7 +1247,7 @@ a:hover, a:focus {
   background-color: #444444;
 }
 .page-footer .footer-bottom {
-  background: #222222;
+  background: #639537;
 }
 .page-footer a {
   color: #FFF;
