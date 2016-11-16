@@ -1795,14 +1795,14 @@ textarea.input-text {
 .header .cdz-header-top {
   border-bottom: 1px solid white;
   /* modified */ 
-  background-color: #CCC;
+  background-color: #62A62B;
   color: white;
 }
 .header .cdz-header-top .cdz-top-link .link a {
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 .header .cdz-header-top .cdz-top-link li a {
-  color: #999999;
+  color: #FFF;
 }
 .header .cdz-header-top .cdz-top-link li a:visited, .header .cdz-header-top .cdz-top-link li a:hover, .header .cdz-header-top .cdz-top-link li a:active {
   color: lighten(#999999, 10%);
@@ -1815,7 +1815,7 @@ textarea.input-text {
   color: #282828;
 }
 .header #cdz-pc-stores .cdz-trigger {
-  color: #999999;
+  color: #FFF;
 }
 .header #cdz-pc-stores .cdz-trigger:hover {
   color: lignten(#999999, 10%);
@@ -2154,7 +2154,7 @@ fieldset[disabled] .block-search .button {
 }
 
 .price {
-  color: #282828;
+  color: #FFF;
 }
 
 .old-price {
