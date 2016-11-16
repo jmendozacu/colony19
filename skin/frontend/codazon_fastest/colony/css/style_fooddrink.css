@@ -185,7 +185,9 @@ input.input-text,
 .manage-address, .change-pass {
   border-radius: 5px;
 }
-
+.cdz-slideshow  {
+  border-radius: 0px;
+}
 @media (max-width: 767px) {
   .cms-index-index .menu-vertical-area {
     margin-bottom: 20px !important;
