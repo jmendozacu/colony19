@@ -2216,8 +2216,11 @@ fieldset[disabled] .block-search .button {
 }
 
 .products-grid .product-item-info .product-item-details .product-item-description {
-  color: #999999;
+  color: #8A8A8A;
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  text-align: left;
+  font-style: italic;
+  letter-spacing: 1px;
 }
 .products-grid .product-item-info .cdz-product-bottom {
   background: white;
@@ -3627,8 +3630,9 @@ button:hover {
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item .product-name a {
   color: #639537;
-  font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 500 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-align: left;
+  letter-spacing: 2px;
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item:hover .product-item-info {
   border-color: #b0d235;
