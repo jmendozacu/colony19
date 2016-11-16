@@ -1250,10 +1250,10 @@ a:hover, a:focus {
   background: #222222;
 }
 .page-footer a {
-  color: #777777;
+  color: #FFF;
 }
 .page-footer a:hover {
-  color: white;
+  color: #E0E0E0;
 }
 .page-footer p.h5 {
   color: #777777;
