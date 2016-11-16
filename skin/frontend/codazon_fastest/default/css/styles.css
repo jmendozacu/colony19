@@ -3405,6 +3405,7 @@ body.catalogsearch-result-index .page-title h1 {
   color: #a0a0a0;
   font-size: 13px;
   margin: 0 0 5px;
+  text-align: left;
 }
 
 .products-grid .add-to-links {
@@ -21553,10 +21554,10 @@ tabs-list.product.data.items .item.title {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    padding: 0 20px 10px;
+    padding: 0 10px 10px;
   }
   .col1-layout .codazon-filter-style-05 .products-grid .product-items.isotope .product-name {
-    padding: 0 20px;
+    padding: 0 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
