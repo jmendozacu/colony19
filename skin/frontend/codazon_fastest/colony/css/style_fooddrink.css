@@ -1794,6 +1794,7 @@ textarea.input-text {
 }
 .header .cdz-header-top {
   border-bottom: 1px solid white;
+  /* modified */ 
   background-color: #CCC;
   color: white;
 }
@@ -1804,7 +1805,7 @@ textarea.input-text {
   color: #999999;
 }
 .header .cdz-header-top .cdz-top-link li a:visited, .header .cdz-header-top .cdz-top-link li a:hover, .header .cdz-header-top .cdz-top-link li a:active {
-  color: lignten(#999999, 10%);
+  color: lighten(#999999, 10%);
 }
 .header .cdz-header-top .cdz-top-link li .forgot-password a {
   color: #999999;
