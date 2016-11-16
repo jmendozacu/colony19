@@ -3661,11 +3661,16 @@ button:hover {
     box-shadow: 0 0 0 0px #ebebeb, 0 1px 0 0 #ebebeb, 1px 1px 0 0 #ebebeb, 1px 0 0 0 #ebebeb inset, 0 1px 0 0 #ebebeb inset;
   }
   .codazon-filter-style-05 .products-grid .product-items .product-item-description {
-    color: #999999;
-    font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+    color: #8A8A8A;
+    font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+    text-align: left;
+    font-style: italic;
+    letter-spacing: 1px;
   }
   .codazon-filter-style-05 .products-grid .product-items .item.product-item .product-name a {
-    color: #b0d235;
+    color: #639537;
+    font: 500 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+    letter-spacing: 2px;
   }
   .codazon-filter-style-05 .products-grid .product-items .item.product-item .price {
     color: #282828;
