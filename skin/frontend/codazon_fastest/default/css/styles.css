@@ -21205,7 +21205,7 @@ body._has-modal {
 }
 
 .product-item .price-box .price {
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .product-item .price-box .price-label {
