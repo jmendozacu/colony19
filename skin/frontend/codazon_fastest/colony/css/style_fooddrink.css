@@ -1837,6 +1837,7 @@ textarea.input-text {
   background: #FFF;
   border-top: 3px double #E0E0E0;
   margin-bottom: 10px;
+  padding-top: 10px;
 }
 
 .block-search .label:hover:before {
@@ -3625,8 +3626,9 @@ button:hover {
   border-color: white;
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item .product-name a {
-  color: #b0d235;
+  color: #639537;
   font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  text-align: left;
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item:hover .product-item-info {
   border-color: #b0d235;
