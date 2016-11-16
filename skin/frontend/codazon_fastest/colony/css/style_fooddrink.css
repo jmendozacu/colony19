@@ -1834,7 +1834,9 @@ textarea.input-text {
 
 /*Search box area*/
 .cdz-header-menu {
-  background: #b0d235;
+  background: #FFF;
+  border-top: 3px double #E0E0E0;
+  margin-bottom: 10px;
 }
 
 .block-search .label:hover:before {
