@@ -1248,9 +1248,13 @@ a:hover, a:focus {
 }
 .page-footer .top-footer-wrapper {
   background-color: #639537;
+  background-image: url("../images/footer.png");
+  background-repeat: repeat;
 }
 .page-footer .footer-bottom {
   background: #639537;
+  background-image: url("../images/footer.png");
+  background-repeat: repeat;
 }
 .page-footer a {
   color: #FFF;
