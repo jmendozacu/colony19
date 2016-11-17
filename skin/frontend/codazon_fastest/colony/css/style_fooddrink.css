@@ -34,7 +34,8 @@ input.input-text,
   padding: 0;
 }
 .content-breadcrums .menu-vertical-subpage, .content-breadcrums .menu-breadcrumbs {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
+  margin-left: 15px;
 }
 
 .products-grid .product-items:not(.owl-carousel) > .product-item .product-item-info {
