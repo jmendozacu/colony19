@@ -20606,8 +20606,9 @@ body._has-modal {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\f178";
-  font-size: 11px;
+  content: "\f105";
+  font-size: 13px;
+  color: #8A8A8A;
 }
 
 .content-breadcrums {
