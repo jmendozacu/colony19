@@ -2415,7 +2415,7 @@ button:hover {
 
 #back-top a {
   background: white;
-  border-color: #F34E12;
+  border: 1px solid #F34E12;
   color: #F34E12;
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   font-size: 0;
@@ -2429,9 +2429,9 @@ button:hover {
 }
 
 #back-top a:hover {
-  background: #b0d235;
-  border-color: #b0d235;
-  color: white;
+  background: #FFF;
+  color: #639537;
+  border: 1px solid #639537;
 }
 
 .qs-button {
