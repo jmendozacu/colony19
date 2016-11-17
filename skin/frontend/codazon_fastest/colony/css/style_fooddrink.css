@@ -3553,14 +3553,14 @@ button:hover {
 
 .block:not(.block-static-block) .block-collapsible-nav-title,
 .block:not(.block-static-block) .block-title {
-  color: #282828;
+  color: #8A8A8A;
   font: 500 16px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   border-bottom-color: #ebebeb;
 }
 
 .block:not(.block-static-block) .block-collapsible-nav-title strong,
 .block:not(.block-static-block) .block-title strong {
-  font: 500 16px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 400 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   border-bottom: 3px solid #121212;
 }
 
