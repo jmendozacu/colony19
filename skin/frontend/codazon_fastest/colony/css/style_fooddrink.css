@@ -658,7 +658,7 @@ input.input-text,
 /*product label*/
 .cdz-product-lbs .lb-item {
   font-weight: 600;
-  text-shadow: 0 2px 1px #717171;
+  /*text-shadow: 0 2px 1px #717171;*/
 }
 
 .page-footer.cdz-footer-style-02 p.h5 {
@@ -4050,7 +4050,7 @@ form .legend {
   color: white;
 }
 .cdz-product-lbs .lb-item.lb-sale {
-  background: #f86532;
+  background: #F34E12;
 }
 
 /*Box Style Home Sport*/
