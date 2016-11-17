@@ -20588,7 +20588,8 @@ body._has-modal {
 }
 
 .breadcrumbs ul li strong {
-  font-weight: 600;
+  font-weight: 400;
+  color: #639537;
 }
 
 .breadcrumbs ul li span {
