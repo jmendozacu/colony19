@@ -17967,15 +17967,15 @@ body {
 }
 
 .menu-breadcrumbs .breadcrumbs {
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
   display: block;
   border: 0;
-  padding: 10px 10px 0 30px;
-  height: 35px;
-  -moz-border-radius: 0 5px 5px 0px;
+  padding: 0px 10px 0 10px;
+  height: 20px;
+  /*-moz-border-radius: 0 5px 5px 0px;
   -webkit-border-radius: 0 5px 5px 0px;
   border-radius: 0 5px 5px 0px;
-  margin: 0 0 0 -30px;
+  margin: 0 0 0 -30px;*/
 }
 
 /*=================== RTL ==================*/
