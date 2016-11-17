@@ -72,6 +72,18 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
 
         $this->_info['price']         = $regularPrice;
         $this->_info['special_price'] = $specialPrice;
+
+        $this->_info['created_at'] = strtotime($p->getCreatedAt());
+        // setting for created_at
+        if ($p->isConfigurable()) {
+            $usedProds = Mage::helper('amlabel')->getUsedProducts($p);
+            foreach ($usedProds as $child) {
+                if ($child != $p
+                    && $this->_info['created_at'] < strtotime($child->getCreatedAt())) {
+                    $this->_info['created_at'] = strtotime($child->getCreatedAt());
+                }
+            }
+        }
     }
 
     public function isApplicable()
@@ -81,10 +93,6 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
         if (!$p) {
             return false;
         }
-
-        // has image for the current mode
-        if (!$this->getValue('img'))
-            return false;
 
         $now = Mage::getModel('core/date')->date();
         if ($this->getDateRangeEnabled() && ($now < $this->getFromDate() || $now > $this->getToDate())) {
@@ -200,6 +208,15 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
                 return false;
         }
 
+        $stockRangeEnabled = $this->getProductStockEnabled();
+        if ($stockRangeEnabled == "1"){
+            //TODO check for all types of products
+            $qty = $this->_getProductQty($p);
+            $lessThan = $this->getStockLess();
+            if ($lessThan >= 0 && $lessThan <= $qty)
+                return false;
+        }
+
         $stockStatus = $this->getStockStatus();
         if ($stockStatus){
             $inStock = $p->getStockItem()->getIsInStock() ? 2 : 1;
@@ -287,7 +304,7 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
                 $days = Mage::getStoreConfig('amlabel/new/days');
                 if (!$days)
                     return false;
-                $createdAt = strtotime($p->getCreatedAt());
+                $createdAt = $this->_info['created_at'];
                 $now = Mage::getModel('core/date')->date('U');
                 return ($now - $createdAt <= $days * 86400); // 60 sec. * 60 min. * 24 hours = 86400 sec.
             } else {
@@ -343,12 +360,30 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
 
     public function getImageInfo()
     {
-        $info = getimagesize($this->getImagePath());
+        if($this->getImagePath()) {
+            $info = getimagesize($this->getImagePath());
+            if(!$info && strpos($this->getImagePath(), 'svg') !== false) {
+                $xml = simplexml_load_file($this->getImagePath());
+                $attr = $xml->attributes();
+                $info = array(intVal($attr->width) . 'pt', intVal($attr->height) . 'pt');
+            }
+            else{
+                $info[0] .= 'px';
+                $info[1] .= 'px';
+            }
+        }
+        else{
+            return array();
+        }
+
         return array('w'=>$info[0], 'h'=>$info[1]);
     }
 
     public function getImagePath()
     {
+        if(!$this->getValue('img')) {
+            return false;
+        }
         return Mage::getBaseDir('media') . '/amlabel/' . $this->getValue('img');
     }
 
@@ -400,6 +435,25 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
                 case 'SPECIAL_PRICE':
                     $value = strip_tags($store->convertPrice($this->_info['special_price'], true));
                     break;
+                case 'SPDL':
+                    $toDate = $p->getSpecialToDate();
+                    if($toDate) {
+                        $currentTime = Mage::getModel('core/date')->date();
+
+                        $diff = strtotime($toDate) - strtotime($currentTime);
+                        $value = floor($diff / (60*60*24));//days
+                    }
+
+                    break;
+                case 'SPHL':
+                    $toDate = $p->getSpecialToDate();
+                    if($toDate) {
+                        $currentTime = Mage::getModel('core/date')->date();
+
+                        $diff = strtotime($toDate) - strtotime($currentTime);
+                        $value = floor($diff / (60*60));//hours
+                    }
+                    break;
                 case 'FINAL_PRICE':
                     $value = strip_tags($store->convertPrice(Mage::helper('tax')->getPrice($p, $p->getFinalPrice()), true, false));
                     break;
@@ -444,6 +498,10 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
                 case 'NEW_FOR':
                     $createdAt = strtotime($p->getCreatedAt());
                     $value     = max(1, floor((time() - $createdAt) / 86400));
+                    break;
+
+                case 'STOCK':
+                    $value = $this->_getProductQty($p);
                     break;
 
                 default:
@@ -535,5 +593,13 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
         }
 
         return $js;
+    }
+
+    private function _getProductQty($product)
+    {
+        $stockItem   = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
+        $quantity = $stockItem->getData('qty');
+
+        return  intval($quantity);
     }
 }

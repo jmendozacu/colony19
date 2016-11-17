@@ -20,7 +20,20 @@ class Amasty_Label_Block_Adminhtml_Label_Edit_Tab_General extends Mage_Adminhtml
         $fldInfo->addField('name', 'text', array(
             'label'     => $hlp->__('Name'),
             'name'      => 'name',
-        ));         
+        ));
+        $fldInfo->addField('open_tab_input', 'hidden', array(
+            'label'     => $hlp->__(''),
+            'name'      => 'open_tab_input',
+        ));
+
+        $fldInfo->addField('is_active', 'select', array(
+            'label'     => $hlp->__('Status'),
+            'name'      => 'is_active',
+            'values'    => array(
+                0 => $hlp->__('Inactive'),
+                1 => $hlp->__('Active'),
+            ),
+        ));
         
         $fldInfo->addField('pos', 'text', array(
             'label'     => $hlp->__('Priority'),

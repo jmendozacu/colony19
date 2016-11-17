@@ -198,4 +198,3 @@
             return $classPath . '_fixed_ambackup';
         }
     }
-?>

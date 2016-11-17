@@ -30,29 +30,48 @@
     height: auto;
 }
 
+
 .top-center {
-    top: 0;
-    left: 50%;
+    top     : 0;
+    left    : 0;
+    right   : 0;
+    margin-left : auto;
+    margin-right : auto;
 }
 
 .middle-left {
-    left: 0;
-    top: 50%;
+    left : 0;
+    top   : 0;
+    bottom  : 0;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .middle-right {
     right: 0;
-    top: 50%;
+    top   : 0;
+    bottom  : 0;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .bottom-center {
     bottom: 0;
-    right: 50%;
+    left    : 0;
+    right   : 0;
+    margin-left : auto;
+    margin-right : auto;
 }
 
 .middle-center {
-    top: 40%;
-    left: 40%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top   : 0;
+    bottom  : 0;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .top-left {
@@ -97,6 +116,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 .amlabel-txt2 {
@@ -104,4 +124,5 @@
     height: 100%;
     background-size: contain !important;
     position: absolute;
+    z-index: 9999;
 }

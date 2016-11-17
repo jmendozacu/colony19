@@ -9,7 +9,7 @@ class Amasty_Label_Model_Observer
     public function applyLabels($observer)
     {
         if (!Mage::app()->getRequest()->getParam('amlabels')
-            || !Mage::getSingleton('admin/session')->isAllowed('catalog/products/assign_labels'))
+        || !Mage::getSingleton('admin/session')->isAllowed('catalog/products/assign_labels'))
             return $this;
 
         $product = $observer->getEvent()->getProduct();
@@ -19,27 +19,26 @@ class Amasty_Label_Model_Observer
 
         foreach ($collection as $label) {
             $skus = trim($label->getIncludeSku(), ', ');
-            if ($skus)
+            if ($skus) {
                 $skus = explode(',', $skus);
-            else
+            } else {
                 $skus = array();
+            }
 
             $name = 'amlabel_' . $label->getId();
-            if (Mage::app()->getRequest()->getParam($name)) { //add
+            if (Mage::app()->getRequest()->getParam($name)) { // add
                 if (!in_array($product->getSku(), $skus)) {
                     $skus[] = $product->getSku();
-                    $label->setIncludeSku(implode(',', $skus));
-                    $label->save();
                 }
-            } else { //remove
-                $k = array_search($product->getSku(), $skus);
-                if ($k !== false) {
-                    $skus[$k] = null;
-                    unset($skus[$k]);
-                    $label->setIncludeSku(trim(implode(',', $skus), ' ,'));
-                    $label->save();
+            } else { // remove
+                $key = array_search($product->getSku(), $skus);
+                while (false !== $key) {
+                    unset($skus[$key]);
+                    $key = array_search($product->getSku(), $skus);
                 }
             }
+            $label->setIncludeSku(implode(',', $skus));
+            $label->save();
         }
 
         return $this;

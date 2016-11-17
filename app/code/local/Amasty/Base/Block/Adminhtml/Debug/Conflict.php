@@ -70,4 +70,3 @@ class Amasty_Base_Block_Adminhtml_Debug_Conflict extends Amasty_Base_Block_Admin
         return $ret;
     }
 }
-?>
