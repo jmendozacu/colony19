@@ -669,7 +669,10 @@ input.input-text,
   border-bottom: 0px;
 }
 .page-footer.cdz-footer-style-02 .bottom-footer-wrapper {
-  background: #639537;
+  background: #4B7029;
+  background-image: url("../images/footer.png");
+  background-repeat: repeat;
+  opacity: 0.6;
 }
 .page-footer.cdz-footer-style-02 .footer-top-ads .block.block-subscribe .actions .button {
   color: white;
