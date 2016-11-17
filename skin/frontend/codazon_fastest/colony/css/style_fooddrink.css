@@ -1097,9 +1097,10 @@ body {
 }
 
 body a {
-  color: #999999;
+  color: #8A8A8A;
   text-decoration: none;
   vertical-align: middle;
+  font-weight: 400;
 }
 
 a:hover {
