@@ -182,6 +182,20 @@ class Amasty_Label_Block_Adminhtml_Label_Edit_Tab_Condition extends Mage_Adminht
                 2 => $hlp->__('In Stock'), 
              ),
         ));
+        $stockEnabled = $fldStock->addField('product_stock_enabled', 'select', array(
+            'label'     => $hlp->__('Use Stock Range'),
+            'title'     => $hlp->__('Use Stock Range'),
+            'name'      => 'product_stock_enabled',
+            'options'   => array(
+                '0' => $hlp->__('No'),
+                '1' => $hlp->__('Yes'),
+            ),
+        ));
+        $stockRange = $fldStock->addField('stock_less', 'text', array(
+            'label'  => $hlp->__('Display if stock is lower than '),
+            'title'  => $hlp->__('Display if stock is lower than '),
+            'name'   => 'stock_less'
+        ));
 
         $fldPriceRange = $form->addFieldset('price', array('legend'=> $hlp->__('Price Range')));
         $priceEnabled = $fldPriceRange->addField('price_range_enabled', 'select', array(
@@ -326,6 +340,13 @@ class Amasty_Label_Block_Adminhtml_Label_Edit_Tab_Condition extends Mage_Adminht
             ->addFieldDependence(
                 $attrRule->getName(),
                 $attrMulti->getName(),
+                '1'
+            )
+            ->addFieldMap($stockEnabled->getHtmlId(), $stockEnabled->getName())
+            ->addFieldMap($stockRange->getHtmlId(), $stockRange->getName())
+            ->addFieldDependence(
+                $stockRange->getName(),
+                $stockEnabled->getName(),
                 '1'
             );
 

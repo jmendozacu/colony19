@@ -66,7 +66,8 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
         $this->_setActiveMenu('catalog/amlabel');
         $this->_title($this->__('Edit'));
 
-        $this->_addContent($this->getLayout()->createBlock('amlabel/adminhtml_' . $this->_modelName . '_edit'));
+        $content = $this->getLayout()->createBlock('amlabel/adminhtml_' . $this->_modelName . '_edit');
+        $this->_addContent($content);
         $this->_addLeft($this->getLayout()->createBlock('amlabel/adminhtml_' . $this->_modelName . '_edit_tabs'));
 
         $this->renderLayout();
@@ -104,7 +105,10 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
         $data  = $this->getRequest()->getPost();
 
         if ($data) {
-
+            $openTab = $data['open_tab_input'];
+            if ($openTab) {
+                Mage::getSingleton('core/cookie')->set('amasty_open_tab_input', $openTab ,time()+86400,'/');
+            }
             $data = $this->_filterDates($data, array('from_date', 'to_date'));
             if (!empty($data['to_time'])) {
                 $data['to_date'] = $data['to_date'] . ' ' . $data['to_time'];
@@ -114,6 +118,7 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
                 $data['from_date'] = $data['from_date'] . ' ' . $data['from_time'];
             }
 
+            $data = $this->_saveColorSize($data);
             $model->setData($data)->setId($id);
             try {
                 $this->prepareForSave($model);
@@ -171,18 +176,8 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
             $model->setData('stores', '');
         }
 
-        // $result = ($a || $b)  && !($a && $b)
-        // explanation:
-        //                       one field of fields set                                               but not both of them set                         ----> show error
-        if (
-            (($model->getProdImageWidth() || $model->getProdImageHeight()) && !($model->getProdImageWidth() && $model->getProdImageHeight()))
-            || (($model->getCatImageWidth() || $model->getCatImageHeight()) && !($model->getCatImageWidth() && $model->getCatImageHeight()))
-        ) {
-            $msg = Mage::helper('amlabel')->__('Please set percentage for both label width and height.');
-            Mage::getSingleton('adminhtml/session')->addError($msg);
-        }
         if ($model->getProdImageWidth() > 100 || $model->getProdImageHeight() > 100 || $model->getCatImageWidth() > 100 || $model->getCatImageHeight() > 100) {
-            $msg = Mage::helper('amlabel')->__('Label height and width value must be between 1 and 100.');
+            $msg = Mage::helper('amlabel')->__('Label Size value must be between 1 and 100.');
             Mage::getSingleton('adminhtml/session')->addError($msg);
         }
 
@@ -219,43 +214,56 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
         $path        = Mage::getBaseDir('media') . DS . 'amlabel' . DS;
         $imagesTypes = array('prod', 'cat');
         foreach ($imagesTypes as $type) {
-            $field = $type . '_img';
+            $field = 'label_type' . $type . '_img';
+            if ($data[$field] == 'download' . $type . '_img') {
+                $field = $type . '_img';
 
-            $isRemove = array_key_exists('remove_' . $field, $data);
-            $hasNew   = !empty($_FILES[$field]['name']);
+                $isRemove = array_key_exists('remove_' . $field, $data);
+                $hasNew = !empty($_FILES[$field]['name']);
 
-            try {
-                // remove the old file
-                if ($isRemove || $hasNew) {
-                    $oldName = isset($data['old_' . $field]) ? $data['old_' . $field] : '';
-                    if ($oldName) {
-                        @unlink($path . $oldName);
-                        $model->setData($field, '');
-                    }
-                }
-
-                // upload a new if any
-                if (!$isRemove && $hasNew) {
-                    //find the first available name
-                    $newName = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', $_FILES[$field]['name']);
-                    if (substr($newName, 0, 1) == '.') // all non-english symbols
-                        $newName = 'label' . $newName;
-                    $i = 0;
-                    while (file_exists($path . $newName)) {
-                        $newName = $i . $newName;
-                        ++$i;
+                try {
+                    // remove the old file
+                    if ($isRemove || $hasNew) {
+                        $oldName = isset($data['old_' . $field]) ? $data['old_' . $field] : '';
+                        if ($oldName) {
+                            $model->setData($field, '');
+                        }
                     }
 
-                    $uploader = new Varien_File_Uploader($field);
-                    $uploader->setFilesDispersion(false);
-                    $uploader->setAllowRenameFiles(false);
-                    $uploader->setAllowedExtensions(array('png', 'gif', 'jpg', 'jpeg'));
-                    $uploader->save($path, $newName);
+                    // upload a new if any
+                    if (!$isRemove && $hasNew) {
+                        //find the first available name
+                        $newName = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', $_FILES[$field]['name']);
+                        if (substr($newName, 0, 1) == '.') // all non-english symbols
+                            $newName = 'label' . $newName;
+                        $i = 0;
+                        while (file_exists($path . $newName)) {
+                            $newName = $i . $newName;
+                            ++$i;
+                        }
 
-                    $model->setData($field, $newName);
+                        $uploader = new Varien_File_Uploader($field);
+                        $uploader->setFilesDispersion(false);
+                        $uploader->setAllowRenameFiles(false);
+                        $uploader->setAllowedExtensions(array('png', 'gif', 'jpg', 'jpeg'));
+                        $uploader->save($path, $newName);
+
+                        $model->setData($field, $newName);
+                    }
+                } catch (Exception $e) {
+                    Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 }
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+            else{
+                $field = 'shape_type' . $type . '_img';
+                if(array_key_exists($field, $data) && $data[$field]) {
+                    $shape = $data[$field];
+                    $color = $type . '_label_color';
+                    $color = $data[$color];
+                    $fileName = Amasty_Label_Model_Shape::generateNewLabel($shape, $color);
+                    $field = $type . '_img';
+                    $model->setData($field, $fileName);
+                }
             }
         }
 
@@ -302,6 +310,31 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
+    public function duplicateAction()
+    {
+        $id    = (int)$this->getRequest()->getParam('id');
+        $model = Mage::getModel('amlabel/' . $this->_modelName)->load($id);
+
+        if ($id && !$model->getId()) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Record does not exist'));
+            $this->_redirect('*/*/');
+
+            return;
+        }
+
+        try {
+            $model->setId(null);
+            $model->save();
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                $this->__($this->_title . ' has been successfully duplicated')
+            );
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+
+        $this->_redirect('*/*/');
+    }
+
     public function massDeleteAction()
     {
         $ids = $this->getRequest()->getParam($this->_modelName . 's');
@@ -320,6 +353,43 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
             Mage::getSingleton('adminhtml/session')->addSuccess(
                 Mage::helper('adminhtml')->__(
                     'Total of %d record(s) were successfully deleted', count($ids)
+                )
+            );
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+        }
+
+        $this->_redirect('*/*/');
+
+    }
+
+    public function masschangestatusAction()
+    {
+        $ids = $this->getRequest()->getParam($this->_modelName . 's');
+        if (!is_array($ids)) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('amlabel')->__('Please select records'));
+            $this->_redirect('*/*/');
+
+            return;
+        }
+
+        $status = $this->getRequest()->getParam('amlabel_value');
+        if (!($status == "1" || $status == "0")) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('amlabel')->__('Please select status'));
+            $this->_redirect('*/*/');
+
+            return;
+        }
+
+        try {
+            foreach ($ids as $id) {
+                $model = Mage::getModel('amlabel/' . $this->_modelName)->load($id);
+                $model->setIsActive($status);
+                $model->save();
+            }
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('amlabel')->__(
+                    'Total of %d record(s) were successfully updated', count($ids)
                 )
             );
         } catch (Exception $e) {
@@ -379,36 +449,56 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
 
     protected function _checkAuto($stores)
     {
-        if (!is_array($stores)) {
-            $stores = explode(',', $stores);
-        }
-        $auto = array();
-        foreach (Mage::app()->getStores() as $store) {
-            if (in_array($store->getId(), $stores)
-                && Mage::getStoreConfig('amlabel/options/use_js', $store->getId())) {
-                $auto[$store->getWebsiteId()][$store->getGroupId()][] = $store->getName();
-            }
-        }
-
-        if (!empty($auto)) {
-            $names = '';
-            foreach ($auto as $websiteId => $website) {
-                $names .= '<br />' . Mage::getSingleton('adminhtml/system_store')->getWebsiteName($websiteId);
-                foreach ($website as $groupId => $group) {
-                    $names .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;' . Mage::getSingleton('adminhtml/system_store')->getGroupName($groupId);
-                    foreach ($group as $name) {
-                        $names .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $name;
-                    }
-                }
-            }
-            $msg = Mage::helper('amlabel')->__(
-                'You need set the `Label Width` and the `Label Height` properties, because this are required for the `Automatic mode` of addition, which used for the following stores:%s',
-                $names
-            );
-            Mage::getSingleton('adminhtml/session')->addError($msg);
-            return true;
-        }
-
         return false;
+    }
+
+    protected function _saveColorSize($data){
+        $catStyles = $data['cat_style'];
+        if(array_key_exists('cat_size', $data) && $data['cat_size']){
+            $size = 'font-size: ' . $data['cat_size'] . ';';
+            if(strpos($catStyles, 'font-size') !== FALSE) {
+                $catStyles = preg_replace("@font-size(.*?);@s", $size, $catStyles);
+            }
+            else{
+                $catStyles .= $size;
+            }
+        }
+        if(array_key_exists('cat_color', $data) && $data['cat_color']){
+            $color = 'color: #' . $data['cat_color'] . ';';
+            if(strpos($catStyles, 'color:') !== FALSE) {
+                $catStyles = preg_replace("@color(.*?);@s", $color, $catStyles);
+            }
+            else{
+                $catStyles .= $color;
+            }
+        }
+
+        $catStyles = str_replace(";;", ";", $catStyles);
+        $data['cat_style'] = $catStyles;
+
+        $prodStyles = $data['prod_style'];
+        if(array_key_exists('prod_size', $data) && $data['prod_size']){
+            $size = 'font-size: ' . $data['prod_size'] . ';';
+            if(strpos($prodStyles, 'font-size') !== FALSE) {
+                $prodStyles = preg_replace("@font-size(.*?);@s", $size, $prodStyles);
+            }
+            else{
+                $prodStyles .= $size;
+            }
+        }
+        if(array_key_exists('prod_color', $data) && $data['prod_color']){
+            $color = 'color: #' . $data['prod_color'] . ';';
+            if(strpos($prodStyles, 'color:') !== FALSE) {
+                $prodStyles = preg_replace("@color(.*?);@s", $color, $prodStyles);
+            }
+            else{
+                $prodStyles .= $color;
+            }
+        }
+
+        $prodStyles = str_replace(";;", ";", $prodStyles);
+        $data['prod_style'] = $prodStyles;
+
+        return $data;
     }
 }

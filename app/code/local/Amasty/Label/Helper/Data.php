@@ -15,21 +15,24 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
         $html = '';
 
         $applied = false;
-        foreach ($this->_getCollection() as $label) {
-            if ($label->getIsSingle() && $applied) {
-                continue;
-            }
-            $label->init($product, $mode);
-            if ($label->isApplicable()) {
-                $applied = true;
-                $html .= $this->_generateHtml($label, $useJs);
-            } elseif ($label->getUseForParent() && ($product->isConfigurable() || $product->isGrouped())) {
-                $usedProds = $this->getUsedProducts($product);
-                foreach ($usedProds as $child) {
-                    $label->init($child, $mode, $product);
-                    if ($label->isApplicable()) {
-                        $applied = true;
-                        $html .= $this->_generateHtml($label, $useJs);
+        $labelCollection = $this->_getCollection();
+        if (0 < $labelCollection->getSize()) {
+            foreach ($labelCollection as $label) {
+                if ($label->getIsSingle() && $applied) {
+                    continue;
+                }
+                $label->init($product, $mode);
+                if ($label->isApplicable()) {
+                    $applied = true;
+                    $html .= $this->_generateHtml($label);
+                } elseif ($label->getUseForParent() && ($product->isConfigurable() || $product->isGrouped())) {
+                    $usedProds = $this->getUsedProducts($product);
+                    foreach ($usedProds as $child) {
+                        $label->init($child, $mode, $product);
+                        if ($label->isApplicable()) {
+                            $applied = true;
+                            $html .= $this->_generateHtml($label);
+                        }
                     }
                 }
             }
@@ -44,6 +47,7 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
             $id            = Mage::app()->getStore()->getId();
             $this->_labels = Mage::getModel('amlabel/label')->getCollection()
                                  ->addFieldToFilter('stores', array('like' => "%,$id,%"))
+                                 ->addFieldToFilter('is_active', 1)
                                  ->setOrder('pos', 'asc')
                                  ->load();
         }
@@ -51,78 +55,45 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
         return $this->_labels;
     }
 
-    protected function _generateHtml($label, $useJs = false)
+    protected function _generateHtml($label)
     {
-        $html = '';
         $imgUrl = $label->getImageUrl();
 
         if (empty($this->_sizes[$imgUrl])) {
             $this->_sizes[$imgUrl] = $label->getImageInfo();
         }
 
-        $tableClass = $label->getCssClass();
-
-        $tableStyle = '';
-        $tableStyle .= 'height:' . $this->_sizes[$imgUrl]['h'] . 'px; ';
-        $tableStyle .= 'width:' . $this->_sizes[$imgUrl]['w'] . 'px; ';
-
+        $positionClass = $label->getCssClass();
         $customStyle = $label->getStyle();
-        if ($customStyle) {
-            $tableStyle .= $customStyle;
-        } else { //adjust image position for middle cases
-            $tableStyle .= $this->_getPositionAdjustment($tableClass, $this->_sizes[$imgUrl]);
-        }
 
         if ($label->getMode() == 'cat') {
             $textStyle = $label->getCatTextStyle();
             $imgWidth  = $label->getCatImageWidth();
-            $imgHeight = $label->getCatImageHeight();
         } else {
             $textStyle = $label->getProdTextStyle();
             $imgWidth  = $label->getProdImageWidth();
-            $imgHeight = $label->getProdImageHeight();
+        }
+        $imgWidth  = ($imgWidth)? $imgWidth . '%': '';
+        if(!$imgWidth && array_key_exists('w', $this->_sizes[$imgUrl])) {
+            $imgWidth = $this->_sizes[$imgUrl]['w'];
+        }
+        $imgWidth  = ($imgWidth)? $imgWidth : 'auto';
+        
+        if(array_key_exists('h', $this->_sizes[$imgUrl]) && $this->_sizes[$imgUrl]['h']) {
+            $customStyle .= ' max-height: '. $this->_sizes[$imgUrl]['h'] . ';';
         }
 
+        $customStyle .= ' max-width: 100%;';
         if ($textStyle) {
             $textStyle = 'style="' . $textStyle . '"';
         }
 
-        // need both w and h for correct script logic and enabled admin setting
-        if ($useJs && !($imgWidth && $imgHeight)) {
-            Mage::log('UseJS enabled, but W&H do not filled.', null, 'Amasty_Label.log', true);
-            return '';
-        } else if ($useJs && ($imgWidth && $imgHeight)) {
-            $textBlockStyle = 'style="width:' . $imgWidth . '%;height:' . $imgHeight . '%; background: url(' . $imgUrl . ') no-repeat 0 0; ' . $customStyle . '"';
-            $html  = '<div class="amlabel-table2 top-left" ' . $label->getJs() . ' >';
-            $html .= '  <div class="amlabel-txt2 ' . $tableClass . '" ' . $textBlockStyle . ' ><div class="amlabel-txt" ' . $textStyle . '>' . $label->getText() . '</div></div>';
-            $html .= '</div>';
-        } else {
-            $html = '<table ' . $label->getJs() . ' class="amlabel-table ' . $tableClass . '" style ="' . $tableStyle . '">';
-            $html .= '<tr>';
-            $html .= '<td style="background: url(' . $imgUrl . ') no-repeat 0 0">';
-            $html .= '<span class="amlabel-txt" ' . $textStyle . '>' . $label->getText() . '</span>';
-            $html .= '</td>';
-            $html .= '</tr>';
-            $html .= '</table>';
-        }
+        $textBlockStyle = 'style="width:' . $imgWidth . '; background: url(' . $imgUrl . ') no-repeat 0 0; ' . $customStyle . '"';
+        $html  = '<div class="amlabel-table2 top-left" ' . $label->getJs() . ' >';
+        $html .= '  <div class="amlabel-txt2 ' . $positionClass . '" ' . $textBlockStyle . ' ><div class="amlabel-txt" ' . $textStyle . '>' . $label->getText() . '</div></div>';
+        $html .= '</div>';
 
         return $html;
-    }
-
-    protected function _getPositionAdjustment($tableClass, $sizes)
-    {
-        $style = '';
-
-        if ('top-center' == $tableClass) {
-            $style .= 'margin-left:' . (-$sizes['w'] / 2) . 'px;';
-        } elseif (false !== strpos($tableClass, 'center')) {
-            $style .= 'margin-right:' . (-$sizes['w'] / 2) . 'px;';
-        }
-        if (false !== strpos($tableClass, 'middle')) {
-            $style .= 'margin-top:' . (-$sizes['h'] / 2) . 'px;';
-        }
-
-        return $style;
     }
 
     public function getUsedProducts($product)

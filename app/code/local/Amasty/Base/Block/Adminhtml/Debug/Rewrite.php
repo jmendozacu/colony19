@@ -16,4 +16,3 @@ class Amasty_Base_Block_Adminhtml_Debug_Rewrite extends Amasty_Base_Block_Adminh
         return Mage::helper("ambase")->getRewritesList();
     }
 }
-?>

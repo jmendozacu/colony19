@@ -45,7 +45,7 @@ class Amasty_Base_Adminhtml_Ambase_BaseController extends Mage_Adminhtml_Control
     public function ajaxAction()
     {
         $helper = Mage::helper("ambase");
-        print $helper->ajaxHtml();
+        $this->getResponse()->setBody($helper->ajaxHtml());
     }
     
     public function fixAction()
@@ -103,4 +103,3 @@ class Amasty_Base_Adminhtml_Ambase_BaseController extends Mage_Adminhtml_Control
         return Mage::getSingleton('admin/session')->isAllowed('system/config');
     }
 }  
-?>

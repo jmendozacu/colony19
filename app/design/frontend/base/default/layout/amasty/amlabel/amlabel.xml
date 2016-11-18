@@ -23,6 +23,11 @@
                 <name>amasty/amlabel/amlabel_observer.js</name>
                 <params/>
             </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>amasty/amlabel/amlabel_height.js</name>
+                <params/>
+            </action>
         </reference>
     </default>
 </layout>
