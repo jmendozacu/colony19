@@ -166,7 +166,7 @@ class Fooman_GoogleAnalyticsPlus_Block_Remarketing extends Fooman_GoogleAnalytic
                 return $this->getArrayReturnValue($products, "''", true);
                 break;
         }
-        return "''";
+        return false;
     }
     
     /**
@@ -270,6 +270,8 @@ class Fooman_GoogleAnalyticsPlus_Block_Remarketing extends Fooman_GoogleAnalytic
         }
 
         array_walk($values, array($this, 'prepareValue'));
+        reset($values);
+
         if (sizeof($values) == 1) {
             return current($values);
         } else {
