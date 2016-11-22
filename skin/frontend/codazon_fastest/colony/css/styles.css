@@ -12045,17 +12045,21 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 }
 
 .cart-icon:before {
-  background-color: transparent;
+ /* background-color: transparent;
   background-image: url("../images/icon.png");
   background-position: 7px 8px;
   background-repeat: no-repeat;
   border-right: 0 solid #e7e7e7;
-  content: "";
+  content: "";*/
   display: inline-block;
   min-height: 41px;
-  padding: 7px 10px;
+  padding: 0px 15px;
   vertical-align: top;
   width: 40px;
+  font-family: FontAwesome;
+  content: "\f07a";
+  color: #FFF;
+  font-size: 23px;
 }
 
 .cdz-top-cart.cdz-dropdown .cdz-trigger::after {
