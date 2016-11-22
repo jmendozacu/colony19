@@ -1,0 +1,102 @@
+
+<?php
+
+$colonnes="";
+$colonnes2="<option value=\"\">Ignorer ce champ</option>";
+for($i=0,$j=ord('A');$i<26;$i++,$j++)
+{
+	$colonnes.=sprintf("<option value=\"%d\">%s</option>",$i,chr($j));
+	$colonnes2.=sprintf("<option value=\"%d\">%s</option>",$i,chr($j));
+
+}
+
+
+?>
+
+<div class="content-header">
+	<table cellspacing="0">
+		<tbody>
+			<tr>
+				<td>
+					<h3>Import des prix produits</h3>
+				</td>
+				<td class="form-buttons"><button title="Importer les prix produits" type="button" class="scalable save" onclick="configForm.submit()" style=""><span><span><span>Importer les prix produit</span></span></span></button></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<form action="<?php echo Mage::helper("adminhtml")->getUrl("*/*/import")?>" method="post" enctype="multipart/form-data" id="configForm">
+	<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+
+	<div class="entry-edit">
+		<div class="section-config active">
+			<div class="entry-edit-head collapseable">
+				<a id="sales_email_creditmemo_comment-head" href="#" class="open">Configuration de l'import</a>
+			</div>
+			<fieldset class="config collapseable" id="sales_email_creditmemo_comment" style="">
+				<legend>Commentaires d'avoir</legend>
+				<table cellspacing="0" class="form-list">
+					<colgroup class="label"></colgroup>
+					<colgroup class="value"></colgroup>
+					<colgroup class="scope-label"></colgroup>
+					<colgroup class=""></colgroup>
+					<tbody>
+						<tr>
+							<td class="label"><label for="colonne_refc"> Colonne RefC</label></td>
+							<td class="value"><select id="colonne_refc" name="colonne_refc" class=" select">
+								<?php echo $colonnes; ?>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="colonne_pvttc"> Colonne PVTTC</label></td>
+							<td class="value"><select id="colonne_pvttc" name="colonne_pvttc" class=" select">
+								<?php echo $colonnes2; ?>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="colonne_pi"> Colonne PI</label></td>
+							<td class="value"><select id="colonne_pi" name="colonne_pi" class=" select">
+								<?php echo $colonnes2; ?>
+							</select></td>
+						</tr>
+						<?php foreach(Mage::getResourceModel('customer/group_collection') as $group): ?>
+							<?php if($group->getId()<3)continue; ?>
+							<tr>
+								<td class="label"><label for="colonne_pvr_<?php echo $group->getId(); ?>"> Colonne <?php echo $group->getCode(); ?></label></td>
+								<td class="value"><select id="colonne_pvr_<?php echo $group->getId(); ?>" name="colonne_pvr_<?php echo $group->getId(); ?>" class=" select">
+									<?php echo $colonnes2; ?>
+								</select></td>
+							</tr>
+						<?php endforeach; ?>
+						<tr>
+							<td class="label"><label for="colonne_poids"> Colonne Poid</label></td>
+							<td class="value"><select id="colonne_poids" name="colonne_poids" class=" select">
+								<?php echo $colonnes2; ?>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="ignore_first"> La première ligne contient les titres</label></td>
+							<td class="value"><select id="ignore_first" name="ignore_first" class=" select">
+								<option value="oui">Oui</option>
+								<option value="non">Non</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="separateur_csv"> Séparateur csv</label></td>
+							<td class="value"><select id="separateur_csv" name="separateur_csv" class=" select">
+								<option value=";">;</option>
+								<option value=",">,</option>
+							</select></td>
+						</tr>
+						<tr>
+							<td class="label"><label for="file"> Fichier à importer</label></td>
+							<td class="value"><input id="file" name="file" value class type="file">​</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+	</div>
+</form>
+

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <produitsedit_adminhtml_listing_index>
+        <reference name="content">
+            <block type="produitsedit/adminhtml_listing" name="adminhtml_listing.grid.container" />
+        </reference>
+    </produitsedit_adminhtml_listing_index>	
+</layout>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <provider_adminhtml_listing_index>
+        <reference name="content">
+            <block type="provider/adminhtml_listing" name="adminhtml_listing.grid.container" />
+        </reference>
+    </provider_adminhtml_listing_index>
+	
+	<provider_adminhtml_listing_new>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="provider/adminhtml_listing_edit" name="adminhtml_listing.grid.container.new"></block>
+        </reference>
+        <reference name="left">
+            <block type="provider/adminhtml_listing_edit_tabs" name="adminhtml_listing.grid.container.tabs"></block>
+        </reference>
+		<reference name="js">
+            <block type="core/template" template="provider/listing/commander.phtml" />
+        </reference>
+    </provider_adminhtml_listing_new>
+
+    <provider_adminhtml_listing_edit>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="provider/adminhtml_listing_edit" name="adminhtml_listing.grid.container.edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="provider/adminhtml_listing_edit_tabs" name="adminhtml_listing.grid.container.tabs"></block>
+        </reference>
+		<reference name="js">
+            <block type="core/template" template="provider/listing/commander.phtml" />
+        </reference>
+		<reference name="js">
+            <block type="core/template" template="provider/listing/status.phtml" />
+        </reference>
+    </provider_adminhtml_listing_edit>
+	
+</layout>

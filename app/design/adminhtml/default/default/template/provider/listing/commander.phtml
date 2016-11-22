@@ -1,0 +1,10 @@
+<script type="text/javascript">
+function updateQuantity(providerId)
+{
+    new Ajax.Request('<?php echo Mage::helper('adminhtml')->getUrl('*/*/commander') ?>', {
+        method: 'post',
+        parameters: { id: providerId, productId: productId, quantity: $(button).previous('input').getValue() },
+		onSuccess: function() { document.location.href='<?php echo Mage::helper('adminhtml')->getUrl('*/*/edit', array('id'=>$this->getRequest()->getParam('id'),'grid'=>'status')) ?>'}
+    });
+}
+</script>

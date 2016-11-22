@@ -1,0 +1,10 @@
+<script type="text/javascript">
+function updateStatus(providerOrderId, idProvider, value)
+{
+    new Ajax.Request('<?php echo Mage::helper('adminhtml')->getUrl('*/*/status') ?>', {
+        method: 'post',
+        parameters: { providerOrderId: providerOrderId,idProvider: idProvider, value:value },
+		onSuccess: function() { window.location.href('<?php echo Mage::helper('adminhtml')->getUrl('*/*/edit', array('id'=>$this->getRequest()->getParam('id'),'grid'=>'status')) ?>')}
+    });
+}
+</script>

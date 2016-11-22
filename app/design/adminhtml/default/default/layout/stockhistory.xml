@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <stockhistory_adminhtml_listing_index>
+        <reference name="content">
+            <block type="stockhistory/adminhtml_listing" name="adminhtml_listing.grid.container" />
+        </reference>
+    </stockhistory_adminhtml_listing_index>	
+</layout>

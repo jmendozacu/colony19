@@ -1,0 +1,45 @@
+<?php $product = Mage::registry('product'); $readonce = Mage::getSingleton('core/resource')->getConnection('core_read'); ?>
+
+<div class="grid">
+	<div class="hor-scroll">
+		<table cellspacing="0" class="data" id="id_7c5f66be3f03251a7d8d45fb9edcb801_table">
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<col  width="100" />
+			<thead>
+				<tr class="headings">
+					<th class=" no-link"><span class="nobr">De</span></th>
+					<th class=" no-link"><span class="nobr">A</span></th>
+					<th class=" no-link"><span class="nobr">Prix d'achat $</span></th>
+					<th class=" no-link"><span class="nobr">Prix d'achat €</span></th>
+					<th class=" no-link"><span class="nobr">Prix HT</span></th>
+					<th class=" no-link"><span class="nobr">Taux TVA</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($readonce->fetchAll("SELECT * FROM mgt_sdw_price_history WHERE entity_id=".$product->getId()." ORDER BY value_from DESC") as $row): ?>
+					<tr title="#" >
+						<td class=" "><span class="nobr"><?php echo Mage::helper('core')->formatDate($row['value_from'],'long', true); ?></span></td>
+						<td class=" a-right "><?php echo Mage::helper('core')->formatDate($row['value_to'],'long', true); ?></td>
+						<td class=" a-right "><?php echo Mage::helper('core')->currency($row['value_pad'], false, false); ?> $</td>
+						<td class=" a-right "><?php echo Mage::helper('core')->currency($row['value_pa'], true, false); ?></td>
+						<td class=" a-right "><?php echo Mage::helper('core')->currency($row['value_pht'], true, false); ?></td>
+						<td class=" a-right last"><?php echo $row['value_tva']; ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+id_7c5f66be3f03251a7d8d45fb9edcb801JsObject = new varienGrid('id_7c5f66be3f03251a7d8d45fb9edcb801', '', 'page', 'sort', 'dir', 'filter');
+id_7c5f66be3f03251a7d8d45fb9edcb801JsObject.useAjax = '';
+id_7c5f66be3f03251a7d8d45fb9edcb801JsObject.rowClickCallback = function(){return false;};
+</script>
