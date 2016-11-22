@@ -13072,7 +13072,8 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .page-footer ul, .page-footer li {
   margin: 0;
   padding: 0;
-  list-style: none none;
+  list-style-image: url("../images/footerbullets.png");
+  /* list-style: none none;*/
 }
 .page-footer .top-footer-wrapper {
   padding: 30px 0;
