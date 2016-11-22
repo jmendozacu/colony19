@@ -1866,10 +1866,11 @@ textarea.input-text {
   border-top: 1px solid #ebebeb;
 }
 .block-search input[type="text"] {
-  color: #444444;
+  color: #8A8A8A;
   background-color: white;
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  border-color: #f2f2f2;
+  border: #E0E0E0 1px solid;
+  border-radius: 30px;
 }
 .block-search .button:hover:before {
   color: #282828;
@@ -1879,7 +1880,7 @@ textarea.input-text {
   color: #282828;
 }
 .block-search .button:before {
-  color: #444444;
+  color: #7CBA45;
 }
 .block-search .cat-search-enable {
   border-color: #d9d9d9;
