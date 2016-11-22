@@ -12069,7 +12069,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .cart-icon .cart-qty {
   background: #fc7070 none repeat scroll 0 0;
   border: 0 solid #999999;
-  border-radius: 20px;
+  border-radius: 0px 20px 20px 20px;
   color: #fff;
   display: inline-block;
   height: 18px;
