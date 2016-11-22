@@ -1821,8 +1821,11 @@ textarea.input-text {
 .header .cdz-header-top .cdz-top-link li a {
   color: #FFF;
 }
+.header .cdz-header-top .cdz-top-link li a:hover {
+  color: #F34E12;
+}
 .header .cdz-header-top .cdz-top-link li a:visited, .header .cdz-header-top .cdz-top-link li a:hover, .header .cdz-header-top .cdz-top-link li a:active {
-  color: lighten(#999999, 10%);
+  /*color: #F34E12;*/
 }
 .header .cdz-header-top .cdz-top-link li .forgot-password a {
   color: #999999;
