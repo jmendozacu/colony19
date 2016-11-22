@@ -1272,6 +1272,7 @@ a:hover, a:focus {
   font: 500 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: 2px;
+  margin-left: -15px;
 }
 .page-footer .item_tag li a {
   color: #777777;
