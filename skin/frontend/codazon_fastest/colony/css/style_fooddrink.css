@@ -3972,8 +3972,8 @@ form .legend {
   box-shadow: none;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  border-radius: 5px;
-  border: 1px solid #ebebeb;
+  /*border-radius: 5px;
+  border: 1px solid #ebebeb;*/
 }
 
 .catalog-product-view .col-main-containter .col-wrapper-main,
