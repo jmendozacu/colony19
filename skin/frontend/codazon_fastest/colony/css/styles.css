@@ -23094,7 +23094,7 @@ fieldset[disabled] .block-search .button {
 }
 
 .old-price {
-  margin-left: 10px;
+  /*margin-left: 10px;*/
   color: #999999;
 }
 
