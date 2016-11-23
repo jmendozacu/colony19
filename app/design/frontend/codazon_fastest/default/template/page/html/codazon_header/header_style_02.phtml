@@ -57,9 +57,13 @@
 						<div class="cdz-header-menu">
 							<div class="row cdz-header-menu-content">
 									<div class="col-sm-17 cdz-content-megamenu">
-										<?php echo $this->getChildHtml('topMenu') ?>
-										<?php //echo $this->getChildHtml('topContainer'); ?>
-									</div>
+                                	<?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
+									<?php echo $this->getChildHtml('topMenuDefault'); ?>
+                                    <?php else: ?>
+									<?php echo $this->getChildHtml('topMenu') ?>
+                                    <?php endif ?>
+									<?php //echo $this->getChildHtml('topContainer'); ?>
+								</div>
 									<div class="col-sm-7 pull-right search-wrapper">
 										<div class="search-content block block-search">
 											<div class="search-form-container" id="cdz-pc-search-form">
@@ -74,12 +78,6 @@
 				</div>
 			</div>
 		</div>
-        <div class="cdz-header-bottom col-sm-24">
-            <?php if( $_themeHelper->getConfig('codazon_settings/header/use_default_menu') == 1 ): ?>
-                <?php echo $this->getChildHtml('topMenuDefault'); ?>
-            <?php endif ?>
-        </div>
-
     </div>
     <div class="mobile-header visible-xs">
         <div class="cdz-mobile-header-menu">

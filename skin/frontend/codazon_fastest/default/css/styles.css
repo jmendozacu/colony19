@@ -3405,7 +3405,6 @@ body.catalogsearch-result-index .page-title h1 {
   color: #a0a0a0;
   font-size: 13px;
   margin: 0 0 5px;
-  text-align: left;
 }
 
 .products-grid .add-to-links {
@@ -10505,7 +10504,7 @@ button {
   backface-visibility: hidden;
   text-transform: uppercase;
   background-image: none;
-  border: 1px solid;
+  border: 3px solid;
   cursor: pointer;
   display: inline-block;
   font: 500 14px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
@@ -10781,15 +10780,15 @@ fieldset[disabled] #back-top a {
 }
 .cdz-product-lbs .lb-item {
   text-align: center;
-  width: 60px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   line-height: 1.35;
   display: table;
-  font-size: 13px;
-  /*margin-bottom: 5px;
+  font-size: 11px;
+  margin-bottom: 5px;
   -moz-border-radius: 100%;
   -webkit-border-radius: 100%;
-  border-radius: 100%;*/
+  border-radius: 100%;
 }
 .cdz-product-lbs .lb-item .lb-content {
   display: table-cell;
@@ -13089,15 +13088,15 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 }
 .page-footer p.h5 {
   font-weight: 600;
-  margin-bottom: 10px;
-  /*text-transform: uppercase;*/
+  margin-bottom: 25px;
+  text-transform: uppercase;
 }
 .page-footer .footer-link {
   margin-top: -10px;
 }
 .page-footer .footer-link li a {
   display: block;
-  padding: 5px 0;
+  padding: 10px 0;
   -moz-transition: all 500ms ease;
   -webkit-transition: all 500ms ease;
   -o-transition: all 500ms ease;
@@ -13162,9 +13161,9 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   font-size: 14px;
 }
 .page-footer .bottom-footer-wrapper {
-  /*padding: 30px 0 20px;*/
+  padding: 30px 0 20px;
   overflow: hidden;
-  /*border-top: 2px solid;*/
+  border-top: 2px solid;
 }
 .page-footer .bottom-footer-wrapper .block-static-block.widget {
   margin-bottom: 0;
@@ -17967,15 +17966,15 @@ body {
 }
 
 .menu-breadcrumbs .breadcrumbs {
-  /*background: #f9f9f9;*/
+  background: #f9f9f9;
   display: block;
   border: 0;
-  padding: 0px 10px 0 10px;
-  height: 20px;
-  /*-moz-border-radius: 0 5px 5px 0px;
+  padding: 10px 10px 0 30px;
+  height: 35px;
+  -moz-border-radius: 0 5px 5px 0px;
   -webkit-border-radius: 0 5px 5px 0px;
   border-radius: 0 5px 5px 0px;
-  margin: 0 0 0 -30px;*/
+  margin: 0 0 0 -30px;
 }
 
 /*=================== RTL ==================*/
@@ -20588,8 +20587,7 @@ body._has-modal {
 }
 
 .breadcrumbs ul li strong {
-  font-weight: 400;
-  color: #639537;
+  font-weight: 600;
 }
 
 .breadcrumbs ul li span {
@@ -20606,9 +20604,8 @@ body._has-modal {
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  content: "\f105";
-  font-size: 13px;
-  color: #8A8A8A;
+  content: "\f178";
+  font-size: 11px;
 }
 
 .content-breadcrums {
@@ -21208,7 +21205,7 @@ body._has-modal {
 }
 
 .product-item .price-box .price {
-  font-weight: 400;
+  font-weight: bold;
 }
 
 .product-item .price-box .price-label {
@@ -21556,10 +21553,10 @@ tabs-list.product.data.items .item.title {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    padding: 0 10px 10px;
+    padding: 0 20px 10px;
   }
   .col1-layout .codazon-filter-style-05 .products-grid .product-items.isotope .product-name {
-    padding: 0 10px;
+    padding: 0 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
