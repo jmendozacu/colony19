@@ -1228,13 +1228,13 @@ a:hover, a:focus {
 .footer-top-ads {
   color: #282828;
 }
-.footer-top-ads .block-title .block-title strong{
+.footer-top-ads .block-title strong{
   color: #FFF;
   text-align: left;
   border-bottom: 0px solid;
 }
 .footer-top-ads .ftop-ads-small {
-  color: #282828;
+  color: #FFF;
 }
 .footer-top-ads .block.block-subscribe .actions .button {
   color: white;
