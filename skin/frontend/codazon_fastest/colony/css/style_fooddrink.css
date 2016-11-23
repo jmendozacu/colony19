@@ -44,8 +44,8 @@ input.input-text,
 
 .products-grid .product-item .product-name a {
   color: #639537;
-  font: 500 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  letter-spacing: 2px;
+  font: 400 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  letter-spacing: 1px;
 }
 
 .cdz-header-style-02.header-container {
@@ -2248,10 +2248,9 @@ fieldset[disabled] .block-search .button {
 
 .products-grid .product-item-info .product-item-details .product-item-description {
   color: #8A8A8A;
-  font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 300 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-align: left;
   font-style: italic;
-  letter-spacing: 1px;
 }
 .products-grid .product-item-info .cdz-product-bottom {
   background: white;
