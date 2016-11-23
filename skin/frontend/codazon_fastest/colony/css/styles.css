@@ -12087,7 +12087,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   white-space: normal;
   font-size: 14px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 20px;
 
 }
 .cdz-rtl .cart-icon .cart-qty {
@@ -12106,7 +12106,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   min-height: 40px;
   padding: 10px 0px 10px 40px;
   vertical-align: middle;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: -20px;
 }
 
