@@ -421,10 +421,10 @@ input.input-text,
   box-shadow: none;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
-  border: 0;
-  border: 1px solid #ebebeb;
   background: white;
-  border-radius: 5px;
+  /*border: 1px solid #ebebeb;
+    border: 0;*/
+  border-radius: 5px;*/
 }
 .col-main .block.block-up-sell .block-content, .col-main .block-related .block-content, .col-main .block-crossell .block-content {
   padding: 20px;
