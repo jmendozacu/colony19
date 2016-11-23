@@ -3587,7 +3587,7 @@ button:hover {
 .block:not(.block-static-block) .block-title {
   color: #8A8A8A;
   font: 500 16px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  border-bottom-color: #ebebeb;
+  border-bottom: #E0E0E0 1px dotted;
 }
 
 .block:not(.block-static-block) .block-collapsible-nav-title strong,
