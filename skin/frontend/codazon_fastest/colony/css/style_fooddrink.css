@@ -2676,7 +2676,7 @@ button:hover {
 .product-view .rsUni .rsThumb.rsNavSelected .thumbIco {
   border: #639537 1px solid;
 }
-.product-view .rsUni .rsThumb.rsNav .thumbIco {
+.product-view .rsUni .rsThumb.rsNavActive .thumbIco {
   border: #8A8A8A 1px solid;
 }
 .product-view .product-shop .price-box .regular-price .price, .product-view .product-shop .price-box .special-price .price, .product-view .product-shop .price-box .full-product-price .price {
