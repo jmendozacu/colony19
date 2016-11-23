@@ -595,7 +595,8 @@ h6, .h6 {
 .availability {
   margin-bottom: 0;
   font-size: 13px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
+  letter-spacing: 1px;
 }
 
 .availability .label {
