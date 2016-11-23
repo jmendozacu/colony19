@@ -186,7 +186,7 @@ input.input-text,
 .action.primary, button.button, .qs-button, .link-compare,
 .cdz-slideshow .slider-item img,
 .manage-address, .change-pass {
-  border-radius: 5px;
+  /*border-radius: 5px;*/
 }
 .cdz-slideshow  {
   border-radius: 0px;
