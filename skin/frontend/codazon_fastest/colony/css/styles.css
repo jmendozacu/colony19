@@ -12104,8 +12104,10 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   font-size: 12px;
   /*font-weight: 700;*/
   min-height: 40px;
-  padding: 10px 0 10px 35px;
+  padding: 10px 0px 10px 40px;
   vertical-align: middle;
+  margin-top: 20px;
+  margin-bottom: -20px;
 }
 
 .block-cart.cdz-dropdown-content {
