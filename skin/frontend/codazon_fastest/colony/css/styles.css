@@ -10059,11 +10059,12 @@ div.calendar table td.button {
 
 .pager select,
 .sorter select {
-  width: 100px;
+  width: 80px;
   padding: 5px 10px;
   height: 35px;
   line-height: 30px;
   float: left;
+  color: #639537;
 }
 
 /*toolbar-switch*/
