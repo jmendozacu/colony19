@@ -1228,6 +1228,9 @@ a:hover, a:focus {
 .footer-top-ads {
   color: #282828;
 }
+.footer-top-ads .block-title strong {
+  color: #FFF;
+}
 .footer-top-ads .ftop-ads-small {
   color: #282828;
 }
