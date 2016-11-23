@@ -12045,17 +12045,21 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 }
 
 .cart-icon:before {
-  background-color: transparent;
+ /* background-color: transparent;
   background-image: url("../images/icon.png");
   background-position: 7px 8px;
   background-repeat: no-repeat;
   border-right: 0 solid #e7e7e7;
-  content: "";
+  content: "";*/
   display: inline-block;
   min-height: 41px;
-  padding: 7px 10px;
+  padding: 0px 15px;
   vertical-align: top;
   width: 40px;
+  font-family: FontAwesome;
+  content: "\f07a";
+  color: #FFF;
+  font-size: 23px;
 }
 
 .cdz-top-cart.cdz-dropdown .cdz-trigger::after {
@@ -12065,23 +12069,25 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .cart-icon .cart-qty {
   background: #fc7070 none repeat scroll 0 0;
   border: 0 solid #999999;
-  border-radius: 20px;
+  border-radius: 0px 20px 20px 20px;
   color: #fff;
   display: inline-block;
-  height: 18px;
-  left: 27px;
+  height: 30px;
+  /* left: 27px;
   line-height: 19px;
-  margin: 0;
+  margin: 0; */
   min-width: 18px;
   overflow: hidden;
-  padding: 0 3px;
+  padding: 5px 0px 0px 0px;
   position: absolute;
   text-align: center;
-  top: -3px;
-  vertical-align: top;
+  /*top: -3px;
+  vertical-align: top;*/
   white-space: normal;
   font-size: 12px;
   font-weight: bold;
+  margin-top: 10px;
+  width: 30px;
 }
 .cdz-rtl .cart-icon .cart-qty {
   left: auto;
@@ -13068,7 +13074,8 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .page-footer ul, .page-footer li {
   margin: 0;
   padding: 0;
-  list-style: none none;
+  list-style-image: url("../images/footerbullets.png");
+  /* list-style: none none;*/
 }
 .page-footer .top-footer-wrapper {
   padding: 30px 0;
