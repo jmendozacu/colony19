@@ -13095,7 +13095,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-bottom: 0;
 }
 .page-footer .footer-bottom {
-  padding: 30px 0;
+  padding: 20px 0px 10px 0px;
 }
 .page-footer p.h5 {
   font-weight: 600;
@@ -18331,7 +18331,7 @@ body {
   -webkit-border-radius: 0 0 0 0;
   -moz-border-radius: 0 0 0 0;
   border-radius: 0 0 0 0;
-  border-bottom: 1px solid;
+  /*border-bottom: 1px solid;*/
 }
 
 .block-title {
