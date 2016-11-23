@@ -1231,7 +1231,10 @@ a:hover, a:focus {
 .footer-top-ads .block:not(.block-static-block) .block-title strong {
   color: #FFF;
   text-align: left;
-  border-bottom: 1px dotted #FFF;
+  /*border-bottom: 1px dotted #FFF;*/
+  padding-bottom: 0px;
+  display: block;
+  width: 30%;
 }
 .footer-top-ads .ftop-ads-small {
   color: #FFF;
