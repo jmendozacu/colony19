@@ -21321,7 +21321,7 @@ body._has-modal {
   border: 0px solid transparent;
 }
 .products-grid .product-item-info .product-item-details {
-  padding: 10px 20px 10px;
+  padding: 0px 10px 0px 10px;
   position: relative;
 }
 .products-grid .product-item-info .product-item-details .product-item-description {
