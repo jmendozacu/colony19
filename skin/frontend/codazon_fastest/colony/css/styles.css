@@ -12072,22 +12072,23 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   border-radius: 0px 20px 20px 20px;
   color: #fff;
   display: inline-block;
-  height: 30px;
+  height: 35px;
+  width: 35px;
   /* left: 27px;
   line-height: 19px;
   margin: 0; */
   min-width: 18px;
   overflow: hidden;
-  padding: 5px 0px 0px 0px;
+  padding: 8px 0px 0px 0px;
   position: absolute;
   text-align: center;
   /*top: -3px;
   vertical-align: top;*/
   white-space: normal;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
-  width: 30px;
+
 }
 .cdz-rtl .cart-icon .cart-qty {
   left: auto;
@@ -12100,10 +12101,10 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 
 .cart-icon .cart-subtotal .price {
   display: inline-block;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 12px;
+  /*font-weight: 700;*/
   min-height: 40px;
-  padding: 10px 0 10px 15px;
+  padding: 10px 0 10px 35px;
   vertical-align: middle;
 }
 
