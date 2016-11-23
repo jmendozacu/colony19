@@ -2665,8 +2665,10 @@ button:hover {
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 .product-view .short-description h2 {
-  color: #282828;
-  font: 500 12px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  color: #639537;
+  font: 400 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font-style: normal;
+  letter-spacing: 1px;
 }
 .product-view .product-options .swatch-attr .select-label {
   color: #b0d235;
