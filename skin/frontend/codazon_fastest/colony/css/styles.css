@@ -1551,7 +1551,7 @@ a.button:hover {
 
 .price-box .special-price {
   color: #282828;
-  padding-left: 1em;
+  /*padding-left: 1em;*/
 }
 
 .price-box .special-price .price-label {
@@ -21228,7 +21228,7 @@ body._has-modal {
 }
 
 .product-item .old-price {
-  margin-left: 10px;
+  /*margin-left: 10px;*/
 }
 
 .product-item .old-price .price-label {
