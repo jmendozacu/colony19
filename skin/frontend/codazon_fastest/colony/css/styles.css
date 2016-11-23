@@ -24471,7 +24471,7 @@ button:hover {
 .block:not(.block-static-block) .block-collapsible-nav-title strong,
 .block:not(.block-static-block) .block-title strong {
   font: 500 16px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  border-bottom: 3px solid #121212;
+  /*border-bottom: 3px solid #121212;*/
 }
 
 .block.review-add .block-content {
