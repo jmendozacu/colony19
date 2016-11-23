@@ -3406,9 +3406,10 @@ button:hover {
   border-radius: 30px;
   padding: 8px 15px 6px 15px;
   margin: 0 auto;
-  font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 300 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-decoration: none;
   margin-left: 10px;
+  letter-spacing: 1px;
 }
 .cdz-main-menu .groupmenu li.level0 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level0 a.menu-link:active,
