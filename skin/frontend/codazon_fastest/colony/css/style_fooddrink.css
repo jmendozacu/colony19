@@ -1277,6 +1277,10 @@ a:hover, a:focus {
 .page-footer a:hover {
   color: #E0E0E0;
 }
+.page-footer .phone-footer {
+  color: #FFF;
+  font:500 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+}
 .page-footer p.h5 {
   color: #777777;
   font: 500 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
