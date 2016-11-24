@@ -343,10 +343,10 @@ input.input-text,
   border: 0;
   border: 1px solid #8A8A8A;
   background: white;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
 }
 .category-products .products-grid .product-image img {
-  /*border-radius: 5px;*/
+ /*border-radius: 5px;*/
 }
 
 .cat-list .cat-item {
