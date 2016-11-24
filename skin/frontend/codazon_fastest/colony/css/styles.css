@@ -11446,7 +11446,7 @@ table colgroup, .data-table colgroup {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f007";
-  font-size: 12px;
+  font-size: 18px;
   margin-right: 5px;
 }
 .header .cdz-header-top .cdz-top-link .cdz-top-login .cdz-trigger:before {
