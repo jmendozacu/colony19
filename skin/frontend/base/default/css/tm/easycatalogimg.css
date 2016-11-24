@@ -11,7 +11,7 @@
 .easycatalogimg-cols-5 li.item { width: 20% !important; }
 .easycatalogimg-cols-6 li.item { width: 16.6% !important; }
 
-.easycatalogimg .parent-category { margin: 0 0 8px; }
+.easycatalogimg .parent-category { margin: 0 0 8px; text-align: center; }
 .easycatalogimg .parent-category a { font-size: 17px; font-weight: normal; text-decoration: none; color: #000; }
 .easycatalogimg .parent-category a:hover { text-decoration: underline; }
 
