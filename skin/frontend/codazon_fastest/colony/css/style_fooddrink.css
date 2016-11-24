@@ -1826,9 +1826,11 @@ textarea.input-text {
   color: white;
 }
 .header .cdz-header-top .cdz-top-link .link a {
-  font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 300 13px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  letter-spacing: 1px;
+  color: #FFF;
 }
-.header .cdz-header-top .cdz-top-link li a {
+.header .cdz-header-top .cdz-top-link .link a:visited {
   color: #FFF;
 }
 .header .cdz-header-top .cdz-top-link li a:hover {
