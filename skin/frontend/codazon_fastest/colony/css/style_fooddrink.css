@@ -266,14 +266,14 @@ input.input-text,
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border: 0;
-    border: 1px solid #ebebeb;
+    border: 1px solid #E0E0E0;
     background: white;
     border-radius: 5px;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .col2-left-layout .category-products .products-grid .product-item-info, .col2-right-layout .category-products .products-grid .product-item-info {
-    border: 1px solid #ebebeb;
+    border: 1px solid #E0E0E0;
     background-color: transparent;
     padding: 0px;
     -webkit-box-shadow: none;
@@ -282,7 +282,7 @@ input.input-text,
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border: 0;
-    border: 1px solid #ebebeb;
+    border: 1px solid #E0E0E0;
     background: white;
     border-radius: 5px;
   }
@@ -297,14 +297,14 @@ input.input-text,
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border: 0;
-    border: 1px solid #8A8A8A;
+    border: 1px solid #E0E0E0;
     background: white;
     /*border-radius: 5px;*/
   }
 }
 @media (min-width: 1200px) {
   .col2-left-layout .category-products .products-grid .product-item-info, .col2-right-layout .category-products .products-grid .product-item-info {
-    border: 1px solid #ebebeb;
+    border: 1px solid #E0E0E0;
     background-color: transparent;
     padding: 0px;
     -webkit-box-shadow: none;
@@ -313,7 +313,7 @@ input.input-text,
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border: 0;
-    border: 1px solid #8A8A8A;
+    border: 1px solid #E0E0E0;
     background: white;
     /*border-radius: 5px;*/
   }
@@ -327,7 +327,7 @@ input.input-text,
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border: 0;
-    border: 1px solid #8A8A8A;
+    border: 1px solid #E0E0E0;
     background: white;
     /*border-radius: 5px;*/
   }
@@ -341,7 +341,7 @@ input.input-text,
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border: 0;
-  border: 1px solid #8A8A8A;
+  border: 1px solid #E0E0E0;
   background: white;
   /*border-radius: 5px;*/
 }
