@@ -11388,8 +11388,8 @@ table colgroup, .data-table colgroup {
   margin-left: 20px;
 }
 .header .cdz-header-top .cdz-top-link .link a {
-  font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  text-transform: uppercase;
+  /*font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  text-transform: uppercase;*/
 }
 .header .cdz-header-top .cdz-top-link .compare {
   display: none;
