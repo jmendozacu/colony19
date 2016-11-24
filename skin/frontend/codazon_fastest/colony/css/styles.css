@@ -1531,7 +1531,7 @@ a.button:hover {
  */
 .price-box .old-price,
 .price-box .special-price {
-  display: inline-block;
+  display: block;
 }
 
 .price-box .old-price .price-label,
@@ -1541,7 +1541,7 @@ a.button:hover {
 
 .price-box .old-price .price,
 .price-box .special-price .price {
-  display: inline-block;
+  display: block;
 }
 
 .price-box .old-price .price {
