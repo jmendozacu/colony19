@@ -11379,7 +11379,7 @@ table colgroup, .data-table colgroup {
   padding: 0;
   display: inline-block;
   list-style: none none;
-  float: right;
+  /*float: right;*/
   margin-left: auto;
 }
 .header .cdz-header-top .cdz-top-link .link {
@@ -11428,6 +11428,7 @@ table colgroup, .data-table colgroup {
   margin: 0;
   padding: 0;
   list-style: none none;
+  float: left;
 }
 .header .cdz-header-top .cdz-top-link li {
   display: inline-block;
@@ -12047,21 +12048,20 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 }
 
 .cart-icon:before {
- /* background-color: transparent;
-  background-image: url("../images/icon.png");
-  background-position: 7px 8px;
-  background-repeat: no-repeat;
-  border-right: 0 solid #e7e7e7;
-  content: "";*/
-  display: inline-block;
-  min-height: 41px;
+  /*min-height: 41px;*/
   padding: 0px 15px;
   vertical-align: top;
-  width: 40px;
-  font-family: FontAwesome;
-  content: "\f07a";
+  /* font-family: FontAwesome;
+  content: "\f07a";*/
   color: #FFF;
   font-size: 23px;
+  background-image: url("../images/panier-header.png");
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  content: "";
 }
 
 .cdz-top-cart.cdz-dropdown .cdz-trigger::after {
