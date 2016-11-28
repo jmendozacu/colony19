@@ -12,7 +12,7 @@
 .easycatalogimg-cols-6 li.item { width: 16.6% !important; }
 
 .easycatalogimg .parent-category { margin: 0 0 8px; text-align: center; border-bottom: 1px solid #F3BE12;}
-.easycatalogimg .parent-category a { font-size: 17px; font-weight: normal; text-decoration: none; /*color: #000*/; }
+.easycatalogimg .parent-category a { font-size: 12px; font-weight: normal; text-decoration: none; letter-spacing: 1px; /*color: #000*/; }
 .easycatalogimg .parent-category a:hover { text-decoration: underline; color: #8A8A8A;}
 
 .easycatalogimg .list-subcategories { padding: 0; margin: 5px 0; list-style: none; font-size: .95em; }
