@@ -1,0 +1,6 @@
+#order_custom_amount table {width:100%; border-collapse:collapse; white-space:nowrap;}
+#order_custom_amount {padding: 13px 15px;}
+#iwd_om_custom_amount {width:70px; margin:0 10px;}
+#iwd_om_custom_amount_desc {width:100%; margin:0;}
+#iwd_om_custom_amount_apply {margin-left: 15px !important;}
+#order_custom_amount label {line-height: 21px;}
