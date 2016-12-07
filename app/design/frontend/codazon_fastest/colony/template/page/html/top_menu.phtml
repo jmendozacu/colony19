@@ -25,7 +25,7 @@ foreach ($children as $child) {
     $outermostClassCode = 'level'. $options['lv'];
     $_hasChildren = ($child->hasChildren()) ? 'parent' : '';
     if($child->getLogoMenu() != null && $child->getLogoMenu() != ''){
-        $html .= "<img class='image-logo_menu' src='". Mage::getBaseUrl('media') . "catalog/category" .  $child->getLogoMenu() ."' />";
+        $html .= "<img class='image-logo_menu' src='". Mage::getBaseUrl('media') . "/catalog/category/" .  $child->getLogoMenu() ."' />";
     }
 
     $html .= '<li class="level-top '.$_hasChildren.' '.$outermostClassCode.'">';
