@@ -4,6 +4,7 @@ $installer->startSetup();
 
 
 $installer->addAttribute("catalog_category", "logo_menu",  array(
+    "group" => "General Information",
     "type"     => "varchar",
     "backend"  => "catalog/category_attribute_backend_image",
     "frontend" => "",
