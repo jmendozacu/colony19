@@ -33,12 +33,12 @@
         <div class="cdz-header-top">
 			<div class="cdz-header-top-content container">
 				<div class="row">
-					<div class="col-sm-8 cdz-col-left" id="cdz-pc-stores">
+					<div class="col-sm-6 cdz-col-left" id="cdz-pc-stores">
 						<?php echo $this->getChildHtml('store_switcher_style_01') ?>
 						<?php echo $this->getChildHtml('store_language_style_01') ?>
 						<?php echo $this->getChildHtml('currency_style_01') ?>
 					</div>
-					<div><?php echo Mage::getStoreConfig('general/store_information/phone'); ?></div>
+					<div class="col-sm-6 cdz-col-left"><?php echo Mage::getStoreConfig('general/store_information/phone'); ?></div>
 					<div class="col-sm-8 cdz-col-right" id="cdz-pc-account">
 						<?php echo $this->getChildHtml('topLinks') ?>
 						<?php echo $this->getChildHtml('cdzTopLinks') ?>
