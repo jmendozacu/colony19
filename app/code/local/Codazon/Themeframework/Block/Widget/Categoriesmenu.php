@@ -62,6 +62,8 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
 		
 		$collection = $this->_catModel->getCollection()
 			->setStoreId($storeId)
+            // ajout agentom - logo :
+                ->addAttributeToSelect('logo_menu')
 			->addAttributeToFilter('is_active',1)
 			->addAttributeToFilter('include_in_menu',1)
 			->addAttributeToSelect('name')
