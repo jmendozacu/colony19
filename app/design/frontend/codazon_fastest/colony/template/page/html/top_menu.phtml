@@ -26,7 +26,7 @@ foreach ($children as $child) {
     $_hasChildren = ($child->hasChildren()) ? 'parent' : '';
     $html .= '<li class="level-top '.$_hasChildren.' '.$outermostClassCode.'">';
     if($child->getLogoMenu() != null && $child->getLogoMenu() != ''){
-        $html .= "<img class='image-logo_menu' src='". Mage::getBaseUrl('media') . "/catalog/category/" .  $child->getLogoMenu() ."' />";
+        $html .= "<img class='image-logo_menu' src='". Mage::getBaseUrl('media') . "/catalog/category/" .  $child->get4Thumbnail() ."' />";
     }
     $html .= '<a href="'. $this->getCategoryUrlById($child->getId()) .'" class="menu-link"><span>'. $this->escapeHtml($this->__($child->getName())) .'</span></a>';
     $nextChildLevel = $childLevel + 1;
