@@ -7,3 +7,8 @@
     text-align : center;
     width : 196px;
 }
+
+.groupmenu-drop-content.groupmenu-1{
+    text-align: left;
+    width: auto;
+}
