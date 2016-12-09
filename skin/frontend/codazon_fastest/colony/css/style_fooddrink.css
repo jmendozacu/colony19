@@ -1327,7 +1327,7 @@ a:hover, a:focus {
 }
 .cdz-footer-style-03 .footer-social a:hover {
   background: none;
-  border-color: none;
+  border-color: unset;
 }
 .cdz-footer-style-03 .footer-social a:hover:before {
   border-color: white;
@@ -1858,7 +1858,7 @@ textarea.input-text {
   color: #FFF;
 }
 .header #cdz-pc-stores .cdz-trigger:hover {
-  color: lignten(#999999, 10%);
+  color: lighten(#999999, 10%);
 }
 .header .cdz-col-left {
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
