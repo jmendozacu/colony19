@@ -3,7 +3,7 @@
     margin : auto;
 }
 
-.groupmenu.level0 li{
+.level-top.parent.level0{
     text-align : center;
     width : 196px;
 }
