@@ -1862,6 +1862,7 @@ textarea.input-text {
 }
 .header .cdz-col-left {
   font: 500 15px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  margin-top : 5px;
 }
 
 .header-bottom {
