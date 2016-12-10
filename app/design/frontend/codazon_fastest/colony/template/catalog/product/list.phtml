@@ -205,7 +205,7 @@
                                 <div class="cdz-buttons-inner actions">
 									<?php echo $_nameAfterChildHtml; ?>
                                     <?php if($_product->isSaleable()): ?>
-                                        <button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>?options=cart')"><span><img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>" alt="<?php echo $this->__('Add to cart'); ?>" class="agentom-addtocart-list" /></span></button>
+                                        <img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>" alt="<?php echo $this->__('Add to cart'); ?>" class="agentom-addtocart-list" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>?options=cart')" />
                                     <?php else: ?>
                                         <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
                                     <?php endif; ?>
