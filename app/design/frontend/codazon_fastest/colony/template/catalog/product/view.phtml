@@ -246,7 +246,7 @@ $_product = $this->getProduct();
             </div>
 		<?php endforeach;?>
         <?php for($i = 1; $i <= 3; $i++): ?>
-        <?php if($_themeHelper->getConfig('codazon_settings/custom_tabs/show_block_tab_'.$i)==1): ?>
+        <?php if(0/*$_themeHelper->getConfig('codazon_settings/custom_tabs/show_block_tab_'.$i)==1*/): ?>
         	<div class="box-collateral box-custom_tab_<?php echo $i  ?>" id="box-custom_tab_<?php echo $i  ?>">
             	<h2><?php echo $_themeHelper->getConfig('codazon_settings/custom_tabs/custom_tab_title_'.$i) ?></h2>
                 <?php
