@@ -56,3 +56,7 @@
 .agentom-input-text-qty, .decrease, .increase{
     border: none !important;
 }
+
+.agentom-addtocart-product{
+    margin: 4px 0 0 0;
+}
