@@ -14418,7 +14418,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .qty_cart input.qty {
   float: left;
   height: 40px;
-  width: 120px !important;
+  /*width: 120px !important;*/
   text-align: center;
   margin: 0 -1px;
   -moz-border-radius: 0;
