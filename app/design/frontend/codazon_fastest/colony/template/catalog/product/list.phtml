@@ -44,7 +44,7 @@
 	$w = $_themeHelper->getConfig('codazon_settings/category_view/image_width');
 	$h = $_themeHelper->getConfig('codazon_settings/category_view/image_height');
 	$_qsHelper = $this->helper('quickshop');
-	
+
 	$_imgHelper = $this->helper('catalog/image');
 ?>
 
@@ -70,12 +70,12 @@
                 <div class="f-fix">
                     <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
                     <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
-                    
+
                     <?php echo $this->getPriceHtml($_product, true) ?>
 					<?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product) ?>
                     <?php endif; ?>
-                    
+
                     <div class="desc std">
                         <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
@@ -110,8 +110,8 @@
 							</ul>
                             <?php endif ?>
 					</div>
-					
-                    
+
+
                 </div>
             </div>
 			</div>
@@ -146,6 +146,9 @@
 
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
+        <div class="toolbar-bottom">
+            <?php echo $this->getToolbarHtml() ?>
+        </div>
     <div class="products-grid">
         <ul class="same-height row">
         <?php $i=0; foreach ($_productCollection as $_product): ?>
@@ -169,7 +172,7 @@
                         </div>
                         <?php endif ?>
                     </div>
-                        
+
                     <div class="product-item-details">
                         <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                         <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_description')): ?>
@@ -217,7 +220,7 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </li>
@@ -226,10 +229,6 @@
         </div>
         <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
     <?php endif; ?>
-
-    <div class="toolbar-bottom">
-        <?php echo $this->getToolbarHtml() ?>
-    </div>
 </div>
 <?php endif; ?>
 <?php
