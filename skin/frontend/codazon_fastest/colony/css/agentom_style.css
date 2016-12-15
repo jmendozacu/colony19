@@ -53,10 +53,6 @@
     float: left;
 }
 
-.decrease{
-    border: none !important;
-}
-
-.increase{
+.agentom-input-text-qty, .decrease, .increase{
     border: none !important;
 }
