@@ -59,6 +59,42 @@ $_product = $this->getProduct();
 				</div>
 				<div class="col-sm-10 col-sm-push-1 product-view-info">
 					<div class="product-shop">
+                        <div class="product-shop-wrap product-shop-social">
+                            <div class="row">
+                                <div class="col-sm-17">
+                                    <ul class="cdz-social-listing">
+                                        <li class="cdz-facebook">
+                                            <a onclick='window.open("https://www.facebook.com/sharer/sharer.php?u=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' href="javascript:void(0)" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Facebook') ?>"><i class="fa fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li class="twitter">
+                                            <a onclick='window.open("https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' target="_blank" rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Twitter') ?>"><i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="linkedin">
+                                            <a onclick='window.open("https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url ?>&title=<?php echo $name ?>&ro=false&summary=<?php echo $desc ?>&source=","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on LinkedIn') ?>"><i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                        <li class="google-plus">
+                                            <a onclick='window.open("https://plus.google.com/share?url=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Google Plus') ?>"><i class="fa fa-google-plus"></i>
+                                            </a>
+                                        </li>
+                                        <li class="pinterest">
+                                            <a onclick='window.open("https://www.pinterest.com/pin/create/button/?url=<?php echo $url ?>&media=<?php echo $image ?>&description=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Pin this') ?>"><i class="fa fa-pinterest"></i>
+                                            </a>
+                                        </li>
+                                        <li class="email">
+                                            <?php if ($this->canEmailToFriend()): ?>
+                                                <a rel="nofollow" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Email to a Friend') ?>" class="email-to-friend" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><i class="fa fa-envelope"></i></a>
+                                            <?php endif; ?>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-7 align-right pull-right">
+                                    <?php echo $this->getChildHtml('codazon_product_area01') ?>
+                                </div>
+                            </div>
+                        </div>
 						<div class="product-shop-wrap product-shop-title">
 							<div class="product-name">
 								<h1 itemprop="name" class="product-name-h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
@@ -128,43 +164,6 @@ $_product = $this->getProduct();
 							$image = urlencode($this->stripTags($this->helper('catalog/image')->init($_product, 'image')));
 							$name = urlencode($this->stripTags($_helper->productAttribute($_product, $_product->getName(), 'name')));
 						?>
-						<div class="product-shop-wrap product-shop-social">
-							<div class="row">
-								<div class="col-sm-17">
-									<ul class="cdz-social-listing">
-										<li class="cdz-facebook">
-											<a onclick='window.open("https://www.facebook.com/sharer/sharer.php?u=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' href="javascript:void(0)" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Facebook') ?>"><i class="fa fa-facebook"></i>
-											</a>
-										</li>
-										<li class="twitter">
-											<a onclick='window.open("https://twitter.com/intent/tweet?url=<?php echo $url ?>&text=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' target="_blank" rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Twitter') ?>"><i class="fa fa-twitter"></i>
-											</a>
-										</li>
-										<li class="linkedin">
-											<a onclick='window.open("https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $url ?>&title=<?php echo $name ?>&ro=false&summary=<?php echo $desc ?>&source=","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on LinkedIn') ?>"><i class="fa fa-linkedin"></i>
-											</a>
-										</li>
-										<li class="google-plus">
-											<a onclick='window.open("https://plus.google.com/share?url=<?php echo $url ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Share on Google Plus') ?>"><i class="fa fa-google-plus"></i>
-										</a>
-										</li>
-										<li class="pinterest">
-										<a onclick='window.open("https://www.pinterest.com/pin/create/button/?url=<?php echo $url ?>&media=<?php echo $image ?>&description=<?php echo $desc ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")' rel="nofollow" title="" href="javascript:void(0)" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Pin this') ?>"><i class="fa fa-pinterest"></i>
-										</a>
-										</li>
-										<li class="email">
-										<?php if ($this->canEmailToFriend()): ?>
-											<a rel="nofollow" title="" class="trasition-all" data-placement="top" data-toggle="tooltip" data-original-title="<?php echo $this->__('Email to a Friend') ?>" class="email-to-friend" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><i class="fa fa-envelope"></i></a>
-										<?php endif; ?>
-										</li>
-									</ul>
-								</div>
-								<div class="col-sm-7 align-right pull-right">
-								<?php echo $this->getChildHtml('codazon_product_area01') ?>
-								</div>
-							</div>
-						</div>
-						
 						<div class="product-shop-wrap product-shop-desc">
 						<?php if ($_product->getShortDescription()):?>
 							<div class="short-description">
