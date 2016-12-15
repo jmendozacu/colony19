@@ -30,7 +30,7 @@
     <div class="add-to-cart">
 		<div class="product-button-top">
         <?php if(!$_product->isGrouped()): ?>
-            <label for="qty"><?php echo $this->__('Qty:') ?></label>
+            <span><?php echo $this->__('Qty:') ?></span>
     		<div class="qty_cart">
         		<div class="qty-ctl">
         			<button title="decrease" onclick="changeQty(0); return false;" class="decrease">decrease</button>
