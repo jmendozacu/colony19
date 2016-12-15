@@ -32,7 +32,7 @@ $i = 0;
     <li class="item">
         <h5 class="category-name parent-category"><a href="<?php echo $_category->getUrl() ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>"><?php echo $this->htmlEscape($_category->getName()) ?></a></h5>
         <?php if ($showImage) : ?>
-            <a href="<?php echo $_category->getUrl() ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>" class="product-image">
+            <a href="<?php echo $_category->getUrl() ?>" title="<?php echo $this->htmlEscape($_category->getName()) ?>" class="product-image no-alt-img">
                 <?php $imageUrl = $this->getImage($_category) ?>
                 <?php if(!$resizeImage = $this->getResizeImage()): ?>
                     <?php
