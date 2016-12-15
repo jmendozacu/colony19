@@ -52,3 +52,11 @@
 .agentom-addtocart-button{
     float: left;
 }
+
+.decrease{
+    border: none;
+}
+
+.increase{
+    border: none;
+}
