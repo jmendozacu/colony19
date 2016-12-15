@@ -58,7 +58,7 @@
         <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
 			<div class="product-item-info">
             <?php // Product Image ?>
-            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image <?php echo ($_themeHelper->getConfig('codazon_settings/category_view/alternative_image'))?'':'no-alt-img'; ?>">
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image no-alt-img">
             	<?php echo $_themeHelper->getProductLabel($_product) ?>
             	<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($w,$h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" id="product-collection-image-<?php echo $_product->getId(); ?>" class="img-responsive" />
 				<?php if($alt_img = $_themeHelper->getConfig('codazon_settings/category_view/alternative_image')): ?>
