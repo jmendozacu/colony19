@@ -39,3 +39,16 @@
     width: 50%;
     float: left;
 }
+
+.agentom-label{
+    margin: 10px 10px 0 0;
+    float: left;
+}
+
+.agentom-qty-cart{
+    float: left;
+}
+
+.agentom-addtocart-button{
+    float: left;
+}
