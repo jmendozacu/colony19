@@ -54,9 +54,9 @@
 }
 
 .decrease{
-    border: none;
+    border: none !important;
 }
 
 .increase{
-    border: none;
+    border: none !important;
 }
