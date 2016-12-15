@@ -154,13 +154,13 @@
         <?php $i=0; foreach ($_productCollection as $_product): ?>
                 <li class="item product-item <?php echo implode(' ', $itemClass); ?>">
                     <div class="product-item-info">
-                    <div class="">
+                    <div class="cdz-hover-section">
                         <div class="cdz-product-top">
                             <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image <?php echo ($_themeHelper->getConfig('codazon_settings/category_view/alternative_image'))?'':'no-alt-img'; ?>">
                             <img src="<?php echo (string)$_imgHelper->init($_product, 'small_image')->resize($w, $h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="img-responsive" id="product-collection-image-<?php echo $_product->getId(); ?>" />
-                            <?php if($alt_img = $_themeHelper->getConfig('codazon_settings/category_view/alternative_image')): ?>
+                            <?php /*if($alt_img = $_themeHelper->getConfig('codazon_settings/category_view/alternative_image')): ?>
                             <img src="<?php echo (string)$_imgHelper->init($_product,'thumbnail')->resize($w, $h); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="alternative-img img-responsive" />
-                            <?php endif ?>
+                            <?php endif*/ ?>
                             </a>
                         </div>
                         <?php echo $_themeHelper->getProductLabel($_product) ?>
