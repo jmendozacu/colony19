@@ -60,3 +60,8 @@
 .agentom-addtocart-product{
     margin: 4px 0 0 0;
 }
+
+.agentom-cart-product-detail{
+    width:auto !important;
+    margin: 0 0 0 8px;
+}
