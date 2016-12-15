@@ -4,7 +4,7 @@ $_cartQty = Mage::getSingleton('checkout/cart')->getQuote()->getItemsQty();
 <div class="cart-footer-inner" id="cart-footer-inner">
     <a href="javascript:void(0)" class="cart-trigger">
         <span class="loading" style="display:none;"><?php echo $this->__('Processing...') ?></span>
-        <span class="amount loaded"><?php echo $this->__('%s item(s) in your cart', ($_cartQty?$_cartQty:0) ) ?></span>
+        <span class="amount loaded"><?php echo $this->__('%s item(s) in your cart', ($_cartQty?round($_cartQty):0) ) ?></span>
     </a>
     <div class="cart-content">
         <div class="cart-icon"></div>
