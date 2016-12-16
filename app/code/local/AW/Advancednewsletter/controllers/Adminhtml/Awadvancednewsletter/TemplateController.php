@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -128,7 +128,7 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_TemplateController ex
                     $segmentCodeList[] = $newSegmentCode;
                     $template->setData('segments_codes', $segmentCodeList);
                     foreach (Mage::getModel('marketsuite/api')->exportCustomers($rule->getId()) as $customer) {
-                        AW_Advancednewsletter_Model_Sync_Mailchimpclient::$disableAutosync = true;
+                        Mage::register('an_disable_autosync', true);
                         Mage::getModel('advancednewsletter/subscriber')
                             ->setCustomer(Mage::getModel('customer/customer')->load($customer->getId()))
                             ->subscribe($customer->getEmail(), array($newSegmentCode))

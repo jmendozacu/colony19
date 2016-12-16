@@ -18,16 +18,17 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Marketsuite
- * @version    2.1.3
+ * @package    AW_Advancednewsletter
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
 
+
 class AW_All_Block_Additional_System extends Mage_Adminhtml_Block_Abstract
 {
     const SUCCESS_RESULT = '<span class="available">%s</span>';
-    const ERROR_RESULT   = '<span class="error">%s</span>';
+    const ERROR_RESULT = '<span class="error">%s</span>';
 
     public function getTemplate()
     {
@@ -50,6 +51,35 @@ class AW_All_Block_Additional_System extends Mage_Adminhtml_Block_Abstract
         return $this->_validate($result, $option);
     }
 
+    protected function _validate($resultString, $option)
+    {
+        $result = $resultString;
+        switch ($option) {
+            case 'memory_limit' :
+                $result = sprintf(self::ERROR_RESULT, $resultString)
+                    . sprintf(self::SUCCESS_RESULT, ' (Recommended 512M)');
+                if ((int)$resultString >= 512) {
+                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
+                }
+                break;
+            case 'max_execution_time' :
+                $result = sprintf(self::ERROR_RESULT, $resultString)
+                    . sprintf(self::SUCCESS_RESULT, ' (Recommended 1800)');
+                if ((int)$resultString >= 1800) {
+                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
+                }
+                break;
+            case 'OS' :
+                $result = sprintf(self::ERROR_RESULT, $resultString)
+                    . sprintf(self::SUCCESS_RESULT, ' (Recommended Unix OS)');
+                if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
+                }
+                break;
+        }
+        return $result;
+    }
+
     public function getMagentoRequirementsUrl()
     {
         return 'http://www.magentocommerce.com/system-requirements';
@@ -59,37 +89,5 @@ class AW_All_Block_Additional_System extends Mage_Adminhtml_Block_Abstract
     {
         $result = php_uname();
         return $this->_validate($result, 'OS');
-    }
-
-    protected function _validate($resultString, $option)
-    {
-        $result = $resultString;
-        switch ($option) {
-            case 'memory_limit' :
-                $result = sprintf(self::ERROR_RESULT, $resultString)
-                    . sprintf(self::SUCCESS_RESULT, ' (Recommended 512M)')
-                ;
-                if ((int)$resultString >= 512) {
-                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
-                }
-                break;
-            case 'max_execution_time' :
-                $result = sprintf(self::ERROR_RESULT, $resultString)
-                    . sprintf(self::SUCCESS_RESULT, ' (Recommended 1800)')
-                ;
-                if ((int)$resultString >= 1800) {
-                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
-                }
-                break;
-            case 'OS' :
-                $result = sprintf(self::ERROR_RESULT, $resultString)
-                    . sprintf(self::SUCCESS_RESULT, ' (Recommended Unix OS)')
-                ;
-                if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-                    $result = sprintf(self::SUCCESS_RESULT, $resultString);
-                }
-                break;
-        }
-        return $result;
     }
 }

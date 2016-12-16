@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -36,16 +36,10 @@ class AW_Advancednewsletter_Model_Cron
 
     /**
      * Sync From Mailchimp. Count of subscribers which will be synchronized with mailchimp by one cron execution
-     *
-     *    listMemberInfo - up to 50 emails, listMembers up to 15000.  list_sync uses listMemberInfo
      */
-    const SYNC_FROM_MAILCHIMP_PAGE_SIZE = 45;
-    const SYNC_FROM_MAILCHIMP_PAGE_SIZE_2 = 450;
+    const SYNC_FROM_MAILCHIMP_PAGE_SIZE = 200;
 
-
-    public static $massSyncFlag = false;
     protected $_syncFromType;
-
 
     /*
      *   Name for export settings
@@ -55,15 +49,6 @@ class AW_Advancednewsletter_Model_Cron
      *   Name for import settings
      */
     const SYNC_FROM_PARAMS_NAME = 'aw_advancednewsletter_mailchimp_from_params';
-
-    /*
-     *    config params
-     */
-    const MAILCHIMP_ENABLED = "advancednewsletter/mailchimpconfig/mailchimpenabled";
-    const MAILCHIMP_AUTOSYNC = "advancednewsletter/mailchimpconfig/autosync";
-    const MAILCHIMP_APIKEY = "advancednewsletter/mailchimpconfig/apikey";
-    const MAILCHIMP_LISTID = "advancednewsletter/mailchimpconfig/listid";
-    const MAILCHIMP_XMLRPC = "advancednewsletter/mailchimpconfig/xmlrpc";
 
     /**
      * Sending newsletters by cron
@@ -82,84 +67,6 @@ class AW_Advancednewsletter_Model_Cron
         $collection->walk('sendPerSubscriber', array($countOfSubscritions));
     }
 
-    protected function _checkInstanceDuplicate($instances, $instanceForCheck)
-    {
-        $instanceForCheckKeys = $instanceForCheck->getKeys();
-        foreach ($instances as $instance) {
-            $instanceKeys = $instance->getKeys();
-            $apiKey = AW_Advancednewsletter_Model_Sync_Mailchimpclient::MAILCHIMP_APIKEY;
-            $listId = AW_Advancednewsletter_Model_Sync_Mailchimpclient::MAILCHIMP_LISTID;
-            if ($instanceKeys[$apiKey] == $instanceForCheckKeys[$apiKey]
-                && $instanceKeys[$listId] == $instanceForCheckKeys[$listId]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Import data from MailChimp to store
-     *
-     * @param $records
-     * @param $storeId
-     * @param $syncFor
-     * @param $status
-     */
-    protected function _addRecordsToStore($records, $storeId, $syncFor, $status)
-    {
-        foreach ($records as $record) {
-            $subscriber = Mage::getModel('advancednewsletter/subscriber')->loadByEmail($record['email']);
-            switch ($syncFor) {
-                case AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_STATUSES:
-                    if ($subscriber->getId()) {
-                        $subscriber->setStatus($status);
-                    }
-
-                    break;
-                case AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_LIST:
-                    // TODO: Throw exception
-                    if (!isset($record['merges']))
-                        continue;
-                    $groups = array();
-                    foreach ($record['merges']['GROUPINGS'] as $grouping) {
-                        $segmentsInGrouping = explode(', ', $grouping['groups']);
-                        $groups = array_merge($segmentsInGrouping, $groups);
-                    }
-                    $groups = array_unique($groups);
-                    foreach ($groups as $keyGroup => $oneGroup) {
-                        if (empty($oneGroup))
-                            unset($groups[$keyGroup]);
-                    }
-
-                    $email = $record['merges']['EMAIL'];
-                    $customerByEmail = Mage::getModel('customer/customer')
-                        ->setStore(Mage::app()->getStore($storeId))
-                        ->loadByEmail($email)
-                    ;
-                    if ($customerByEmail->getId())
-                        $subscriber->setCustomerId($customerByEmail->getId());
-
-                    $subscriber
-                            ->setStatus($status)
-                            ->setEmail($email)
-                            ->setFirstName($record['merges']['FNAME'])
-                            ->setLastName($record['merges']['LNAME'])
-                            ->setSegmentsCodes($groups)
-                            ->setStoreId($storeId);
-
-                    break;
-                default:
-                    break;
-            }
-            /* save customer */
-            try {
-                $subscriber->save();
-            } catch (Exception $ex) {
-
-            }
-        }
-    }
-
     /**
      *  Import data from MailChimp
      */
@@ -168,11 +75,7 @@ class AW_Advancednewsletter_Model_Cron
         if (!Mage::helper('advancednewsletter')->isChimpEnabled()) {
             return $this;
         }
-        /*
-         *  TODO:  use different pagesize for sync_list  & sync_statuses
-         *    listMemberInfo - up to 50 emails, listMembers up to 15000.  list_sync uses listMemberInfo
-         */
-        self::$massSyncFlag = true;
+
         $cache = Mage::getModel('advancednewsletter/cache');
         $syncFromParams = $cache->loadCache(self::SYNC_FROM_PARAMS_NAME);
         if (!$syncFromParams)
@@ -183,53 +86,30 @@ class AW_Advancednewsletter_Model_Cron
             return;
         }
 
-        /* Getting instances for sync. Instances with the same apikey and listid joined to one */
-        $instances = array();
-        foreach ($syncFromParams as $storeId => $storePages) {
-            try {
-                $instanceForCheck = AW_Advancednewsletter_Model_Sync_Mailchimpclient::getInstance($storeId);
-                if (!$this->_checkInstanceDuplicate($instances, $instanceForCheck))
-                    $instances[] = $instanceForCheck;
-            } catch (Exception $ex) {
-                continue;
-            }
-        }
+        Mage::register('an_disable_autosync', true);
 
-        /* Creation segments for all instances */
-        foreach ($instances as $instance) {
-            try {
-                $chimpGroupings = $instance->getChimpGroupings();
-                foreach ($chimpGroupings as $chimpGrouping) {
-                    $arr = array();
-                    foreach ($chimpGrouping['groups'] as $segment) {
-                        $arr[] = $segment['name'];
-                    }
-                    Mage::getModel('advancednewsletter/segment')->massCreation($arr);
-                }
-            } catch (Exception $ex) {
-                continue;
-            }
-        }
+        $mailChimpInstances = $this->getMailChimpInstancesForAllStores($syncFromParams);
+        $this->syncAllSegmentsFromMailchimp($mailChimpInstances);
 
         $instancesIds = array();
         /* Subscrubers sync */
-        foreach ($instances as $instance) {
+        foreach ($mailChimpInstances as $instance) {
 
             $storeId = $instance->getStoreId();
             $syncFor = $syncFromParams[$storeId]['sync_for'];
 
             $pageSize = self::SYNC_FROM_MAILCHIMP_PAGE_SIZE;
-            if ($syncFor === 'sync_statuses') {
-                $pageSize = self::SYNC_FROM_MAILCHIMP_PAGE_SIZE_2;
-            }
 
             $instancesIds[] = $storeId;
             $page = $syncFromParams[$storeId]['subscr_page'];
             if (!($page === 'none')) {
-                $subscribers = $instance->getRecords('subscribed', $syncFor, $page, $pageSize);
+                $subscribers = $instance->getSubscribers('subscribed', $page, $pageSize);
                 if (count($subscribers)) {
-                    $this->_addRecordsToStore(
-                        $subscribers, $storeId, $syncFor, AW_Advancednewsletter_Model_Subscriber::STATUS_SUBSCRIBED
+                    $this->saveSubscribers(
+                        $subscribers,
+                        $storeId,
+                        $syncFor,
+                        AW_Advancednewsletter_Model_Subscriber::STATUS_SUBSCRIBED
                     );
                     ++$syncFromParams[$storeId]['subscr_page'];
                 } else {
@@ -237,13 +117,15 @@ class AW_Advancednewsletter_Model_Cron
                 }
             }
 
-
             $page = $syncFromParams[$storeId]['unsubscr_page'];
             if (!($page === 'none')) {
-                $unsubscribers = $instance->getRecords('unsubscribed', $syncFor, $page, $pageSize);
+                $unsubscribers = $instance->getSubscribers('unsubscribed', $page, $pageSize);
                 if (count($unsubscribers)) {
-                    $this->_addRecordsToStore(
-                        $unsubscribers, $storeId, $syncFor, AW_Advancednewsletter_Model_Subscriber::STATUS_UNSUBSCRIBED
+                    $this->saveSubscribers(
+                        $unsubscribers,
+                        $storeId,
+                        $syncFor,
+                        AW_Advancednewsletter_Model_Subscriber::STATUS_UNSUBSCRIBED
                     );
                     ++$syncFromParams[$storeId]['unsubscr_page'];
                 } else {
@@ -272,7 +154,122 @@ class AW_Advancednewsletter_Model_Cron
         } else {
             $cache->removeCache(self::SYNC_FROM_PARAMS_NAME);
         }
-        self::$massSyncFlag = false;
+        Mage::unregister('an_disable_autosync');
+    }
+
+    /**
+     * Get MailChimp instances for all stores. Duplicated instances are skipped
+     *
+     * @param srray $syncFromParams
+     * @return array
+     */
+    private function getMailChimpInstancesForAllStores($syncFromParams)
+    {
+        $mailChimpInstances = array();
+        $usedParams = array();
+        foreach ($syncFromParams as $storeId => $storePages) {
+            try {
+                $apiKey = Mage::helper('advancednewsletter')->getChimpApiKey($storeId);
+                $listId = Mage::helper('advancednewsletter')->getChimpListId($storeId);
+
+                if ($this->isApiKeyAndListIdAlreadyUsed($usedParams, $apiKey, $listId)) {
+                    continue;
+                }
+                $instance = AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($storeId);
+                $mailChimpInstances[] = $instance;
+                $usedParams[] = array(
+                    'api_key'   => $apiKey,
+                    'list_id'   => $listId
+                );
+            } catch (Exception $ex) {
+                continue;
+            }
+        }
+        return $mailChimpInstances;
+    }
+
+    /**
+     * Check MailChimp api key and list id to avoid duplicate synchronization
+     *
+     * @param array $usedParams
+     * @param string $apiKey
+     * @param string $listId
+     * @return bool
+     */
+    private function isApiKeyAndListIdAlreadyUsed($usedParams, $apiKey, $listId)
+    {
+        foreach ($usedParams as $param) {
+            if ($param['api_key'] == $apiKey && $param['list_id'] == $listId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Synchronize all segments from MailChimp
+     *
+     * @param $instances
+     * @return void
+     */
+    private function syncAllSegmentsFromMailchimp($instances)
+    {
+        /** @var AW_Advancednewsletter_Model_Sync_Interface $instance */
+        foreach ($instances as $instance) {
+            try {
+                $segments = $instance->getSegments();
+                Mage::getModel('advancednewsletter/segment')->massCreation($segments);
+            } catch (Exception $ex) {
+                continue;
+            }
+        }
+    }
+
+    /**
+     * Save subscribers
+     *
+     * @param array $subscribersData (array(array('email'=>..,'status'=>.., ...)))
+     * @param int $storeId
+     * @param string $syncFor
+     * @param string $status
+     * @return void
+     */
+    private function saveSubscribers($subscribersData, $storeId, $syncFor, $status)
+    {
+        foreach ($subscribersData as $subscriberData) {
+            $subscriber = Mage::getModel('advancednewsletter/subscriber')->loadByEmail($subscriberData['email']);
+            switch ($syncFor) {
+                case AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_STATUSES:
+                    if ($subscriber->getId()) {
+                        $subscriber->setStatus($status);
+                    }
+                    break;
+                case AW_Advancednewsletter_Block_Adminhtml_Synchronization::SYNC_LIST:
+                    $customerByEmail = Mage::getModel('customer/customer')
+                        ->setStore(Mage::app()->getStore($storeId))
+                        ->loadByEmail($subscriberData['email'])
+                    ;
+                    if ($customerByEmail->getId())
+                        $subscriber->setCustomerId($customerByEmail->getId());
+
+                    $subscriber
+                        ->setStatus($status)
+                        ->setEmail($subscriberData['email'])
+                        ->setFirstName($subscriberData['first_name'])
+                        ->setLastName($subscriberData['last_name'])
+                        ->setSegmentsCodes($subscriberData['segments'])
+                        ->setStoreId($storeId);
+                    break;
+                default:
+                    break;
+            }
+
+            try {
+                $subscriber->save();
+            } catch (Exception $ex) {
+
+            }
+        }
     }
 
     /**
@@ -284,30 +281,31 @@ class AW_Advancednewsletter_Model_Cron
             return $this;
         }
 
-        self::$massSyncFlag = true;
         $cache = Mage::getModel('advancednewsletter/cache');
         $syncToParams = $cache->loadCache(self::SYNC_TO_PARAMS_NAME);
         if (!$syncToParams) {
             return;
         }
 
+        Mage::register('an_disable_autosync', true);
+
         $syncToParams = unserialize($syncToParams);
         foreach ($syncToParams as $storeId => $pagesToSync) {
             if (
-                Mage::getStoreConfig(self::MAILCHIMP_ENABLED, $storeId)
-                && Mage::getStoreConfig(self::MAILCHIMP_APIKEY, $storeId)
-                && Mage::getStoreConfig(self::MAILCHIMP_LISTID, $storeId)
+                Mage::helper('advancednewsletter')->isChimpEnabled($storeId)
+                && Mage::helper('advancednewsletter')->getChimpApiKey($storeId)
+                && Mage::helper('advancednewsletter')->getChimpListId($storeId)
             ) {
 
                 // sync  subspage
                 $page = $syncToParams[$storeId]['subscr_page'];
-                $syncToParams[$storeId]['subscr_page'] = $this->_exportSubsPage(
+                $syncToParams[$storeId]['subscr_page'] = $this->exportSubscribersPage(
                     $storeId, 'subscribed', $page, self::SYNC_TO_MAILCHIMP_PAGE_SIZE, $pagesToSync['include_names']
                 );
 
                 // sync  unsubspage
                 $page = $syncToParams[$storeId]['unsubscr_page'];
-                $syncToParams[$storeId]['unsubscr_page'] = $this->_exportSubsPage(
+                $syncToParams[$storeId]['unsubscr_page'] = $this->exportSubscribersPage(
                     $storeId, 'unsubscribed', $page, self::SYNC_TO_MAILCHIMP_PAGE_SIZE, $pagesToSync['include_names']
                 );
 
@@ -328,7 +326,7 @@ class AW_Advancednewsletter_Model_Cron
             $cache->removeCache(self::SYNC_TO_PARAMS_NAME);
         }
 
-        self::$massSyncFlag = false;
+        Mage::unregister('an_disable_autosync');
     }
 
     /*
@@ -343,13 +341,13 @@ class AW_Advancednewsletter_Model_Cron
      *  @result mixed   (int|string)
      */
 
-    protected function _exportSubsPage($storeId, $type, $page, $pageSize, $includeNames)
+    private function exportSubscribersPage($storeId, $type, $page, $pageSize, $includeNames)
     {
         if ($page === 'none') {
             return 'none';
         }
 
-        $subscribers = $this->_getSubscibersPack($storeId, $type, $page, $pageSize);
+        $subscribers = $this->getSubscribers($storeId, $type, $page, $pageSize);
 
         if (!count($subscribers)) {
             return 'none';
@@ -357,34 +355,21 @@ class AW_Advancednewsletter_Model_Cron
 
         switch ($type) {
             case 'subscribed':
-                $batch = $this->_getSubsBatch($subscribers, TRUE);
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::getInstance($storeId)->batchSubscribe(
-                    $batch, false, $includeNames
-                );
+                try {
+                    AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($storeId)
+                        ->batchSubscribe($subscribers, $includeNames);
+                } catch (Exception $e) {
+
+                }
                 break;
 
             case 'unsubscribed':
-                /*
-                 *   1) unsubscribe batch with 'delete_members' to delete old data
-                 *   2) subscribe batch to list to add new data
-                 *   3) unsubscribe this batch to change status
-                 */
+                try {
+                    AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($storeId)
+                        ->batchUnsubscribe($subscribers, $includeNames);
+                } catch (Exception $e) {
 
-                $batch = $this->_getSubsBatch($subscribers);
-
-                $email = array();
-                foreach ($batch as $subscriber) {
-                    $email[] = $subscriber['EMAIL'];
                 }
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::getInstance($storeId)
-                    ->batchUnsubscribe($email, TRUE)
-                ;
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::getInstance($storeId)
-                    ->batchSubscribe($batch)
-                ;
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::getInstance($storeId)
-                    ->batchUnsubscribe($email, FALSE)
-                ;
                 break;
 
             default:
@@ -394,39 +379,15 @@ class AW_Advancednewsletter_Model_Cron
     }
 
     /**
-     * Create formatted batch array for mailchimp request
-     * @param array $subscribers
-     * @param bool $includeInterests Include FNAME && LNAME
-     *
-     * @return array
-     */
-    private function _getSubsBatch($subscribers, $includeInterests = FALSE)
-    {
-        $batch = array();
-        foreach ($subscribers as $subscriber) {
-            $subsData = array('EMAIL' => $subscriber['email']);
-            if ($includeInterests) {
-                $subsData['INTERESTS'] = $subscriber['segments_codes'];
-            }
-            $subsData['FNAME'] = $subscriber['first_name'];
-            $subsData['LNAME'] = $subscriber['last_name'];
-            $batch[] = $subsData;
-        }
-
-        return $batch;
-    }
-
-    /**
-     *  Get subscribers data for selected store, type, page
+     *  Get subscribers for selected store, type, page
      *
      *  @param int $storeId
      *  @param string $type = 'subscribed'|'unsubscribed'|etc
      *  @param int $page
      *  @param int $pageSize
-     *
      *  @return array
      */
-    protected function _getSubscibersPack($storeId, $type, $page, $pageSize)
+    private function getSubscribers($storeId, $type, $page, $pageSize)
     {
         $subscribersCollection = Mage::getModel('advancednewsletter/subscriber')
                 ->getCollection()
@@ -456,7 +417,11 @@ class AW_Advancednewsletter_Model_Cron
 
         $arr = array();
         foreach ($subscribers as $subscriber) {
-            $arr[] = $subscriber->getData();
+            if (!is_array($subscriber->getSegmentsCodes())) {
+                $segments = explode(',', $subscriber->getSegmentsCodes());
+                $subscriber->setSegmentsCodes($segments);
+            }
+            $arr[] = $subscriber;
         }
         return $arr;
     }

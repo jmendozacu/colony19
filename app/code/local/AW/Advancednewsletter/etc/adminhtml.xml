@@ -145,8 +145,8 @@
             <observers>
                 <an_subscriber_delete_event>
                     <type>singleton</type>
-                    <class>advancednewsletter/sync_factory</class>
-                    <method>delete</method>
+                    <class>advancednewsletter/observer</class>
+                    <method>subscriberDelete</method>
                 </an_subscriber_delete_event>
             </observers>
         </an_subscriber_delete>

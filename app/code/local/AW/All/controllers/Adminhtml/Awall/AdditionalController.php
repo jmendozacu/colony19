@@ -18,11 +18,12 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Marketsuite
- * @version    2.1.3
+ * @package    AW_Advancednewsletter
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
+
 
 class AW_All_Adminhtml_Awall_AdditionalController extends Mage_Adminhtml_Controller_Action
 {
@@ -31,7 +32,11 @@ class AW_All_Adminhtml_Awall_AdditionalController extends Mage_Adminhtml_Control
         $this
             ->loadLayout()
             ->_title($this->__('aheadWorks - Additional Info View'))
-            ->renderLayout()
-        ;
+            ->renderLayout();
+    }
+
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/config/awall/awall_additional');
     }
 }

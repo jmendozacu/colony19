@@ -18,11 +18,12 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Marketsuite
- * @version    2.1.3
+ * @package    AW_Advancednewsletter
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
+
 
 class AW_All_Block_Additional_Main extends Mage_Adminhtml_Block_Abstract
 {
@@ -39,7 +40,7 @@ class AW_All_Block_Additional_Main extends Mage_Adminhtml_Block_Abstract
 
             $pluginsConfig = Mage::getConfig()->loadModulesConfiguration('aw_plugin.xml');
 
-            foreach($pluginsConfig->getNode() as $_plugin) {
+            foreach ($pluginsConfig->getNode() as $_plugin) {
                 $_pluginAttributes = $_plugin->asArray();
 
                 if (!array_key_exists('render', $_pluginAttributes) || $_pluginAttributes['render'] == '') {
@@ -57,12 +58,15 @@ class AW_All_Block_Additional_Main extends Mage_Adminhtml_Block_Abstract
                 }
 
                 $_sortOrder = 0;
-                if (array_key_exists('sort_order', $_pluginAttributes) && (string)$_pluginAttributes['sort_order'] != '') {
+                if (array_key_exists('sort_order', $_pluginAttributes)
+                    && (string)$_pluginAttributes['sort_order'] != ''
+                ) {
                     $_sortOrder = (int)$_pluginAttributes['sort_order'];
                 }
 
                 if (array_key_exists($_sortOrder, $this->_plugins)) {
-                    $_sortOrder = key(asort($this->_plugins)) + 1;
+                    asort($this->_plugins);
+                    $_sortOrder = key($this->_plugins) + 1;
                 }
                 $this->_plugins[$_sortOrder] = $_render;
             }
@@ -71,7 +75,7 @@ class AW_All_Block_Additional_Main extends Mage_Adminhtml_Block_Abstract
         if (count($this->_plugins) != 0) {
             ksort($this->_plugins);
             foreach ($this->_plugins as $_render) {
-                $html.= $_render->toHtml();
+                $html .= $_render->toHtml();
             }
         }
         return $html;

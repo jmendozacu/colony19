@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -59,8 +59,14 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_SynchronizationContro
 
     public function testConnectionAction()
     {
+        $apiKey = $this->getRequest()->getParam('apikey');
         try {
-            AW_Advancednewsletter_Model_Sync_Mailchimpclient::testConnection($this->getRequest()->getParams());
+            if (!$apiKey) {
+                throw new AW_Advancednewsletter_Exception(
+                    $this->_helper()->__('Invalid Request. Api key info not found')
+                );
+            }
+            AW_Advancednewsletter_Model_Sync_Mailchimp::testConnection($apiKey);
         } catch (Exception $e) {
             return $this->getResponse()->setBody($this->_helper()->__($e->getMessage()));
         }

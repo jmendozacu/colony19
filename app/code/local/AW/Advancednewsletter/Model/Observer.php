@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -103,7 +103,11 @@ class AW_Advancednewsletter_Model_Observer
                         ->setCustomerId($customer->getId())
                         ->setFirstName($customer->getFirstname())
                         ->setLastName($customer->getLastname())
-                        ->setPhone($customer->getPrimaryBillingAddress()->getTelephone())
+                        ->setPhone(
+                            $customer->getPrimaryBillingAddress() ?
+                                $customer->getPrimaryBillingAddress()->getTelephone() :
+                                ''
+                        )
                         ->save()
                     ;
                 } catch (Exception $ex) {
@@ -328,5 +332,117 @@ class AW_Advancednewsletter_Model_Observer
             $value = $anSessionData->getData($name);
         }
         return $value;
+    }
+
+    public function subscriberSubscribe($observer)
+    {
+        if (
+            !Mage::helper('advancednewsletter')->isChimpEnabled() ||
+            !Mage::helper('advancednewsletter')->isChimpAutoSyncEnabled() ||
+            Mage::registry('an_disable_autosync')
+        ) {
+            return $this;
+        }
+        try {
+            $subscriber = $observer->getSubscriber();
+            AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($subscriber->getStoreId())
+                ->subscribe($subscriber)
+            ;
+        } catch (Exception $ex) {
+
+        }
+    }
+
+    public function subscriberUnsubscribe($observer)
+    {
+        if (
+            !Mage::helper('advancednewsletter')->isChimpEnabled() ||
+            !Mage::helper('advancednewsletter')->isChimpAutoSyncEnabled() ||
+            Mage::registry('an_disable_autosync')
+        ) {
+            return $this;
+        }
+        try {
+            $subscriber = $observer->getSubscriber();
+            AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($subscriber->getStoreId())
+                ->unsubscribe($subscriber)
+            ;
+        } catch (Exception $ex) {
+
+        }
+    }
+
+    public function subscriberDelete($observer)
+    {
+        if (
+            !Mage::helper('advancednewsletter')->isChimpEnabled() ||
+            !Mage::helper('advancednewsletter')->isChimpAutoSyncEnabled() ||
+            Mage::registry('an_disable_autosync')
+        ) {
+            return $this;
+        }
+        try {
+            $subscriber = $observer->getSubscriber();
+            AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($subscriber->getStoreId())
+                ->delete($subscriber)
+            ;
+        } catch (Exception $ex) {
+
+        }
+    }
+
+    public function subscriberForceWrite($observer)
+    {
+        if (
+            !Mage::helper('advancednewsletter')->isChimpEnabled() ||
+            !Mage::helper('advancednewsletter')->isChimpAutoSyncEnabled() ||
+            Mage::registry('an_disable_autosync')
+        ) {
+            return $this;
+        }
+        try {
+            $subscriber = $observer->getSubscriber();
+            AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($subscriber->getStoreId())
+                ->forceWrite($subscriber)
+            ;
+        } catch (Exception $ex) {
+
+        }
+    }
+
+    public function removeSegment($observer)
+    {
+        if (
+            !Mage::helper('advancednewsletter')->isChimpEnabled() ||
+            !Mage::helper('advancednewsletter')->isChimpAutoSyncEnabled() ||
+            Mage::registry('an_disable_autosync')
+        ) {
+            return $this;
+        }
+        if ($observer->getSegmentCode()) {
+            try {
+                foreach (Mage::app()->getStores() as $store) {
+                    AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($store->getId())
+                        ->removeSegment($observer->getSegmentCode())
+                    ;
+                }
+            } catch (Exception $ex) {
+
+            }
+        }
+    }
+
+    public function controllerActionPredispatch()
+    {
+        if((bool)Mage::helper('core')->isModuleOutputEnabled('AW_Advancednewsletter') == true) {
+            $config = Mage::getConfig();
+            $node = $config->getNode('global/blocks/adminhtml/rewrite');
+            $dnode = $config->getNode('global/blocks/adminhtml/drewrite/customer_edit_tab_newsletter');
+            $node->appendChild($dnode);
+            $dnode = $config->getNode('global/blocks/adminhtml/drewrite/newsletter_template_preview');
+            $node->appendChild($dnode);
+            $dnode = $config->getNode('global/blocks/adminhtml/drewrite/page_menu');
+            $node->appendChild($dnode);
+        }
     }
 }

@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -61,7 +61,6 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_SegmentController ext
             $breadcrumbTitle = $breadcrumbLabel = Mage::helper('advancednewsletter')->__('New Segment');
         }
 
-        Mage::getSingleton('adminhtml/session')->setAnSegmentData($segment);
         $this
             ->displayTitle()
             ->loadLayout()
@@ -108,6 +107,7 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_SegmentController ext
                 return $this->_redirect('*/*/edit', array('id' => $model->getId()));
             return $this->_redirect('*/*/', array('id' => $model->getId()));
         } catch (Exception $ex) {
+            Mage::getSingleton('adminhtml/session')->setAnSegmentData($request->getParams());
             Mage::getSingleton('adminhtml/session')->addError($ex->getMessage());
             return $this->_redirect('*/*/edit');
         }

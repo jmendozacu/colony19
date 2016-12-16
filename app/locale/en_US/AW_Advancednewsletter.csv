@@ -332,3 +332,8 @@
 "Use TLS or SSL","Use TLS or SSL"
 "TLS","TLS"
 "SSL","SSL"
+"API key is not valid","API key is not valid"
+"List ID is not valid","List ID is not valid"
+"Can not create an empty group in MailChimp list. Please create it manually (name of the group doesn't matter)","Can not create an empty group in MailChimp list. Please create it manually (name of the group doesn't matter)"
+"Select a list..","Select a list.."
+"Request failed: %s (%s)","Request failed: %s (%s)"

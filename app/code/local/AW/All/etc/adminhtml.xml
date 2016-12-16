@@ -21,6 +21,12 @@
                                 <children>
                                     <awall>
                                         <title>aheadWorks - All</title>
+                                        <children>
+                                            <awall_additional>
+                                                <title>Additional Info View</title>
+                                                <sort_order>0</sort_order>
+                                            </awall_additional>
+                                        </children>
                                     </awall>
                                 </children>
                             </config>
