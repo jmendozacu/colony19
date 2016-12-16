@@ -18,12 +18,11 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.4
+ * @package    AW_Marketsuite
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
-
 
 class AW_All_Helper_Versions extends Mage_Core_Helper_Abstract
 {
@@ -36,33 +35,28 @@ class AW_All_Helper_Versions extends Mage_Core_Helper_Abstract
     const ENTERPRISE_DETECT_EXTENSION = 'Enterprise';
     const ENTERPRISE_DESIGN_NAME = "enterprise";
     const PROFESSIONAL_DESIGN_NAME = "pro";
-
+    
     protected static $_platform = -1;
 
     /**
      * Checks which edition is used
-     *
      * @return int
      */
     public static function getPlatform()
     {
         if (self::$_platform == -1) {
-            $pathToClaim = BP . DS . "app" . DS . "etc" . DS . "modules" . DS . self::ENTERPRISE_DETECT_COMPANY . "_"
-                . self::ENTERPRISE_DETECT_EXTENSION . ".xml";
-            $pathToEEConfig = BP . DS . "app" . DS . "code" . DS . "core" . DS . self::ENTERPRISE_DETECT_COMPANY . DS
-                . self::ENTERPRISE_DETECT_EXTENSION . DS . "etc" . DS . "config.xml";
+            $pathToClaim = BP . DS . "app" . DS . "etc" . DS . "modules" . DS . self::ENTERPRISE_DETECT_COMPANY . "_" . self::ENTERPRISE_DETECT_EXTENSION .  ".xml";
+            $pathToEEConfig = BP . DS . "app" . DS . "code" . DS . "core" . DS . self::ENTERPRISE_DETECT_COMPANY . DS . self::ENTERPRISE_DETECT_EXTENSION . DS . "etc" . DS . "config.xml";
             $isCommunity = !file_exists($pathToClaim) || !file_exists($pathToEEConfig);
             if ($isCommunity) {
-                self::$_platform = self::CE_PLATFORM;
+                 self::$_platform = self::CE_PLATFORM;
             } else {
-                $_xml = @simplexml_load_file($pathToEEConfig, 'SimpleXMLElement', LIBXML_NOCDATA);
-                if (!$_xml === false) {
+                $_xml = @simplexml_load_file($pathToEEConfig,'SimpleXMLElement', LIBXML_NOCDATA);
+                if(!$_xml===FALSE) {
                     $package = (string)$_xml->default->design->package->name;
                     $theme = (string)$_xml->install->design->theme->default;
                     $skin = (string)$_xml->stores->admin->design->theme->skin;
-                    $isProffessional = ($package == self::PROFESSIONAL_DESIGN_NAME)
-                        && ($theme == self::PROFESSIONAL_DESIGN_NAME)
-                        && ($skin == self::PROFESSIONAL_DESIGN_NAME);
+                    $isProffessional = ($package == self::PROFESSIONAL_DESIGN_NAME) && ($theme == self::PROFESSIONAL_DESIGN_NAME) && ($skin == self::PROFESSIONAL_DESIGN_NAME);
                     if ($isProffessional) {
                         self::$_platform = self::PE_PLATFORM;
                         return self::$_platform;
@@ -76,30 +70,21 @@ class AW_All_Helper_Versions extends Mage_Core_Helper_Abstract
 
     /**
      * Convert platform from string to int and backwards
-     *
      * @static
-     *
      * @param $platformCode
-     *
      * @return int|string
      */
     public static function convertPlatform($platformCode)
     {
         if (is_numeric($platformCode)) {
             // Convert predefined to letters code
-            $platform = ($platformCode == self::EE_PLATFORM
-                ? 'ee'
-                : ($platformCode == self::PE_PLATFORM ? 'pe'
+            $platform = ($platformCode == self::EE_PLATFORM ? 'ee' : ($platformCode == self::PE_PLATFORM ? 'pe'
                     : 'ce'));
         } elseif (is_string($platformCode)) {
             $platformCode = strtolower($platformCode);
-            $platform = ($platformCode == 'ee'
-                ? self::EE_PLATFORM
-                : ($platformCode == 'pe' ? self::PE_PLATFORM
+            $platform = ($platformCode == 'ee' ? self::EE_PLATFORM : ($platformCode == 'pe' ? self::PE_PLATFORM
                     : self::CE_PLATFORM));
-        } else {
-            $platform = self::CE_PLATFORM;
-        }
+        }else{$platform = self::CE_PLATFORM;}
         return $platform;
     }
 

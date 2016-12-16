@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Marketsuite
- * @version    2.1.2
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -67,14 +67,14 @@ class AW_Marketsuite_Adminhtml_Awmss_CustomerController extends Mage_Adminhtml_C
     public function exportCsvAction()
     {
         $fileName = 'customers.csv';
-        $content = $this->getLayout()->createBlock('adminhtml/awmss_customer_grid')->getCsv();
+        $content = $this->getLayout()->createBlock('marketsuite/adminhtml_customer_grid')->getCsv();
         $this->_prepareDownloadResponse($fileName, $content);
     }
 
     public function exportXmlAction()
     {
         $fileName = 'customers.xml';
-        $content = $this->getLayout()->createBlock('adminhtml/awmss_customer_grid')->getXml();
+        $content = $this->getLayout()->createBlock('marketsuite/adminhtml_customer_grid')->getXml();
         $this->_prepareDownloadResponse($fileName, $content);
     }
 

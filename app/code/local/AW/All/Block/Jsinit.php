@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.4
+ * @package    AW_Marketsuite
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -27,7 +27,7 @@
 class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
 {
     protected $_platform = -1;
-    protected $_extensionsCache = array();
+    protected $_extensions_cache = array();
     protected $_extensions;
 
     protected $_section = '';
@@ -80,13 +80,13 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
             try {
                 if ($platform = Mage::getConfig()->getNode("modules/$moduleName/platform")) {
                     $platform = strtolower($platform);
-                    $ignorePlatform = false;
+                    $ignore_platform = false;
                 } else {
                     throw new Exception();
                 }
             } catch (Exception $e) {
                 $platform = "ce";
-                $ignorePlatform = true;
+                $ignore_platform = true;
             }
             $platform = AW_All_Helper_Versions::convertPlatform($platform);
 
@@ -101,8 +101,7 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
             }
             $isPlatformValid = $platform >= $this->getPlatform();
             $feedInfo = $this->getExtensionInfo($moduleName);
-            $upgradeAvailable =
-                ($this->_convertVersion($feedInfo->getLatestVersion()) - $this->_convertVersion($ver)) > 0;
+            $upgradeAvailable = ($this->_convertVersion($feedInfo->getLatestVersion()) - $this->_convertVersion($ver)) > 0;
 
             if (null !== $feedInfo->getDisplayName()) {
                 $moduleName = $feedInfo->getDisplayName();
@@ -147,17 +146,17 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
      */
     public function getExtensionInfo($moduleName)
     {
-        if (!sizeof($this->_extensionsCache)) {
+        if (!sizeof($this->_extensions_cache)) {
             if ($displayNames = Mage::app()->loadCache('aw_all_extensions_feed')) {
-                $this->_extensionsCache = @unserialize($displayNames);
+                $this->_extensions_cache = @unserialize($displayNames);
             }
         }
-        if (array_key_exists($moduleName, $this->_extensionsCache)) {
+        if (array_key_exists($moduleName, $this->_extensions_cache)) {
             $data = array(
-                'url' => @$this->_extensionsCache[$moduleName]['url'],
-                'display_name' => @$this->_extensionsCache[$moduleName]['display_name'],
-                'latest_version' => @$this->_extensionsCache[$moduleName]['version'],
-                'documentation_url' => @$this->_extensionsCache[$moduleName]['documentation_url'],
+                'url' => @$this->_extensions_cache[$moduleName]['url'],
+                'display_name' => @$this->_extensions_cache[$moduleName]['display_name'],
+                'latest_version' => @$this->_extensions_cache[$moduleName]['version'],
+                'documentation_url' => @$this->_extensions_cache[$moduleName]['documentation_url'],
             );
             return new Varien_Object($data);
         }
@@ -166,15 +165,15 @@ class AW_All_Block_Jsinit extends Mage_Adminhtml_Block_Template
 
     /**
      * Return icon for installed extension
-     * @param $extension
+     * @param $Extension
      * @return Varien_Object
      */
-    public function getIcon($extension)
+    public function getIcon($Extension)
     {
-        if ($extension->getUpgradeAvailable()) {
+        if ($Extension->getUpgradeAvailable()) {
             $icon = 'aw_all/images/update.gif';
             $title = "Update available";
-        } elseif (!$extension->getIsPlatformValid()) {
+        } elseif (!$Extension->getIsPlatformValid()) {
             $icon = 'aw_all/images/bad.gif';
             $title = "Wrong Extension Platform";
         } else {

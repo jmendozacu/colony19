@@ -18,12 +18,11 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Zblocks
- * @version    2.5.4
+ * @package    AW_Marketsuite
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
-
 
 class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
 {
@@ -40,15 +39,11 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
 
     /**
      * Checks feed
-     *
      * @return
      */
     public function check()
     {
-        if (
-            (time() - Mage::app()->loadCache('aw_all_updates_feed_lastcheck')) >
-            Mage::getStoreConfig('awall/feed/check_frequency')
-        ) {
+        if ((time() - Mage::app()->loadCache('aw_all_updates_feed_lastcheck')) > Mage::getStoreConfig('awall/feed/check_frequency')) {
             $this->refresh();
         }
     }
@@ -59,23 +54,19 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
 
         try {
 
-            $node = $this->getFeedData();
-            if (!$node) {
-                return false;
-            }
-            foreach ($node->children() as $item) {
+            $Node = $this->getFeedData();
+            if (!$Node) return false;
+            foreach ($Node->children() as $item) {
 
                 if ($this->isInteresting($item)) {
                     $date = strtotime((string)$item->date);
-                    if (!Mage::getStoreConfig('awall/install/run')
-                        || (Mage::getStoreConfig('awall/install/run') < $date)
-                    ) {
+                    if (!Mage::getStoreConfig('awall/install/run') || (Mage::getStoreConfig('awall/install/run') < $date)) {
                         $feedData[] = array(
-                            'severity'    => 3,
-                            'date_added'  => $this->getDate((string)$item->date),
-                            'title'       => (string)$item->title,
+                            'severity' => 3,
+                            'date_added' => $this->getDate((string)$item->date),
+                            'title' => (string)$item->title,
                             'description' => (string)$item->content,
-                            'url'         => (string)$item->url,
+                            'url' => (string)$item->url,
                         );
                     }
                 }
@@ -88,9 +79,19 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
 
             Mage::app()->saveCache(time(), 'aw_all_updates_feed_lastcheck');
             return true;
-        } catch (Exception $e) {
+        } catch (Exception $E) {
             return false;
         }
+    }
+
+
+    public function getInterests()
+    {
+        if (!$this->getData('interests')) {
+            $types = @explode(',', Mage::getStoreConfig('awall/feed/interests'));
+            $this->setData('interests', $types);
+        }
+        return $this->getData('interests');
     }
 
     /**
@@ -120,15 +121,6 @@ class AW_All_Model_Feed_Updates extends AW_All_Model_Feed_Abstract
             }
         }
         return false;
-    }
-
-    public function getInterests()
-    {
-        if (!$this->getData('interests')) {
-            $types = @explode(',', Mage::getStoreConfig('awall/feed/interests'));
-            $this->setData('interests', $types);
-        }
-        return $this->getData('interests');
     }
 
     public function isExtensionInstalled($code)

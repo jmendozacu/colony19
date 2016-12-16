@@ -2,7 +2,7 @@
 <config>
     <modules>
         <AW_Marketsuite>
-            <version>2.1.2</version><platform>ce</platform>
+            <version>2.1.3</version><platform>ce</platform>
         </AW_Marketsuite>
     </modules>
     <admin>
@@ -151,7 +151,7 @@
         <rewrite>
             <marketsuite_adminhtml_order>
                 <from><![CDATA[#^/admin/sales_order/export#]]></from>
-                <to>/adminhtml/awmss_order/export</to>
+                <to>/admin/awmss_order/export</to>
             </marketsuite_adminhtml_order>
         </rewrite>
     </global>
