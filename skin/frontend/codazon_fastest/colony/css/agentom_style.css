@@ -65,3 +65,7 @@
     width:auto !important;
     margin: 0 0 0 8px;
 }
+
+.agentom-percent-value{
+    color : orange;
+}
