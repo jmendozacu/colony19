@@ -25,12 +25,20 @@
  */
 
 
-class AW_Zblocks_Model_Condition extends Mage_CatalogRule_Model_Rule
-{
-    public function _construct()
-    {
-        parent::_construct();
-        $this->_init('zblocks/condition');
-    }
+$installer = $this;
+$installer->startSetup();
 
+try {
+    if ($this->getTable('admin/permission_block')) {
+        $this->getConnection()->insertMultiple(
+            $this->getTable('admin/permission_block'),
+            array(
+                array('block_name' => 'zblocks/block', 'is_allowed' => 1),
+            )
+        );
+    }
+} catch (Exception $ex) {
+    Mage::logException($ex);
 }
+
+$installer->endSetup();

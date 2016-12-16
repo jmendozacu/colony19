@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -40,7 +40,7 @@ class AW_Zblocks_Block_Adminhtml_Zblocks_Edit_Tab_Filter extends Mage_Adminhtml_
         $form->setHtmlIdPrefix('rule_');
         $renderer = Mage::getBlockSingleton('adminhtml/widget_form_renderer_fieldset')
             ->setTemplate('promo/fieldset.phtml')
-            ->setNewChildUrl($this->getUrl('*/adminhtml_zblocks/newConditionHtml/form/rule_conditions_fieldset'));
+            ->setNewChildUrl($this->getUrl('*/*/newConditionHtml/form/rule_conditions_fieldset'));
         
         $fieldset = $form->addFieldset('conditions_fieldset', array(
             'legend'=>Mage::helper('zblocks')->__('Conditions (leave blank for all products)'))

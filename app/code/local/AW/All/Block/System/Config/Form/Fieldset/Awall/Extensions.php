@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Blog
- * @version    1.3.16
+ * @package    AW_Zblocks
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -93,13 +93,13 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
         try {
             if ($platform = Mage::getConfig()->getNode("modules/$moduleName/platform")) {
                 $platform = strtolower($platform);
-                $ignore_platform = false;
+                $ignorePlatform = false;
             } else {
                 throw new Exception();
             }
         } catch (Exception $e) {
             $platform = "ce";
-            $ignore_platform = true;
+            $ignorePlatform = true;
         }
 
 
@@ -113,19 +113,23 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
         $id = $moduleName;
 
         $warning = "";
-        if (!$ignore_platform) {
+        if (!$ignorePlatform) {
             $magentoVersion = $this->_convertVersion(Mage::getVersion());
 
             if ($magentoVersion >= $this->_convertVersion(AW_All_Helper_Config::ENTERPRISE_VERSION)) {
                 // EE
                 if ($platform == 'ce' || $platform == 'pe') {
-                    $warning = $this->__("This extension can't be run under Magento Enterprise platform. You need Enterprise version of the extension.");
+                    $warning = $this->__(
+                        "This extension can't be run under Magento Enterprise platform. You need Enterprise version of the extension."
+                    );
                 }
 
             } elseif ($magentoVersion >= $this->_convertVersion(AW_All_Helper_Config::PROFESSIONAL_EDITION)) {
                 // PE
                 if ($platform == 'ce') {
-                    $warning = $this->__("This extension can't be run under Magento Professional platform. You need Professional version of the extension.");
+                    $warning = $this->__(
+                        "This extension can't be run under Magento Professional platform. You need Professional version of the extension."
+                    );
                 }
             } else {
                 // CE
@@ -144,12 +148,15 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
                     $moduleName = '<a href="' . $url . '" target="_blank" title="' . $name . '">' . $name . "</a>";
 
                     if ($warning) {
-                        $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/bad.gif') . '" title="' . $this->__("Wrong Extension Platform") . '"/></a>';
+                        $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/bad.gif') .
+                            '" title="' . $this->__("Wrong Extension Platform") . '"/></a>';
                         $moduleName = "$update $moduleName";
                     } else {
 
                         if ($this->_convertVersion($ver) < $this->_convertVersion($version)) {
-                            $update = '<a href="' . $url . '" target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/update.gif') . '" title="' . $this->__("Update available") . '"/></a>';
+                            $update = '<a href="' . $url . '" target="_blank"><img src="' .
+                                $this->getSkinUrl('aw_all/images/update.gif') . '" title="' .
+                                $this->__("Update available") . '"/></a>';
                             $hasUpdate = 1;
                             $moduleName = "$update $moduleName";
                         }
@@ -159,22 +166,25 @@ class AW_All_Block_System_Config_Form_Fieldset_Awall_Extensions extends Mage_Adm
         }
 
         if (!$hasUpdate && !$warning) {
-            $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/ok.gif') . '" title="' . $this->__("Installed") . '"/></a>';
+            $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/ok.gif') .
+                '" title="' . $this->__("Installed") . '"/></a>';
             $moduleName = "$update $moduleName";
         } elseif ($warning && (!@$displayNames || !@$name)) {
-            $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/bad.gif') . '" title="' . $this->__("Wrong Extension Platform") . '"/></a>';
+            $update = '<a  target="_blank"><img src="' . $this->getSkinUrl('aw_all/images/bad.gif') .
+                '" title="' . $this->__("Wrong Extension Platform") . '"/></a>';
             $moduleName = "$update $moduleName";
         }
 
 
         if ($ver) {
-            $field = $fieldset->addField($id, 'label',
-                                         array(
-                                              'name' => 'ssssss',
-                                              'label' => $moduleName,
-                                              'value' => $warning ? $warning : $ver,
-
-                                         ))->setRenderer($this->_getFieldRenderer());
+            $field = $fieldset->addField(
+                $id, 'label',
+                array(
+                    'name' => 'ssssss',
+                    'label' => $moduleName,
+                    'value' => $warning ? $warning : $ver,
+                )
+            )->setRenderer($this->_getFieldRenderer());
             return $field->toHtml();
         }
         return '';

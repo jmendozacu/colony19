@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -63,7 +63,7 @@ class AW_Zblocks_Block_Adminhtml_Zblocks_Grid extends Mage_Adminhtml_Block_Widge
                 'index'        => 'position',
                 'type'         => 'options',
                 'filter'       => 'zblocks/adminhtml_widget_grid_column_filter_position',
-                'filter_index' => Mage::getModel('zblocks/zblocks')->getCollection()->getPositionFilterIndex(),
+                'filter_index' => 'main_table.block_position',
                 'options'      => Mage::getModel('zblocks/source_position')->toOptionArray(),
                 'renderer'     => 'zblocks/adminhtml_widget_grid_column_renderer_position'
         ));
@@ -72,7 +72,7 @@ class AW_Zblocks_Block_Adminhtml_Zblocks_Grid extends Mage_Adminhtml_Block_Widge
                 'header'       => Mage::helper('zblocks')->__('Position Code'),
                 'align'        => 'left',
                 'index'        => 'position',
-                'filter_index' => Mage::getModel('zblocks/zblocks')->getCollection()->getPositionFilterIndex(),
+                'filter_condition_callback' => array($this, '_addPositionCodeFilterCallback'),
         ));
 
         $this->addColumn('block_count', array(
@@ -202,5 +202,20 @@ class AW_Zblocks_Block_Adminhtml_Zblocks_Grid extends Mage_Adminhtml_Block_Widge
             return;
         }
         $collection->getSelect()->where('block_count=?', $value);
+    }
+
+    protected function _addPositionCodeFilterCallback($collection, $column)
+    {
+        if (!$condition = $column->getFilter()->getCondition()) {
+            return;
+        }
+        $collection->addFieldToFilter(
+            $collection->getConnection()->getCheckSql(
+                "main_table.block_position = '" . AW_Zblocks_Model_Source_Position::CUSTOM_POSITION . "'",
+                "CONCAT(main_table.block_position_custom, ' *')",
+                "main_table.block_position"
+            ),
+            $condition
+        );
     }
 }

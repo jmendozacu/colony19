@@ -18,25 +18,25 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Blog
- * @version    1.3.16
+ * @package    AW_Zblocks
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
 
+
 class AW_All_Adminhtml_Awall_AdditionalController extends Mage_Adminhtml_Controller_Action
 {
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('system/config/awall/awall_additional');
-    }
-
     public function indexAction()
     {
         $this
             ->loadLayout()
             ->_title($this->__('aheadWorks - Additional Info View'))
-            ->renderLayout()
-        ;
+            ->renderLayout();
+    }
+
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/config/awall/awall_additional');
     }
 }

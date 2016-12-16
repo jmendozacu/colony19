@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */

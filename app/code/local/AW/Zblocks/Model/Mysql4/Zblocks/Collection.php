@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -147,12 +147,5 @@ class AW_Zblocks_Model_Mysql4_Zblocks_Collection extends Mage_Core_Model_Mysql4_
         }
 
         return $this;
-    }
-
-    public function getPositionFilterIndex()
-    {
-        return "(SELECT if(block_position='custom', CONCAT(block_position_custom, ' *'), block_position)
-            FROM {$this->getTable('zblocks/zblocks')} as zb
-            WHERE zb.zblock_id = main_table.zblock_id)";
     }
 }

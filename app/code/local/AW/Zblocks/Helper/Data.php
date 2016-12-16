@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -40,7 +40,22 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
 
     const FORM_DUPLICATE_NAME = 'Copy_';
 
-    const DOCUMENTATION_CUSTOM_POSITION_URL = 'http://confluence.aheadworks.com/display/EUDOC/Z-Blocks#Z-Blocks-6.Customblockpositioning';
+    const DOCUMENTATION_CUSTOM_POSITION_URL =
+        'http://confluence.aheadworks.com/display/EUDOC/Z-Blocks#Z-Blocks-6.Customblockpositioning';
+
+    const CACHE_KEY_WIDGET_BLOCK_ID = 'aw_zblock_widget_block_id';
+    const CACHE_KEY_BLOCK_CUSTOM_POSITION = 'aw_zblock_block_custom_position';
+    const CACHE_KEY_BLOCK_BLOCK_POSITION = 'aw_zblock_block_block_position';
+    const CACHE_KEY_BLOCK_CATEGORY_PATH = 'aw_zblock_block_category_path';
+    const CACHE_KEY_BLOCK_CURRENT_CATEGORY_ID = 'aw_zblock_block_current_category_id';
+    const CACHE_KEY_BLOCK_CURRENT_PRODUCT_ID = 'aw_zblock_block_current_product_id';
+    const CACHE_KEY_BLOCK_IS_CMS_PAGE = 'aw_zblock_block_is_cms_page';
+
+    const CACHE_KEY_STORE_ID = 'aw_zblock_store_id';
+    const CACHE_KEY_CUSTOMER_GROUP_ID = 'aw_zblock_customer_group_id';
+    const CACHE_KEY_CUSTOMER_SESSION_OBJECT_ID = 'aw_zblock_customer_sesssion_object_id';
+    const CACHE_KEY_HTTP_REFERER = 'aw_zblock_http_referer';
+
 
     protected $_widgetIdentity = false;
 
@@ -145,12 +160,7 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
             && isset($data['mss_rule_id'])
             && $mssRuleId = $data['mss_rule_id']
         ) {
-            $session = Mage::getSingleton('customer/session');
-            if ($session->isLoggedIn()) {
-                $object = $session->getCustomer();
-            } else {
-                $object = Mage::getSingleton('checkout/session')->getQuote();
-            }
+            $object = $this->getCustomerSessionObject();
 
             if (!Mage::getModel('marketsuite/api')->checkRule($object, $mssRuleId)) {
                 return false;
@@ -162,7 +172,7 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
     protected function _isRefererUrlValid($url)
     {
         if ($url) {
-            $refererUrl = Mage::helper('core/http')->getHttpReferer();
+            $refererUrl = $this->getHttpReferer();
             if (strpos($refererUrl, $url) === false) {
                 return false;
             }
@@ -173,16 +183,16 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
     /*
      * Checks whether the block is valid to be displayed
      * @param array $data Block data
+     * @param string $currentProductId The ID of the current product
      * @return bool Block visibility
      */
-    protected function _isValid($data)
+    protected function _isValid($data, $currentProductId)
     {
         // filter check
-        $currentProduct = Mage::registry('current_product');
-        if ($currentProduct) {
+        if ($currentProductId) {
             $model = Mage::getModel('zblocks/condition')->load($data['zblock_id'], 'zblock_id');
             $model->setWebsiteIds(Mage::app()->getStore()->getWebsite()->getId())
-                    ->setProductsFilter($currentProduct->getId());
+                    ->setProductsFilter($currentProductId);
 
             $conditions = $model->getConditions();
 
@@ -194,15 +204,15 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
 
                     if (is_array($match)) {
                         if (
-                            isset($match[$currentProduct->getId()])
-                            && is_array($match[$currentProduct->getId()])
+                            isset($match[$currentProductId])
+                            && is_array($match[$currentProductId])
                         ) {
-                            if (!$match[$currentProduct->getId()][Mage::app()->getStore()->getWebsite()->getId()]) {
+                            if (!$match[$currentProductId][Mage::app()->getStore()->getWebsite()->getId()]) {
                                 return false;
                             }
                         } else {
                             # old format for magento < 1.8.0.0
-                            if (!in_array($currentProduct->getId(), $match)) {
+                            if (!in_array($currentProductId, $match)) {
                                 return false;
                             }
                         }
@@ -370,14 +380,18 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
 
     /*
      * Returns content of the blocks to display on the position specified
-     * @param string $customPosition Custom block position name
-     * @param string $blockPosition Pre-defined block position name
-     * @param string $categoryPath Product category path
-     * @param string $currentCategoryId The ID of the current category
+     * @param Varien_Object $renderData Description of the position specified
      * @return array Blocks content to be displayed
      */
-    public function getBlocks($customPosition, $blockPosition, $categoryPath, $currentCategoryId)
+    public function getBlocks($renderData)
     {
+        $customPosition = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_CUSTOM_POSITION);
+        $blockPosition = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_BLOCK_POSITION);
+        $categoryPath = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_CATEGORY_PATH);
+        $currentCategoryId = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_CURRENT_CATEGORY_ID);
+        $currentProductId = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_CURRENT_PRODUCT_ID);
+        $isCmsPage = $renderData->getData(AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_IS_CMS_PAGE);
+
         $categoryPath = str_replace("'", "\'", $categoryPath);
         $currentCategoryId = (string) str_replace("'", "\'", $currentCategoryId);
         $blocks = array();
@@ -400,7 +414,7 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
             ->addOrder('block_sort_order', 'ASC');
 
 
-        /* Add customer gropup filter */
+        /* Add customer group filter */
         $collection->includeCustomerGroup($this->getCustomerGroup());
         /* filter only specific block see AW_Zblocks_Block_Widget_Block */
         if ($this->getWidgetIdentity()) {
@@ -412,11 +426,10 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
 
         if (in_array($blockPosition, $needCategoryPositions) || $customPosition) {
             $customPositionCondition = $customPosition?" OR is_use_category_filter_custom = 0":"";
-            if (!count($categoryPath) && Mage::registry('current_product')) {
+            if (!count($categoryPath) && $currentProductId) {
                 $adapter = Mage::getSingleton('core/resource')->getConnection('core_read');
-                $productId = Mage::registry('current_product')->getId();
                 $categoryProductTable = Mage::getSingleton('core/resource')->getTableName('catalog/category_product');
-                $sql = "SELECT category_id FROM {$categoryProductTable} WHERE product_id = {$productId}";
+                $sql = "SELECT category_id FROM {$categoryProductTable} WHERE product_id = {$currentProductId}";
 
                 $categories = $adapter->fetchAll($sql);
                 foreach ($categories as $value) {
@@ -456,16 +469,16 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
              * If this is a product page and item should not be visible in subcategories (and product pages) and
               its position is category-related CONTINUE
              */
-            if (Mage::registry('current_product') && !$item->getShowInSubcategories()) {
+            if ($currentProductId && !$item->getShowInSubcategories()) {
                 $categoryOnlyPositions = Mage::getSingleton('zblocks/source_position')->getCategoryOnlyPositions();
                 if (in_array($blockPosition, $categoryOnlyPositions)) {
                     continue;
                 }
             }
-            if (Mage::app()->getRequest()->getModuleName() == 'cms' && !$item->getShowInCms()) {
+            if ($isCmsPage && !$item->getShowInCms()) {
                 continue;
             }
-            if (!$this->_isValid($item->getData())) {
+            if (!$this->_isValid($item->getData(), $currentProductId)) {
                 continue;
             }
             if (!$this->_isRefererUrlValid($item->getRefererUrl())) {
@@ -661,6 +674,27 @@ class AW_Zblocks_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $customer = Mage::getSingleton('customer/session');
         return $customer->isLoggedIn() ? $customer->getCustomer()->getGroupId() : self::NOT_LOGGED_IN_STATUS;
+    }
+
+    public function getCustomerSessionObject()
+    {
+        $session = Mage::getSingleton('customer/session');
+        if ($session->isLoggedIn()) {
+            $object = $session->getCustomer();
+        } else {
+            $object = Mage::getSingleton('checkout/session')->getQuote();
+        }
+        return $object;
+    }
+
+    public function getHttpReferer()
+    {
+        return Mage::helper('core/http')->getHttpReferer();
+    }
+
+    public function getIsCmsPage()
+    {
+        return (Mage::app()->getRequest()->getModuleName() == 'cms');
     }
 
     public function setWidgetIdentity($id)

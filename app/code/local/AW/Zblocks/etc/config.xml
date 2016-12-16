@@ -2,7 +2,7 @@
 <config>
     <modules>
         <AW_Zblocks>
-            <version>2.5.2</version><platform>ce</platform>
+            <version>2.5.4</version><platform>ce</platform>
         </AW_Zblocks>
     </modules>
     <frontend>

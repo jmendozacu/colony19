@@ -25,12 +25,24 @@
  */
 
 
-class AW_Zblocks_Model_Condition extends Mage_CatalogRule_Model_Rule
+class AW_Zblocks_Model_PageCache_Container_Widget extends AW_Zblocks_Model_PageCache_Container_Block
 {
-    public function _construct()
+    protected function _getCacheTagPrefix()
     {
-        parent::_construct();
-        $this->_init('zblocks/condition');
+        return 'AW_ZBLOCKS_WIDGET_';
     }
 
+    /**
+     * Render block content from placeholder
+     *
+     * @return string|false
+     */
+    protected function _renderBlock()
+    {
+        $block = $this->_getPlaceHolderBlock();
+
+        $block->setBlockId($this->_placeholder->getAttribute(AW_Zblocks_Helper_Data::CACHE_KEY_WIDGET_BLOCK_ID));
+
+        return parent::_renderBlock();
+    }
 }

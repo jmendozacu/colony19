@@ -18,11 +18,12 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Blog
- * @version    1.3.16
+ * @package    AW_Zblocks
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
+
 
 class AW_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribute_Source_Abstract
 {
@@ -33,32 +34,11 @@ class AW_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribute_S
     const TYPE_INFO = 'INFO';
     const TYPE_INSTALLED_UPDATE = 'INSTALLED_UPDATE';
 
-
-    public function toOptionArray()
-    {
-        return array(
-            array('value' => self::TYPE_INSTALLED_UPDATE, 'label' => Mage::helper('awall')->__('My extensions updates')),
-            array('value' => self::TYPE_UPDATE_RELEASE, 'label' => Mage::helper('awall')->__('All extensions updates')),
-            array('value' => self::TYPE_NEW_RELEASE, 'label' => Mage::helper('awall')->__('New Releases')),
-            array('value' => self::TYPE_PROMO, 'label' => Mage::helper('awall')->__('Promotions/Discounts')),
-            array('value' => self::TYPE_INFO, 'label' => Mage::helper('awall')->__('Other information'))
-        );
-    }
-
-    /**
-     * Retrive all attribute options
-     *
-     * @return array
-     */
-    public function getAllOptions()
-    {
-        return $this->toOptionArray();
-    }
-
-
     /**
      * Returns label for value
+     *
      * @param string $value
+     *
      * @return string
      */
     public function getLabel($value)
@@ -72,8 +52,21 @@ class AW_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribute_S
         return '';
     }
 
+    public function toOptionArray()
+    {
+        return array(
+            array('value' => self::TYPE_INSTALLED_UPDATE,
+                  'label' => Mage::helper('awall')->__('My extensions updates')),
+            array('value' => self::TYPE_UPDATE_RELEASE, 'label' => Mage::helper('awall')->__('All extensions updates')),
+            array('value' => self::TYPE_NEW_RELEASE, 'label' => Mage::helper('awall')->__('New Releases')),
+            array('value' => self::TYPE_PROMO, 'label' => Mage::helper('awall')->__('Promotions/Discounts')),
+            array('value' => self::TYPE_INFO, 'label' => Mage::helper('awall')->__('Other information'))
+        );
+    }
+
     /**
      * Returns array ready for use by grid
+     *
      * @return array
      */
     public function getGridOptions()
@@ -84,5 +77,15 @@ class AW_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribute_S
             $out[$item['value']] = $item['label'];
         }
         return $out;
+    }
+
+    /**
+     * Retrive all attribute options
+     *
+     * @return array
+     */
+    public function getAllOptions()
+    {
+        return $this->toOptionArray();
     }
 }
