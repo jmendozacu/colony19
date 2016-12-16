@@ -13,7 +13,7 @@
 "MSS is not installed or not up to date","MSS n'est pas installé ou à jour"
 "Notice for product with disabled price to explain to customer","Notification pour les produits avec prix caché pour expliquer au visiteur"
 "Permissions","Permissions"
-"Product with disabled price notice","Texte désactivé quand le prix est caché"
+"Product with disabled price notice","Texte affiché quand le prix est caché"
 "Redirect from category notice tooltip","Notification affichée au visiteur après redirection d'une page catégorie inaccessible. On peut utiliser du HTML."
 "Redirect from category notice"," Notification affichée après redirection d'une page catégorie"
 "Redirect from category tooltip","Un client avec des accès insuffisants à une catégorie sera redirigé vers une page spécifiée. Entrez l'URL longue ou courte pour rediriger vers le magasin. Par exemple, vous pouvez entrer 'http://example.com/customer-service' ou 'customer-service' sans les guillements."
