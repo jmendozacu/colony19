@@ -250,6 +250,10 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
                 <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->formatPrice($_regularPrice + $_originalWeeeTaxAmount, false) ?>
                 </span>
+                <?php
+                $percent = round(100-($_finalPrice*100/$_regularPrice));
+                ?>
+                <span class="agentom-percent-text"><?php echo __('Réduction de '); ?><span class="agentom-percent-value"><?php echo $percent . "%" ?></span></span>
             </p>
         <?php elseif ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 1)): // incl. + weee ?>
 
@@ -300,6 +304,10 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
                 <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->formatPrice($_regularPrice + $_originalWeeeTaxAmount, false) ?>
                 </span>
+                <?php
+                $percent = round(100-($_finalPrice*100/$_regularPrice));
+                ?>
+                <span class="agentom-percent-text"><?php echo __('Réduction de '); ?><span class="agentom-percent-value"><?php echo $percent . "%" ?></span></span>
             </p>
         <?php elseif ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 4)): // incl. + weee ?>
 
@@ -332,6 +340,10 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
                 <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->formatPrice($_regularPrice + $_originalWeeeTaxAmount, false) ?>
                 </span>
+                <?php
+                $percent = round(100-($_finalPriceInclTax*100/$_regularPrice));
+                ?>
+                <span class="agentom-percent-text"><?php echo __('Réduction de '); ?><span class="agentom-percent-value"><?php echo $percent . "%" ?></span></span>
             </p>
         <?php elseif ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 2)): // excl. + weee + final ?>
 
@@ -362,6 +374,10 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
                 <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
                 </span>
+                <?php
+                $percent = round(100-($_finalPriceInclTax*100/$_regularPrice));
+                ?>
+                <span class="agentom-percent-text"><?php echo __('Réduction de '); ?><span class="agentom-percent-value"><?php echo $percent . "%" ?></span></span>
             </p>
         <?php else: // excl. ?>
 
@@ -398,6 +414,10 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
             <span class="price" id="old-price-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                     <?php echo $_coreHelper->formatPrice($_regularPrice, false) ?>
                 </span>
+            <?php
+            $percent = round(100-($_finalPrice*100/$_regularPrice));
+            ?>
+            <span class="agentom-percent-text"><?php echo __('Réduction de '); ?><span class="agentom-percent-value"><?php echo $percent . "%" ?></span></span>
         </p>
     <?php endif; /* if ($_finalPrice == $_price): */ ?>
 
