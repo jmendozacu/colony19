@@ -24,7 +24,7 @@
 <config>
 	<modules>
 		<Netzarbeiter_GroupsCatalog2>
-			<active>true</active>
+			<active>false</active>
 			<codePool>community</codePool>
 			<depends>
 				<Mage_Core />
