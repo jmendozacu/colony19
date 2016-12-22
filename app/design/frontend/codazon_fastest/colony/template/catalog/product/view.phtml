@@ -236,7 +236,9 @@ $_product = $this->getProduct();
     </div>
 
     <div class="product-collateral">
-    	<?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
+    	<?php
+        $count = 0;
+        foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
 <!--            <div class="box-collateral --><?php //echo "box-{$alias}"?><!--" id="--><?php //echo "box-{$alias}"?><!--">-->
 <!--                --><?php //if ($title = $this->getChildData($alias, 'title')):?>
 <!--                <h2>--><?php //echo $this->escapeHtml($title); ?><!--</h2>-->
@@ -244,14 +246,14 @@ $_product = $this->getProduct();
 <!--                --><?php //echo $html; ?>
 <!--            </div>-->
 			<div class="agentom-float-left-product-details">
-                <?php if ($title = $this->getChildData($alias, 'title')):?>
-					    <?php if($title == "Details"): ?>
-					        <h2><?php echo $_product->getName(); ?></h2>
-                        <?php endif; ?>
+                <?php if ($count == 0):?>
+					        <h2><?php echo $this->__("Description : ") . $_product->getName(); ?></h2>
                     <?php endif;?>
                                 <?php echo $html; ?>
             </div>
-		<?php endforeach;?>
+		<?php
+        $count++;
+        endforeach;?>
         <div class="clear"></div>
         <?php for($i = 1; $i <= 3; $i++): ?>
         <?php if(0/*$_themeHelper->getConfig('codazon_settings/custom_tabs/show_block_tab_'.$i)==1*/): ?>
