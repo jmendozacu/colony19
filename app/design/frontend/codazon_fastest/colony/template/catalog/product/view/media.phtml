@@ -60,7 +60,7 @@
 					$_baseSmallImg = (string)$_imgHelper->init($_product, 'image')->resize($wSmall,$hSmall);
 				?>
 				<div class="amlabel-div">
-					<?php echo Mage::helper('amlabel')->getLabels($_product,'product') ?>
+					<?php echo Mage::helper('amlabel')->getLabels($_product,'product',true) ?>
 	            <div class="rsContent">
                 	<a class="rsImg"  href="<?php echo $_baseMainImg ?>"
                     data-rsBigImg="<?php echo $_baseBigImg ?>" />
