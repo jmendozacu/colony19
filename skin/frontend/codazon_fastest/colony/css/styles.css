@@ -11424,7 +11424,7 @@ table colgroup, .data-table colgroup {
   display: none;
 }
 .header .cdz-header-top .cdz-top-link {
-  margin: 0;
+  margin: 5px 0 0 0;
   padding: 0;
   list-style: none none;
   float: left;
