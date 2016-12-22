@@ -245,6 +245,9 @@ $_product = $this->getProduct();
 <!--            </div>-->
 			<div class="agentom-float-left-product-details">
                 <?php if ($title = $this->getChildData($alias, 'title')):?>
+					<?php if($title == "Details"): ?>
+					<h2><?php echo $_product->getName(); ?></h2>
+					<?php endif; ?>
                                 <h2><?php echo $this->escapeHtml($title); ?></h2>
                                 <?php endif;?>
                                 <?php echo $html; ?>
