@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -81,7 +81,7 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_CustomerController ex
             );
         } else {
             try {
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::$disableAutosync = true;
+                Mage::register('an_disable_autosync', true);
                 foreach ($customersIds as $customerId) {
                     $customer = Mage::getModel('customer/customer')->load($customerId);
                     /* We will subscribe customer to default store view of a website */
@@ -117,7 +117,7 @@ class AW_Advancednewsletter_Adminhtml_Awadvancednewsletter_CustomerController ex
             );
         } else {
             try {
-                AW_Advancednewsletter_Model_Sync_Mailchimpclient::$disableAutosync = true;
+                Mage::register('an_disable_autosync', true);
                 foreach ($customersIds as $customerId) {
                     $customer = Mage::getModel('customer/customer')->load($customerId);
                     Mage::getModel('advancednewsletter/subscriber')

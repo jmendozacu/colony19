@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -146,8 +146,9 @@ class AW_Advancednewsletter_Block_Adminhtml_Segment_Edit_Form extends Mage_Admin
         if (Mage::getSingleton('adminhtml/session')->getAnSegmentData()) {
             $form->setValues(Mage::getSingleton('adminhtml/session')->getAnSegmentData());
             Mage::getSingleton('adminhtml/session')->setAnSegmentData(null);
-        } elseif (Mage::registry('an_segment_data')) {
-            $form->setValues(Mage::registry('an_segment_data'));
+        } elseif (Mage::registry('an_current_segment')) {
+            $form->setValues(Mage::registry('an_current_segment'));
+            Mage::unregister('an_current_segment');
         }
 
         $form->setUseContainer(true);

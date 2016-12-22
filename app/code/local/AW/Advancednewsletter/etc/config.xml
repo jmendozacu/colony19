@@ -2,7 +2,7 @@
 <config>
     <modules>
         <AW_Advancednewsletter>
-            <version>2.4.7</version><platform>ce</platform>
+            <version>2.5.0</version><platform>ce</platform>
         </AW_Advancednewsletter>
     </modules>
     <frontend>
@@ -42,17 +42,17 @@
                 <class>AW_Advancednewsletter_Block</class>
             </advancednewsletter>
             <adminhtml>
-                <rewrite>
+                <drewrite>
                     <customer_edit_tab_newsletter>AW_Advancednewsletter_Block_Adminhtml_Customer_Edit_Tab_Newsletter</customer_edit_tab_newsletter>
-                </rewrite>
+                </drewrite>
             </adminhtml>
             <adminhtml>
-                <rewrite>
+                <drewrite>
                     <newsletter_template_preview>AW_Advancednewsletter_Block_Adminhtml_Template_Preview</newsletter_template_preview>
-                </rewrite>
-                <rewrite>
+                </drewrite>
+                <drewrite>
                     <page_menu>AW_Advancednewsletter_Block_Adminhtml_Page_Menu</page_menu>
-                </rewrite>
+                </drewrite>
             </adminhtml>
         </blocks>
         <models>
@@ -146,8 +146,8 @@
                 <observers>
                     <an_subscriber_subscribe_event>
                         <type>singleton</type>
-                        <class>advancednewsletter/sync_factory</class>
-                        <method>subscribe</method>
+                        <class>advancednewsletter/observer</class>
+                        <method>subscriberSubscribe</method>
                     </an_subscriber_subscribe_event>
                 </observers>
             </an_subscriber_subscribe>
@@ -155,8 +155,8 @@
                 <observers>
                     <an_subscriber_subscribe_event>
                         <type>singleton</type>
-                        <class>advancednewsletter/sync_factory</class>
-                        <method>unsubscribe</method>
+                        <class>advancednewsletter/observer</class>
+                        <method>subscriberUnsubscribe</method>
                     </an_subscriber_subscribe_event>
                 </observers>
             </an_subscriber_unsubscribe>
@@ -164,7 +164,7 @@
                 <observers>
                     <an_segment_delete_event>
                         <type>singleton</type>
-                        <class>advancednewsletter/sync_factory</class>
+                        <class>advancednewsletter/observer</class>
                         <method>removeSegment</method>
                     </an_segment_delete_event>
                 </observers>
@@ -182,8 +182,8 @@
                 <observers>
                     <an_subscriber_force_write_event>
                         <type>singleton</type>
-                        <class>advancednewsletter/sync_factory</class>
-                        <method>forceWrite</method>
+                        <class>advancednewsletter/observer</class>
+                        <method>subscriberForceWrite</method>
                     </an_subscriber_force_write_event>
                 </observers>
             </an_subscriber_force_write>
@@ -396,11 +396,20 @@
                 <observers>
                     <an_subscriber_delete_event>
                         <type>singleton</type>
-                        <class>advancednewsletter/sync_factory</class>
-                        <method>delete</method>
+                        <class>advancednewsletter/observer</class>
+                        <method>subscriberDelete</method>
                     </an_subscriber_delete_event>
                 </observers>
             </an_subscriber_delete>
+            <controller_action_predispatch>
+                <observers>
+                    <an_controller_action_predispatch>
+                        <type>singleton</type>
+                        <class>advancednewsletter/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </an_controller_action_predispatch>
+                </observers>
+            </controller_action_predispatch>
         </events>
     </adminhtml>
 
@@ -454,7 +463,6 @@
             </formconfiguration>
             <mailchimpconfig>
                 <autosync>1</autosync>
-                <xmlrpc>http://api.mailchimp.com/1.3/</xmlrpc>
             </mailchimpconfig>
         </advancednewsletter>
     </default>

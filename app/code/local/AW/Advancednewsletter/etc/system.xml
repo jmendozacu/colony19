@@ -187,15 +187,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </listid>
-                        <xmlrpc translate="label">
-                            <label>XML-RPC URL</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>25</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </xmlrpc>
-                        <test_connection translate="label">                                                      
+                        <test_connection translate="label">
                             <frontend_model>advancednewsletter/adminhtml_system_configuration_button</frontend_model>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>

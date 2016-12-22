@@ -114,3 +114,8 @@ div.awan-checkoutcheckboxes label.an-data{
 #advancednewsletter-form {
     background: #fff;
 }
+
+.std .an-segments ul {
+    list-style: none;
+    padding-left: 0em;
+}

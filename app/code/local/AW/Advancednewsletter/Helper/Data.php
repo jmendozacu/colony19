@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -31,6 +31,9 @@ class AW_Advancednewsletter_Helper_Data extends Mage_Core_Helper_Abstract
     const SHOW_SEGMENTS_AT_CUSTOMER_REGISTER_FORM
         = 'advancednewsletter/general/display_segments_at_customer_registration';
     const CONFIG_MAILCHIMP_ENABLED = 'advancednewsletter/mailchimpconfig/mailchimpenabled';
+    const CONFIG_MAILCHIMP_AUTOSYNC = "advancednewsletter/mailchimpconfig/autosync";
+    const CONFIG_MAILCHIMP_APIKEY = "advancednewsletter/mailchimpconfig/apikey";
+    const CONFIG_MAILCHIMP_LISTID = "advancednewsletter/mailchimpconfig/listid";
     const ANY_CATEGORY_VALUE = 0;
     const MSS_PATH = 'http://ecommerce.aheadworks.com/market-segmentation-suite.html';
     /* Consts used for AN 1.* export to AN 2.* */
@@ -40,6 +43,21 @@ class AW_Advancednewsletter_Helper_Data extends Mage_Core_Helper_Abstract
     public function isChimpEnabled($storeId = null)
     {
         return (int) Mage::getStoreConfig(self::CONFIG_MAILCHIMP_ENABLED, $storeId);
+    }
+
+    public function isChimpAutoSyncEnabled($storeId = null)
+    {
+        return Mage::getStoreConfig(self::CONFIG_MAILCHIMP_AUTOSYNC, $storeId);
+    }
+
+    public function getChimpApiKey($storeId = null)
+    {
+        return Mage::getStoreConfig(self::CONFIG_MAILCHIMP_APIKEY, $storeId);
+    }
+
+    public function getChimpListId($storeId = null)
+    {
+        return Mage::getStoreConfig(self::CONFIG_MAILCHIMP_LISTID, $storeId);
     }
 
     public function getSettings($configPaths, $storeId = null, $withDefault = false)

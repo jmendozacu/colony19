@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -27,6 +27,8 @@
 
 class AW_Zblocks_Adminhtml_Zblocks_Block_WidgetController extends Mage_Adminhtml_Controller_Action
 {
+    const DEFAULT_ACTION_NAME = 'chooser';
+    const RESOURCE_NAME = 'admin/cms/zblocks';
     
     public function chooserAction()
     {
@@ -36,5 +38,14 @@ class AW_Zblocks_Adminhtml_Zblocks_Block_WidgetController extends Mage_Adminhtml
         )); 
         $this->getResponse()->setBody($pagesGrid->toHtml());
     }
-    
+
+    protected function _isAllowed()
+    {
+        $isAllowed = false;
+        $actionName = $this->getRequest()->getActionName();
+        if ($actionName == self::DEFAULT_ACTION_NAME) {
+            $isAllowed = Mage::getSingleton('admin/session')->isAllowed(self::RESOURCE_NAME);
+        }
+        return $isAllowed;
+    }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <placeholders>
+        <aw_zblocks_block>
+            <block>zblocks/block</block>
+            <placeholder>AW_ZBLOCKS_BLOCK</placeholder>
+            <container>AW_Zblocks_Model_PageCache_Container_Block</container>
+            <cache_lifetime>3600</cache_lifetime>
+        </aw_zblocks_block>
+        <aw_zblocks_widget>
+            <block>zblocks/widget_block</block>
+            <placeholder>AW_ZBLOCKS_WIDGET</placeholder>
+            <container>AW_Zblocks_Model_PageCache_Container_Widget</container>
+            <cache_lifetime>3600</cache_lifetime>
+        </aw_zblocks_widget>
+    </placeholders>
+</config>

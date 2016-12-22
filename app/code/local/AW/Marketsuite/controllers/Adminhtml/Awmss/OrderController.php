@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Marketsuite
- * @version    2.1.2
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -66,16 +66,31 @@ class AW_Marketsuite_Adminhtml_Awmss_OrderController extends Mage_Adminhtml_Cont
 
     public function exportCsvAction()
     {
-        $fileName = 'orders.csv';
-        $content = $this->getLayout()->createBlock('adminhtml/awmss_order_grid')->getCsv();
-        $content = preg_replace("/(\s){2,}/", '/', $content);
-        $this->_prepareDownloadResponse($fileName, $content);
+        if (strpos (Mage::helper('core/http')->getHttpReferer(), 'marketsuite/adminhtml_order') === false) {
+            $fileName   = 'orders.csv';
+            $grid       = $this->getLayout()->createBlock('adminhtml/sales_order_grid');
+            $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
+        } else {
+            $fileName = 'orders.csv';
+            $content = $this->getLayout()->createBlock('marketsuite/adminhtml_order_grid')->getCsv();
+            $content = preg_replace("/(\s){2,}/", '/', $content);
+            $this->_prepareDownloadResponse($fileName, $content);
+        }
     }
 
     public function exportXmlAction()
     {
         $fileName = 'orders.xml';
-        $content = $this->getLayout()->createBlock('adminhtml/awmss_order_grid')->getXml();
+        $content = $this->getLayout()->createBlock('marketsuite/adminhtml_order_grid')->getXml();
         $this->_prepareDownloadResponse($fileName, $content);
     }
+
+    public function exportExcelAction()
+    {
+        $fileName   = 'orders.xml';
+        $grid       = $this->getLayout()->createBlock('adminhtml/sales_order_grid');
+        $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+    }
+
+
 }

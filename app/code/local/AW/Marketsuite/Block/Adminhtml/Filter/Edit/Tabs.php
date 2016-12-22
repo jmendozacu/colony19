@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Marketsuite
- * @version    2.1.2
+ * @version    2.1.3
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */

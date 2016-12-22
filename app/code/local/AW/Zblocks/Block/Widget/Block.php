@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -29,8 +29,29 @@ class AW_Zblocks_Block_Widget_Block extends AW_Zblocks_Block_Block implements Ma
 {   
     protected function _toHtml()
     {
-        $this->setBlockPosition(AW_Zblocks_Model_Source_Position::WIDGET_POSITION);
         Mage::helper('zblocks')->setWidgetIdentity($this->getBlockId());
         return parent::_toHtml();
+    }
+
+    /**
+     * Get cache key informative items
+     *
+     * @return array
+     */
+    public function getCacheKeyInfo()
+    {
+        $items = parent::getCacheKeyInfo();
+        $items[AW_Zblocks_Helper_Data::CACHE_KEY_WIDGET_BLOCK_ID] = $this->getBlockId();
+        return $items;
+    }
+
+    public function getRenderData($isForCacheKey = false)
+    {
+        $renderData = parent::getRenderData($isForCacheKey);
+        $renderData->setData(
+            AW_Zblocks_Helper_Data::CACHE_KEY_BLOCK_BLOCK_POSITION,
+            AW_Zblocks_Model_Source_Position::WIDGET_POSITION
+        );
+        return $renderData;
     }
 }

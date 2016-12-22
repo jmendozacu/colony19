@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -27,14 +27,96 @@
 
 interface AW_Advancednewsletter_Model_Sync_Interface
 {
-
+    /**
+     * Subscribe a subscriber
+     *
+     * @param AW_Advancednewsletter_Model_Subscriber $subscriber
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
     public function subscribe($subscriber);
 
+    /**
+     * Unsubscribe a subscriber
+     *
+     * @param AW_Advancednewsletter_Model_Subscriber $subscriber
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
     public function unsubscribe($subscriber);
 
-    public function delete($subscriber);
+    /**
+     * Delete a subscriber
+     *
+     * @param AW_Advancednewsletter_Model_Subscriber $subscriber
+     * @param bool $useOriginalData
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function delete($subscriber, $useOriginalData = false);
 
+    /**
+     * Rewrite a subscriber by new data
+     *
+     * @param AW_Advancednewsletter_Model_Subscriber $subscriber
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
     public function forceWrite($subscriber);
 
-    public function removeSegment($segment);
+    /**
+     * Remove segment
+     *
+     * @param string $segmentCode
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function removeSegment($segmentCode);
+
+    /**
+     * Get all MailChimp lists
+     *
+     * @return array
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function getAllLists();
+
+    /**
+     * Batch subscribe
+     *
+     * @param array $subscribers
+     * @param bool $updateNames
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function batchSubscribe($subscribers, $updateNames = TRUE);
+
+    /**
+     * Batch unsubscribe
+     *
+     * @param array $subscribers
+     * @param bool $updateNames
+     * @return $this
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function batchUnsubscribe($subscribers, $updateNames = true);
+
+    /**
+     * Get all segments
+     *
+     * @return array
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function getSegments();
+
+    /**
+     * Get subscribers
+     *
+     * @param string $status
+     * @param int $page
+     * @param int $pageSize
+     * @return array
+     * @throws AW_Advancednewsletter_Exception
+     */
+    public function getSubscribers($status, $page, $pageSize);
 }

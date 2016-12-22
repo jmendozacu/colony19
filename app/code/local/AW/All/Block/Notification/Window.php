@@ -18,8 +18,8 @@
  * =================================================================
  *
  * @category   AW
- * @package    AW_Blog
- * @version    1.3.16
+ * @package    AW_Catalogpermissions
+ * @version    1.4.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -27,6 +27,23 @@
 
 class AW_All_Block_Notification_Window extends Mage_Adminhtml_Block_Notification_Window
 {
+    public function presetFirstSetup()
+    {
+
+    }
+
+    public function getNoticeMessageText()
+    {
+        if ($this->getIsFirstRun()) {
+            $child = $this->getLayout()->createBlock('core/template')->setTemplate(
+                'aw_all/notification/window/first-run.phtml'
+            )->toHtml();
+            return $child;
+        } else {
+            return $this->getData('notice_message_text');
+        }
+    }
+
     protected function _construct()
     {
         parent::_construct();
@@ -52,20 +69,5 @@ class AW_All_Block_Notification_Window extends Mage_Adminhtml_Block_Notification
             $this->setTemplate('aw_all/notification/window/standard.phtml');
         }
         return parent::_toHtml();
-    }
-
-    public function presetFirstSetup()
-    {
-
-    }
-
-    public function getNoticeMessageText()
-    {
-        if ($this->getIsFirstRun()) {
-            $child = $this->getLayout()->createBlock('core/template')->setTemplate('aw_all/notification/window/first-run.phtml')->toHtml();
-            return $child;
-        } else {
-            return $this->getData('notice_message_text');
-        }
     }
 }

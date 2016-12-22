@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -66,7 +66,6 @@ class AW_Advancednewsletter_Model_Segment extends Mage_Core_Model_Abstract
      */
     public function delete()
     {
-        AW_Advancednewsletter_Model_Sync_Mailchimpclient::$disableAutosync = true;
         $segmentCode = $this->getCode();
         parent::delete();
         Mage::getModel('advancednewsletter/subscriber')->getCollection()->removeSegment($segmentCode);

@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Zblocks
- * @version    2.5.2
+ * @version    2.5.4
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -32,6 +32,11 @@ class AW_Zblocks_Block_Adminhtml_Widget_Grid_Column_Renderer_Position extends Ma
         $value = $row->getData('position');
         $html = '';
         $positions = Mage::getModel('zblocks/source_position')->toOptionArray();
+
+        $blockPosition = $row->getData('block_position');
+        if ($blockPosition == AW_Zblocks_Model_Source_Position::CUSTOM_POSITION) {
+            $value = AW_Zblocks_Model_Source_Position::CUSTOM_POSITION;
+        }
 
         foreach ($positions as $position) {
             if (!isset($position['value']) || !is_array($position['value'])) {

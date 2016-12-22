@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -30,7 +30,7 @@
              
             new Ajax.Request('<?php echo $this->getConnectionUrl() ?>', {
                 method: 'post',
-                parameters: {xmlrpc: $('advancednewsletter_mailchimpconfig_xmlrpc').value, apikey: $('advancednewsletter_mailchimpconfig_apikey').value},
+                parameters: {apikey: $('advancednewsletter_mailchimpconfig_apikey').value},
                 onSuccess: function(transport) {
                    alert(transport.responseText);
                 }

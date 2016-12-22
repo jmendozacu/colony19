@@ -19,7 +19,7 @@
  *
  * @category   AW
  * @package    AW_Advancednewsletter
- * @version    2.4.7
+ * @version    2.5.0
  * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
  * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
  */
@@ -27,7 +27,11 @@
 
 class AW_AdvancedNewsletter_Model_Source_Mailchimplist
 {
-
+    /**
+     * Get Mailchimp lists as options array
+     *
+     * @return array
+     */
     public function toOptionArray()
     {
         $store = null;
@@ -41,50 +45,25 @@ class AW_AdvancedNewsletter_Model_Source_Mailchimplist
             return array();
         }
 
-        $xmlrpcurl = Mage::getStoreConfig('advancednewsletter/mailchimpconfig/xmlrpc', $store);
-        $apikey = Mage::getStoreConfig('advancednewsletter/mailchimpconfig/apikey', $store);
-
-        if (!$apikey || !$xmlrpcurl)
-            return array();
-
         try {
-            $arr = explode('-', $apikey, 2);
-            $dc = (isset($arr[1])) ? $arr[1] : 'us1';
-
-            list($aux, $host) = explode('http://', $xmlrpcurl);
-            $apiHost = 'http://' . $dc . '.' . $host;
-
-            $client = new Zend_XmlRpc_Client($apiHost);
-
-            /*
-             *   Mailchimp API 1.3
-             *   lists(string apikey, [array filters], [int start], [int limit])
-             *
-             */
-
-            $lists = $client->call('lists', $apikey);
+            $mailChimp = AW_Advancednewsletter_Model_Sync_Mailchimp::getInstance($store);
+            $lists = $mailChimp->getAllLists();
         } catch (Exception $e) {
-             // "Test connection" button is responsible now for connection check
             return array();
         }
 
-        if (is_array($lists) && isset($lists['data']) && count($lists['data'])) {
+        $options = array();
+        $options[] = array(
+            'label' => Mage::helper('advancednewsletter')->__('Select a list..'),
+            'value' => '',
+        );
 
-            $options = array();
+        foreach ($lists as $listId => $listName) {
             $options[] = array(
-                'label' => 'Select a list..',
-                'value' => '',
+                'value' => $listId,
+                'label' => $listName
             );
-
-            foreach ($lists['data'] as $list) {
-                $options[] = array(
-                    'value' => $list['id'],
-                    'label' => $list['name']
-                );
-            }
-            return $options;
         }
-        return array();
+        return $options;
     }
-
 }
