@@ -248,7 +248,9 @@ $_product = $this->getProduct();
 			<div class="agentom-float-left-product-details">
                 <?php if ($count == 0):?>
 					        <h2 class="agentom-product-name-h2"><?php echo $this->__("Description : ") . "<span class='agentom-product-attr-h2-inner'>" . $_product->getName() . " " . $_product->getShortDescription() . "</span>"; ?></h2>
-                    <?php endif;?>
+                <?php else: ?>
+                    <h2 class="agentom-product-name-h2"><?php echo __('Ses caractéristiques') ?></h2>
+				<?php endif;?>
                                 <?php echo $html; ?>
             </div>
 		<?php
