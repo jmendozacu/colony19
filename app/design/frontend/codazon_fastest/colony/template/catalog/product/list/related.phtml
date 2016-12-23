@@ -91,7 +91,9 @@ switch($template){
                             <div class="cdz-buttons-container">
                                 <div class="cdz-buttons-inner">
 									<?php if($_product->isSaleable()): ?>
-                                        <button data-toggle="tooltip" data-original-title="<?php echo $this->__('Add to Cart') ?>" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                        <button data-toggle="tooltip" data-original-title="<?php echo $this->__('Add to Cart') ?>" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                            <img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>" alt="<?php echo $this->__('Add to cart'); ?>" class="agentom-addtocart-list" />
+                                        </button>
                                     <?php endif ?>
                                     <?php if($_qsEnable) echo $_qsHelper->getQuickshopHtml($_product) ?>
                                     <?php if($_compareUrl = $this->getAddToCompareUrl($_product)): ?>
