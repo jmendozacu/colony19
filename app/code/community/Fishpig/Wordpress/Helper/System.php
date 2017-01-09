@@ -67,6 +67,20 @@ class Fishpig_Wordpress_Helper_System extends Fishpig_Wordpress_Helper_Abstract
 	protected function _validateDatabaseConnection()
 	{
 		if (Mage::helper('wordpress/app')->getDbConnection() === false) {
+			if (Mage::helper('wordpress/app')->isTablePrefixWrong()) {
+				if ($prefix = Mage::helper('wordpress/app')->getTablePrefix()) {
+					throw Fishpig_Wordpress_Exception::error(
+						'Database Error',
+						sprintf('The database connection was successful but no tables were found using the table prefix \'%s\'. You can confirm your database table prefix by opening the file wp-config.php, which is in your WordPress root directory.', $prefix)
+					);
+				}
+				
+				throw Fishpig_Wordpress_Exception::error(
+					'Database Error',
+					'The database connection was successful but no tables were found. Either WordPress is not installed in the database or you need to set your table prefix. You can confirm your database table prefix by opening the file wp-config.php, which is in your WordPress root directory.'
+				);
+			}
+
 			throw Fishpig_Wordpress_Exception::error(
 				'Database Error',
 				$this->__('Error establishing a database connection')

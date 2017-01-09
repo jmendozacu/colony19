@@ -101,6 +101,7 @@ abstract class Fishpig_Wordpress_Helper_Shortcode_Abstract extends Fishpig_Wordp
 	 */
 	public function getParameterRegex()
 	{
+		return '/([a-z_-]+)="([^"]*)"/i';
 		return '/([a-z]{1,})=([^\s ]{1,})/i';
 	}
 	

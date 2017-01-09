@@ -58,6 +58,16 @@ class Fishpig_Wordpress_Helper_App extends Fishpig_Wordpress_Helper_Abstract
 	 */	
 	protected $_contentHolder = array();
 
+	/**
+	 * Table prefix is incorrect flag
+	 *
+	 * @var bool
+	 */
+	static protected $_tablePrefixIsWrong = false;
+	
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		/**
@@ -175,6 +185,8 @@ class Fishpig_Wordpress_Helper_App extends Fishpig_Wordpress_Helper_Abstract
 			);
 		}
 		catch (Exception $e) {
+			self::$_tablePrefixIsWrong = true;
+
 			return $this->addError($e->getMessage())
 				->addError(sprintf('Unable to query WordPress database. Is the table prefix (%s) correct?', $tablePrefix));
 		}
@@ -428,7 +440,7 @@ class Fishpig_Wordpress_Helper_App extends Fishpig_Wordpress_Helper_Abstract
 		
 		return $this;
 	}
-	
+
 	/**
 	 * Get a table name
 	 *
@@ -534,5 +546,13 @@ class Fishpig_Wordpress_Helper_App extends Fishpig_Wordpress_Helper_Abstract
 	protected function _getStoreId()
 	{
 		return (int)Mage::app()->getStore()->getId();
+	}
+	
+	/**
+	 * @return bool
+	 */
+	public function isTablePrefixWrong()
+	{
+		return self::$_tablePrefixIsWrong === true;
 	}
 }

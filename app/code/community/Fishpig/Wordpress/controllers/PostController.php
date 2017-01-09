@@ -68,7 +68,11 @@ class Fishpig_Wordpress_PostController extends Fishpig_Wordpress_Controller_Abst
 			'wordpress_post_view',
 			'wordpress_' . $post->getPostType() . '_view',
 		);
-		
+
+		if ($post->getPostType() == 'revision' && $post->getParentPost()) {
+			$layoutHandles[] = 'wordpress_' . $post->getParentPost()->getPostType() . '_view';
+		}
+                
 		$isHomepage = (bool)$this->getRequest()->getParam('is_homepage');
 		
 		if ($post->isHomepagePage() && !$isHomepage) {
@@ -102,7 +106,7 @@ class Fishpig_Wordpress_PostController extends Fishpig_Wordpress_Controller_Abst
 		$this->_addCustomLayoutHandles($layoutHandles);
 		$this->_initLayout();
 		$this->_title(strip_tags($post->getPostTitle()));
-		
+
 		if (($headBlock = $this->getLayout()->getBlock('head')) !== false) {
 			$headBlock->addItem(
 				'link_rel', 
@@ -268,17 +272,6 @@ class Fishpig_Wordpress_PostController extends Fishpig_Wordpress_Controller_Abst
 				}
 			}
 		}
-		else if ($postId = $this->getRequest()->getParam('id')) {
-			$post = Mage::getModel('wordpress/post')
-				->setPostType($this->getRequest()->getParam('post_type', '*'))
-				->load($postId);
-			
-			if ($post->getId() && ($post->canBeViewed() || $isPreview)) {
-				Mage::register('wordpress_post', $post);
-				
-				return $post;
-			}
-		}
 		else if (($pageId = $this->getRequest()->getParam('page_id')) && $isPreview) {
 			$post = Mage::getModel('wordpress/post')
 				->setPostType('page')
@@ -287,6 +280,17 @@ class Fishpig_Wordpress_PostController extends Fishpig_Wordpress_Controller_Abst
 			if ($post->getId()) {
 				Mage::register('wordpress_post', $post);
 
+				return $post;
+			}
+		}
+		else if ($postId = $this->getRequest()->getParam('id')) {
+			$post = Mage::getModel('wordpress/post')
+				->setPostType($this->getRequest()->getParam('post_type', '*'))
+				->load($postId);
+			
+			if ($post->getId() && ($post->canBeViewed() || $isPreview)) {
+				Mage::register('wordpress_post', $post);
+				
 				return $post;
 			}
 		}

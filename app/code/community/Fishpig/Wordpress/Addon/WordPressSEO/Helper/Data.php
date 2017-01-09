@@ -798,4 +798,16 @@ class Fishpig_Wordpress_Addon_WordPressSEO_Helper_Data extends Fishpig_Wordpress
 		
 		return $this;
 	}
+
+	/**
+	 * Ensure post types are correctly converted
+	 *
+	 * @param string $key
+	 * @param string $index
+	 * @return mixed
+	**/
+	public function getData($key='', $index=null)
+	{
+		return parent::getData(str_replace('-', '_', $key), $index);
+	}
 }

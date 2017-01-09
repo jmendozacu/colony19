@@ -20,7 +20,7 @@ class Fishpig_Wordpress_Block_Sidebar_Widget_Text extends Fishpig_Wordpress_Bloc
 	protected function _toHtml()
 	{
 		if ($html = parent::_toHtml()) {
-			return Mage::helper('cms')->getBlockTemplateProcessor()->filter($html);
+			return Mage::helper('wordpress/filter')->process($html);
 		}
 		
 		return '';
