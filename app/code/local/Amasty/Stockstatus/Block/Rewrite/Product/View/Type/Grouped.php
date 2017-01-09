@@ -10,7 +10,7 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Grouped extends Mage_Ca
     {
         if ('true' != (string)Mage::getConfig()->getNode('modules/Amasty_Xnotif/active'))
         {
-            if(strpos($this->getTemplate(), "availability") <= 0){                
+            if (strpos($this->getTemplate(), "availability") === false) {
                 $this->setTemplate('amasty/amstockstatus/grouped.phtml');
             }
         }
@@ -21,4 +21,4 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Grouped extends Mage_Ca
     {
         return $this->helper('amstockstatus')->getCustomStockStatusText($product);
     }
-}
+}

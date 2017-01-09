@@ -4,14 +4,7 @@
  * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
  * @package Amasty_Stockstatus
  */
-if ('true' == (string)Mage::getConfig()->getNode('modules/Amasty_Promo/active') && substr((string)Mage::getConfig()->getNode()->modules->Amasty_Promo->version, 0, 1) >= 2)
-{
-    class Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item_Pure extends  Amasty_Promo_Model_Sales_Quote_Item{}
-}
-else
-{
-    class Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item_Pure extends Mage_Sales_Model_Quote_Item {}
-}
+
 
 class Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item extends Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item_Pure
 {
@@ -51,4 +44,4 @@ class Amasty_Stockstatus_Model_Rewrite_Sales_Quote_Item extends Amasty_Stockstat
         }
         return parent::getMessage($string);
     }
-}
+}

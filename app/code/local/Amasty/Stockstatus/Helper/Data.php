@@ -79,18 +79,18 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
 
                 $status = $this->getStatusIconImage($product) . '<span class="amstockstatus amsts_' . $this->getCustomStockStatusId() . '">' . $status . '</span>';
                 $tag  ='<p class="availability';
-                if(strpos($html, $tag) && !strpos($html, $status)){
+                if ((false !== strpos($html, $tag)) && (false === strpos($html, $status))) {
                     $pattern = "@($tag)(.*?<span)(.*?)</span>@";
                     if (Mage::getStoreConfig('amstockstatus/general/icononly') || $product->getData('hide_default_stock_status'))
                     {
-                        $html = preg_replace($pattern, '$1$2>' . $status . '</span>', $html, 1);
+                        $html = preg_replace($pattern, '$1$2>' . $status . '</span>', $html, 2);
                     }
                     else
                     {
-                        $html = preg_replace($pattern, '$1$2$3 ' . $status . '</span>', $html, 1);
+                        $html = preg_replace($pattern, '$1$2$3 ' . $status . '</span>', $html, 2);
                     }
                 }
-                if(!strpos($html, $status)){
+                if (false === strpos($html, $status)) {
                      // regexp
                     $inStock   = Mage::helper('amstockstatus')->__('In stock') . '.?';
                     $outStock  = Mage::helper('amstockstatus')->__('Out of stock') . '.?';
@@ -106,13 +106,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                         $html = preg_replace("@($inStock|$outStock|$inStock1|$outStock1)[\s]*<@", '$1 ' . $status  . '<', $html);
                     }
                 }
-                /*
-                if(!strpos($html, $status) && strpos($html, '<div class="product-name">')){
-                     $pattern = '@<div class="product-name">(.*?)</div>@';
-                    // $html = preg_replace($pattern, '$0' . $status, $html);
-
-                }
-                */
+                //TODO add ststus if availability tag missing
             }
         }
         return $html;
@@ -133,8 +127,8 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                 $quantity = $this->_getProductQty($product);
                 $altText   = str_replace('{qty}',  $quantity, $altText);
             }
-            $bubble       = Mage::getBaseUrl('js') . 'amasty/amstockstatus/bubble.gif';
-            $bubbleFiller = Mage::getBaseUrl('js') . 'amasty/amstockstatus/bubble_filler.gif';
+            $bubble       = Mage::getBaseUrl('js') . 'amasty/amstockstatusxnotif/bubble.gif';
+            $bubbleFiller = Mage::getBaseUrl('js') . 'amasty/amstockstatusxnotif/bubble_filler.gif';
             if ($altText)
             {
                 $iconHtml .= <<<INLINECSS
@@ -150,7 +144,7 @@ class Amasty_Stockstatus_Helper_Data extends Mage_Core_Helper_Abstract
                 span.tt span{ display: none; }
                 /*background:; ie hack, something must be changed in a for ie to execute it*/
                 span.tt:hover{ z-index:25; color: #aaaaff; background:;}
-                span.tt:hover span.tooltip{
+                span.tt:hover span.amtooltip{
                     display:block;
                     position:absolute;
                     top:0px; left:0;
@@ -186,7 +180,7 @@ INLINECSS;
             if ($altText)
             {
                 $altText = Mage::helper('core')->escapeHtml($altText);
-                $altText = '<span class="tooltip"><span class="top"></span><span class="middle"><strong>' . $altText . '</strong></span><span class="bottom"></span></span>';
+                $altText = '<span class="amtooltip"><span class="top"></span><span class="middle"><strong>' . $altText . '</strong></span><span class="bottom"></span></span>';
             }
             $iconHtml .= ' <span class="tt"><img src="' . $iconUrl . '" class="amstockstatus_icon" alt="" title="">' . $altText . '</span> ';
         }
@@ -402,4 +396,4 @@ INLINECSS;
         return  intval($quantity);
 
     }
-}
+}

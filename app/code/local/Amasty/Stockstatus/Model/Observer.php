@@ -135,7 +135,7 @@ class Amasty_Stockstatus_Model_Observer
     {
         if (($observer->getBlock() instanceof Mage_Catalog_Block_Product_View)) {
             $template = $observer->getBlock()->getTemplate();
-            if(strpos($template, "view.phtml")){
+            if (false !== strpos($template, "view.phtml")) {
                 $html = $observer->getTransport()->getHtml();
 
                 $product = Mage::registry('product');
@@ -168,14 +168,11 @@ class Amasty_Stockstatus_Model_Observer
     /*display stock status at category page*/
     public function onListBlockHtmlBefore($observer)//core_block_abstract_to_html_after    
     {
-return;
         if (($observer->getBlock() instanceof Mage_Catalog_Block_Product_List) && Mage::getStoreConfig('amstockstatus/general/display_at_categoty')) {
             $html = $observer->getTransport()->getHtml();
-            preg_match_all("/product.*?-price-([0-9]+)/", $html, $productsId);
-            preg_match_all("/price-including-tax-([0-9]+)/", $html, $productsTaxId);
+            preg_match_all('/price[a-z\-]*?([0-9]*?)"/', $html, $productsId);
 
-            $ids = array_merge($productsId[1], $productsTaxId[1]);
-            $ids = array_unique($ids);
+            $ids = array_unique($productsId[1]);
             $collection = Mage::getModel('catalog/product')->getCollection();
             $collection ->addFieldToFilter('entity_id', array('in'=>$ids));
             $collection ->addStoreFilter(Mage::app()->getStore()->getId())
@@ -242,4 +239,4 @@ return;
 
         return $this;
     }
-}
+}

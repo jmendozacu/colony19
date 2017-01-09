@@ -97,6 +97,7 @@ class Amasty_Stockstatus_Block_Rewrite_Product_View_Type_Configurable extends Am
                  if ($product->isSaleable() ||(Mage::getStoreConfig('amstockstatus/general/outofstock') &&  !('true' == (string)Mage::getConfig()->getNode('modules/Amasty_Conf/active') && Mage::registry('isList')))) {
                     if ($product->getStatus() != Mage_Catalog_Model_Product_Status::STATUS_DISABLED)
                     {
+                        $product->getStockItem()->setData('is_in_stock', 1);
                         $products[] = $product;
                     }
                 }
