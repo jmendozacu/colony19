@@ -2,7 +2,7 @@
 
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
  * @package Amasty_Label
  */
 class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Controller_Action
@@ -464,11 +464,18 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
             }
         }
         if(array_key_exists('cat_color', $data) && $data['cat_color']){
-            $color = 'color: #' . $data['cat_color'] . ';';
-            if(strpos($catStyles, 'color:') !== FALSE) {
-                $catStyles = preg_replace("@color(.*?);@s", $color, $catStyles);
+            $color = 'color: #' . $data['cat_color'];
+            $massStyles = explode(';', $catStyles);
+            $find = 0;
+            foreach ($massStyles as &$style) {
+                $style = trim($style);
+                if(strpos($style, 'color') === 0) {
+                    $style = $color;
+                    $find = 1;
+                }
             }
-            else{
+            $catStyles = implode(';', $massStyles);
+            if(!$find){
                 $catStyles .= $color;
             }
         }
@@ -488,10 +495,17 @@ class Amasty_Label_Adminhtml_AmlabellabelController extends Mage_Adminhtml_Contr
         }
         if(array_key_exists('prod_color', $data) && $data['prod_color']){
             $color = 'color: #' . $data['prod_color'] . ';';
-            if(strpos($prodStyles, 'color:') !== FALSE) {
-                $prodStyles = preg_replace("@color(.*?);@s", $color, $prodStyles);
+            $massStyles = explode(';', $prodStyles);
+            $find = 0;
+            foreach ($massStyles as &$style) {
+                $style = trim($style);
+                if(strpos($style, 'color') === 0) {
+                    $style = $color;
+                    $find = 1;
+                }
             }
-            else{
+            $prodStyles = implode(';', $massStyles);
+            if(!$find){
                 $prodStyles .= $color;
             }
         }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
  * @package Amasty_Label
  */
 class Amasty_Label_Block_Adminhtml_Label_Edit_Form extends Mage_Adminhtml_Block_Widget_Form

@@ -2,7 +2,7 @@
 
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
  * @package Amasty_Label
  */
 class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
@@ -87,8 +87,12 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
         if ($textStyle) {
             $textStyle = 'style="' . $textStyle . '"';
         }
-
-        $textBlockStyle = 'style="width:' . $imgWidth . '; background: url(' . $imgUrl . ') no-repeat 0 0; ' . $customStyle . '"';
+        
+        $backgroundImg = '; ';
+        if ($imgUrl) {
+            $backgroundImg = '; background: url(' . $imgUrl . ') no-repeat 0 0; ';
+        }
+        $textBlockStyle = 'style="width:' . $imgWidth . $backgroundImg . $customStyle . '"';
         $html  = '<div class="amlabel-table2 top-left" ' . $label->getJs() . ' >';
         $html .= '  <div class="amlabel-txt2 ' . $positionClass . '" ' . $textBlockStyle . ' ><div class="amlabel-txt" ' . $textStyle . '>' . $label->getText() . '</div></div>';
         $html .= '</div>';

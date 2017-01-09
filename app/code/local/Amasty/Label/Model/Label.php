@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
  * @package Amasty_Label
  */
 class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
@@ -332,7 +332,7 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
             return false;
 
         if ($this->getSpecialPriceOnly()
-            && !$this->_info['special_price'])
+            && !$this->getProduct()->getData('special_price'))
             return false;
 
         $value = $this->_info['price'] - $this->_info['special_price'];
@@ -349,13 +349,17 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
         $minPercent = Mage::getStoreConfig('amlabel/general/sale_min_percent');
         if ($minPercent && $value < $minPercent)
             return false;
-
+        
         return true;
     }
     
     public function getImageUrl()
     {
-        return Mage::getBaseUrl('media') . 'amlabel/' . $this->getValue('img');
+        if ($this->getValue('img')) {
+            return Mage::getBaseUrl('media') . 'amlabel/' . $this->getValue('img');
+        } else {
+            return '';
+        }
     }
 
     public function getImageInfo()
@@ -364,8 +368,13 @@ class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
             $info = getimagesize($this->getImagePath());
             if(!$info && strpos($this->getImagePath(), 'svg') !== false) {
                 $xml = simplexml_load_file($this->getImagePath());
-                $attr = $xml->attributes();
-                $info = array(intVal($attr->width) . 'pt', intVal($attr->height) . 'pt');
+                if($xml) {
+                    $attr = $xml->attributes();
+                    $info = array(intVal($attr->width) . 'pt', intVal($attr->height) . 'pt');
+                }
+                else{
+                    return array();
+                }
             }
             else{
                 $info[0] .= 'px';
