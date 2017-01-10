@@ -38,10 +38,8 @@
     <?php foreach ($_additional as $_data): ?>
         <?php
         $attr_value = $_helper->productAttribute($_product, $_data['value'], $_data['code']);
-        if($attr_value != "No" || $attr_value != "Non" || !empty($attr_value)): ?>
-            <p class="agentom-product-view-attribute">
+        if($attr_value != "No" && $attr_value != "Non" && !empty($attr_value)): ?>
             <?php echo $attr_value;?>
-            </p>
         <?php endif; ?>
     <?php endforeach; ?>
 <!--    <table class="data-table" id="product-attribute-specs-table">-->
