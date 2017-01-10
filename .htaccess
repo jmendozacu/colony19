@@ -1,3 +1,12 @@
+SetEnvIf Host colonyandco.agentom.com MAGE_RUN_CODE=colonyco
+SetEnvIf Host colonyandco.agentom.com MAGE_RUN_TYPE=website
+
+SetEnvIf Host powell.agentom.com MAGE_RUN_CODE=powell
+SetEnvIf Host powell.agentom.com MAGE_RUN_TYPE=website
+
+SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_CODE=abcperroquet
+SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
+
 ############################################
 ## uncomment these lines for CGI mode
 ## make sure to specify the correct cgi php binary file name
