@@ -21,7 +21,7 @@
 }
 
 .groupmenu-drop-content{
-    width: auto;
+    width: auto!important;
 }
 
 .groupmenu-drop{
