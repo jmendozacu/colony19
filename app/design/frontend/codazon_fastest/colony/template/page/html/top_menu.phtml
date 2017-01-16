@@ -33,14 +33,14 @@ foreach ($children as $child) {
     $html .= "<p>".$child->getLevel()."</p>";
     if ($child->hasChildren()) {
 		$html .= '<span class="cdz-menu-toggle"></span>';
-        if($child->getLevel()<=1){
+        if($child->getLevel()<4){
             $html .= '<ul class="groupmenu-drop">';
         }
 
 		$html .= '<div class="groupmenu-drop-content groupmenu-1">';
         $html .=     $this->render($child, $childrenWrapClass,false,'',$options, true);
 		$html .= '</div>';
-        if($child->getLevel()<=1){
+        if($child->getLevel()<4){
             $html .= '</ul>';
         }
     }
