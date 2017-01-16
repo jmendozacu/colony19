@@ -29,6 +29,11 @@
 }
 
 /** CATEGORY **/
+
+.product-item-info{
+    min-height: 395px !important;
+}
+
 .agentom-addtocart-list{
     cursor: pointer;
     float: right;
