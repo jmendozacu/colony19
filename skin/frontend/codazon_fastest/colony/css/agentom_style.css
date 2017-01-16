@@ -4,7 +4,11 @@
 
 /** MENU CSS DESKTOP **/
 .agentom-menu-1{
-    margin-top : 34px;
+    margin-top : 40px;
+}
+
+.search-input-wrap{
+    margin-top : 35px;
 }
 
 .image-logo_menu{
