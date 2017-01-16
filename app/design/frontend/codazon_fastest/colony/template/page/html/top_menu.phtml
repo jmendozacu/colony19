@@ -35,14 +35,15 @@ foreach ($children as $child) {
 		$html .= '<span class="cdz-menu-toggle"></span>';
         if($child->getLevel()<3){
             $html .= '<ul class="groupmenu-drop">';
+        }else{
+            $html .= '<ul class="agentom-submenu">';
         }
 
 		$html .= '<div class="groupmenu-drop-content groupmenu-1">';
         $html .=     $this->render($child, $childrenWrapClass,false,'',$options, true);
 		$html .= '</div>';
-        if($child->getLevel()<3){
-            $html .= '</ul>';
-        }
+        $html .= '</ul>';
+
     }
     $html .= '</li>';
 	$counter++;
