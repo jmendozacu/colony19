@@ -2,8 +2,8 @@
 Contributors: WPMUDEV, marquex, WPMUDEV-Support2, WPMUDEV-Support1, WPMUDEV-Support6, WPMUDEV-Support4, iworks
 Tags: custom sidebars, widgets, sidebars, custom, sidebar, widget, personalize
 Requires at least: 3.3
-Tested up to: 4.6.1
-Stable tag: 2.1.1.5
+Tested up to: 4.7
+Stable tag: 2.1.1.9
 
 Display custom widget configurations for every page or post on your site.
 
@@ -32,7 +32,7 @@ Every part of Custom Sidebars integrates seamlessly with the Widgets menu for si
   <li>Unlimited custom widget configurations</li>
   <li>Set custom widgets for individual posts and pages, categories, post types, and archives</li>
   <li>Seamless integration with the WordPress Widgets menu</li>
-  <li>Works with well-coded themes and doesn’t slow down your site</li>
+  <li>Works with well-coded themes and doesn't slow down your site</li>
 </ul>
 
 Install Custom Sidebars and see for yourself why it's the most popular widget extension plugin available for WordPress with over 200,000 downloads.
@@ -54,7 +54,7 @@ Get Custom Sidebars or <a href="https://premium.wpmudev.org/project/custom-sideb
 
 == Screenshots ==
 
-1. Set custom sidebars for indvidual posts and pages or by category, post-type, or archive.
+1. Set custom sidebars for individual posts and pages or by category, post-type, or archive.
 2. Create new sidebars without confusing settings.
 3. Integrates with WordPress core Widgets menu.
 
@@ -99,7 +99,7 @@ You can create all the sidebars you want, but you need some sidebars of your the
 
 = Everything is working properly on Admin area, but the custom sidebars are not displayed on the site. Why? =
 
- You are probably using a theme that doesn’t load dynamic sidebars properly or doesn’t use the wp_head() function in its header. The plugin replaces the sidebars inside that function, and many other plugins hook there, so it is [more than recommended to use it](http://josephscott.org/archives/2009/04/wordpress-theme-authors-dont-forget-the-wp_head-function/).
+ You are probably using a theme that doesn't load dynamic sidebars properly or doesn't use the wp_head() function in its header. The plugin replaces the sidebars inside that function, and many other plugins hook there, so it is [more than recommended to use it](http://josephscott.org/archives/2009/04/wordpress-theme-authors-dont-forget-the-wp_head-function/).
 
 = It appears that only an Admin can choose to add a sidebar. How can Editors (or any other role) edit customs sidebars? =
 
@@ -115,9 +115,28 @@ Custom Sidebars has the same license as WordPress, so you can use it wherever yo
 
 = I like the plugin, but what can I do if my website is based in a WP version older than 3.3 =
 
-If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2.
+If you are running a earlier version of WordPress download Custom Sidebars 0.8.2.
 
 == Changelog ==
+
+= 2.1.1.9 =
+* Fixed export problem, when two or more widget has the same name.
+* Fixed problem with import widgets created before Custom Sidebars plugin was installed.
+* Fixed problem with sidebars on Front Page.
+
+= 2.1.1.8 =
+* Added support and widgets links on the plugins page.
+* Fixed export problem, when two or more widget has the same name.
+* Fixed few "Undefined index" warnings.
+* Improved import preview screen.
+* Improved RTL languages on widgets screen.
+
+= 2.1.1.7 =
+* Rollback last change with front page.
+
+= 2.1.1.6 =
+* Fixed a bug when we try to use to get property of non-object in "maybe_display_widget()".
+* If front page is a page, then we have now the same rules like we have on on page.
 
 = 2.1.1.5 =
 * Added new filter "cs_replace_post_type" to filter post type inside function "determine_replacement()".
@@ -141,7 +160,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 * Fixed issue with broken link icon for cloned widgets.
 
 = 2.1.0.8 =
-* Small improvements in the admin UI: Better scrolling, fix JS errors and PHP notices.
+* Small improvements in the admin UI: Better scrolling, fix JavaScript errors and PHP notices.
 * Update third party libraries.
 * Small improvements in code.
 
@@ -195,7 +214,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 *		Fix: Fixed various issues when flagging a sidebar s replaceable.
 *		Fix: Plugin will not load in accessibility mode but display a notice instead.
 *		Minor fix: Make code compatible with PHP 5.2.4
-*		Minor fix: Slight improvement of ajax stability
+*		Minor fix: Slight improvement of AJAX stability
 *		Minor fix: Plugin now requires capability "edit_theme_options"
 
 = 2.0.8 =
@@ -205,7 +224,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 *		Fix: Fixed issue with some people losing some sidebar settings after update.
 
 = 2.0.6.1 =
-*		Minor fix: Use WordPress core functions to get URL to javascript files.
+*		Minor fix: Use WordPress core functions to get URL to JavaScript files.
 *		Minor fix: Refactor function name to avoid misunderstandings.
 
 = 2.0.5 =
@@ -213,7 +232,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 *		Fixed: PHP warning about strict standards.
 
 = 2.0.3 =
-*		Fixed: Javascript errors on Windows servers are fixed.
+*		Fixed: JavaScript errors on Windows servers are fixed.
 
 = 2.0.2 =
 *		Fixed: Dashboard notification is now removed when clicking "dismiss"
@@ -230,7 +249,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 *		Added: Add setting "CUSTOM_SIDEBAR_DISABLE_METABOXES" in wp-config.php to remove custom-sidebar meta boxes.
 
 = 1.5 =
-*		Added: Custom sidebars now works with buddypress pages.
+*		Added: Custom sidebars now works with BuddyPress pages.
 
 = 1.4 =
 *		Fixed: Individual post sidebar selection when default sidebars for single posts are defined
@@ -269,9 +288,9 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 *       Added: Italian translation
 
 = 0.8.2 =
-* 	Fixed: Problems with spanish translation
+* 	Fixed: Problems with Spanish translation
 *	Added: Dutch and German language files
-* 	Fixed: Some css issues with WP3.3
+* 	Fixed: Some CSS issues with WP3.3
 
 = 0.8.1 =
 *	Fixed: You can assign sidebars to your pages again.
@@ -294,7 +313,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 
 *	New interface, more user friendly
 *	Added the possibility of customize the main blog page sidebars
-*	Added the sidebars by category, so now you can personalize all the post that belongs to a category easily in a hierarchycal way
+*	Added the sidebars by category, so now you can personalize all the post that belongs to a category easily in a hierarchical way
 *	Added the possibility of customize the authors page sidebars
 *	Added the possibility of customize the tags page sidebars
 *	Added, now it is possible to edit the sidebars names, as well as the pre-widget, post-widget, pre-title, post-title for a sidebar.
@@ -330,7 +349,7 @@ If you are running a earlier version of Wordpress download Custom Sidebars 0.8.2
 == Upgrade Notice ==
 
 = 1.0 =
-*Caution:* Version 1.0 needs Wordpress 3.3 to work. If you are running an earlier version *do not upgrade*.
+*Caution:* Version 1.0 needs WordPress 3.3 to work. If you are running an earlier version *do not upgrade*.
 
 = 0.7.1 =
 Now custom sidebars works with Thesis theme and some minor bugs have been solved.
