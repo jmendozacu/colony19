@@ -31,8 +31,8 @@
 <div class="product-shop-stock-avai">
 <?php if ($_product->isAvailable()): ?>
     
-	<p class="availability in-stock"><label><?php echo $this->__('Availability:') ?> </label><span><?php echo $this->__('In stock') ?></span>
-<!--	<strong>--><?php //echo $this->__('(') ?><!-- --><?//= (int) Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty()?><!----><?php //echo $this->__(' Pcs)') ?><!--</strong>-->
+	<p class="availability in-stock">
+		<label><?php echo $this->__('Availability:') ?> </label><span><?php echo $this->__('In stock') ?></span>
 	</p>
 <?php else: ?>
     <p class="availability out-of-stock"><label><?php echo $this->__('Availability:') ?></label> <span><?php echo $this->__('Out of stock') ?></span></p>
