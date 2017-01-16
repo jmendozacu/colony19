@@ -36,9 +36,8 @@
     width: 32px !important;
 }
 
-.availability.out-of-stock{
-    float : right;
-    margin : -50px 18px 0 0;
+.availability{
+    text-align: left;
 }
 
 /** PRODUIT **/
