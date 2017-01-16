@@ -96,7 +96,7 @@
                                     <img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>" alt="<?php echo $this->__('Add to cart'); ?>" class="agentom-addtocart-list" />
                                 </button>
 							<?php else: ?>
-								<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+<!--								<p class="availability out-of-stock"><span>--><?php //echo $this->__('Out of stock') ?><!--</span></p>-->
 							<?php endif; ?>
 
 
@@ -215,7 +215,7 @@
                                              class="agentom-addtocart-list btn-cart"
                                              onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>?options=cart')" />
                                     <?php else: ?>
-                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+<!--                                        <p class="availability out-of-stock"><span>--><?php //echo $this->__('Out of stock') ?><!--</span></p>-->
                                     <?php endif; ?>
                                     <?php echo $_qsHelper->getQuickshopHtml($_product) ?>
                                     <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_compare_wishlist') == 1): ?>
