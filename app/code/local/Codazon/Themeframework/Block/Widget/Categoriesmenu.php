@@ -3,6 +3,7 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
 {
 	protected $_templateFile;
 	protected $_menu;
+    protected $_isSubMenu;
 	const CACHE_TAG = 'CODAZON_THEMEFRAMEWORK';
 	
 	public function _construct(){
@@ -73,11 +74,13 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
 		return  $parent;
 	}
 	
-	public function render(Varien_Data_Tree_Node $menuTree, $childrenWrapClass = '', $hasWrap = false, $parentWrapClass = 'nav-wrap', $options=null)
+	public function render(Varien_Data_Tree_Node $menuTree, $childrenWrapClass = '', $hasWrap = false, $parentWrapClass = 'nav-wrap', $options=null, $submenu = false)
     {
         ob_start();
        	$html = include $this->_templateFile;
         $directOutput = ob_get_clean();
+
+        $this->_isSubMenu = $submenu;
 
         if (is_string($html)) {
             return $html;
@@ -163,5 +166,9 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
         $cacheId['short_cache_id'] = $shortCacheId;
 
         return $cacheId;
+    }
+
+    public function getIsSubMenu(){
+        return $this->_isSubMenu;
     }
 }
