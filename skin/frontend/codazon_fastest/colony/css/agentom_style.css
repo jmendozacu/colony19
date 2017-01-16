@@ -14,13 +14,18 @@
 
 .level-top.level1{
     text-align: left;
-    /*width: auto;*/
-}
-
-.groupmenu-1.level1{
-    width: 200px!important;
     display: block;
     float: left;
+    text-align: left;
+    width: 280px;
+}
+
+.groupmenu-drop-content{
+    width: auto;
+}
+
+.groupmenu-drop{
+    width: 1000px;
 }
 
 /** CATEGORY **/
