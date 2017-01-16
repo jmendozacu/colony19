@@ -17,6 +17,12 @@
     width: auto;
 }
 
+.groupmenu-1 {
+    width: 200px;
+    display: block;
+    float: left;
+}
+
 /** CATEGORY **/
 .agentom-addtocart-list{
     cursor: pointer;
