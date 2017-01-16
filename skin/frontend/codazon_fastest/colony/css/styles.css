@@ -11363,8 +11363,8 @@ table colgroup, .data-table colgroup {
 .header .cdz-header-top {
   border-bottom: 1px solid #e7e7e7;
   background-color: #f1f1f1;
-  padding-bottom: 5px;
-  padding-top: 5px;
+  padding-bottom: 2px;
+  padding-top: 0px;
   color: #999999;
 }
 .header .cdz-header-top .cdz-col-right .cdz-dropdown {
