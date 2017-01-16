@@ -17,8 +17,8 @@
     width: auto;
 }
 
-.groupmenu-1 li {
-    width: 200px;
+.groupmenu-1.level1{
+    width: 200px!important;
     display: block;
     float: left;
 }
