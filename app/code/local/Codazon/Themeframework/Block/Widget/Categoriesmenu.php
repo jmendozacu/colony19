@@ -35,8 +35,14 @@ class Codazon_Themeframework_Block_Widget_Categoriesmenu extends Mage_Core_Block
 		if(is_null($this->getTemplate())){
 			$this->setTemplate($this->getData('template'));
 		}
-		if (!$this->getData('template') || is_null($menuTree) || is_null($childrenWrapClass)) {
-            throw new Exception("Top-menu renderer isn't fully configured.");
+        if (!$this->getTemplate()) {
+            throw new Exception("Top-menu renderer isn't fully configured. Missing template");
+        }
+        if (is_null($menuTree)) {
+            throw new Exception("Top-menu renderer isn't fully configured. Missing menu tree");
+        }
+        if (is_null($childrenWrapClass)) {
+            throw new Exception("Top-menu renderer isn't fully configured. Missing wrap class");
         }
 
         $includeFilePath = realpath(Mage::getBaseDir('design') . DS . $this->getTemplateFile());
