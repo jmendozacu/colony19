@@ -45,14 +45,8 @@ class Mage_Page_Block_Html_Topmenu_Renderer extends Mage_Page_Block_Html_Topmenu
         $this->_addCacheTags();
         $menuTree = $this->getMenuTree();
         $childrenWrapClass = $this->getChildrenWrapClass();
-        if (!$this->getTemplate()) {
-            throw new Exception("Top-menu renderer isn't fully configured. Missing template");
-        }
-        if (is_null($menuTree)) {
-            throw new Exception("Top-menu renderer isn't fully configured. Missing menu tree");
-        }
-        if (is_null($childrenWrapClass)) {
-            throw new Exception("Top-menu renderer isn't fully configured. Missing wrap class");
+        if (!$this->getTemplate() || is_null($menuTree) || is_null($childrenWrapClass)) {
+            throw new Exception("Top-menu renderer isn't fully configured.");
         }
 
         $includeFilePath = realpath(Mage::getBaseDir('design') . DS . $this->getTemplateFile());
