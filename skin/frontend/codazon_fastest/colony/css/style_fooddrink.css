@@ -3406,7 +3406,7 @@ button:hover {
     backface-visibility: hidden;
   }
   .header .sticky-menu.active .block-search .form-search .button:before {
-    color: #b0d235;
+    color: white;
   }
   .header .sticky-menu.active .block-search .form-search:hover .button:before {
     color: white;
@@ -3438,7 +3438,7 @@ button:hover {
   font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 .cdz-main-menu .groupmenu-drop {
-  background-color: white;
+  background-color: #b0d235;
 }
 .cdz-main-menu .groupmenu-drop .groupmenu-drop-content {
   color: #282828;
