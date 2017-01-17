@@ -5,7 +5,10 @@
 /** MENU CSS DESKTOP **/
 
 .agentom-tel{
-    font-size: 13px;
+    font-size: 13px !important;
+    font-weight: initial !important;
+    margin-top: 7px !important;
+    text-transform: inherit !important;
 }
 
 .agentom-menu-1{
