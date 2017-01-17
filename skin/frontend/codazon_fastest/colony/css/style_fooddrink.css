@@ -3406,7 +3406,7 @@ button:hover {
     backface-visibility: hidden;
   }
   .header .sticky-menu.active .block-search .form-search .button:before {
-    color: white;
+    color: #b0d235;
   }
   .header .sticky-menu.active .block-search .form-search:hover .button:before {
     color: white;
