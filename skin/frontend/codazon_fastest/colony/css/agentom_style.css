@@ -3,6 +3,16 @@
 }
 
 /** MENU CSS DESKTOP **/
+
+.agentom-tel{
+    display: inline-block;
+    font-family: FontAwesome;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+
 .agentom-menu-1{
     margin-top : 40px;
 }
