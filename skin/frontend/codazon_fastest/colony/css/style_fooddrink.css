@@ -3428,6 +3428,16 @@ button:hover {
 .cdz-main-menu .groupmenu li.level0 a.menu-link:visited {
   color: #ffffff;
 }
+
+.cdz-main-menu .groupmenu li.level1 a.menu-link {
+  color: yellow;
+}
+.cdz-main-menu .groupmenu li.level1 a.menu-link:hover,
+.cdz-main-menu .groupmenu li.level1 a.menu-link:active,
+.cdz-main-menu .groupmenu li.level1 a.menu-link:visited {
+  color: yellow;
+}
+
 .cdz-main-menu .groupmenu li.level0.parent:hover:after {
   color: #b0d235;
 }
