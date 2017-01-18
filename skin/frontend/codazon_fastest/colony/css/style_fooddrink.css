@@ -3413,7 +3413,7 @@ button:hover {
   }
 }
 .cdz-main-menu .groupmenu li.level0 a.menu-link {
-  color: #639537;
+  color: #ffffff;
   background-color: #b0d235;
   border-radius: 30px;
   padding: 8px 15px 6px 15px;
@@ -3426,7 +3426,7 @@ button:hover {
 .cdz-main-menu .groupmenu li.level0 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level0 a.menu-link:active,
 .cdz-main-menu .groupmenu li.level0 a.menu-link:visited {
-  color: #62A62B;
+  color: #ffffff;
 }
 .cdz-main-menu .groupmenu li.level0.parent:hover:after {
   color: #b0d235;
