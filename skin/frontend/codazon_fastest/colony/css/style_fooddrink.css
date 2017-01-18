@@ -3429,15 +3429,6 @@ button:hover {
   color: #ffffff;
 }
 
-.cdz-main-menu .groupmenu li.level1 a.menu-link {
-  color: yellow;
-}
-.cdz-main-menu .groupmenu li.level1 a.menu-link:hover,
-.cdz-main-menu .groupmenu li.level1 a.menu-link:active,
-.cdz-main-menu .groupmenu li.level1 a.menu-link:visited {
-  color: yellow;
-}
-
 .cdz-main-menu .groupmenu li.level0.parent:hover:after {
   color: #b0d235;
 }
@@ -3447,6 +3438,25 @@ button:hover {
   border-color: white;
   font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
+
+.cdz-main-menu .groupmenu li.level1 a.menu-link {
+    color: yellow;
+}
+.cdz-main-menu .groupmenu li.level1 a.menu-link:hover,
+.cdz-main-menu .groupmenu li.level1 a.menu-link:active,
+.cdz-main-menu .groupmenu li.level1 a.menu-link:visited {
+    color: yellow;
+}
+
+.cdz-main-menu .groupmenu li.level2 a.menu-link {
+    color: #ffffff;
+}
+.cdz-main-menu .groupmenu li.level2 a.menu-link:hover,
+.cdz-main-menu .groupmenu li.level2 a.menu-link:active,
+.cdz-main-menu .groupmenu li.level2 a.menu-link:visited {
+    color: #ffffff;
+}
+
 .cdz-main-menu .groupmenu-drop {
   background-color: #b0d235;
 }
