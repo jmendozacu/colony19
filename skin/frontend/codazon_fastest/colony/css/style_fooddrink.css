@@ -3440,21 +3440,21 @@ button:hover {
 }
 
 .cdz-main-menu .groupmenu li.level1 a.menu-link {
-    color: yellow;
+    color: yellow!important;
 }
 .cdz-main-menu .groupmenu li.level1 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level1 a.menu-link:active,
 .cdz-main-menu .groupmenu li.level1 a.menu-link:visited {
-    color: yellow;
+    color: yellow!important;
 }
 
 .cdz-main-menu .groupmenu li.level2 a.menu-link {
-    color: #ffffff;
+    color: #ffffff!important;
 }
 .cdz-main-menu .groupmenu li.level2 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level2 a.menu-link:active,
 .cdz-main-menu .groupmenu li.level2 a.menu-link:visited {
-    color: #ffffff;
+    color: #ffffff!important;
 }
 
 .cdz-main-menu .groupmenu-drop {
