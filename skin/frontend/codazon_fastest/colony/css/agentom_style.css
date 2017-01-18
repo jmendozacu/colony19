@@ -4,7 +4,7 @@
 
 /** MENU CSS DESKTOP **/
 
-ul.agentom-submenu div.groupmenu-drop-content.groupmenu-1 li.level-top.level1 a{
+ul.agentom-submenu div.groupmenu-drop-content.groupmenu-1 li.level-top.level1 a.menu-link{
     color : yellow!important;
 }
 
