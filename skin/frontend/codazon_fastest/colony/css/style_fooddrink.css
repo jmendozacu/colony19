@@ -3434,8 +3434,8 @@ button:hover {
 .cdz-main-menu .groupmenu li.level0:hover > a.menu-link {
   color: white;
   background-color: #b0d235;
-  /*border-color: white;*/
-  /*font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;*/
+  border-color: white;
+  font: 500 12px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 .cdz-main-menu .groupmenu-drop {
   background-color: #b0d235;
