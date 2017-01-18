@@ -103,7 +103,14 @@ $_product = $this->getProduct();
 								<div class="col-sm-24">
 									<div class="row">
 										<div class="col-sm-8">
-										<h3 class="product-shop-sku"><span><?php echo $this->__('SKU: ') ?></span><strong><?php echo $this->htmlEscape($_product->getData('sku'));?></strong></h3>
+											<div class="product-shop-wrap product-shop-desc">
+												<?php if ($_product->getShortDescription()):?>
+													<div class="short-description">
+														<h2><?php echo $this->__('Utilisation') ?></h2>
+														<div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+													</div>
+												<?php endif;?>
+											</div>
 										<?php echo $this->getChildHtml('alert_urls') ?>
 										<meta content="<?php echo $this->htmlEscape($_product->getData('sku'));?>" itemprop="productID">
 										</div>
@@ -164,14 +171,6 @@ $_product = $this->getProduct();
 							$image = urlencode($this->stripTags($this->helper('catalog/image')->init($_product, 'image')));
 							$name = urlencode($this->stripTags($_helper->productAttribute($_product, $_product->getName(), 'name')));
 						?>
-						<div class="product-shop-wrap product-shop-desc">
-						<?php if ($_product->getShortDescription()):?>
-							<div class="short-description">
-								<h2><?php echo $this->__('Utilisation') ?></h2>
-								<div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
-							</div>
-						<?php endif;?>
-						</div>
 					</div>
 				</div>
 				</div>	
