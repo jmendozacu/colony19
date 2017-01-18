@@ -4,6 +4,10 @@
 
 /** MENU CSS DESKTOP **/
 
+ul.agentom-submenu div.groupmenu-drop-content.groupmenu-1 li.level-top.level2 a{
+    color : yellow!important;
+}
+
 .agentom-tel{
     font-size: 13px !important;
     font-weight: initial !important;
