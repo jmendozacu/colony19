@@ -3421,7 +3421,7 @@ button:hover {
   font: 300 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-decoration: none;
   margin-left: 10px;
-  /*letter-spacing: 1px;*/
+  letter-spacing: 0.5px;
 }
 .cdz-main-menu .groupmenu li.level0 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level0 a.menu-link:active,
