@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Agentom_Video>
+      <version>0.1.0</version>
+    </Agentom_Video>
+  </modules>
+  <frontend>
+    <routers>
+      <video>
+        <use>standard</use>
+          <args>
+            <module>Agentom_Video</module>
+            <frontName>video</frontName>
+          </args>
+      </video>
+    </routers>
+  </frontend>
+  <global>
+		<rewrite>        
+            <agentom_video_catalog_categorycontroller>
+                <from><![CDATA[#^/catalog/category/#]]></from> <!-- Mage_Catalog_CategoryController  -->
+                <to>/video/catalog_category/</to> <!-- Agentom_Video_Catalog_CategoryController  -->
+            </agentom_video_catalog_categorycontroller>        
+            <agentom_video_catalog_productcontroller>
+                <from><![CDATA[#^/catalog/product/#]]></from> <!-- Mage_Catalog_ProductController  -->
+                <to>/video/catalog_product/</to> <!-- Agentom_Video_Catalog_ProductController  -->
+            </agentom_video_catalog_productcontroller>
+		</rewrite>
+    <helpers>
+      <video>
+        <class>Agentom_Video_Helper</class>
+      </video>
+    </helpers>
+	<models>
+	  <video>
+		<class>Agentom_Video_Model</class>
+		<resourceModel>video_mysql4</resourceModel>
+	  </video>
+	</models>
+	<resources>
+	  <categoryattribute1484813170_setup>
+		<setup>
+		  <module>Agentom_Video</module>
+		  <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </categoryattribute1484813170_setup>
+	  <categoryattribute1484813170_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </categoryattribute1484813170_write>
+	  <categoryattribute1484813170_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </categoryattribute1484813170_read>
+	  <customerattribute1484813170_setup>
+		<setup>
+		  <module>Agentom_Video</module>
+		  <class>Mage_Customer_Model_Entity_Setup</class>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </customerattribute1484813170_setup>
+	  <customerattribute1484813170_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </customerattribute1484813170_write>
+	  <customerattribute1484813170_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </customerattribute1484813170_read>
+	</resources>
+    <events>
+	  <sales_order_invoice_save_after> <!-- identifier of the event we want to catch -->
+        <observers>
+          <sales_order_invoice_save_after_handler> <!-- identifier of the event handler -->
+            <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+            <class>video/observer</class> <!-- observers class alias -->
+            <method>updateCustomerForAuthorizedCategories</method>  <!-- observer's method to be called -->
+            <args></args> <!-- additional arguments passed to observer -->
+          </sales_order_invoice_save_after_handler>
+        </observers>
+      </sales_order_invoice_save_after>
+    </events>
+  </global>
+  <admin>
+	<routers>
+	  <video>
+	    <use>admin</use>
+		<args>
+		  <module>Agentom_Video</module>
+		  <frontName>admin_video</frontName>
+		</args>
+	  </video>
+	</routers>
+  </admin>
+</config> 
