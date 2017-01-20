@@ -4,6 +4,7 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
 
     protected function _initCatagory()
     {
+        die();
         $category = parent::_initCatagory();
 
         Mage::log("debug : attr cat : " . $category->getHiddenFromCustomer(),0,"debug_agentom_video.log");
@@ -28,6 +29,7 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
         return $category;
     }
 
+    // TODO : add powell case
 //    protected function _initCatagory()
 //    {
 //        $category = parent::_initCatagory();
