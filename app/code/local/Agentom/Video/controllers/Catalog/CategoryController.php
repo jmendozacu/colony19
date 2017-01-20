@@ -28,6 +28,10 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
         return $category;
     }
 
+    public function indexAction(){
+        die('test');
+    }
+
     // TODO : add powell case
 //    protected function _initCatagory()
 //    {
