@@ -4,8 +4,6 @@ class Codazon_Themeframework_CategoryController extends Mage_Core_Controller_Fro
 	protected $_catId;
 	
 	public function indexAction(){
-
-	    die();
 		 if ($category = $this->_initCatagory()) {
 			$this->loadLayout();
 			$root = $this->getLayout()->getBlock('root');
