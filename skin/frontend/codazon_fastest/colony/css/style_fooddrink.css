@@ -4345,4 +4345,16 @@ form .legend {
   min-width: 150px;
   width: 20%;
 }
- 
+ .cart-icon .cart-subtotal .price {
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  margin-bottom: -20px;
+  margin-top: 0;
+  min-height: 40px;
+  padding-left: 15px;
+  vertical-align: middle;
+}
+.cart-icon .cart-qty {
+  left:22px
+}
