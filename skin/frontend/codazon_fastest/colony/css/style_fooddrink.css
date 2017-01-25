@@ -577,8 +577,8 @@ input.input-text,
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     content: "\f007";
-    font-size: 12px;
-    margin-right: 5px;
+    font-size: 20px;
+    margin: 5px 5px 0 0;
   }
   .header .cdz-header-top .cdz-top-link .cdz-top-login .cdz-trigger:before {
     content: "\f090";
