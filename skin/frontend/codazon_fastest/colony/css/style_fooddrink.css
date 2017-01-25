@@ -2562,7 +2562,8 @@ button:hover {
 .data-table .input-text.qty {
   min-width: 40px;
   padding: 0 8px;
-  color: #b0d235;
+  color: #282828;
+  text-align: center;
 }
 
 .qty-ctl .increase:before {
