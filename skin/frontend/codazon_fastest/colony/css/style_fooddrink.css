@@ -2455,16 +2455,16 @@ button:hover {
 
 #back-top a {
   background: white;
-  border: 1px solid #F34E12;
-  color: #F34E12;
+  border: 1px solid #ff6600;
+  color: #ff6600;
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   font-size: 0;
 }
 
 #back-top a:focus,
 #back-top a:active {
-  background: #F34E12;
-  border-color: #F34E12;
+  background: #ff6600;
+  border-color: #ff6600;
   color: white;
 }
 
