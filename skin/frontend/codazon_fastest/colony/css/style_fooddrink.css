@@ -4355,6 +4355,11 @@ form .legend {
   padding-left: 15px;
   vertical-align: middle;
 }
+
 .cart-icon .cart-qty {
   left:22px
+}
+
+.col-sm-6.cdz-header-cart {
+  text-align: right;
 }
