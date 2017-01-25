@@ -4325,6 +4325,15 @@ form .legend {
 }
 
 /*--Ajouts Maxime ---*/
-  .col-sm-5 {
-    width: 20%;
-  }
+.col-sm-5 {
+  width: 20%;
+}
+.col-co-3 {
+	min-width:150px;
+	width:33.33%
+}
+ .col-co-5 {
+	min-width:150px;
+	width:20%
+}
+ 
