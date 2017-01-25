@@ -17,6 +17,9 @@
 .search-input-wrap{
     margin-top : 35px;
 }
+.cdz-mobile-search. .search-input-wrap {
+	margin-top:0px;
+}
 
 .image-logo_menu{
     margin : auto;
