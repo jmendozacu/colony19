@@ -1149,7 +1149,7 @@ a:hover, a:focus {
   margin-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-bottom: 1px dotted #639537;
+ /* border-bottom: 1px dotted #639537;*/
 }
 
 .cdz-dropdown-content {
