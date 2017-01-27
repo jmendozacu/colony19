@@ -672,8 +672,8 @@ input.input-text,
 }
 .page-footer.cdz-footer-style-02 .bottom-footer-wrapper {
   background: #4B7029;
-  background-image: url("../images/footer.png");
-  background-repeat: repeat;
+  /*background-image: url("../images/footer.png");
+  background-repeat: repeat;*/
   opacity: 0.6;
 }
 .page-footer.cdz-footer-style-02 .footer-top-ads .block.block-subscribe .actions .button {
@@ -1263,13 +1263,13 @@ a:hover, a:focus {
 }
 .page-footer .top-footer-wrapper {
   background-color: #639537;
-  background-image: url("../images/footer.png");
-  background-repeat: repeat;
+ /*  background-image: url("../images/footer.png");
+  background-repeat: repeat;*/
 }
 .page-footer .footer-bottom {
   background: #639537;
-  background-image: url("../images/footer.png");
-  background-repeat: repeat;
+ /* background-image: url("../images/footer.png");
+  background-repeat: repeat;*/
 }
 .page-footer a {
   color: #FFF;
@@ -1876,7 +1876,7 @@ textarea.input-text {
 /*Search box area*/
 .cdz-header-menu {
   background: #FFF;
-  border-top: 3px double #E0E0E0;
+  border-top: 3px double #B2DEF2;
   margin-bottom: 10px;
   padding-top: 10px;
 }
