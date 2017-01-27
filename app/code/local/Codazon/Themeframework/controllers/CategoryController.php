@@ -12,9 +12,7 @@ class Codazon_Themeframework_CategoryController extends Mage_Core_Controller_Fro
 			$this->getLayout()->getBlock('head')->setTitle($this->__('All categories of')." ".$category->getName());
 			$this->renderLayout();
 		 }
-		 die('toto');
 	}
-
 	public function getCatId(){
 		if(!$this->_catId){
 			$this->_catId = $this->getRequest()->getParam('id');
