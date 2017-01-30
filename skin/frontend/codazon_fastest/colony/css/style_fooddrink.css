@@ -3441,8 +3441,8 @@ button:hover {
 }
 
 .cdz-main-menu .groupmenu li.level1 a.menu-link {
-    color: #FFFF3D !important;
-	background-color:#c4c4c4;
+    color: #7CBA45 !important;
+	background-color:#f3f3f3;
 	padding:0;
 	border-radius:0;
 }
@@ -3462,7 +3462,7 @@ button:hover {
 }
 
 .cdz-main-menu .groupmenu-drop {
-  background-color: #c4c4c4;
+  background-color: #f3f3f3;
 }
 .cdz-main-menu .groupmenu-drop .groupmenu-drop-content {
   color: #282828;
