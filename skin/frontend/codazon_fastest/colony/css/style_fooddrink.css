@@ -2682,6 +2682,7 @@ button:hover {
   font: 400 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   font-style: normal;
   letter-spacing: 1px;
+  text-transform: none;
 }
 .product-view .product-options .swatch-attr .select-label {
   color: #b0d235;
