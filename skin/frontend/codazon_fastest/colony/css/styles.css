@@ -4304,6 +4304,7 @@ body.catalogsearch-result-index .page-title h1 {
 }
 .product-collateral {
   clear: both;
+  padding-top:20px;
 }
 
 .collateral-tabs dd h2 {
@@ -4792,7 +4793,7 @@ body.catalogsearch-result-index .page-title h1 {
 
 .block-related .checkbox {
   float: right;
-  margin-top: 20px;
+  margin: 10px 10px 0px 0px;
 }
 
 .block-related .product-details {
@@ -14099,7 +14100,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   }
 }
 .product-view .product-shop-stock-avai {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .product-view .product-shop-wrap {
   margin-bottom: 30px;
@@ -14221,7 +14222,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-right: 0;
 }
 .product-view .product-button-top {
-  margin-bottom: 20px;
+ /*margin-bottom: 20px;*/
   float: left;
 }
 .product-view .product-options dl.last dd.last {
@@ -14313,6 +14314,11 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
+  background: white none repeat scroll 0 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 0;
+  padding: 0;
+}
 }
 .product-view .product-detail-tab .box-collateral {
   padding: 0;

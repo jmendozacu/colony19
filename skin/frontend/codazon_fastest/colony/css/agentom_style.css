@@ -52,6 +52,7 @@
     min-height: 406px !important;
 }
 
+
 .agentom-addtocart-list{
     cursor: pointer;
     float: right;
@@ -59,14 +60,19 @@
     width: 32px !important;
 }
 
+.block-related .agentom-addtocart-list{
+    cursor: pointer;
+    float: right;
+    margin: -50px 18px 0 0;
+    width: 32px !important;
+}
 .availability{
     text-align: left;
 }
 
 /** PRODUIT **/
 .add-to-box{
-    float : right;
-    margin : -80px 0 0 0;
+    float : left;
 }
 
 .agentom-float-left-product-details{
@@ -107,8 +113,9 @@
 }
 
 .agentom-product-name-h2 {
-    color : #639537;
+    color: #639537;
     text-transform: none;
+    font: 300 20px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 
 .agentom-product-attr-h2-inner{
