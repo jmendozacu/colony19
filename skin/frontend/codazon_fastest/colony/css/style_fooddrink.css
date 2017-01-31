@@ -3443,27 +3443,27 @@ button:hover {
 
 .cdz-main-menu .groupmenu li.level1 a.menu-link {
     color: #7CBA45 !important;
-	background-color:#f3f3f3;
+	background-color:#e0e0e0;
 	padding:0;
 	border-radius:0;
 }
 .cdz-main-menu .groupmenu li.level1 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level1 a.menu-link:active,
 .cdz-main-menu .groupmenu li.level1 a.menu-link:visited {
-    color: #FFFF3D !important;
+    color: #7CBA45 !important;
 }
 
 .cdz-main-menu .groupmenu li.level2 a.menu-link {
-    color: #ffffff!important;
+    color: #5d5d5c!important;
 }
 .cdz-main-menu .groupmenu li.level2 a.menu-link:hover,
 .cdz-main-menu .groupmenu li.level2 a.menu-link:active,
 .cdz-main-menu .groupmenu li.level2 a.menu-link:visited {
-    color: #ffffff!important;
+    color: #5d5d5c!important;
 }
 
 .cdz-main-menu .groupmenu-drop {
-  background-color: #f3f3f3;
+  background-color: #e0e0e0;
 }
 .cdz-main-menu .groupmenu-drop .groupmenu-drop-content {
   color: #282828;
