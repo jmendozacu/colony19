@@ -2635,8 +2635,10 @@ button:hover {
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
 .product-view .availability.in-stock span {
-  color: #b0d235;
-  font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+color: #639537;
+font: 400 16px/1.2 Poppins,Helvetica Neue,Verdana,Arial,sans-serif;
+letter-spacing: 1px;
+text-transform: none;
 }
 .product-view .availability.in-stock strong {
   font: 500 11px/1.55 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
