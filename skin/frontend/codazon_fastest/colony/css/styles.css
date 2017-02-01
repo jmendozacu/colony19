@@ -14102,7 +14102,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-bottom: 30px;
 }
 .product-view .product-shop-wrap {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   clear: left;
   float: left;
   width: 100%;
@@ -14295,7 +14295,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .product-view .box-collateral,
 .product-view .block-related,
 .product-view .block-upsell {
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   padding: 20px;
 }
 .product-view .product-essential .product-item,
