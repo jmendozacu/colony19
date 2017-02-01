@@ -14121,7 +14121,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-bottom: 5px;
 }
 .product-view .product-name {
-  margin: 0 0 10px;
+  margin: 10px 0
 }
 .product-view .product-img-box {
   width: inherit;
