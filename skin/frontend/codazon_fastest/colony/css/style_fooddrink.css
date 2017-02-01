@@ -440,7 +440,7 @@ input.input-text,
   border-radius: 5px;*/
 }
 .col-main .block.block-up-sell .block-content, .col-main .block-related .block-content, .col-main .block-crossell .block-content {
-  padding: 20px;
+  padding: 20px 0;
 }
 .col-main #cdz-filter-bar .block:not(.block-static-block) .block-title strong {
   border-bottom-width: 3px !important;
@@ -3433,7 +3433,7 @@ button:hover {
   border-radius: 30px;
   padding: 8px 15px 6px 15px;
   margin: 0 auto;
-  font: 300 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 400 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-decoration: none;
   margin-left: 10px;
   letter-spacing: 0.5px;
@@ -4030,14 +4030,15 @@ form .legend {
 .product-view .block-upsell,
 .block-crosssell {
   background: white;
-  padding: 20px;
+  
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   /*border-radius: 5px;
-  border: 1px solid #ebebeb;*/
+  border: 1px solid #ebebeb;
+  padding: 20px;*/
 }
 
 .catalog-product-view .col-main-containter .col-wrapper-main,
