@@ -85,6 +85,10 @@ echo 'debug';
                         	<div class="cdz-buttons-inner">
                         	<?php if( $this->display('addtocart_btn') ):?>
 								<?php if($_product->isSaleable()): ?>
+                                    <img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>"
+                                         alt="<?php echo $this->__('Add to cart'); ?>"
+                                         class="agentom-addtocart-list btn-cart"
+                                         onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>?options=cart')" />
                                    <div class="cart-wrapper">
                                         <div class="cart-qty">
                                             <div class="qty-ctl">
