@@ -89,20 +89,6 @@ echo 'debug';
                                          alt="<?php echo $this->__('Add to cart'); ?>"
                                          class="agentom-addtocart-list btn-cart"
                                          onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>?options=cart')" />
-                                   <div class="cart-wrapper">
-                                        <div class="cart-qty">
-                                            <div class="qty-ctl">
-                                                <button title="decrease" onclick="changeCartQty(this,-1); return false;" class="decrease">decrease</button>
-                                            </div>
-                                            <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
-                                            <div class="qty-ctl">
-                                                <button title="increase" onclick="changeCartQty(this,1); return false;" class="increase">increase</button>
-                                            </div>
-                                        </div>
-                                        <button data-toggle="tooltip" data-original-title="<?php echo $this->__('Add to Cart') ?>" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart"
-                                            onclick="setLocation('<?php echo $this->getAddToCartUrl($_product,array('has_qty' => 1)) ?>')"
-                                        ><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                                    </div>
                                 <?php endif; ?>
                             <?php endif ?>
                             </div>
