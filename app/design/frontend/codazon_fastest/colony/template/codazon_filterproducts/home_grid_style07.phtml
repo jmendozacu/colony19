@@ -32,9 +32,14 @@ echo 'debug';
 				<div class="cdz-hover-section">
 					<div class="cdz-product-top">
                     <?php if( $this->display('image') ):?>
-                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $_imgHelper->init($_product, 'small_image')->resize($_width,$_height); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                    <a href="<?php echo $_product->getProductUrl() ?>"
+                       title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
+                       class="product-image no-alt-img">
+                        <img src="<?php echo $_imgHelper->init($_product, 'small_image')->resize($_width,$_height); ?>"
+                             alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
                     <img src="<?php echo (string)$_imgHelper->init($_product,'thumbnail')->resize($_width, $_height); ?>"
-                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>" class="img-responsive" />
+                         alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'thumbnail'), null, true) ?>"
+                         class="alternative-img img-responsive" />
                     </a>
                     <?php endif ?>
                     </div>
