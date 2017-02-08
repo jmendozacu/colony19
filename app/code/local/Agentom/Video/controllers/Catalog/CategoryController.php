@@ -28,7 +28,7 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
         return $category;
     }
 
-    public function indexAction(){
+    public function viewAction(){
         die('test');
     }
 
