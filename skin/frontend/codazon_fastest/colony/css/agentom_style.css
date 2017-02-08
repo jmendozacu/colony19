@@ -3,13 +3,26 @@
 }
 
 /** HOME PAGE BLOCKSTATIC CCS */
-.agentom-block-title{
-
+.agentom-block-title-orange{
+    border-bottom: 10px solid orange;
+    color: lightgrey;
+    font-size: 27px;
+    font-style: italic;
+    height: 47px;
+    margin: 0 0 15px;
+    width: 100%;
 }
 
-.agentom-title-h2{
-
+.agentom-block-title-green{
+    border-bottom: 10px solid green;
+    color: lightgrey;
+    font-size: 27px;
+    font-style: italic;
+    height: 47px;
+    margin: 0 0 15px;
+    width: 100%;
 }
+
 /** MENU CSS DESKTOP **/
 .agentom-tel{
     font-size: 13px !important;
