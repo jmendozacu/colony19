@@ -2604,7 +2604,7 @@ button:hover {
 .product-view .product-name h1 {
   font: 500 20px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   color: #639537;
-  letter-spacing: 1px;
+  /*letter-spacing: 1px;*/
 }
 .product-view .product-shop-sku {
   clear: left;
