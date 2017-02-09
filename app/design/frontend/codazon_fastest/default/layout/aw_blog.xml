@@ -17,6 +17,28 @@
                 <type>skin_css</type>
                 <name>aw_blog/css/style.css</name>
             </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>sympolic_link_wp/wordpress/lib/prettyphoto/css/prettyPhoto.min.css?ver=4.12</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>sympolic_link_wp/wordpress/css/js_composer_tta.min.css?ver=4.12</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>sympolic_link_wp/wordpress/css/lib/vc-open-iconic/vc_openiconic.min.css?ver=4.12</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>sympolic_link_wp/wordpress/lib/vc_carousel/css/vc_carousel.min.css?ver=4.12</name>
+            </action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/js/dist/js_composer_front.min.js?ver=4.12</name></action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/lib/prettyphoto/js/jquery.prettyPhoto.min.js?ver=4.12</name></action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/lib/vc_accordion/vc-accordion.min.js?ver=4.12</name></action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/lib/vc-tta-autoplay/vc-tta-autoplay.min.js?ver=4.12</name></action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/lib/vc_carousel/js/transition.min.js?ver=4.12</name></action>
+            <action method="addItem"><type>skin_js</type><name>sympolic_link_wp/wordpress/lib/vc_carousel/js/vc_carousel.min.js?ver=4.12</name></action>
         </reference>
 		<reference name="right">
             <block type="blog/menu_sidebar" name="left.blog.menu"  before="-">
