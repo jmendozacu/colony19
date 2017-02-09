@@ -14103,7 +14103,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-bottom: 30px;
 }
 .product-view .product-shop-wrap {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   clear: left;
   float: left;
   width: 100%;
@@ -14261,7 +14261,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin: 0 0 0 10px;
 }
 .product-view .product-shop-social {
-  margin-top: 15px;
+  /*margin-top: 15px;*/
 }
 .product-view .size-chart-btn {
   background: transparent;
