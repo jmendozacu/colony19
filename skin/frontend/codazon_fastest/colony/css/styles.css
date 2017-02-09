@@ -14122,7 +14122,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
   margin-bottom: 5px;
 }
 .product-view .product-name {
-  margin: 10px 0
+  /*margin: 10px 0*/
 }
 .product-view .product-img-box {
   width: inherit;

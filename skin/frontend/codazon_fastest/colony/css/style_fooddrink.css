@@ -1304,6 +1304,7 @@ a:hover, a:focus {
   font-weight: 400;
   letter-spacing: 2px;
   margin-left: -15px;
+  margin-top: 50px;
 }
 .page-footer .item_tag li a {
   color: #777777;
@@ -3468,13 +3469,13 @@ text-transform: none;
     color: #7639537 !important;
 }
 .cdz-main-menu .groupmenu li.level2 a.menu-link:before {
-    color: #5d5d5c!important;
+    color: #ff6600!important;
 	display: inline-block;
 font-family: FontAwesome;
 font-style: normal;
 font-weight: normal;
 line-height: 1;
-content: "\f105";
+content: "\f00c";
 font-size: 12px;
 margin-right: 2px;
 }
