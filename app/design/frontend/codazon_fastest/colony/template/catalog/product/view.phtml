@@ -193,9 +193,11 @@ endforeach;
                                 $image = urlencode($this->stripTags($this->helper('catalog/image')->init($_product, 'image')));
                                 $name = urlencode($this->stripTags($_helper->productAttribute($_product, $_product->getName(), 'name')));
                                 ?>
+								<div class="product-shop-wrap product-shop-characteristics">
+								<h2 class="agentom-product-name-h2"><?php echo __('Characteristics') ?></h2>
+								<?php echo $attr_array[1]; ?>
+								</div>
                             </div>
-                            <h2 class="agentom-product-name-h2"><?php echo __('Ses caractéristiques') ?></h2>
-                            <?php echo $attr_array[1]; ?>
                         </div>
                     </div>
                 </div>
