@@ -21162,7 +21162,7 @@ body._has-modal {
 
 .product-name {
   display: block;
-  margin: 0 0 0.7rem;
+  /*margin: 0 0 0.7rem;*/
   word-wrap: break-word;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
