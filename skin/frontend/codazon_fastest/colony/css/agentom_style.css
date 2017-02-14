@@ -69,6 +69,11 @@
 
 /** CATEGORY **/
 
+.toolbar-bottom{
+    margin-top: -69px !important;
+    width: 53% !important;
+}
+
 .product-item-info{
     min-height: 360px !important;
 }
