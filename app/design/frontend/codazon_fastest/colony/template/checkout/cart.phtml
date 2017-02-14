@@ -32,9 +32,6 @@
  */
 ?>
 <div class="cart">
-    <?php
-        echo $this->getLayout()->createBlock('cms/block')->setBlockId('bloc_panier')->toHtml()
-    ?>
     <div class="page-title title-buttons">
         <h1><?php echo $this->__('Shopping Cart') ?></h1>
         <?php if(!$this->hasError()): ?>

@@ -26,6 +26,9 @@
 ?>
 <?php /** @var $this Mage_Checkout_Block_Cart_Shipping */ ?>
 <div class="shipping">
+    <?php
+    echo $this->getLayout()->createBlock('cms/block')->setBlockId('bloc_panier')->toHtml()
+    ?>
     <h2><?php echo $this->__('Estimate Shipping and Tax') ?></h2>
     <div class="shipping-form">
        <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="shipping-zip-form">
