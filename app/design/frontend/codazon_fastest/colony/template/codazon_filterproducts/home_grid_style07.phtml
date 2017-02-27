@@ -97,14 +97,7 @@
         <?php $i++; endforeach ?>
 <?php if(!$this->getAddedItem()): ?>
 		</ul>
-        <div class="ajax-load-wrapper">
-            <div class="ajax-load-button">
-                <a href="javascript:void(0)" class="btn cdz-ajax-trigger">
-                    <?php echo $this->__('Load more') ?>
-                </a>
-                <div class="ajax-loader" style="display:none;"><?php echo $this->__('Loading...') ?></div>
-            </div>
-        </div>
+
 		</div>
 		<script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>  	
 </div>
