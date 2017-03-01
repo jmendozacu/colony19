@@ -17,11 +17,13 @@
 		<div class="block-content">
 			<ul id="<?php echo $this->getListId() ?>">
 			<?php foreach($posts as $post): ?>
-				<?php $datas = $post->getPostContent();
-                echo $this->htmlEscape($datas); ?>
 				<li class="item">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
-				</li>
+				<p>
+                    <?php $datas = $post->getPostExcerpt();
+                    echo $this->htmlEscape($datas); ?>
+                </p>
+                </li>
 			<?php endforeach; ?>
 			</ul>
 			<script type="text/javascript">decorateList('<?php echo $this->getListId() ?>')</script>
