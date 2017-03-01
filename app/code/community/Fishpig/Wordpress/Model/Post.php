@@ -350,7 +350,6 @@ class Fishpig_Wordpress_Model_Post extends Fishpig_Wordpress_Model_Abstract
 	 */
 	public function getPostContent($context = 'full')
 	{
-	    die('toto');
 		$key = rtrim('filtered_post_content_' . $context, '_');
 		
 		if (!$this->hasData($key)) {
