@@ -11,7 +11,8 @@
 				<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
 				<?php if ($image = $post->getFeaturedImage()): ?>
 					<a href="<?php echo $post->getPermalink() ?>">
-						<img src="<?php echo $post->getFeaturedImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
+						<?php echo $post->getFeaturedImage(); ?>
+						<img src="<?php echo $this->escapeHtml($post->getFeaturedImage()) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
 					</a>
 				<?php endif; ?>
 				<p><?php echo $post->getPostExcerpt(40) ?></p></li>
