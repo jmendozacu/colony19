@@ -3654,13 +3654,14 @@ margin-right: 2px;
   border-bottom: #E0E0E0 1px dotted;
 }
 .ftop-newsletter .block:not(.block-static-block) .block-collapsible-nav-title, .block:not(.block-static-block) .block-title {
-  border-bottom: 1px dotted #e0e0e0;
+  border-bottom: none;
   color: #8a8a8a;
   font: 500 16px/1.35 Poppins,Helvetica Neue,Verdana,Arial,sans-serif;
 }
 .block:not(.block-static-block) .block-collapsible-nav-title strong,
 .block:not(.block-static-block) .block-title strong {
   font: 400 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  color: #639537
   /*border-bottom: 3px solid #121212;*/
 }
 
@@ -4414,5 +4415,3 @@ form .legend {
 margin-top:5px;
 }
 .cdz-main-menu.default-menu .groupmenu .groupmenu-drop li{margin:0px 0;}
-
-.ftop-newsletter .block-title      {border: medium none;}
