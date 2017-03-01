@@ -17,7 +17,7 @@
 		<div class="block-content">
 			<ul id="<?php echo $this->getListId() ?>">
 			<?php foreach($posts as $post): ?>
-				<?php $datas = $post->getFeaturedImage();
+				<?php $datas = $post->getEmbeddedImages();
                 echo "<img src='". $datas ."'/>"; ?>
 				<li class="item">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
