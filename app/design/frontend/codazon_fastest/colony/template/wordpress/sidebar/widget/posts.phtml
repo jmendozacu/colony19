@@ -1,0 +1,20 @@
+<?php $posts = Mage::getResourceModel('wordpress/post_collection')
+	->addPostTypeFilter('post')
+	->setOrderByPostDate()
+	->addIsViewableFilter()
+	->setPageSize(5)
+	->load(); ?>
+<?php if (count($posts) > 0): ?>
+	<ul>
+		<?php foreach($posts as $post): ?>
+			<li>
+				<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
+				<?php if ($image = $post->getFeaturedImage()): ?>
+					<a href="<?php echo $post->getPermalink() ?>">
+						<img src="<?php echo $post->getAvailableImage() ?>" src="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
+					</a>
+				<?php endif; ?>
+				<p><?php echo $post->getPostExcerpt(40) ?></p></li>
+		<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
