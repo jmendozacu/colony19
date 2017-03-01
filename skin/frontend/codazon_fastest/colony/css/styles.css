@@ -11194,7 +11194,7 @@ table colgroup, .data-table colgroup {
   .products-grid .product-item-info .cdz-buttons-container {
     text-align: center;
     display: table;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
     margin-bottom: 10px;
   }
