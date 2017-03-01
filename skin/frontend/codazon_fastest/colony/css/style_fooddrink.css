@@ -1040,7 +1040,6 @@ input.input-text,
 .newsletter-style02 .block.block-subscribe {
   margin-bottom: 20px;
 }
-.ftop-newsletter .block-title      {border: medium none;}
 .footer-newsletter-02 .ftop-newsletter .block.block-subscribe .block-content {
   margin: 0;
   width: auto;
@@ -4415,3 +4414,5 @@ form .legend {
 margin-top:5px;
 }
 .cdz-main-menu.default-menu .groupmenu .groupmenu-drop li{margin:0px 0;}
+
+.ftop-newsletter .block-title      {border: medium none;}
