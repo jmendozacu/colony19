@@ -12,7 +12,10 @@
 
                 <?php
                 $image = $post->getFeaturedImage();
-                if (!empty($image) && !is_null($image)): ?>
+                if (!empty($image) && !is_null($image)):
+                    Mage::log($post->getFeaturedImage(),0,"debug_wp_post.log")
+                    ?>
+
 					<a href="<?php echo $post->getPermalink() ?>">
 						<img src="<?php echo $this->escapeHtml($post->getFeaturedImage()) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
 					</a>
