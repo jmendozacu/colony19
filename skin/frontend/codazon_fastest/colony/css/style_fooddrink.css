@@ -1040,7 +1040,7 @@ input.input-text,
 .newsletter-style02 .block.block-subscribe {
   margin-bottom: 20px;
 }
-
+.ftop-newsletter .block-title      {border: medium none;}
 .footer-newsletter-02 .ftop-newsletter .block.block-subscribe .block-content {
   margin: 0;
   width: auto;
@@ -4098,7 +4098,7 @@ form .legend {
 * ============================================ */
 .nav-tabs,
 .nav.nav-tabs {
-  border-bottom-color: #ebebeb;
+  border: medium none;
 }
 
 .nav-tabs .nav-tab-item.active .switch {
@@ -4143,6 +4143,7 @@ form .legend {
 .nav-tabs .nav-tab-item h2 {
   font: 500 14px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
 }
+.nav-tab-content .tab-content {display:none;}
 
 /* ============================================ *
 * Codazon_Tab style
