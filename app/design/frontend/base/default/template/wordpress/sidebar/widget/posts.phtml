@@ -19,7 +19,7 @@
 			<?php foreach($posts as $post): ?>
                 <pre>
 				<?php $datas = $post->getAuthor();
-                echo $datas; ?>
+                echo $this->htmlEscape($datas); ?>
                     </pre>
 				<li class="item">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
