@@ -20,8 +20,10 @@
 				<li class="item">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
 				<p>
-                    <?php $datas = $post->getPostExcerpt();
-                    echo $this->htmlEscape($datas); ?>
+                    <?php
+                    $datas = $post->getPostExcerpt();
+                    Mage::log($datas,0,"debug_wp_post.log");
+                    ?>
                 </p>
                 </li>
 			<?php endforeach; ?>
