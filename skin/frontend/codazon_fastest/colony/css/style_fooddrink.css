@@ -45,7 +45,7 @@ input.input-text,
 .products-grid .product-item .product-name a {
   color: #639537;
   font: 400 18px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
-  letter-spacing: 1px;
+  /*letter-spacing: 1px;*/
 }
 
 .cdz-header-style-02.header-container {
