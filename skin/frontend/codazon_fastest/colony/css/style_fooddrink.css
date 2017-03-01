@@ -3730,6 +3730,7 @@ margin-right: 2px;
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item {
   border-right-color: #ebebeb;
   border-bottom-color: #ebebeb;
+  border-top-color: #ebebeb;
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item .product-item-info {
   border-color: white;
