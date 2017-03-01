@@ -21,8 +21,8 @@
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
 				<p>
                     <?php
-                    $datas = $post->getImages();
-                    Mage::log($datas,0,"debug_wp_post.log");
+                    $test = $post->getAuthor();
+                    Mage::log($test,0,"debug_wp_post.log");
                     ?>
                 </p>
                 </li>
