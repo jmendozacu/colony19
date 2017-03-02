@@ -176,6 +176,7 @@
     float: left;
     padding: 0 0 0 20px;
     width: 75%;
+    border : 1px solid #e0e8f3;
 }
 
 .agentom-wp-recent-post-home{
