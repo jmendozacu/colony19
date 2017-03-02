@@ -17,7 +17,7 @@
                 $image = $post->getFeaturedImage();
                 if (!empty($image) && !is_null($image)):?>
 					<a href="<?php echo $post->getPermalink() ?>">
-						<img src="<?php echo $this->escapeHtml($post->getFeaturedImage()->getData('guid')) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
+						<img class="agentom-wp-image" src="<?php echo $this->escapeHtml($post->getFeaturedImage()->getData('guid')) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
 					</a>
 				<?php endif; ?>
 				<p><?php echo $post->getPostExcerpt(40) ?></p>
