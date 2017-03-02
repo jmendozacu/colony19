@@ -167,16 +167,17 @@
 /** HOME WP RECENTS POSTS **/
 
 #agentom-facebook-content{
-    width : 25%;
-    float: left;
     border: 1px solid #e0e8f3;
+    float: left;
+    margin-right: 10px;
+    width: 25%;
 }
 
 #agentom-wp-content{
+    border: 1px solid #e0e8f3;
     float: left;
     padding: 0 0 0 20px;
-    width: 75%;
-    border : 1px solid #e0e8f3;
+    width: 73%;
 }
 
 .agentom-wp-recent-post-home{
