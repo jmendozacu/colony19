@@ -181,3 +181,7 @@
     float:left;
     width : 20%;
 }
+
+.agentom-wp-recent-post-home .agentom-wp-image{
+    width : 100px;
+}
