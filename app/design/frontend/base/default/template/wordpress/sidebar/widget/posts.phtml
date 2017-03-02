@@ -19,12 +19,6 @@
 			<?php foreach($posts as $post): ?>
 				<li class="item">
 					<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
-				<p>
-                    <?php
-                    $test = $post->getPostContent('excerpt');
-                    Mage::log($test,0,"debug_wp_post.log");
-                    ?>
-                </p>
                 </li>
 			<?php endforeach; ?>
 			</ul>

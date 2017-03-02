@@ -163,3 +163,9 @@
 .product-image-moreview {
 	margin-bottom:15px;
 }
+
+/** HOME WP RECENTS POSTS **/
+.agentom-wp-recent-post-home{
+    float:left;
+    width : 25%;
+}

@@ -2,12 +2,11 @@
 	->addPostTypeFilter('post')
 	->setOrderByPostDate()
 	->addIsViewableFilter()
-	->setPageSize(5)
+	->setPageSize(4)
 	->load(); ?>
 <?php if (count($posts) > 0): ?>
-	<ul>
 		<?php foreach($posts as $post): ?>
-			<li>
+			<div class="agentom-wp-recent-post-home">
 				<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
 
                 <?php
@@ -17,7 +16,7 @@
 						<img src="<?php echo $this->escapeHtml($post->getFeaturedImage()->getData('guid')) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
 					</a>
 				<?php endif; ?>
-				<p><?php echo $post->getPostExcerpt(40) ?></p></li>
+				<p><?php echo $post->getPostExcerpt(40) ?></p>
+			</div>
 		<?php endforeach; ?>
-	</ul>
 <?php endif; ?>
