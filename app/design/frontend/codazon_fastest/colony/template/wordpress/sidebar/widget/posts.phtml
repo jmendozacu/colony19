@@ -12,7 +12,7 @@
     <div id="agentom-wp-content">
 		<?php foreach($posts as $post): ?>
 			<div class="agentom-wp-recent-post-home">
-				<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
+				<a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
 
                 <?php
                 $image = $post->getFeaturedImage();
