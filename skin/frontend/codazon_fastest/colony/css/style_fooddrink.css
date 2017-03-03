@@ -34,7 +34,7 @@ input.input-text,
   padding: 0;
 }
 .content-breadcrums .menu-vertical-subpage, .content-breadcrums .menu-breadcrumbs {
-  /*padding-top: 20px;*/
+  padding-top: 10px;
   margin-left: 15px;
 }
 
@@ -4420,7 +4420,7 @@ form .legend {
 }
 
 .cart-icon .cart-qty {
-  left:22px
+  /*left:22px*/
 }
 
 .col-sm-6.cdz-header-cart {
