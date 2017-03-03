@@ -187,6 +187,11 @@
     font-size:12px;
 }
 
+.agentom-wp-recent-post-home a{
+    color : black;
+    font-weight: bold;
+}
+
 .agentom-wp-recent-post-home .agentom-wp-image{
     margin-left: 8px;
     width: 130px;
