@@ -184,11 +184,12 @@
     float: left;
     margin-right: 15px;
     width: 23%;
+    font-size:12px;
 }
 
 .agentom-wp-recent-post-home .agentom-wp-image{
     margin-left: 8px;
-    width: 170px;
+    width: 130px;
 }
 
 .agentom-wp-readmore{
@@ -197,5 +198,8 @@
 }
 
 .agentom-wp-readmore-link{
-    color : #f8941c;
+    color: #f8941c;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
 }
