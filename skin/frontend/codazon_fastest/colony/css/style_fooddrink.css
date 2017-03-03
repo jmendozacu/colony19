@@ -703,8 +703,8 @@ input.input-text,
 }
 .cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a {
   color: white;
-  background-color: #B0D235;
-  border-color: #b0d235;
+  background-color: #7cba45;
+  border-color: #7cba45;
   display: inline-block;
   border: 2px solid;
   min-width: 34px;
@@ -1981,7 +1981,7 @@ fieldset[disabled] .block-search .button {
     float: right;
     margin-bottom: 0 !important;
     position: relative;
-    width: 380px;
+    width: 300px;
     z-index: 4;
 }
 
