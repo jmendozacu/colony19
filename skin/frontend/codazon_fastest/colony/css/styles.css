@@ -16109,13 +16109,12 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .customer-address-index .col-left.sidebar,
 .sales-order-view .col-left.sidebar,
 .tag-customer-index .col-left.sidebar {
-  width: 18%;
-  right: 80%;
-  height: 100%;
-  padding: 20px 20px;
-  position: fixed;
   left: 0;
+  padding: 20px;
+  position: fixed;
   right: auto;
+  width: 18%;
+  z-index: 1000;
 }
 .customer-account-index .col-main,
 .customer-account-edit .col-main,
@@ -16131,7 +16130,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .customer-address-index .col-main,
 .sales-order-view .col-main,
 .tag-customer-index .col-main {
-  width: 78%;
+  width: 60%;
   padding: 20px 0;
   left: 20%;
   float: left;
