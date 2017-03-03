@@ -714,10 +714,10 @@ input.input-text,
   text-align: center;
 }
 .cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a .fa {
-  font-size: 1.4em;
+  font-size: 1em;
 }
 .cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a .fa:before {
-  font-size: 1.4em;
+  font-size: 1.3em;
 }
 .content-breadcrums .menu-breadcrumbs .breadcrumbs {
   margin: 0;
