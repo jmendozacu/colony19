@@ -713,6 +713,12 @@ input.input-text,
   margin: 0px 5px 0 0;
   text-align: center;
 }
+.cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a .fa {
+  font-size: 1.4em;
+}
+.cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a .fa:before {
+  font-size: 1.4em;
+}
 .content-breadcrums .menu-breadcrumbs .breadcrumbs {
   margin: 0;
 }
