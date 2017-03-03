@@ -4468,3 +4468,10 @@ margin-top:5px;
     max-height: 65px;
     max-width: 100%;
 }
+.footer-box .logo-footer {
+	max-width:190px;
+}
+.cdz-mobile-header-menu .cdz-mobile-logo img {
+    height: 65px;
+    max-width: 100%;
+}	
