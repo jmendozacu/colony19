@@ -704,9 +704,16 @@ input.input-text,
 .cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a {
   color: white;
   background-color: #B0D235;
-  /*border-color: white;
-  border-width: 1px;
-  border-radius: 0;*/
+  border-color: #b0d235;
+  display: inline-block;
+  border: 2px solid;
+  min-width: 34px;
+  min-height: 30px;
+  border-radius: 6px;
+  line-height: 30px;
+  padding: 0;
+  margin: 0px 5px 0 0;
+  text-align: center;
 }
 .content-breadcrums .menu-breadcrumbs .breadcrumbs {
   margin: 0;
