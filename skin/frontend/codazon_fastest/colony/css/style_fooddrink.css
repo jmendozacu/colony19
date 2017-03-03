@@ -1985,7 +1985,7 @@ fieldset[disabled] .block-search .button {
     float: right;
     margin-bottom: 0 !important;
     position: relative;
-    width: 380px;
+    width: 100%;
     z-index: 4;
 }
 
