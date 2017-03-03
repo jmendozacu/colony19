@@ -4464,3 +4464,7 @@ margin-top:5px;
   font-weight: normal;
   line-height: 1;
 }
+.header .logo img {
+    max-height: 65px;
+    max-width: 100%;
+}
