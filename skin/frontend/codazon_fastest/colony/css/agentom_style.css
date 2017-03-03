@@ -174,18 +174,18 @@
 }
 
 #agentom-wp-content{
+    border: 1px solid #e0e8f3;
+    float: left;
+    padding: 0 0 0 20px;
+    width: 73%;
+}
+
+.agentom-wp-recent-post-home{
     float: left;
     font-size: 12px;
     margin-right: 15px;
     padding: 10px 0 0;
     width: 23%;
-}
-
-.agentom-wp-recent-post-home{
-    float: left;
-    margin-right: 15px;
-    width: 23%;
-    font-size:12px;
 }
 
 .agentom-wp-recent-post-home .agentom-wp-post-title{
