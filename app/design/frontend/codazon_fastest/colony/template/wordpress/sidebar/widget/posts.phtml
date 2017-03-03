@@ -8,8 +8,8 @@
     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
 </div>
 <?php if (count($posts) > 0): ?>
+	<h2><?php echo $this->__("Recent posts from the blog"); ?></h2>
     <div id="agentom-wp-content">
-        <h2><?php echo $this->__("Recent posts from the blog"); ?></h2>
 		<?php foreach($posts as $post): ?>
 			<div class="agentom-wp-recent-post-home">
 				<a href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
