@@ -4474,4 +4474,9 @@ margin-top:5px;
 .cdz-mobile-header-menu .cdz-mobile-logo img {
     height: 65px;
     max-width: 100%;
+}
+.cdz-main-menu .groupmenu li.level0 {
+  display: inline-block;
+  float: none;
+  position: relative;
 }	
