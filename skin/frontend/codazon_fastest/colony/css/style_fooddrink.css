@@ -701,7 +701,13 @@ input.input-text,
   border-width: 1px;
   border-radius: 0;*/
 }
-
+.cdz-header-bottom-content .cdz-main-menu.cdz-main-menu-horizontal .social a {
+  color: white;
+  background-color: #B0D235;
+  /*border-color: white;
+  border-width: 1px;
+  border-radius: 0;*/
+}
 .content-breadcrums .menu-breadcrumbs .breadcrumbs {
   margin: 0;
 }
