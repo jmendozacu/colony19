@@ -4440,3 +4440,26 @@ form .legend {
 margin-top:5px;
 }
 .cdz-main-menu.default-menu .groupmenu .groupmenu-drop li{margin:0px 0;}
+
+.cdz-mobile-header-menu .cdz-menu-responsive .icon-bar {
+  background: #7cba45 none repeat scroll 0 0;
+  border-radius: 2px;
+  display: block;
+  height: 4px;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  top: 25px;
+  transition: top 0.2s ease 0.4s, left 0.2s ease 0.4s, opacity 0.2s ease 0.4s, transform 0.2s ease 0.2s;
+  width: calc(100% - 20px);
+}
+.cdz-mobile-header-menu .cdz-mobile-search .cdz-search-trigger::before {
+  color: #7cba45;
+  content: "";
+  display: inline-block;
+  font-family: FontAwesome;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
