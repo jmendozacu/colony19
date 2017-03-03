@@ -16061,7 +16061,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .sales-order-view .footer,
 .tag-customer-index .header-container,
 .tag-customer-index .footer {
-  display: none;
+  /*display: none;*/
 }
 .customer-account-index .main-container .col-main-containter,
 .customer-account-edit .main-container .col-main-containter,
