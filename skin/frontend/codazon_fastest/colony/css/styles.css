@@ -16130,7 +16130,7 @@ fieldset[disabled] .mobile-search-wrapper .ui-dialog .button {
 .customer-address-index .col-main,
 .sales-order-view .col-main,
 .tag-customer-index .col-main {
-  width: 78%;
+  width: 60%;
   padding: 20px 0;
   left: 20%;
   float: left;
