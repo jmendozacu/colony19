@@ -22,6 +22,7 @@
 					</a>
 				<?php endif; ?>
 				<p><?php echo $post->getPostExcerpt(40) ?></p>
+				<p class="agentom-wp-readmore"><a class="agentom-wp-readmore-link" href="<?php echo $post->getPermalink() ?>"><?php echo __("Read +"); ?></a></p>
 			</div>
 		<?php endforeach; ?>
     </div>
