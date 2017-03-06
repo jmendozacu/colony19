@@ -3765,7 +3765,7 @@ margin-right: 2px;
   color: #639537;
   font: 500 16px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-align: left;
-  letter-spacing: 2px;
+  /*letter-spacing: 2px;*/
 }
 .col1-layout .codazon-filter-style-04 .products-grid .product-items:not(.owl-carousel) .product-item:hover .product-item-info {
   border-color: #b0d235;
