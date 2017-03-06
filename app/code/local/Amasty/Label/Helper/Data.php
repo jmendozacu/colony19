@@ -8,12 +8,13 @@
 class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
 {
     protected $_labels = null;
-    protected $_sizes  = array();
 
     public function getLabels($product, $mode = 'category', $useJs = false)
     {
         $html = '';
-
+        if (! $this->_validateProduct($product)) {
+            return $html;
+        }
         $applied = false;
         $labelCollection = $this->_getCollection();
         if (0 < $labelCollection->getSize()) {
@@ -41,6 +42,19 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
         return $html;
     }
 
+    protected function _validateProduct($product) {
+        $id = $product->getId();
+        $ids = Mage::registry('amlabel_scripts_ids');
+
+        if ($id && is_array($ids) && in_array($id, $ids)) {
+            return false;
+        }
+        $ids[] = $id;
+        Mage::unregister('amlabel_scripts_ids');
+        Mage::register('amlabel_scripts_ids', $ids);
+        return true;
+    }
+
     protected function _getCollection()
     {
         if (is_null($this->_labels)) {
@@ -57,46 +71,15 @@ class Amasty_Label_Helper_Data extends Mage_Core_Helper_Abstract
 
     protected function _generateHtml($label)
     {
-        $imgUrl = $label->getImageUrl();
+        $block = Mage::app()->getLayout()->createBlock(
+            'amlabel/label',
+            'amlabel_label_block',
+            array(
+                'label' => $label
+            )
+        );
 
-        if (empty($this->_sizes[$imgUrl])) {
-            $this->_sizes[$imgUrl] = $label->getImageInfo();
-        }
-
-        $positionClass = $label->getCssClass();
-        $customStyle = $label->getStyle();
-
-        if ($label->getMode() == 'cat') {
-            $textStyle = $label->getCatTextStyle();
-            $imgWidth  = $label->getCatImageWidth();
-        } else {
-            $textStyle = $label->getProdTextStyle();
-            $imgWidth  = $label->getProdImageWidth();
-        }
-        $imgWidth  = ($imgWidth)? $imgWidth . '%': '';
-        if(!$imgWidth && array_key_exists('w', $this->_sizes[$imgUrl])) {
-            $imgWidth = $this->_sizes[$imgUrl]['w'];
-        }
-        $imgWidth  = ($imgWidth)? $imgWidth : 'auto';
-        
-        if(array_key_exists('h', $this->_sizes[$imgUrl]) && $this->_sizes[$imgUrl]['h']) {
-            $customStyle .= ' max-height: '. $this->_sizes[$imgUrl]['h'] . ';';
-        }
-
-        $customStyle .= ' max-width: 100%;';
-        if ($textStyle) {
-            $textStyle = 'style="' . $textStyle . '"';
-        }
-        
-        $backgroundImg = '; ';
-        if ($imgUrl) {
-            $backgroundImg = '; background: url(' . $imgUrl . ') no-repeat 0 0; ';
-        }
-        $textBlockStyle = 'style="width:' . $imgWidth . $backgroundImg . $customStyle . '"';
-        $html  = '<div class="amlabel-table2 top-left" ' . $label->getJs() . ' >';
-        $html .= '  <div class="amlabel-txt2 ' . $positionClass . '" ' . $textBlockStyle . ' ><div class="amlabel-txt" ' . $textStyle . '>' . $label->getText() . '</div></div>';
-        $html .= '</div>';
-
+        $html = $block->setLabel($label)->toHtml();
         return $html;
     }
 

@@ -6,7 +6,12 @@
  */
 class Amasty_Label_Model_Label extends Mage_Core_Model_Abstract
 {
-    protected $_info = array();
+    /**
+     * Label cache tag
+     */
+    const CACHE_TAG      = 'amasty_label';
+    protected $_cacheTag = 'amasty_label';
+    protected $_info     = array();
     
     public function _construct()
     {

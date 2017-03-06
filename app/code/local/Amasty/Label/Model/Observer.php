@@ -79,8 +79,9 @@ class Amasty_Label_Model_Observer
             if (!Mage::registry('amlabel_product_id_' . $id)) {
                 // add product ID info in output
                 Mage::register('amlabel_product_id_' . $id, true, true);
-                $html = $html = $observer->getTransport()->getHtml();
-                $observer->getTransport()->setHtml('<div class="price" id="amlabel-product-price-' . $id . '" style="display:none"></div>' . $html);
+                $html = $observer->getTransport()->getHtml();
+                $html = '<div class="price" id="amlabel-product-price-' . $id . '" style="display:none"></div>' . $html;
+
                 // add label for product
                 $product = $block->getProduct();
                 /*
@@ -97,6 +98,8 @@ class Amasty_Label_Model_Observer
                 if ($label) {
                     $this->addScript($id, addslashes($label));
                 }
+
+                $observer->getTransport()->setHtml($html);
             }
         }
 

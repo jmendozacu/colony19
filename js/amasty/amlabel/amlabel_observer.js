@@ -3,13 +3,15 @@ amlabel_product_ids     = [];
 Event.observe(document, 'dom:loaded', amlabel_init);
 
 function amlabel_init() {
-    $$(amlabel_selector).each(function (element) {
-        amlabel_add_label(element);
-    });
+    if('undefined' != typeof(amlabel_selector)) {
+        $$(amlabel_selector).each(function (element) {
+            amlabel_add_label(element);
+        });
+        amLabelSetCorrectHeight();
+    }
 }
 
 function amlabel_add_label(element){
-    var product_ar = [];
     var product_id = 0;
     var element_id = 0;
     var element_with_id = 0;
@@ -18,7 +20,7 @@ function amlabel_add_label(element){
 
     do {
         // find price block
-        element_with_id = element.up(n).down('.price');
+        element_with_id = element.up(n).down('[id*="-price-"]');
         // find block with id
         if (element_with_id) {
             // get element ID
@@ -40,22 +42,24 @@ function amlabel_add_label(element){
 
     // if element have any ID
     if (element_id) {
-        // direct product lists
-        product_ar = element_id.split('-');
-        product_id = product_ar[product_ar.length - 1];
-        // uncommon product lists
-        if (!parseInt(product_id)) {
-            product_id = product_ar[product_ar.length - 2];
+        element_id = parseInt(element_id.match(/\d+/).first());
+        if(element_id > 0 && element_id < 10000000) {
+            product_id = element_id;
         }
     }
 
-    if (product_id > 0 && amlabel_product_ids[product_id]) {
+    if (product_id > 0
+        && amlabel_product_ids[product_id]
+        && !$(element).hasClassName('amlabel-observed')//fix for ajax scroll-duplicated items
+    ) {
         // check on zoom elements before insert
         var classes = $w(element.className).join();
         if (classes.indexOf('zoom-') > 0) {
-            $(element).down().setStyle({'position': 'relative'}).insert(amlabel_product_ids[product_id].replace(/\\"/g, '"'));
-        } else {
-            $(element).setStyle({'position': 'relative'}).insert(amlabel_product_ids[product_id].replace(/\\"/g, '"'));
+            element = $(element).down();
         }
+        var html = amlabel_product_ids[product_id];
+        html = html.replace(/\\"/g, '"');
+        $(element).setStyle({'position': 'relative'}).insert(html);
+        $(element).addClassName('amlabel-observed');
     }
 }
