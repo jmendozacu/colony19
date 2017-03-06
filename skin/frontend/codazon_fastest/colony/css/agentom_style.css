@@ -44,6 +44,7 @@
 
 .image-logo_menu{
     margin : auto;
+	max-height: 60px;
 }
 
 .level-top.parent.level0{
