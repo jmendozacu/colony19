@@ -3461,7 +3461,7 @@ text-transform: none;
   border-radius: 30px;
   padding: 8px 15px 6px 15px;
   margin: 0 auto;
-  font: 400 12px/1.20 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+  font: 400 12px/1.10 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
   text-decoration: none;
   margin-left: 10px;
   letter-spacing: 0.5px;
@@ -4476,7 +4476,7 @@ margin-top:5px;
     max-width: 100%;
 }
 .cdz-main-menu .groupmenu li.level0 {
-  display: inline-block;
+  display: table-cell;
   float: none;
   position: relative;
 }	
