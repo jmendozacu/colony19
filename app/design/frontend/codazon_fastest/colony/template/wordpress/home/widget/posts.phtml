@@ -4,15 +4,15 @@
 	->addIsViewableFilter()
 	->setPageSize(4)
 	->load(); ?>
-<div id="agentom-facebook-content">
-    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
-</div>
-<?php if (count($posts) > 0): ?>
     <div class="agentom-block-title-orange">
         <p class="agentom-title-h2">
             <span><?php echo $this->__("Recent posts from the blog"); ?></span>
         </p>
     </div>
+<div id="agentom-facebook-content">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
+</div>
+<?php if (count($posts) > 0): ?>
     <div id="agentom-wp-content">
 		<?php foreach($posts as $post): ?>
 			<div class="agentom-wp-recent-post-home">
