@@ -187,7 +187,9 @@
 .agentom-wp-recent-post-home .agentom-wp-post-title{
     color : black;
 }
-
+.agentom-wp-recent-post-home .agentom-wp-image {
+    margin: 10px;
+}
 .agentom-wp-recent-post-home .agentom-wp-image{
     margin-left: 8px;
     width: 130px;
