@@ -4,8 +4,8 @@
 	->addIsViewableFilter()
 	->setPageSize(3)
 	->load(); ?>
-<div class="agentom-homepage-wp-content">
-<div id="agentom-facebook-content">
+<div class="row">
+<div id="col-sm-6">
     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
 </div>
 <?php if (count($posts) > 0): ?>
@@ -18,7 +18,6 @@
 		<?php foreach($posts as $post): ?>
 			<div class="col-sm-6">
 				<h4><a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a></h4>
-
                 <?php
                 $image = $post->getFeaturedImage();
                 if (!empty($image) && !is_null($image)):?>
