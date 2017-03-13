@@ -169,9 +169,10 @@
 
 #agentom-facebook-content{
     border: 1px solid #e0e8f3;
+    float: left;
 }
 
-#agentom-wp-content{
+#agentom-homepage-wp-content{
     border: 1px solid #e0e8f3;
     padding: 0 0 0 20px;
 }

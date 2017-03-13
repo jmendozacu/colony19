@@ -4,16 +4,17 @@
 	->addIsViewableFilter()
 	->setPageSize(3)
 	->load(); ?>
-    <div class="agentom-block-title-orange">
-        <p class="agentom-title-h2">
-            <span><?php echo $this->__("Recent posts from the blog"); ?></span>
-        </p>
-    </div>
-<div id="agentom-facebook-content col-sm-8">
+<div class="agentom-homepage-wp-content">
+<div id="agentom-facebook-content">
     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
 </div>
 <?php if (count($posts) > 0): ?>
     <div id="agentom-wp-content col-sm-16">
+        <div class="agentom-block-title-orange">
+            <p class="agentom-title-h2">
+                <span><?php echo $this->__("Recent posts from the blog"); ?></span>
+            </p>
+        </div>
 		<?php foreach($posts as $post): ?>
 			<div class="col-sm-6">
 				<h4><a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a></h4>
@@ -31,3 +32,4 @@
 		<?php endforeach; ?>
     </div>
 <?php endif; ?>
+</div>
