@@ -190,6 +190,7 @@
 }
 .agentom-wp-image {
     margin: 10px 10px;
+	width: 100%;
 }
 .agentom-wp-recent-post-home .agentom-wp-image{
     margin-left: 8px;
