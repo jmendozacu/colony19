@@ -39,6 +39,7 @@
         <?php
         $attr_value = $_helper->productAttribute($_product, $_data['value'], $_data['code']);
         if($attr_value != "No" && $attr_value != "Non" && !empty($attr_value)): ?>
+            <?php echo $_data['code']; ?>
             <?php echo $attr_value;?>
         <?php endif; ?>
     <?php endforeach; ?>
