@@ -278,7 +278,7 @@ endforeach;
         <?php echo $this->getChildHtml('product_additional_data') ?>
     </div>
     <?php
-        $vignette = $_product->getAttribute('vignette');
+        $vignette = $_product->getVignette();
         echo $vignette;
     ?>
     <?php echo $this->getChildHtml('catalog.product.related') ?>
