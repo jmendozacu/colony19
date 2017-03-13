@@ -1,0 +1,127 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+	$_imgHelper = $this->helper('catalog/image');
+	$gallery = 	$this->getGalleryImages();
+	$_baseImg = $_imgHelper->init($_product, 'image');
+	$_themeHelper = $this->helper('themeframework');
+	$minWidth = 450;
+	$w = max($minWidth, $_themeHelper->getConfig('codazon_settings/product_view/base_image_width') );
+	if($_themeHelper->getConfig('codazon_settings/product_view/keep_image_aspect_ratio')){
+		$h = round(($w/$_baseImg->getOriginalWidth())*$_baseImg->getOriginalHeight());
+	}else{
+		$h = $_themeHelper->getConfig('codazon_settings/product_view/base_image_height');	
+	}
+	$wSmall = $_themeHelper->getConfig('codazon_settings/product_view/more_view_image_width');
+	$hSmall = $_themeHelper->getConfig('codazon_settings/product_view/more_view_image_height');
+	$thumbStyle = ($_themeHelper->getConfig('codazon_settings/product_view/more_view_thumb_style')==1)?'vertical':'horizontal';
+?>
+<div class="row">
+<div class="product-image-moreview col-sm-24" >
+    <div class="more-views">
+        <h2><?php echo $this->__('More Views') ?></h2>
+        <div class="fwImage">
+            <div id="viewmore-slider" class="royalSlider rsUni product-image-thumbs cdz-zoom no-fullscreen">
+            	<?php
+					$_baseBigImg = (string)$_imgHelper->init($_product, 'image')->resize(null);
+					$_baseMainImg = (string)$_imgHelper->init($_product, 'image')->resize($w, $h);
+					$_baseSmallImg = (string)$_imgHelper->init($_product, 'image')->resize($wSmall,$hSmall);
+				?>
+				<div class="amlabel-div">
+					<?php echo Mage::helper('amlabel')->getLabels($_product,'product',true) ?>
+	            <div class="rsContent">
+                	<a class="rsImg"  href="<?php echo $_baseMainImg ?>"
+                    data-rsBigImg="<?php echo $_baseBigImg ?>" />
+	                <img data-rsmainimg="<?php echo $_baseMainImg ?>"   class="rsTmb" src="<?php echo $_baseSmallImg ?>" alt="<?php echo $this->getImageLabel() ?>" />
+                    </a>
+                    <div class="magnify" style="background: url('<?php echo $_baseMainImg; ?>') no-repeat; width:225px; height:225px;"></div>
+                </div>
+					</div>
+			<?php if( count($gallery) > 0 ): ?>
+            <?php $_baseImg = (string)$_imgHelper->init($_product, 'image'); ?>
+            <?php foreach ($gallery as $_image): ?>
+				<?php
+					if( $_baseImg == (string)$_imgHelper->init($_product, 'image', $_image->getFile()) ){
+						continue;
+					}
+					$_img = $_imgHelper->init($_product, 'thumbnail', $_image->getFile());
+					$_bigImg = (string)$_img->resize(null);
+					$_mainImg = (string)$_img->resize($w, $h);
+					$_smallImg = (string)$_img->resize($wSmall,$hSmall);
+                ?>
+                <div class="rsContent">
+                    <a class="rsImg"  href="<?php echo $_mainImg ?>"
+                        data-rsbigimg="<?php echo $_bigImg ?>" />
+                        <img data-rsmainimg="<?php echo $_mainImg ?>" class="rsTmb" src="<?php echo $_smallImg ?>" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
+                    </a>
+                    <div class="magnify" style="background: url('<?php echo $_mainImg; ?>') no-repeat; width:225px; height:225px;"></div>
+                </div>
+            <?php endforeach; ?> 
+            <?php endif ?>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+(function( $ ) {
+	$(window).load(function() {	
+		 setUpMediaSlider('#viewmore-slider', '<?php echo $thumbStyle ?>');
+	});
+})( jQuery );
+</script>
+<script>
+if(typeof ConfigurableMediaImages !== 'undefined'){
+	ConfigurableMediaImages.updateImage = function(el) {
+		var select = $j(el);
+		var label = select.find('option:selected').attr('data-label');
+		var productId = optionsPrice.productId;
+		var selectedLabels = new Array();
+		$j('.product-options .super-attribute-select').each(function() {
+			var $option = $j(this);
+			if($option.val() != '') {
+				selectedLabels.push($option.find('option:selected').attr('data-label'));
+			}
+		});
+		var swatchImageUrl = ConfigurableMediaImages.getSwatchImage(productId, label, selectedLabels);
+		if(!ConfigurableMediaImages.isValidImage(swatchImageUrl)) {
+			return;
+		}
+		var swatchImage = ConfigurableMediaImages.getImageObject(productId, swatchImageUrl);
+		$j(window).trigger('swatchUpdateImage',[swatchImageUrl]);
+	};
+}
+</script>
+<?php echo $this->getChildHtml('after'); ?>

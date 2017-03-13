@@ -1,0 +1,207 @@
+.clear{
+    clear: both;
+}
+
+/** HOME PAGE BLOCKSTATIC CCS */
+.agentom-block-title-orange{
+    border-bottom: 6px solid orange;
+    color: lightgrey;
+    font-size: 1.8em;
+    font-style: italic;
+    height: 40px;
+    margin: 0 0 15px;
+    width: 100%;
+}
+
+.agentom-block-title-green{
+    border-bottom: 6px solid green;
+    color: lightgrey;
+    font-size: 1.8em;
+    font-style: italic;
+    height: 40px;
+    margin: 0 0 15px;
+    width: 100%;
+}
+
+/** MENU CSS DESKTOP **/
+.agentom-tel{
+    font-size: 13px !important;
+    font-weight: initial !important;
+    margin-top: 7px !important;
+    text-transform: inherit !important;
+}
+
+.agentom-menu-1{
+    margin-top : 35px;
+}
+
+.search-input-wrap{
+    margin-top : 26px;
+}
+.cdz-mobile-search. .search-input-wrap {
+	margin-top:0px;
+}
+
+.image-logo_menu{
+    margin : auto;
+	max-height: 60px;
+}
+
+.level-top.parent.level0{
+    text-align : center;
+    width : 196px;
+}
+
+.level-top.level1{
+    text-align: left;
+    display: block;
+    float: left;
+    text-align: left;
+    width: 280px;
+}
+
+.groupmenu-drop-content{
+    width: auto!important;
+}
+
+.groupmenu-drop{
+    width: 1000px;
+}
+
+/** CATEGORY **/
+
+.toolbar-bottom{
+    margin-top: -69px !important;
+    width: 53% !important;
+}
+
+.product-item-info{
+    min-height: 360px !important;
+}
+
+
+.agentom-addtocart-list{
+    cursor: pointer;
+    float: right;
+    margin: -85px 18px 0 0;
+    width: 32px !important;
+}
+
+.agentom-addtocart-list-homepage{
+    cursor: pointer;
+    float: right;
+    margin: -52px 18px 0 0;
+    width: 32px !important;
+}
+
+.block-related .agentom-addtocart-list{
+    cursor: pointer;
+    float: right;
+    margin: -50px 18px 0 0;
+    width: 32px !important;
+}
+.availability{
+    text-align: left;
+}
+
+/** PRODUIT **/
+.add-to-box{
+    float : left;
+}
+
+.agentom-float-left-product-details{
+    width: 50%;
+    float: left;
+    padding-left: 15px;
+}
+
+.agentom-label{
+    margin: 10px 10px 0 0;
+    float: left;
+}
+
+.agentom-qty-cart{
+    float: left;
+}
+
+.agentom-addtocart-button{
+    float: left;
+}
+
+.agentom-input-text-qty, .decrease, .increase{
+    border: none !important;
+}
+
+.agentom-addtocart-product{
+    margin: 4px 0 0 0;
+    cursor: pointer;
+}
+
+.agentom-cart-product-detail{
+    width:auto !important;
+    margin: 0 0 0 8px;
+}
+
+.agentom-percent-value{
+    color : orange;
+}
+
+.agentom-product-name-h2 {
+    color: #639537;
+    text-transform: none;
+    font: 300 20px/1.35 Poppins, Helvetica Neue, Verdana, Arial, sans-serif;
+}
+
+.agentom-product-attr-h2-inner{
+    font-size: 15px;
+    color : #000000;
+}
+
+.agentom-percent-text{
+    display: none;
+}
+
+.product-image-moreview {
+	margin-bottom:15px;
+}
+
+/** HOME WP RECENTS POSTS **/
+
+#agentom-facebook-content{
+    border: 1px solid #e0e8f3;
+}
+
+#agentom-wp-content{
+    border: 1px solid #e0e8f3;
+    padding: 0 0 0 20px;
+}
+
+.agentom-wp-recent-post-home{
+    float: left;
+    font-size: 12px;
+    margin-right: 15px;
+    padding: 10px 0 0;
+    width: 23%;
+}
+
+.agentom-wp-recent-post-home .agentom-wp-post-title{
+    color : black;
+}
+
+.agentom-wp-recent-post-home .agentom-wp-image{
+    margin-left: 8px;
+    width: 130px;
+    padding:10px;
+}
+
+.agentom-wp-readmore{
+    padding: 0 20px 0 0;
+    text-align: right;
+}
+
+.agentom-wp-readmore-link{
+    color: #f8941c;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+}

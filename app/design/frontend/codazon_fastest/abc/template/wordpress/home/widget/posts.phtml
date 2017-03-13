@@ -1,0 +1,33 @@
+<?php $posts = Mage::getResourceModel('wordpress/post_collection')
+	->addPostTypeFilter('post')
+	->setOrderByPostDate()
+	->addIsViewableFilter()
+	->setPageSize(4)
+	->load(); ?>
+    <div class="agentom-block-title-orange">
+        <p class="agentom-title-h2">
+            <span><?php echo $this->__("Recent posts from the blog"); ?></span>
+        </p>
+    </div>
+<div id="agentom-facebook-content col-sm-pull-8">
+    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
+</div>
+<?php if (count($posts) > 0): ?>
+    <div id="agentom-wp-content col-sm-16">
+		<?php foreach($posts as $post): ?>
+			<div class="agentom-wp-recent-post-home">
+				<a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
+
+                <?php
+                $image = $post->getFeaturedImage();
+                if (!empty($image) && !is_null($image)):?>
+					<a href="<?php echo $post->getPermalink() ?>">
+						<img class="agentom-wp-image" src="<?php echo $this->escapeHtml($post->getFeaturedImage()->getData('guid')) ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>" />
+					</a>
+				<?php endif; ?>
+				<p><?php echo $post->getPostExcerpt(40) ?></p>
+				<p class="agentom-wp-readmore"><a class="agentom-wp-readmore-link" href="<?php echo $post->getPermalink() ?>"><?php echo __("Read +"); ?></a></p>
+			</div>
+		<?php endforeach; ?>
+    </div>
+<?php endif; ?>

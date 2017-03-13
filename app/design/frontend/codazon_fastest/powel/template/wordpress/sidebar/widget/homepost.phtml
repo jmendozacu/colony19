@@ -1,0 +1,13 @@
+<?php $posts = $this->getPosts() ?>
+<?php if (count($posts) > 0): ?>
+            <?php foreach($posts as $post): ?>
+                      <?php if ($featuredImage = $post->getFeaturedImage()){ ?>
+                        <a href="<?php echo $post->getPermalink() ?>">
+                             <div class="blog">
+                                <img src="<?php echo $featuredImage->getLargeImage();?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/>
+                            </div>
+                        </a>
+                    <?php }  ?>
+            <?php endforeach; ?>
+ 
+<?php endif; ?>

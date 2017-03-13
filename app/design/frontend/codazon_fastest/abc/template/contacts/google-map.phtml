@@ -1,0 +1,52 @@
+<?php
+	$_themeHelper = $this->helper('themeframework');
+	$zoom = $_themeHelper->getConfig('codazon_settings/contact_us/zoom')?$_themeHelper->getConfig('codazon_settings/contact_us/zoom'):10;
+	$address = $_themeHelper->getConfig('codazon_settings/contact_us/address');
+	$address = $address?$address:"6505 boulevard Henri-Bourassa, Montréal, Quebec, H1G2V5";
+	$storeName = nl2br(Mage::getStoreConfig('general/store_information/name'));
+	
+	
+	$configLat = $_themeHelper->getConfig('codazon_settings/contact_us/latitude');
+	$configLng = $_themeHelper->getConfig('codazon_settings/contact_us/longtitude');
+	if( ($configLat != '') && ($configLng != '') ){
+		$lat = $configLat; $lng = $configLng;
+	}else{
+		$mapJson = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.urlencode($address).'&sensor=false');
+		$mapObject = json_decode($mapJson);
+		$lat = $mapObject->results[0]->geometry->location->lat;
+		$lng = $mapObject->results[0]->geometry->location->lng; 
+	}
+	
+	$mapHeight = $_themeHelper->getConfig('codazon_settings/contact_us/map_height');
+	$mapHeight = $mapHeight?$mapHeight:300;
+	
+?>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.17&signed_in=true&key=AIzaSyByF5Th99QzkJtIhod9awRaDK2CGSNB43o"></script>
+<script type="text/javascript"> function initialize() {
+	var myLatlng = new google.maps.LatLng(<?php echo $lat?>, <?php echo $lng ?>);
+	var mapOptions = {
+		zoom: <?php echo $zoom ?>,
+		center: myLatlng
+	};
+	var map = new google.maps.Map(document.getElementById('cdz-google-map'), mapOptions);
+	var contentString = '<?php echo strip_tags($address) ?>';
+	var infowindow = new google.maps.InfoWindow({
+		content: contentString
+	});
+	var image = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'codazon_themeframework/images/gmap_icon.png' ?>';
+	var marker = new google.maps.Marker({
+		position: myLatlng,
+		map: map,
+		icon: image,
+		title: '<?php echo strip_tags($address) ?>'
+	});
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.open(map, marker);
+	});
+	}
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<div id="cdz-google-map" style="width: 100%; height: <?php echo $mapHeight ?>px"></div>
+<div class="contact-adress">
+	<?php echo $_themeHelper->getConfig('codazon_settings/contact_us/contact_info') ?>
+</div>

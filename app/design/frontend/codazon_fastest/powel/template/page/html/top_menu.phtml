@@ -1,0 +1,62 @@
+<?php
+$_themeHelper = $this->helper('themeframework');
+$html = '';
+$limit = $_themeHelper->getConfig('codazon_settings/header/default_menu_parent_items_count');
+$children = $menuTree->getChildren();
+$parentLevel = $menuTree->getLevel();
+$childLevel = is_null($parentLevel) ? 0 : $parentLevel + 1;
+$counter = 1;
+$childrenCount = $children->count();
+$parentPositionClass = $menuTree->getPositionClass();
+$itemPositionClassPrefix = $parentPositionClass ? $parentPositionClass . '-' : 'nav-';
+
+if($hasWrap){
+	$html .= '<nav class="cdz-main-menu cdz-main-menu-horizontal default-menu">';
+	$html .= '<ul class="groupmenu">';
+}
+if(!isset($options['lv'])){
+	$options['lv'] = 0;
+}else{
+	$options['lv']++;
+}
+
+foreach ($children as $child) {
+    $child->setLevel($childLevel);
+    $outermostClassCode = 'level'. $options['lv'];
+    $_hasChildren = ($child->hasChildren()) ? 'parent' : '';
+    $html .= '<li class="level-top '.$_hasChildren.' '.$outermostClassCode.'">';
+    if($child->getLogoMenu() != null && $child->getLogoMenu() != ''){
+        $html .= "<img class='image-logo_menu' src='". Mage::getBaseUrl('media') . "/catalog/category/" .  $child->getLogoMenu() ."' />";
+    }
+    $html .= '<a href="'. $this->getCategoryUrlById($child->getId()) .'" class="menu-link"><span>'. $this->escapeHtml($this->__($child->getName())) .'</span></a>';
+    $nextChildLevel = $childLevel + 1;
+    if ($child->hasChildren()) {
+		$html .= '<span class="cdz-menu-toggle"></span>';
+        if($child->getLevel()<3){
+            $html .= '<ul class="groupmenu-drop">';
+        }else{
+            $html .= '<ul class="agentom-submenu">';
+        }
+
+		$html .= '<div class="groupmenu-drop-content groupmenu-1">';
+        $html .=     $this->render($child, $childrenWrapClass,false,'',$options, true);
+		$html .= '</div>';
+        $html .= '</ul>';
+
+    }
+    $html .= '</li>';
+	$counter++;
+	if( $hasWrap&&($limit)&&($limit != $childrenCount) ){
+		if($counter > $limit){
+			$url = $this->getUrl('themeframework/category/index',array('id' => $menuTree->getId() ));
+			$html .= '<li class="level-top level0 last view-all vertical-level1"><a class="menu-link" href="'.$url.'"><span>'.$this->__('More').'</span></a></li>';
+			break;
+		}
+	}
+}
+if($hasWrap){
+	$html .= '</ul>';	
+	$html .= '</nav>';
+}
+
+return $html;
