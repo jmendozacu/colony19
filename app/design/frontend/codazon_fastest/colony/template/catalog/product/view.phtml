@@ -277,6 +277,10 @@ endforeach;
         <?php endfor ?>
         <?php echo $this->getChildHtml('product_additional_data') ?>
     </div>
+    <?php
+        $vignette = $_product->getAttribute('vignette');
+        echo $vignette;
+    ?>
     <?php echo $this->getChildHtml('catalog.product.related') ?>
     <?php echo $this->getChildHtml('upsell_products') ?>
 </div>
