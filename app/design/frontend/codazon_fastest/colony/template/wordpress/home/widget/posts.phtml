@@ -13,7 +13,7 @@
     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
 </div>
 <?php if (count($posts) > 0): ?>
-    <div id="agentom-wp-content">
+    <div id="agentom-wp-content col-sm-16">
 		<?php foreach($posts as $post): ?>
 			<div class="agentom-wp-recent-post-home">
 				<a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
