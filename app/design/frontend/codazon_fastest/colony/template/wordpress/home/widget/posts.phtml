@@ -9,13 +9,13 @@
             <span><?php echo $this->__("Recent posts from the blog"); ?></span>
         </p>
     </div>
-<div id="agentom-facebook-content col-sm-pull-8">
+<div id="agentom-facebook-content col-sm-8">
     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('home-page-facebook')->toHtml(); ?>
 </div>
 <?php if (count($posts) > 0): ?>
     <div id="agentom-wp-content col-sm-16">
 		<?php foreach($posts as $post): ?>
-			<div class="col-sm-pull-6">
+			<div class="col-sm-6">
 				<a class ="agentom-wp-post-title" href="<?php echo $post->getPermalink() ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
 
                 <?php
