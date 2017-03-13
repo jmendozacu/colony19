@@ -2,7 +2,7 @@
 .easycatalog-grid li { background: none; padding: 0; margin: 0; list-style: none; }
 .std .easycatalog-grid,
 .std .easycatalog-grid li { padding: 0; margin: 0; list-style: none; }
-.easycatalog-grid li.item { padding: 10px !important; float: left; box-sizing: border-box; }
+.easycatalog-grid li.item { padding: 10px !important; width:20%; float: left; box-sizing: border-box; }
 .easycatalog-grid .product-image { width: auto; height: auto; text-align: center; display: block; text-align: -moz-center; text-align: -webkit-center;}
 .easycatalog-grid img { width: auto; max-width: 100%; height: auto; border: 1px dotted #E0E0E0;}
 .easycatalogimg-cols-2 li.item { width: 50% !important; }
