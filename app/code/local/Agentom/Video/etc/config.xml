@@ -15,18 +15,21 @@
           </args>
       </video>
     </routers>
-      <rewrite>
-          <agentom_video_catalog_categorycontroller>
-              <from><![CDATA[#^/catalog/category/#]]></from> <!-- Mage_Catalog_CategoryController  -->
-              <to>/video/catalog_category/</to> <!-- Agentom_Video_Catalog_CategoryController  -->
-          </agentom_video_catalog_categorycontroller>
-          <agentom_video_catalog_productcontroller>
-              <from><![CDATA[#^/catalog/product/#]]></from> <!-- Mage_Catalog_ProductController  -->
-              <to>/video/catalog_product/</to> <!-- Agentom_Video_Catalog_ProductController  -->
-          </agentom_video_catalog_productcontroller>
-      </rewrite>
   </frontend>
   <global>
+      <routers>
+          <catalog>
+              <rewrite>
+                  <category>
+                      <to>/video/catalog_category</to>
+                      <override_action>true</override_action>
+                      <actions>
+                          <view><to>video/catalog_category/view</to></view>
+                      </actions>
+                  </category>
+              </rewrite>
+          </catalog>
+      </routers>
     <helpers>
       <video>
         <class>Agentom_Video_Helper</class>

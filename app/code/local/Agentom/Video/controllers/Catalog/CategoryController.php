@@ -29,7 +29,7 @@ die('test 2');
     }
 
     public function viewAction(){
-        die('test');
+        die('test 3');
     }
 
     // TODO : add powell case
