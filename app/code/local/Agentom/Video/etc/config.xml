@@ -17,11 +17,11 @@
     </routers>
   </frontend>
   <global>
-		<rewrite>        
+		<rewrite>
             <agentom_video_catalog_categorycontroller>
                 <from><![CDATA[#^/catalog/category/#]]></from> <!-- Mage_Catalog_CategoryController  -->
                 <to>/video/catalog_category/</to> <!-- Agentom_Video_Catalog_CategoryController  -->
-            </agentom_video_catalog_categorycontroller>        
+            </agentom_video_catalog_categorycontroller>
             <agentom_video_catalog_productcontroller>
                 <from><![CDATA[#^/catalog/product/#]]></from> <!-- Mage_Catalog_ProductController  -->
                 <to>/video/catalog_product/</to> <!-- Agentom_Video_Catalog_ProductController  -->

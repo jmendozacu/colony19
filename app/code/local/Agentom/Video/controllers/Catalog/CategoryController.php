@@ -1,9 +1,10 @@
 <?php
-require_once "Mage/Catalog/controllers/CategoryController.php";  
+require_once(Mage::getModuleDir('controllers','Mage_Catalog').DS.'CategoryController.php');
 class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryController{
 
     protected function _initCatagory()
     {
+        die('test');
         $category = parent::_initCatagory();
 
         Mage::log("debug : attr cat : " . $category->getHiddenFromCustomer(),0,"debug_agentom_video.log");
