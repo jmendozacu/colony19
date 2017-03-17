@@ -5,7 +5,6 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
     protected function _initCatagory()
     {
         $category = parent::_initCatagory();
-die('test 2');
         Mage::log("debug : attr cat : " . $category->getHiddenFromCustomer(),0,"debug_agentom_video.log");
 
         if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
