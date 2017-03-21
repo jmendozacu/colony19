@@ -52,9 +52,11 @@ class MageWorx_SeoXTemplates_Model_Observer_Category extends Mage_Core_Model_Abs
             $category = Mage::registry('current_category');
 
             if (is_object($category)) {
+                /** @var MageWorx_SeoXTemplates_Model_DynamicRenderer_Category $dynamicRenderer */
                 $dynamicRenderer = Mage::getSingleton('mageworx_seoxtemplates/dynamicRenderer_category');
                 $dynamicRenderer->modifyCategoryTitle($category, $block);
                 $dynamicRenderer->modifyCategoryMetaDescription($category, $block);
+                $dynamicRenderer->modifyCategoryMetaKeywords($category, $block);
                 $dynamicRenderer->modifyCategoryDescription($category);
             }
         }

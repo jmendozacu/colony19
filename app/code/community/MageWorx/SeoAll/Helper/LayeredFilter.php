@@ -10,7 +10,7 @@
 class MageWorx_SeoAll_Helper_LayeredFilter extends Mage_Core_Helper_Abstract
 {
     /**
-     * Retrive specific filters data as array (use for canonical url)
+     * Retrieve specific filters data as array (use for canonical url)
      * @return array | false
      */
     public function getLayeredNavigationFiltersData()
@@ -23,11 +23,15 @@ class MageWorx_SeoAll_Helper_LayeredFilter extends Mage_Core_Helper_Abstract
 
                 if (is_null($item->getFilter()->getData('attribute_model'))) {
                     //Ex: If $item->getFilter()->getRequestVar() == 'cat'
+                    $attributeId = null;
                     $use_in_canonical = 0;
                     $position         = 0;
                 }
                 else {
                     $attributeModel = $item->getFilter()->getAttributeModel();
+
+                    $attributeId = $attributeModel->getAttributeId();
+
                     if (is_callable(array($attributeModel, 'getLayeredNavigationCanonical'))) {
                         $use_in_canonical = $attributeModel->getLayeredNavigationCanonical();
                     }else{
@@ -42,6 +46,7 @@ class MageWorx_SeoAll_Helper_LayeredFilter extends Mage_Core_Helper_Abstract
                 }
 
                 $filterData[] = array(
+                    'attribute_id'     => $attributeId,
                     'name'             => $item->getName(),
                     'label'            => $item->getLabel(),
                     'code'             => $item->getFilter()->getRequestVar(),

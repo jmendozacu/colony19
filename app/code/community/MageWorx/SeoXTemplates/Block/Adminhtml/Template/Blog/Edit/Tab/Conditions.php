@@ -203,7 +203,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Blog_Edit_Tab_Conditions e
     }
 
     /**
-     * Retrive product ids from template model
+     * Retrieve product ids from template model
      * @return array|null
      */
     protected function _getSelectedProducts()
@@ -270,7 +270,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Blog_Edit_Tab_Conditions e
     }
 
     /**
-     * Retrive HTML attributes for switcher
+     * Retrieve HTML attributes for switcher
      * @param MageWorx_SeoXTemplates_Model_Mysql4_Template_Product_Collection $duplicate|null
      * @return array
      */

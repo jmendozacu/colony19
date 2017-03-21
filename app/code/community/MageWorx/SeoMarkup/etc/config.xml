@@ -12,7 +12,7 @@
 <config>
     <modules>
         <MageWorx_SeoMarkup>
-            <version>4.2.0</version>
+            <version>4.2.2</version>
         </MageWorx_SeoMarkup>
     </modules>    
     <frontend>

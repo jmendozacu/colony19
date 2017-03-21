@@ -41,7 +41,7 @@ class MageWorx_SeoXTemplates_Model_Template_Blog extends MageWorx_SeoXTemplates_
     }
 
     /**
-     * Retrive duplicate template that is assigned to all items
+     * Retrieve duplicate template that is assigned to all items
      *
      * @return MageWorx_SeoXTemplates_Model_Template|false
      */
@@ -61,7 +61,7 @@ class MageWorx_SeoXTemplates_Model_Template_Blog extends MageWorx_SeoXTemplates_
     }
 
     /**
-     * Retrive filtered collection for apply (or count)
+     * Retrieve filtered collection for apply (or count)
      *
      * @param int $from
      * @param int $limit

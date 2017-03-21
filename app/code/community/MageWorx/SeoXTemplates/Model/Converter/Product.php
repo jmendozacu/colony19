@@ -113,7 +113,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
 
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @param string $attribute
      * @return string
      */
@@ -123,7 +123,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @return string
      */
     protected function _convertStoreViewName()
@@ -132,7 +132,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @return string
      */
     protected function _convertStoreName()
@@ -141,7 +141,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @return string
      */
     protected function _convertWebsiteName()
@@ -166,7 +166,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
                 $value = self::$_variablesData['category'];
             }
             elseif (isset(self::$_variablesData['categories'])) {
-                list($value) = explode(', ', self::$_variablesData['categories']);
+                list($value) = explode($this->_categoriesSeparator, self::$_variablesData['categories']);
             } else {
                 $value = $this->_getRawCategoryAttributeValue($params['category'], 'name');
             }
@@ -208,7 +208,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
                     $names[$id] = $category;
                 }
             }
-            $value = trim(implode(', ', $names));
+            $value = trim(implode($this->_categoriesSeparator, $names));
             self::$_variablesData['categories'] = $value;
             return $value;
         }
@@ -216,7 +216,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @param int $includingTax
      * @return string
      */
@@ -235,7 +235,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @param int $includingTax
      * @return string
      */
@@ -258,7 +258,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @return string
      */
     protected function _convertPriceForBundle()
@@ -289,7 +289,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @param int $includingTax
      * @return string
      */
@@ -305,7 +305,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive converted string
+     * Retrieve converted string
      * @param int $includingTax
      * @return string
      */
@@ -330,7 +330,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     protected function _convertAttribute($attributeCode)
     {
         $value = Mage::helper('mageworx_seoall/attribute')->getAttributeValueByCode($this->_item, $attributeCode);
-        return is_array($value) ? implode(', ', $value) : $value;
+        return is_array($value) ? implode($this->_listSeparator, $value) : $value;
     }
 
     /**
@@ -374,7 +374,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Product extends MageWorx_S
     }
 
     /**
-     * Retrive prices for bundle product
+     * Retrieve prices for bundle product
      * @param type $_product
      * @return array
      */

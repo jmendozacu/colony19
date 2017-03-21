@@ -11,6 +11,6 @@
 class MageWorx_SeoXTemplates_Model_Adapter_Blog_Metakeywords extends MageWorx_SeoXTemplates_Model_Adapter_Blog
 {
     protected $_converterModelUri = 'mageworx_seoxtemplates/converter_blog_metakeywords';
-    protected $_attributeCodes    = array('meta_keyword');
+    protected $_attributeCodes    = array('meta_keywords');
 
 }

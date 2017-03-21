@@ -79,7 +79,7 @@ class MageWorx_SeoXTemplates_Helper_Template_Product extends MageWorx_SeoXTempla
     }
 
     /**
-     * Retrive note for grid with assigned products
+     * Retrieve note for grid with assigned products
      *
      * @return string Note
      */

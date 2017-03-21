@@ -1,12 +1,11 @@
 <?php
-
 /**
  * MageWorx
  * MageWorx SeoXTemplates Extension
  *
  * @category   MageWorx
  * @package    MageWorx_SeoXTemplates
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_SeoXTemplates_Model_Converter
 {
@@ -67,7 +66,6 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
                         $value  = $prefix . $value . $suffix;
                         break;
                     }
-
                 }
             }
 
@@ -118,6 +116,10 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
         return false;
     }
 
+    /**
+     * @param string $attributeCode
+     * @return string
+     */
     protected function _convertFilter($attributeCode)
     {
         $attributeCode = str_replace('filter_', '', $attributeCode);
@@ -134,7 +136,11 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
             foreach ($currentFiltersData as $filter) {
 
                 if ($attributeCode == 'all' || $attributeCode == $filter['code']) {
-                    $value .= $filter['name'] . " " . strip_tags($filter['label'] . ', ');
+                    $value .= $filter['name'] . $this->_pairSeparator . strip_tags($filter['label']) . $this->_listSeparator;
+                } elseif ($attributeCode == 'all_value' || $attributeCode == $filter['code'] . '_value') {
+                    $value .= strip_tags($filter['label'] . $this->_listSeparator);
+                } elseif($attributeCode == 'all_label' || $attributeCode == $filter['code'] . '_label') {
+                    $value .= $filter['name'] . $this->_listSeparator;
                 }
             }
         }
@@ -142,34 +148,48 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
         return rtrim($value, ' ,');
     }
 
+    /**
+     * @return string
+     */
     protected function _convertName()
     {
         return $this->_item->getName();
     }
 
+    /**
+     * @return string
+     */
     protected function _convertParentCategory()
     {
         $value = '';
         $parentId = $this->_item->getParentId();
         if ($parentId) {
-            if ($parentId !== Mage::app()->getWebsite(Mage::app()->getStore($this->_item->getStoreId())->getWebsite()->getId())->getDefaultStore()->getRootCategoryId()) {
 
-                if (is_callable(array(Mage::getResourceModel('catalog/category'), 'getAttributeRawValue'))) {
-                    $value = trim(Mage::getResourceModel('catalog/category')
-                            ->getAttributeRawValue($parentId, 'name', $this->_item->getStoreId()));
-                } else {
-                    $category = Mage::getModel('catalog/category')->setStoreId($this->_item->getStoreId())->load($parentId);
-                    $value    = trim($category->getName());
-                }
+            $rootCategoryId = Mage::app()->getStore($this->_item->getStoreId())->getRootCategoryId();
+
+            if (Mage::helper('mageworx_seoxtemplates/config')->isCropRootCategory($this->_item->getStoreId())
+                && $parentId == $rootCategoryId
+            ) {
+                return $value;
+            }
+
+            if (is_callable(array(Mage::getResourceModel('catalog/category'), 'getAttributeRawValue'))) {
+                $value = trim(Mage::getResourceModel('catalog/category')
+                    ->getAttributeRawValue($parentId, 'name', $this->_item->getStoreId()));
+            } else {
+                $category = Mage::getModel('catalog/category')->setStoreId($this->_item->getStoreId())->load($parentId);
+                $value    = trim($category->getName());
             }
         }
         return $value;
     }
 
+    /**
+     * @return string
+     */
     protected function _convertCategories()
     {
         $value     = '';
-        $separator = ' ' . Mage::helper('mageworx_seoxtemplates/config')->getTitleSeparator() . ' ';
         $paths     = explode('/', $this->_item->getPath());
         $paths     = (is_array($paths)) ? array_slice($paths, 1) : $this->_item->getParentCategories();
 
@@ -192,17 +212,18 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
 
         if (!empty($path) && is_array($path) && count($path) > 0) {
             $path  = array_filter($path);
-            $value = join($separator, array_reverse($path));
+            $value = join($this->_categoriesSeparator, array_reverse($path));
         }
 
         return $value;
     }
 
+    /**
+     * @return string
+     */
     protected function _convertSubCategories()
     {
         $value     = '';
-        $separator = ' ' . Mage::helper('mageworx_seoxtemplates/config')->getTitleSeparator() . ' ';
-        
         $childIds = $this->_item->getChildren();
 
         if(!$childIds){
@@ -222,27 +243,40 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
 
         if (!empty($names) && is_array($names)) {
             $names  = array_filter($names);
-            $value = join($separator, $names);
+            $value = join($this->_categoriesSeparator, $names);
         }
 
         return $value;
     }
 
+    /**
+     * @return null|string
+     */
     protected function _convertStoreViewName()
     {
         return Mage::app()->getStore($this->_item->getStoreId())->getName();
     }
 
+    /**
+     * @return string
+     */
     protected function _convertStoreName()
     {
         return Mage::app()->getStore($this->_item->getStoreId())->getGroup()->getName();
     }
 
+    /**
+     * @return string
+     */
     protected function _convertWebsiteName()
     {
         return Mage::app()->getStore($this->_item->getStoreId())->getWebsite()->getName();
     }
 
+    /**
+     * @param $attributeCode
+     * @return string
+     */
     protected function _convertAttribute($attributeCode)
     {
         $value = '';
@@ -253,12 +287,16 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Category extends MageWorx_
             $value = $this->_item->getData($attributeCode);
         }
         if (is_array($value)) {
-            $value = implode(', ', $value);
+            $value = implode($this->_listSeparator, $value);
         }
 
         return $value;
     }
 
+    /**
+     * @param $convertValue
+     * @return string
+     */
     protected function _render($convertValue)
     {
         return trim($convertValue);

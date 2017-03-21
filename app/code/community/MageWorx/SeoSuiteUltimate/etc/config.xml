@@ -12,7 +12,7 @@
 <config>
     <modules>
         <MageWorx_SeoSuiteUltimate>
-            <version>7.3.0</version>
+            <version>9.0.1</version>
         </MageWorx_SeoSuiteUltimate>
     </modules>
     <global>       

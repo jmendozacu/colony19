@@ -12,7 +12,7 @@
 <config>
     <modules>
         <MageWorx_SeoXTemplates>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
         </MageWorx_SeoXTemplates>
     </modules>
     <admin>
@@ -50,7 +50,14 @@
                     <template_relation_category>
                         <table>mageworx_seoxtemplates_template_relation_category</table>
                     </template_relation_category>
-                     <template_blog>
+                    <template_categoryFilter>
+                        <table>mageworx_seoxtemplates_template_categoryfilter</table>
+                    </template_categoryFilter>
+                    <template_relation_categoryFilter>
+                        <table>mageworx_seoxtemplates_template_categoryfilter_category</table>
+                    </template_relation_categoryFilter>
+
+                    <template_blog>
                         <table>mageworx_seoxtemplates_template_blog</table>
                     </template_blog>
                     <template_relation_blog>
@@ -91,7 +98,7 @@
         </template>                
     </global>
     <frontend>
-        <events>   
+        <events>
             <catalog_product_load_after>
                 <observers>
                     <mageworx_seoxtemplates_modify_product_properties>
@@ -139,6 +146,14 @@
                     </mageworx_seoxtemplates_delete_blog_post_relation>
                 </observers>                 
             </model_delete_after>
+            <mageworx_seoxtemplates_item_type_factory>
+                <observers>
+                    <mageworx_seoxtemplates_item_type>
+                        <class>MageWorx_SeoXTemplates_Model_Observer_CategoryFilter</class>
+                        <method>setItemType</method>
+                    </mageworx_seoxtemplates_item_type>
+                </observers>
+            </mageworx_seoxtemplates_item_type_factory>
         </events>
         <layout>
             <updates>
@@ -159,14 +174,17 @@
     </adminhtml>
     <default>
         <mageworx_seo>
-            <mageworx_seoxtemplates>                
+            <seoxtemplates>
                 <template_limit>50</template_limit>
                 <crop_default_category>0</crop_default_category>
                 <enabled_cron_notify>0</enabled_cron_notify>
+                <separator_for_categories> - </separator_for_categories>
+                <separator_for_list>, </separator_for_list>
+                <separator_for_pair>: </separator_for_pair>
                 <error_email><![CDATA[]]></error_email>
                 <error_email_template>mageworx_seoxtemplates_generate_error_email_template</error_email_template>
                 <error_email_identity>general</error_email_identity>
-            </mageworx_seoxtemplates>
+            </seoxtemplates>
         </mageworx_seo>
     </default>
     <crontab>
@@ -291,7 +309,39 @@
                 <run>
                     <model>mageworx_seoxtemplates/observer_cron::scheduledForBmkGenerateTemplates</model>
                 </run>
-            </mageworx_seoxtemplates_blog_meta_keywords_generate>        
+            </mageworx_seoxtemplates_blog_meta_keywords_generate>
+            <mageworx_seoxtemplates_category_filter_title_generate>
+                <schedule>
+                    <cron_expr>40 5 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>mageworx_seoxtemplates/observer_cron::scheduledForCftGenerateTemplates</model>
+                </run>
+            </mageworx_seoxtemplates_category_filter_title_generate>
+            <mageworx_seoxtemplates_category_filter_meta_description_generate>
+                <schedule>
+                    <cron_expr>0 6 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>mageworx_seoxtemplates/observer_cron::scheduledForCfmdGenerateTemplates</model>
+                </run>
+            </mageworx_seoxtemplates_category_filter_meta_description_generate>
+            <mageworx_seoxtemplates_category_filter_meta_keywords_generate>
+                <schedule>
+                    <cron_expr>20 6 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>mageworx_seoxtemplates/observer_cron::scheduledForCfmkGenerateTemplates</model>
+                </run>
+            </mageworx_seoxtemplates_category_filter_meta_keywords_generate>
+            <mageworx_seoxtemplates_category_filter_meta_keywords_generate>
+                <schedule>
+                    <cron_expr>40 6 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>mageworx_seoxtemplates/observer_cron::scheduledForCfdGenerateTemplates</model>
+                </run>
+            </mageworx_seoxtemplates_category_filter_meta_keywords_generate>
         </jobs>
     </crontab>
 </config>

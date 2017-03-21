@@ -124,7 +124,7 @@ abstract class MageWorx_SeoXTemplates_Model_Adapter_Category extends MageWorx_Se
     }
 
     /**
-     * Retrive header for report
+     * Retrieve header for report
      * @return array
      */
     protected function _getHeaderData()

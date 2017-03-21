@@ -12,7 +12,7 @@
 <config>
     <modules>
         <MageWorx_XSitemap>
-            <version>4.6.7</version>
+            <version>4.6.9</version>
         </MageWorx_XSitemap>
     </modules>
     <admin>

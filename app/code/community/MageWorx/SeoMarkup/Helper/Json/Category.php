@@ -28,7 +28,7 @@ class MageWorx_SeoMarkup_Helper_Json_Category extends Mage_Core_Helper_Abstract
         $data['url']         = Mage::helper('core/url')->getCurrentUrl();
         $data['mainEntity']                    = array();
         $data['mainEntity']['@context']        = 'http://schema.org';
-        $data['mainEntity']['@type']           = 'ItemList';
+        $data['mainEntity']['@type']           = 'OfferCatalog';
         $data['mainEntity']['name']            = $category->getName();
         $data['mainEntity']['url']             = Mage::helper('core/url')->getCurrentUrl();
         $data['mainEntity']['numberOfItems']   = count($productCollection->getItems());

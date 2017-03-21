@@ -17,7 +17,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit extends Mage
     }
 
     /**
-     * Retrive JS code for save action
+     * Retrieve JS code for save action
      * @return string
      */
     protected function _getFormScript()

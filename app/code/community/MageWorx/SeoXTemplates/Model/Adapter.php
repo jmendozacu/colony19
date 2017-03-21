@@ -13,9 +13,19 @@ abstract class MageWorx_SeoXTemplates_Model_Adapter extends Mage_Core_Model_Abst
     protected $_defaultStore;
     protected $_storeId;
     protected $_attributeCodes = array();
+
+    /**
+     * @var MageWorx_SeoXTemplates_Model_Converter
+     */
     protected $_converter;
+
+    /**
+     * @var string
+     */
     protected $_converterModelUri;
+
     protected $_collection;
+
     protected $_testMode;
 
     abstract protected function _apply($template);

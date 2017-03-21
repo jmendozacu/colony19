@@ -10,6 +10,9 @@
  */
 abstract class MageWorx_SeoXTemplates_Controller_Adminhtml_Seoxtemplates_Template extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @var MageWorx_SeoXTemplates_Model_Template_Category
+     */
     protected $_model;
 
     abstract protected function _createModel();
@@ -39,6 +42,7 @@ abstract class MageWorx_SeoXTemplates_Controller_Adminhtml_Seoxtemplates_Templat
             $this->_model->setStoreId($this->_getStoreIdFromRequest());
             $this->_model->setTypeId($this->_getTypeIdFromRequest());
         }
+
         Mage::helper('mageworx_seoxtemplates/factory')->setModel($this->_model);
     }
 
@@ -87,6 +91,7 @@ abstract class MageWorx_SeoXTemplates_Controller_Adminhtml_Seoxtemplates_Templat
         $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
 
         $id = (int) $this->getRequest()->getParam('template_id');
+
         if ($this->_model->getId() || $id == 0) {
 
             if (!empty($data)) {
@@ -310,7 +315,6 @@ abstract class MageWorx_SeoXTemplates_Controller_Adminhtml_Seoxtemplates_Templat
                 $this->_model->setDateApplyStart(date("Y-m-d H:i:s"))->save();
             }
         }
-
 
         $limit = Mage::helper('mageworx_seoxtemplates/config')->getTemplateLimitForCurrentStore();
 

@@ -21,19 +21,19 @@ abstract class MageWorx_SeoXTemplates_Helper_Template extends Mage_Core_Helper_A
     const WRITE_FOR_ALL    = 2;
 
     /**
-     * Retrive array (Type Id -> Type Title)
+     * Retrieve array (Type Id -> Type Title)
      * @return array
      */
     abstract function getTypeArray();
 
     /**
-     * Retrive array (Type Id -> Type Code)
+     * Retrieve array (Type Id -> Type Code)
      * @return array
      */
     abstract function getTypeCodeArray();
 
     /**
-     * Retrive array (Assign Type Id -> Relation Title)
+     * Retrieve array (Assign Type Id -> Relation Title)
      * @return array
      */
     abstract function getAssignTypeArray();
@@ -136,7 +136,7 @@ abstract class MageWorx_SeoXTemplates_Helper_Template extends Mage_Core_Helper_A
     }
 
     /**
-     * Retrive type label by type id
+     * Retrieve type label by type id
      * @param int $id
      * @return string
      */
@@ -152,7 +152,7 @@ abstract class MageWorx_SeoXTemplates_Helper_Template extends Mage_Core_Helper_A
     }
 
     /**
-     * Retrive type id by type code
+     * Retrieve type id by type code
      * @param string $typeName
      * @return int|null
      */
@@ -175,7 +175,7 @@ abstract class MageWorx_SeoXTemplates_Helper_Template extends Mage_Core_Helper_A
     public function getTemplateAdapterByModel($template)
     {
         $typeNames           = $this->getTypeCodeArray();
-        $name                = str_ireplace(' ', '_', strtolower($typeNames[$template->getTypeId()]));
+        $name                = str_ireplace(' ', '_', $typeNames[$template->getTypeId()]);
         $templateCodeArray   = explode('_', $name);
         $currentTemplateCode = array_shift($templateCodeArray) . "_" . join('', $templateCodeArray);
         $adapterClassName    = 'mageworx_seoxtemplates/adapter_' . $currentTemplateCode;

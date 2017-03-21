@@ -13,7 +13,7 @@ abstract class MageWorx_SeoXTemplates_Model_Template extends Mage_Core_Model_Abs
     abstract protected function _getHelper();
 
     /**
-     * Retrive duplicate template that is assigned to all items
+     * Retrieve duplicate template that is assigned to all items
      *
      * @return MageWorx_SeoXTemplates_Model_Template|false
      */

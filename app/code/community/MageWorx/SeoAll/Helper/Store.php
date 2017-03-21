@@ -82,4 +82,21 @@ class MageWorx_SeoAll_Helper_Store extends Mage_Core_Helper_Abstract
     {
         return $storeData = Mage::getModel('core/store')->load($id);
     }
+
+    /**
+     *
+     * @return int
+     */
+    public function getDefaultStoreId()
+    {
+        if(Mage::app()->isSingleStoreMode()){
+            return (int)Mage::app()->getStore(true)->getId();
+        }
+
+        if(Mage::app()->getDefaultStoreView()){
+            return (int)Mage::app()->getDefaultStoreView()->getId();
+        }
+
+        return (int)array_shift($this->getAllEnabledStore())->getStoreId();
+    }
 }

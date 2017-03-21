@@ -31,7 +31,7 @@ class MageWorx_SeoBase_Model_Observer_Canonical extends Mage_Core_Model_Abstract
             $fullActionName = $action->getFullActionName() ? $action->getFullActionName() : null;
             $canonicalUrl = $canonicalFactory->getModel($fullActionName)->getCanonicalUrl();
 
-            Mage::log($canonicalUrl, null, 'canonical.log');
+            //Mage::log($canonicalUrl, null, 'canonical.log');
 
             if ($canonicalUrl) {
                 $headBlock->addItem('link_rel', $canonicalUrl,  'rel="canonical"');

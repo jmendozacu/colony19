@@ -18,11 +18,17 @@ class MageWorx_SeoMarkup_Helper_Json_Seller extends Mage_Core_Helper_Abstract
             return false;
         }
 
+        $name = Mage::helper('mageworx_seomarkup/config')->getSellerName();
+        $image = $this->getSellerImageUrl();
+
+        if (!$name || !$image) { // Name and Image are required fields
+            return false;
+        }
+
         $data = array();
         $data['@context']    = 'http://schema.org';
         $data['@type']       = Mage::helper('mageworx_seomarkup/config')->getSellerType();
 
-        $name = Mage::helper('mageworx_seomarkup/config')->getSellerName();
         if ($name) {
             $data['name'] = $name;
         }
@@ -61,6 +67,14 @@ class MageWorx_SeoMarkup_Helper_Json_Seller extends Mage_Core_Helper_Abstract
 
         $data['url'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 
+        if ($image) {
+            $data['image'] = $image;
+        }
+
+        $priceRange = Mage::helper('mageworx_seomarkup/config')->getSellerPriceRange();
+        if ($priceRange) {
+            $data['priceRange'] =  $priceRange;
+        }
         return $data;
     }
 
@@ -73,5 +87,18 @@ class MageWorx_SeoMarkup_Helper_Json_Seller extends Mage_Core_Helper_Abstract
         $data['streetAddress']   = Mage::helper('mageworx_seomarkup/config')->getSellerStreetAddress();
         $data['postalCode']      = Mage::helper('mageworx_seomarkup/config')->getSellerPostCode();
         return $data;
+    }
+
+    public function getSellerImageUrl()
+    {
+        $folderName = MageWorx_SeoMarkup_Model_System_Config_Backend_SellerImage::UPLOAD_DIR;
+        $storeConfig = Mage::helper('mageworx_seomarkup/config')->getSellerImage();
+        $faviconFile = Mage::getBaseUrl('media') . $folderName . '/' . $storeConfig;
+        $absolutePath = Mage::getBaseDir('media') . '/' . $folderName . '/' . $storeConfig;
+
+        if(!is_null($storeConfig) &&  Mage::helper('mageworx_seomarkup')->isFile($absolutePath)) {
+            return $faviconFile;
+        }
+        return false;
     }
 }

@@ -58,7 +58,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive product ids by template with some type and store view
+     * Retrieve product ids by template with some type and store view
      * @return array
      */
     protected function _getAssignForAnalogTemplateCategoryIds()
@@ -72,14 +72,15 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive category ids
+     * Retrieve category ids
      * @return array
      */
     protected function getCategoryIds()
     {
         $categoryIds = array();
-        $collection  = Mage::getResourceModel('mageworx_seoxtemplates/template_relation_category_collection')->loadByTemplateId(Mage::app()->getRequest()->getParam('template_id',
-                0));
+
+        $collection = $this->_getRelationCollection();
+        $collection->loadByTemplateId(Mage::app()->getRequest()->getParam('template_id', 0));
 
         foreach ($collection as $item) {
             $categoryIds[] = $item->getCategoryId();
@@ -88,7 +89,15 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive category ids as string
+     * @return MageWorx_SeoXTemplates_Model_Mysql4_Template_Relation_Category_Collection
+     */
+    protected function _getRelationCollection()
+    {
+        return Mage::getResourceModel('mageworx_seoxtemplates/template_relation_category_collection');
+    }
+
+    /**
+     * Retrieve category ids as string
      * @return string
      */
     public function getIdsString()
@@ -97,7 +106,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive root node
+     * Retrieve root node
      * @return Varien_Data_Tree_Node
      */
     public function getRootNode()
@@ -110,7 +119,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive root node
+     * Retrieve root node
      * @return Varien_Data_Tree_Node
      */
     public function getRoot($parentNodeCategory = null, $recursionLevel = 3)
@@ -288,7 +297,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
     }
 
     /**
-     * Retrive HTML attributes for switcher
+     * Retrieve HTML attributes for switcher
      * @param MageWorx_SeoXTemplates_Model_Mysql4_Template_Category_Collection $duplicate|null
      * @return array
      */
@@ -418,6 +427,20 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tab_Conditio
 //        elseif ($templateId = $this->getRequest()->getParam('template_id')) {
 //            return $templateId;
 //        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getNote()
+    {
+        $partOne = Mage::helper('mageworx_seoxtemplates')->
+        __('Note: There is only one combination "Template Type – Store View – Category" available for the chosen Category.');
+
+        $partTwo =  Mage::helper('mageworx_seoxtemplates')->
+        __('So Categories assigned to different templates with the same conditions are disabled in the Category Tree.');
+
+        return $partOne . ' ' . $partTwo;
     }
 
 }

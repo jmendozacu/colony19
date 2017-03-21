@@ -67,7 +67,7 @@ class MageWorx_SeoXTemplates_Helper_Template_Blog extends MageWorx_SeoXTemplates
     }
 
     /**
-     * Retrive note for grid with assigned blog posts
+     * Retrieve note for grid with assigned blog posts
      *
      * @return string Note
      */

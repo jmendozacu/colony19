@@ -12,7 +12,7 @@
 <config>
     <modules>
         <MageWorx_SeoBase>
-            <version>3.21.0</version>
+            <version>3.21.2</version>
         </MageWorx_SeoBase>
     </modules>
     <frontend>
@@ -24,7 +24,7 @@
                     </files>
                 </MageWorx_SeoBase>
             </modules>
-        </translate>        
+        </translate>
         <events>
             <controller_action_layout_generate_blocks_after>
                 <observers>
@@ -44,7 +44,7 @@
                     </mageworx_seobase_add_next_prev>
                 </observers>
             </core_block_abstract_to_html_after>
-            
+
             <core_block_abstract_to_html_after>
                 <observers>                    
                     <mageworx_seobase_replace_category_rss_link>

@@ -17,6 +17,8 @@ class MageWorx_SeoXTemplates_Model_DynamicRenderer_Category extends Mage_Core_Mo
 
     protected $_isConvertedMetaDescription;
 
+    protected $_isConvertedMetaKeywords;
+
     protected $_isConvertedDescription;
 
     /**
@@ -30,6 +32,7 @@ class MageWorx_SeoXTemplates_Model_DynamicRenderer_Category extends Mage_Core_Mo
             return true;
         }
 
+        /** @var MageWorx_SeoXTemplates_Model_Converter_Category_Metatitle $metaTitleConverter */
         $metaTitleConverter = Mage::getSingleton('mageworx_seoxtemplates/converter_category_metatitle');
         $title = Mage::helper('mageworx_seoall/title')->cutPrefixSuffix($block->getTitle());
 
@@ -69,6 +72,34 @@ class MageWorx_SeoXTemplates_Model_DynamicRenderer_Category extends Mage_Core_Mo
             if ($convertedMetaDescription) {
                 $this->_isConvertedMetaDescription = true;
                 $block->setDescription($convertedMetaDescription);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param Mage_Catalog_Model_Category $category
+     * @param Mage_Page_Block_Html_Head $block
+     * @return boolean
+     */
+    public function modifyCategoryMetaKeywords($category, $block)
+    {
+        if ($this->_isConvertedMetaKeywords) {
+            return true;
+        }
+
+        /** @var MageWorx_SeoXTemplates_Model_Converter_Category_Metakeywords $metaKeywordsConverter */
+        $metaKeywordsConverter = Mage::getSingleton('mageworx_seoxtemplates/converter_category_metakeywords');
+        $convertedMetaKeywords = $metaKeywordsConverter->convert($category,  $block->getKeywords(), true);
+
+        if (!empty($convertedMetaKeywords) && $block->getKeywords() != $convertedMetaKeywords) {
+            $stripTags       = new Zend_Filter_StripTags();
+            $convertedMetaKeywords = htmlspecialchars(html_entity_decode(preg_replace(array('/\r?\n/', '/[ ]{2,}/'),
+                array(' ', ' '), $stripTags->filter($convertedMetaKeywords)), ENT_QUOTES, 'UTF-8'));
+            if ($convertedMetaKeywords) {
+                $this->_isConvertedMetaKeywords = true;
+                $block->setKeywords($convertedMetaKeywords);
                 return true;
             }
         }

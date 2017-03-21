@@ -11,7 +11,7 @@
 class MageWorx_SeoXTemplates_Helper_Template_Comment_Blog extends MageWorx_SeoXTemplates_Helper_Template_Comment
 {
     /**
-     * Retrive comment for template edit page
+     * Retrieve comment for template edit page
      * @param int $typeId
      * @return string
      * @throws Exception

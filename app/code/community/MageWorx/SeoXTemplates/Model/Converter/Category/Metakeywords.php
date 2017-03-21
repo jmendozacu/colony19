@@ -20,9 +20,4 @@ class MageWorx_SeoXTemplates_Model_Converter_Category_Metakeywords extends MageW
         $convertValue = parent::_render($convertValue);
         return strip_tags($convertValue);
     }
-
-    protected function _convertFilter($attributeCode)
-    {
-        return '';
-    }
 }

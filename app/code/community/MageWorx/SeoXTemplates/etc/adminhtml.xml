@@ -6,7 +6,7 @@
  * 
  * @category   MageWorx
  * @package    MageWorx_SeoXTemplates
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
  -->
 
@@ -16,26 +16,31 @@
             <children>
                 <mageworx_seoxtemplates translate="title" module="mageworx_seoxtemplates">
                     <title>SEO Extended Templates</title>                    
-                    <sort_order>100</sort_order>
+                    <sort_order>120</sort_order>
                     <children>
                         <product translate="title">
                             <title>For Product</title>
-                            <sort_order>1</sort_order>
+                            <sort_order>2</sort_order>
                             <action>adminhtml/mageworx_seoxtemplates_template_product</action>
                         </product>
                         <category translate="title">
                             <title>For Category</title>
-                            <sort_order>2</sort_order>                            
+                            <sort_order>10</sort_order>
                             <action>adminhtml/mageworx_seoxtemplates_template_category</action>
                         </category>
+                        <categoryFilters translate="title">
+                            <title>For Category Filters</title>
+                            <sort_order>16</sort_order>
+                            <action>adminhtml/mageworx_seoxtemplates_template_categoryFilter</action>
+                        </categoryFilters>
                         <blog translate="title">
                             <title>For AW Blog Post</title>
-                            <sort_order>3</sort_order>
+                            <sort_order>20</sort_order>
                             <action>adminhtml/mageworx_seoxtemplates_template_blog</action>
                         </blog>
                         <settings translate="title">
                             <title>Settings</title>
-                            <sort_order>5</sort_order>
+                            <sort_order>50</sort_order>
                             <action>adminhtml/system_config/edit/section/mageworx_seo/</action>
                         </settings>
                     </children>
@@ -60,6 +65,10 @@
                                         <title>For Category</title>    
                                         <sort_order>10</sort_order>                            
                                     </category>
+                                    <categoryFilters translate="title">
+                                        <title>For Category Filters</title>
+                                        <sort_order>12</sort_order>
+                                    </categoryFilters>
                                      <blog translate="title">
                                         <title>For AW Blog</title>
                                         <sort_order>15</sort_order>

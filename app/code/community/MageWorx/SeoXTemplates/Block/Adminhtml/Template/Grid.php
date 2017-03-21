@@ -86,6 +86,10 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Grid extends Mage_Adminhtm
             'options' => Mage::helper('mageworx_seoxtemplates/factory')->getHelper()->getTypeArray(),
         ));
 
+
+        $this->_addCustomColumn();
+
+
         if (!Mage::app()->isSingleStoreMode()) {
             $this->addColumn('store_id', array(
                 'header' => Mage::helper('catalog')->__('Store'),
@@ -273,6 +277,11 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Grid extends Mage_Adminhtm
             'confirm' => Mage::helper('mageworx_seoxtemplates')->__('Are you sure you want to do this?')
         ));
 
+        return $this;
+    }
+
+    protected function _addCustomColumn()
+    {
         return $this;
     }
 }

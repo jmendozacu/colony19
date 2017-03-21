@@ -17,7 +17,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category_Edit_Tabs extends
     }
 
     /**
-     * Retrive tab label
+     * Retrieve tab label
      * @return string
      */
     protected function _getConditionLabel()

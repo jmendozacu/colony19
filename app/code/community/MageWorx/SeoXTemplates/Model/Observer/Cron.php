@@ -38,6 +38,8 @@ class MageWorx_SeoXTemplates_Model_Observer_Cron extends Mage_Core_Model_Abstrac
 
         $errors = array();
 
+
+        /** @var MageWorx_SeoXTemplates_Model_Mysql4_Template_Collection $collection */
         $collection = Mage::getModel("mageworx_seoxtemplates/template_$role")->getCollection();
         $collection->addTypeFilter($typeId);
         $collection->addCronFilter();
@@ -51,6 +53,7 @@ class MageWorx_SeoXTemplates_Model_Observer_Cron extends Mage_Core_Model_Abstrac
             switch($role){
                 case 'category':
                 case 'product':
+                case 'categoryFilter':
                     $result = $this->_process($role, $model);
                     break;
                 case 'blog':
@@ -172,77 +175,168 @@ class MageWorx_SeoXTemplates_Model_Observer_Cron extends Mage_Core_Model_Abstrac
 
     public function scheduledForPmtGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_title'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_title')
+        );
     }
 
     public function scheduledForPmdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_description'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_description')
+        );
     }
 
     public function scheduledForPmkGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_keywords'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_meta_keywords')
+        );
     }
 
     public function scheduledForPnGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_name'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_name')
+        );
     }
 
     public function scheduledForPukGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_url'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_url')
+        );
     }
 
     public function scheduledForPdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_description'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_description')
+        );
     }
 
     public function scheduledForPsdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_short_description'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_short_description')
+        );
     }
 
     public function scheduledForPiaGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('product', Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_gallery'));
+        $this->scheduledGenerateTemplates(
+            'product',
+            Mage::helper('mageworx_seoxtemplates/template_product')->getTypeIdByTypeCode('product_gallery')
+        );
     }
 
     public function scheduledForCmtGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('category', Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_title'));
+        $this->scheduledGenerateTemplates(
+            'category',
+            Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_title')
+        );
     }
 
     public function scheduledForCmdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('category', Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_description'));
+        $this->scheduledGenerateTemplates(
+            'category',
+            Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_description')
+        );
     }
 
     public function scheduledForCmkGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('category', Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_keywords'));
+        $this->scheduledGenerateTemplates(
+            'category',
+            Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_meta_keywords')
+        );
     }
 
     public function scheduledForCdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('category', Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_description'));
+        $this->scheduledGenerateTemplates(
+            'category',
+            Mage::helper('mageworx_seoxtemplates/template_category')->getTypeIdByTypeCode('category_description')
+        );
     }
 
     public function scheduledForBtGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('blog', Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_title'));
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('AW_Blog')) {
+            $this->scheduledGenerateTemplates(
+                'blog',
+                Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_title')
+            );
+        }
     }
 
     public function scheduledForBmdGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('blog', Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_meta_description'));
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('AW_Blog')) {
+            $this->scheduledGenerateTemplates(
+                'blog',
+                Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_meta_description')
+            );
+        }
     }
 
     public function scheduledForBmkGenerateTemplates()
     {
-        $this->scheduledGenerateTemplates('blog', Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_meta_keywords'));
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('AW_Blog')) {
+            $this->scheduledGenerateTemplates(
+                'blog',
+                Mage::helper('mageworx_seoxtemplates/template_blog')->getTypeIdByTypeCode('blog_meta_keywords')
+            );
+        }
+    }
+
+    public function scheduledForCftGenerateTemplates()
+    {
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('MageWorx_SeoExtended')) {
+            $this->scheduledGenerateTemplates(
+                'categoryFilter',
+                Mage::helper('mageworx_seoxtemplates/template_categoryFilter')->getTypeIdByTypeCode('categoryFilter_meta_title')
+            );
+        }
+    }
+
+    public function scheduledForCfmdGenerateTemplates()
+    {
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('MageWorx_SeoExtended')) {
+            $this->scheduledGenerateTemplates(
+                'categoryFilter',
+                Mage::helper('mageworx_seoxtemplates/template_categoryFilter')->getTypeIdByTypeCode('categoryFilter_meta_description')
+            );
+        }
+    }
+
+    public function scheduledForCfmkGenerateTemplates()
+    {
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('MageWorx_SeoExtended')) {
+            $this->scheduledGenerateTemplates(
+                'categoryFilter',
+                Mage::helper('mageworx_seoxtemplates/template_categoryFilter')->getTypeIdByTypeCode('categoryFilter_meta_keywords')
+            );
+        }
+    }
+
+    public function scheduledForCfdGenerateTemplates()
+    {
+        if (Mage::helper('mageworx_seoxtemplates')->isModuleEnabled('MageWorx_SeoExtended')) {
+            $this->scheduledGenerateTemplates(
+                'categoryFilter',
+                Mage::helper('mageworx_seoxtemplates/template_categoryFilter')->getTypeIdByTypeCode('categoryFilter_description')
+            );
+        }
     }
 
     protected function _getHelper($role)

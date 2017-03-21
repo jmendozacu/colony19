@@ -128,7 +128,7 @@ abstract class MageWorx_SeoXTemplates_Model_Adapter_Product extends MageWorx_Seo
     }
 
     /**
-     * Retrive header for report
+     * Retrieve header for report
      * @return array
      */
     protected function _getHeaderData()

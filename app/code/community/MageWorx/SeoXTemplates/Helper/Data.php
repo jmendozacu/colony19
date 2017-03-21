@@ -31,7 +31,7 @@ class MageWorx_SeoXTemplates_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Retrive template hash
+     * Retrieve template hash
      * @param MageWorx_SeoXTemplates_Model_Template $template
      * @return string
      */
@@ -41,7 +41,7 @@ class MageWorx_SeoXTemplates_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Retrive step of modification of the template by requested params
+     * Retrieve step of modification of the template by requested params
      * @return string
      */
     public function getStep()

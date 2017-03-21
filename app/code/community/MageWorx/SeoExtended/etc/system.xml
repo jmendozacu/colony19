@@ -6,18 +6,18 @@
  * 
  * @category   MageWorx
  * @package    MageWorx_SeoExtended
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
  -->
 <config>
     <tabs>
-        <mageworx module="seoextended">
+        <mageworx module="mageworx_seoextended">
             <label>MageWorx</label>
             <sort_order>101</sort_order>
         </mageworx>
     </tabs>
     <sections>
-        <mageworx_seo translate="label" module="seoextended">
+        <mageworx_seo translate="label" module="mageworx_seoextended">
             <label>SEO Suite</label>
             <tab>mageworx</tab>
             <frontend_type>text</frontend_type>
@@ -26,7 +26,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <seoextended translate="label" module="seoextended">
+                <seoextended translate="label" module="mageworx_seoextended">
                     <label>SEO Extended</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>10</sort_order>
@@ -34,10 +34,10 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <optimized_urls translate="label">
+                        <optimized_urls translate="label comment">
                             <label><![CDATA[Optimized URLs For Product And Category Enabled]]></label>
                             <frontend_type>select</frontend_type>
-                            <frontend_model>seoextended/adminhtml_system_config_frontend_optimizedurls</frontend_model>
+                            <frontend_model>mageworx_seoextended/adminhtml_system_config_frontend_optimizedurls</frontend_model>
                             <source_model>adminhtml/system_config_source_yesno</source_model>                            
                             <sort_order>10</sort_order>
                             <comment>
@@ -53,13 +53,35 @@
                             </comment>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>                                
+                            <show_in_store>1</show_in_store>
                         </optimized_urls>
+                        <use_seo_for_category_filters translate="label comment">
+                            <label><![CDATA[Enable SEO for Category Filters Functionality ▾]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </use_seo_for_category_filters>
+                        <use_on_single_filter translate="label comment">
+                            <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;Use SEO-ed data for a <br>&nbsp;&nbsp;&nbsp;&nbsp;single filter]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[When multiple filters with SEO-ed data applied, we will prioritise filters by their position in LN]]></comment>
+                            <depends>
+                                <use_seo_for_category_filters>1</use_seo_for_category_filters>
+                            </depends>
+                        </use_on_single_filter>
                         <status_pager_num_for_title translate="label comment">
                             <label><![CDATA[Add Pager Number to<br>Meta Title]]>
                             </label>
                             <frontend_type>select</frontend_type>
-                            <source_model>seoextended/system_config_source_meta_pageNum</source_model>
+                            <source_model>mageworx_seoextended/source_meta_pageNum</source_model>
                             <comment><![CDATA[E.g. 'Apparel <b>| Page 3</b>']]></comment>
                             <sort_order>210</sort_order>
                             <show_in_default>1</show_in_default>
@@ -70,7 +92,7 @@
                             <label><![CDATA[Add Pager Number to<br>Meta Description]]>
                             </label>
                             <frontend_type>select</frontend_type>
-                            <source_model>seoextended/system_config_source_meta_pageNum</source_model>
+                            <source_model>mageworx_seoextended/source_meta_pageNum</source_model>
                             <comment><![CDATA[E.g. 'Description of apparel<b> | Page 2</b>']]></comment>
                             <sort_order>212</sort_order>
                             <show_in_default>1</show_in_default>
@@ -109,7 +131,7 @@
                         <crop_meta_keywords translate="label">         
                             <label><![CDATA[Disable Meta Keywords Tag]]></label>                   
                             <frontend_type>select</frontend_type>
-                            <source_model>seoextended/system_config_source_meta_CropKeywords</source_model>
+                            <source_model>mageworx_seoextended/source_meta_CropKeywords</source_model>
                             <sort_order>260</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>

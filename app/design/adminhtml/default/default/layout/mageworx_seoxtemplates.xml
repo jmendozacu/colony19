@@ -3,10 +3,10 @@
 /**
  * MageWorx
  * MageWorx SeoXTemplates Extension
- * 
+ *
  * @category   MageWorx
  * @package    MageWorx_SeoXTemplates
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 -->
 <layout>
@@ -31,60 +31,75 @@
                 </action>
                 <action method="addItem">
                     <type>skin_css</type>
-                    <name>css/mageworx/seoxtemplates/apply.css</name>                    
+                    <name>css/mageworx/seoxtemplates/apply.css</name>
                 </action>
             </block>
             <block type="adminhtml/template" name="apply" template="mageworx/seoxtemplates/apply.phtml" output="toHtml"/>
         </block>
     </adminhtml_mageworx_seoxtemplates_template_product_apply>
-      
-    <adminhtml_mageworx_seoxtemplates_template_product_edit>     
-        <reference name="head">        
+
+    <adminhtml_mageworx_seoxtemplates_template_product_edit>
+        <reference name="head">
             <action method="addItem">
                 <type>skin_css</type>
-                <name>css/mageworx/seoxtemplates/switcher.css</name>                    
+                <name>css/mageworx/seoxtemplates/switcher.css</name>
             </action>
-        </reference>   
+        </reference>
     </adminhtml_mageworx_seoxtemplates_template_product_edit>
-          
+
     <adminhtml_mageworx_seoxtemplates_template_product_index>
-        <reference name="content">            
+        <reference name="content">
             <block type="mageworx_seoxtemplates/adminhtml_template_product" name="adminhtml_template_product" template="mageworx/seoxtemplates/template.phtml"></block>
         </reference>
-    </adminhtml_mageworx_seoxtemplates_template_product_index>    
-    
+    </adminhtml_mageworx_seoxtemplates_template_product_index>
+
     <adminhtml_mageworx_seoxtemplates_template_category_apply>
         <update handle="adminhtml_mageworx_seoxtemplates_template_product_apply" />
     </adminhtml_mageworx_seoxtemplates_template_category_apply>
-    
+
     <adminhtml_mageworx_seoxtemplates_template_category_edit>
         <update handle="adminhtml_mageworx_seoxtemplates_template_product_edit" />
     </adminhtml_mageworx_seoxtemplates_template_category_edit>
-    
+
     <adminhtml_mageworx_seoxtemplates_template_category_index>
-        <reference name="content">            
+        <reference name="content">
             <block type="mageworx_seoxtemplates/adminhtml_template_category" name="adminhtml_template_category" template="mageworx/seoxtemplates/template.phtml"></block>
         </reference>
     </adminhtml_mageworx_seoxtemplates_template_category_index>
-    
+
     <adminhtml_mageworx_seoxtemplates_template_category_edit>
         <reference name="head">
             <action method="setCanLoadExtJs"><flag>1</flag></action>
             <action method="setCanLoadRulesJs"><flag>1</flag></action>
         </reference>
     </adminhtml_mageworx_seoxtemplates_template_category_edit>
-    
+
+    <adminhtml_mageworx_seoxtemplates_template_categoryfilter_index>
+        <reference name="content">
+            <block type="mageworx_seoxtemplates/adminhtml_template_categoryFilter" name="adminhtml_template_category_filter" template="mageworx/seoxtemplates/template.phtml"></block>
+        </reference>
+    </adminhtml_mageworx_seoxtemplates_template_categoryfilter_index>
+
+    <adminhtml_mageworx_seoxtemplates_template_categoryfilter_apply>
+        <update handle="adminhtml_mageworx_seoxtemplates_template_product_apply" />
+    </adminhtml_mageworx_seoxtemplates_template_categoryfilter_apply>
+
+    <adminhtml_mageworx_seoxtemplates_template_categoryfilter_edit>
+        <update handle="adminhtml_mageworx_seoxtemplates_template_product_edit" />
+        <update handle="adminhtml_mageworx_seoxtemplates_template_category_edit" />
+    </adminhtml_mageworx_seoxtemplates_template_categoryfilter_edit>
+
     <adminhtml_mageworx_seoxtemplates_template_blog_apply>
         <update handle="adminhtml_mageworx_seoxtemplates_template_product_apply" />
     </adminhtml_mageworx_seoxtemplates_template_blog_apply>
-    
+
     <adminhtml_mageworx_seoxtemplates_template_blog_edit>
         <update handle="adminhtml_mageworx_seoxtemplates_template_product_edit" />
     </adminhtml_mageworx_seoxtemplates_template_blog_edit>
-    
+
     <adminhtml_mageworx_seoxtemplates_template_blog_index>
-        <reference name="content">            
+        <reference name="content">
             <block type="mageworx_seoxtemplates/adminhtml_template_blog" name="adminhtml_template_blog" template="mageworx/seoxtemplates/template.phtml"></block>
         </reference>
-    </adminhtml_mageworx_seoxtemplates_template_blog_index>    
+    </adminhtml_mageworx_seoxtemplates_template_blog_index>
 </layout>

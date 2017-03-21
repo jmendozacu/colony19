@@ -45,7 +45,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Category extends Mage_Admi
     }
 
     /**
-     * Retrive category template labels
+     * Retrieve category template labels
      * @return array
      */
     public function getEntityNames()

@@ -143,7 +143,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_ProductCo
     }
 
     /**
-     * Retrive product ids from product grid
+     * Retrieve product ids from product grid
      *
      * @param array $data
      * @return array
@@ -181,7 +181,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_ProductCo
     }
 
     /**
-     * Retrive template model
+     * Retrieve template model
      * @return MageWorx_SeoXTemplates_Model_Template_Product
      */
     protected function _createModel()

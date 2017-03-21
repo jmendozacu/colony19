@@ -447,7 +447,12 @@ class MageWorx_XSitemap_Model_Generator
         if ($upTime == '0000-00-00 00:00:00') {
             $upTime = $model->getCreatedAt();
         }
-        return substr($upTime, 0, 10);
+        $upTime = substr($upTime, 0, 10);
+
+        if (!$upTime) {
+            $upTime = $this->_getDate();
+        }
+        return $upTime;
     }
 
     protected function getStoreItemUrl($url)

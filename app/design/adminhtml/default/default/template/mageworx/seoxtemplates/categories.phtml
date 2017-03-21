@@ -5,15 +5,12 @@
  *
  * @category   MageWorx
  * @package    MageWorx_SeoXTemplates
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 ?>
 <div class="entry-edit">
     <fieldset id="grop_fields">
-        <div class="note"><p>
-            <?php echo Mage::helper('mageworx_seoxtemplates')->
-                __('Note: There is only one combination "Template Type – Store View – Category" available for the chosen Category. So Categories assigned to different templates with the same conditions are disabled in the Category Tree.') ?>
-        </p></div>
+        <div class="note"><p><?php echo $this->_getNote() ?></p></div>
         <div class="tree-actions">
             <a href="#" id="tree_action_collapse"><?php echo $this->helper('cms')->__('Collapse All'); ?></a>
         	<span class="separator">|</span>

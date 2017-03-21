@@ -109,7 +109,7 @@ class MageWorx_SeoMarkup_Helper_Html_Page extends Mage_Core_Helper_Abstract
         $absolutePath = Mage::getBaseDir('media') . '/' . $folderName . '/' . $storeConfig;
 
         
-        if(!is_null($storeConfig) && $this->_isFile($absolutePath)) {
+        if(!is_null($storeConfig) &&  Mage::helper('mageworx_seomarkup')->isFile($absolutePath)) {
             return $faviconFile;
         } 
         return false;
@@ -127,16 +127,9 @@ class MageWorx_SeoMarkup_Helper_Html_Page extends Mage_Core_Helper_Abstract
         $faviconFile = Mage::getBaseUrl('media') . $folderName . '/' . $storeConfig;
         $absolutePath = Mage::getBaseDir('media') . '/' . $folderName . '/' . $storeConfig;
 
-        if(!is_null($storeConfig) && $this->_isFile($absolutePath)) {
+        if(!is_null($storeConfig) && Mage::helper('mageworx_seomarkup')->isFile($absolutePath)) {
             return $faviconFile;
         }
         return false;
-    }
-
-    protected function _isFile($filename) {
-        if (Mage::helper('core/file_storage_database')->checkDbUsage() && !is_file($filename)) {
-            Mage::helper('core/file_storage_database')->saveFileToFilesystem($filename);
-        }
-        return is_file($filename);
     }
 }

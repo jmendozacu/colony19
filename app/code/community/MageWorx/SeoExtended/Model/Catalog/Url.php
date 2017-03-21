@@ -2,11 +2,12 @@
 /**
  * MageWorx
  * MageWorx SeoExtended Extension
- * 
+ *
  * @category   MageWorx
  * @package    MageWorx_SeoExtended
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
- */class MageWorx_SeoExtended_Model_Catalog_Url extends Mage_Catalog_Model_Url
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
+ */
+class MageWorx_SeoExtended_Model_Catalog_Url extends Mage_Catalog_Model_Url
 {
     /**
      * Get unique product request path
@@ -174,7 +175,7 @@
     }
 
     protected function _getProductRequestPathSince17ver($product, $category){
-        if (!Mage::helper('seoextended/config')->isOptimizedUrlsEnabled())
+        if (!Mage::helper('mageworx_seoextended/config')->isOptimizedUrlsEnabled())
         {
             return parent::getProductRequestPath($product, $category);
         }
@@ -195,7 +196,7 @@
             if ($category->getLevel() > 1) {
                 // To ensure, that category has path either from attribute or generated now
                 $this->_addCategoryUrlPath($category);
-                $categoryUrl = Mage::helper('seoextended/category')->getCategoryUrlPath($category->getUrlPath(),
+                $categoryUrl = Mage::helper('mageworx_seoextended/category')->getCategoryUrlPath($category->getUrlPath(),
                     false, $storeId, true);
                 $requestPath = $categoryUrl . '/' . $urlKey;
             } else {

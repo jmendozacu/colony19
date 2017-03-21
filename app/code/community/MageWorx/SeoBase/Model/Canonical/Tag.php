@@ -42,7 +42,7 @@ class MageWorx_SeoBase_Model_Canonical_Tag extends MageWorx_SeoBase_Model_Canoni
             $url = $this->_addLimitAllToUrl($url, $toolbar);
         }
         else {
-            $url = $this->_deleteSortParameters($url, $toolbar);
+            $url = $this->_deleteSortParameters($currentUrl , $toolbar);
         }
 
         if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {

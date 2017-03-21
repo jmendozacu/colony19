@@ -29,6 +29,8 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit_Tab_Settings extends 
             'options' => Mage::helper('mageworx_seoxtemplates/factory')->getHelper()->getAllTypeOptions(),
         ));
 
+        $this->_addCustomField($fieldset);
+
         if (!Mage::app()->isSingleStoreMode()) {
            $field = $fieldset->addField('store_id', 'select', array(
                 'name'      => 'general[store_id]',
@@ -51,5 +53,14 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit_Tab_Settings extends 
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * @param Varien_Data_Form_Element_Fieldset $fieldset
+     * @return $this
+     */
+    protected function _addCustomField($fieldset)
+    {
+        return $this;
     }
 }

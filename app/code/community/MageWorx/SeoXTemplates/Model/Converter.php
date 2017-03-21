@@ -17,10 +17,29 @@ abstract class MageWorx_SeoXTemplates_Model_Converter extends Varien_Object
 
     protected $_item = null;
 
+    /** @var  bool */
     protected $_isDynamically;
 
+    /** @var  string */
+    protected $_categoriesSeparator;
+
+    /** @var  string */
+    protected $_listSeparator;
+
+    /** @var  string */
+    protected $_pairSeparator;
+
+    /**
+     * @param $vars
+     * @param $templateCode
+     * @return mixed
+     */
     abstract protected function __convert($vars, $templateCode);
 
+    /**
+     * @param $templateCode
+     * @return mixed
+     */
     abstract protected function _stopProccess($templateCode);
 
     /**
@@ -40,7 +59,14 @@ abstract class MageWorx_SeoXTemplates_Model_Converter extends Varien_Object
             return $templateCode;
         }
 
+        /** @var MageWorx_SeoXTemplates_Helper_Config $helperConfig */
+        $helperConfig = Mage::helper('mageworx_seoxtemplates/config');
         $this->_setItem($item);
+
+        $this->_categoriesSeparator = $helperConfig->getSeparatorForCategories($this->_item->getStoreId());
+        $this->_listSeparator       = $helperConfig->getSeparatorForList($this->_item->getStoreId());
+        $this->_pairSeparator       = $helperConfig->getSeparatorForPair($this->_item->getStoreId());
+
         $vars = $this->__parse($templateCode);
         $convertValue = $this->__convert($vars, $templateCode);
 
@@ -57,7 +83,7 @@ abstract class MageWorx_SeoXTemplates_Model_Converter extends Varien_Object
     }
 
     /**
-     * Retrive parsed vars from template code
+     * Retrieve parsed vars from template code
      * @param string $templateCode
      * @return array
      */

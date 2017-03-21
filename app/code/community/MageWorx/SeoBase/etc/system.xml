@@ -549,6 +549,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website></show_in_website>
                             <show_in_store></show_in_store>
+                            <can_be_empty>1</can_be_empty>
                             <depends>
                                 <enabled>1</enabled>
                                 <scope>1</scope>

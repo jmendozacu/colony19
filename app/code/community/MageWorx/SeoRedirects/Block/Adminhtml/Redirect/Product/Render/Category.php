@@ -13,7 +13,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Render_Category ext
 
     public function render(Varien_Object $row)
     {
-        $categoryOptions = Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray();
+        $categoryOptions = Mage::getSingleton('mageworx_seoall/source_category')->toArray();
 
         if (!array_key_exists($row[$this->_fieldName], $categoryOptions)) {
             return '<font color="red">' . Mage::helper('mageworx_seoredirects')->__('Disabled or Deleted Category') . '</font>';

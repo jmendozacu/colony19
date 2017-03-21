@@ -20,7 +20,7 @@ class MageWorx_SeoXTemplates_Model_Mysql4_Template_Relation_Product extends Mage
     }
 
     /**
-     * Retrive item ids by template(s)
+     * Retrieve item ids by template(s)
      * @param int|array $templateId
      * @return array
      */

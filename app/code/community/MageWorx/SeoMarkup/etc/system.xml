@@ -169,7 +169,19 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<b>A value for the 'Name' field is required.</b>]]></comment>
                         </seller_name>
+                        <seller_image translate="label comment">
+                            <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]>Image</label>
+                            <comment><![CDATA[<b>A value for the 'Image' field is required.</b><br/>  Allowed file types: PNG, GIF, JPG, JPEG.]]></comment>
+                            <frontend_type>image</frontend_type>
+                            <backend_model>mageworx_seomarkup/system_config_backend_sellerImage</backend_model>
+                            <base_url type="media" scope_info="1">seller_image</base_url>
+                            <sort_order>122</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </seller_image>
                         <seller_description translate="label">
                             <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]>Description</label>
                             <frontend_type>textarea</frontend_type>
@@ -194,6 +206,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<b>The 'Phone' field is recommended.</b>]]></comment>
                         </seller_phone>
                         <seller_fax translate="label">
                             <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]>Fax</label>
@@ -218,7 +231,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <comment><![CDATA[<b>Example:</b> Seattle]]></comment>
+                            <comment><![CDATA[<b>The 'Address' field is recommended.<br/>Example:</b> Seattle]]></comment>
                         </seller_location>
                         <seller_region translate="label comment">
                             <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]>State/Region</label>
@@ -246,6 +259,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </seller_post_code>
+                        <seller_price_range translate="label comment">
+                            <label><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]>Price Range</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>222</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[<b>The 'Price Range' field is recommended.<br/>Example:</b><br />$$$<br />$31-60]]></comment>
+                        </seller_price_range>
                         <breadcrumbs_separator translate="label">
                             <label>Breadcrumbs Settings:</label>
 							<frontend_model>mageworx_seomarkup/adminhtml_system_config_frontend_separator</frontend_model>

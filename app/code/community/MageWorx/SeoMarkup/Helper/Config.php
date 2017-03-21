@@ -36,6 +36,8 @@ class MageWorx_SeoMarkup_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_SELLER_REGION                    = 'mageworx_seo/richsnippets/seller_region';
     const XML_PATH_SELLER_STREET                    = 'mageworx_seo/richsnippets/seller_street';
     const XML_PATH_SELLER_POST_CODE                 = 'mageworx_seo/richsnippets/seller_post_code';
+    const XML_PATH_SELLER_IMAGE                     = 'mageworx_seo/richsnippets/seller_image';
+    const XML_PATH_SELLER_PRICE_RANGE               = 'mageworx_seo/richsnippets/seller_price_range';
 
     const XML_PATH_BREADCRUMBS_ENABLED              = 'mageworx_seo/richsnippets/enable_breadcrumbs';
     const XML_PATH_BREADCRUMBS_METHOD               = 'mageworx_seo/richsnippets/breadcrumbs_method';
@@ -226,6 +228,16 @@ class MageWorx_SeoMarkup_Helper_Config extends Mage_Core_Helper_Abstract
     public function getSellerPostCode()
     {
         return trim(Mage::getStoreConfig(self::XML_PATH_SELLER_POST_CODE));
+    }
+
+    public function getSellerImage()
+    {
+        return trim(Mage::getStoreConfig(self::XML_PATH_SELLER_IMAGE));
+    }
+
+    public function getSellerPriceRange()
+    {
+        return trim(Mage::getStoreConfig(self::XML_PATH_SELLER_PRICE_RANGE));
     }
 
     /** Breadcrumbs **/

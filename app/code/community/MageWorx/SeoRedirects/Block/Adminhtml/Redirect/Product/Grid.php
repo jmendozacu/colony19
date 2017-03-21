@@ -167,7 +167,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
                 'sortable'	=> false,
                 'width' => '250px',
                 'type'  => 'options',
-                'options'	=> Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray(),
+                'options'	=> Mage::getSingleton('mageworx_seoall/source_category')->toArray(),
                 'renderer'	=> 'mageworx_seoredirects/adminhtml_redirect_product_render_category',
                 'filter_condition_callback' => array($this, 'filterCallback'),
             ),'name');
@@ -190,7 +190,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
                 'sortable'	=> false,
                 'width' => '250px',
                 'type'  => 'options',
-                'options'	=> Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray(),
+                'options'	=> Mage::getSingleton('mageworx_seoall/source_category')->toArray(),
                 'renderer'	=> 'mageworx_seoredirects/adminhtml_redirect_product_render_category_priority',
                 'filter_condition_callback' => array($this, 'filterCallback'),
             ),'name');
@@ -223,6 +223,28 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
                 'index'   => 'status',
                 'type'    => 'options',
                 'options' => Mage::getSingleton('mageworx_seoredirects/source_yesno')->toArray()
+            )
+        );
+
+        $this->addColumn(
+            'action',
+            array(
+                'header'    => Mage::helper('customer')->__('Action'),
+                'width'     => '80',
+                'type'      => 'action',
+                'getter'    => 'getId',
+                'align'    => 'center',
+                'actions'   => array(
+                    array(
+                        'caption' => Mage::helper('catalog')->__('Edit'),
+                        'url'     => array('base' => '*/*/edit', 'params' => array('store' => $this->_getStoreId())),
+                        'field'   => 'redirect_id'
+                    )
+                ),
+                'filter'    => false,
+                'sortable'  => false,
+//                'index'     => 'stores',
+                'is_system' => true,
             )
         );
 
@@ -265,7 +287,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
                         'type'     => 'select',
                         'class'    => 'required-entry',
                         'label'    => Mage::helper('mageworx_seoredirects')->__('Choose:'),
-                        'values'   => Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray()
+                        'values'   => Mage::getSingleton('mageworx_seoall/source_category')->toArray()
                     )
                 )
             )
@@ -281,7 +303,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
                         'type'     => 'select',
                         'class'    => 'required-entry',
                         'label'    => Mage::helper('mageworx_seoredirects')->__('Choose:'),
-                        'values'   => Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray()
+                        'values'   => Mage::getSingleton('mageworx_seoall/source_category')->toArray()
                     )
                 )
             )
@@ -320,7 +342,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Grid extends Mage_A
      */
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/edit', array('redirect_id' => $row->getId(), 'store' => $this->_getStoreId()));
+        return false;
     }
 
     /**

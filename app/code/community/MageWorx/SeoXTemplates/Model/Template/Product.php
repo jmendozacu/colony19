@@ -65,7 +65,7 @@ class MageWorx_SeoXTemplates_Model_Template_Product extends MageWorx_SeoXTemplat
     }
 
     /**
-     * Retrive filtered collection for apply (or count)
+     * Retrieve filtered collection for apply (or count)
      *
      * @param int $from
      * @param int $limit

@@ -19,6 +19,10 @@ class MageWorx_SeoXTemplates_Helper_Config extends Mage_Core_Helper_Abstract
     const XML_PATH_ENABLE_PRODUCT_SEO_NAME     = 'mageworx_seo/seoxtemplates/use_product_seo_name';
     const XML_PATH_ENABLE_CATEGORY_SEO_NAME    = 'mageworx_seo/seoxtemplates/use_category_seo_name';
 
+    const XML_PATH_SEPARATOR_CATEGORIES        = 'mageworx_seo/seoxtemplates/separator_for_categories';
+    const XML_PATH_SEPARATOR_LIST              = 'mageworx_seo/seoxtemplates/separator_for_list';
+    const XML_PATH_SEPARATOR_PAIR              = 'mageworx_seo/seoxtemplates/separator_for_pair';
+
     const XML_PATH_CROP_META_TITLE             = 'mageworx_seo/seoxtemplates/crop_meta_title';
     const XML_PATH_CROP_META_DESCRIPTION       = 'mageworx_seo/seoxtemplates/crop_meta_description';
     const XML_PATH_MAX_LENGTH_META_TITLE       = 'mageworx_seo/seoxtemplates/max_title_length';
@@ -101,7 +105,49 @@ class MageWorx_SeoXTemplates_Helper_Config extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Retrive quantity of templates items for a generation step
+     * @param null|int $store
+     * @return string
+     */
+    public function getSeparatorForCategories($store = null)
+    {
+        $result = Mage::getStoreConfig(self::XML_PATH_SEPARATOR_CATEGORIES, $store);
+
+        if (!$result) {
+            $result = ' - ';
+        }
+        return $result;
+    }
+
+    /**
+     * @param null|int $store
+     * @return string
+     */
+    public function getSeparatorForList($store = null)
+    {
+        $result = Mage::getStoreConfig(self::XML_PATH_SEPARATOR_LIST, $store);
+
+        if (!$result) {
+            $result = ', ';
+        }
+        return $result;
+    }
+
+    /**
+     * @param null|int $store
+     * @return string
+     */
+    public function getSeparatorForPair($store = null)
+    {
+        $result = Mage::getStoreConfig(self::XML_PATH_SEPARATOR_PAIR, $store);
+
+        if (!$result) {
+            $result = ': ';
+        }
+        return $result;
+    }
+
+    /**
+     * Retrieve quantity of templates items for a generation step
      *
      * @return int
      */

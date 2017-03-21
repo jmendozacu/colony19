@@ -166,7 +166,7 @@ class MageWorx_XSitemap_Model_Mysql4_Catalog_Product_Html extends Mage_Core_Mode
                 ->where('exclude_tbl.value=0 OR exclude_tbl.value IS NULL');
         }
 
-        if(Mage::helper('xsitemap')->isExcludeFromXMLOutOfStockProduct($storeId)){
+        if(Mage::helper('xsitemap')->isExcludeFromHTMLOutOfStockProduct($storeId)){
             $cond = 'e.entity_id = csi.product_id';
 
             if (Mage::getStoreConfig('cataloginventory/item_options/manage_stock', $storeId)) {

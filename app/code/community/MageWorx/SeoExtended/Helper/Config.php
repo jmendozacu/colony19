@@ -5,11 +5,13 @@
  * 
  * @category   MageWorx
  * @package    MageWorx_SeoExtended
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 class MageWorx_SeoExtended_Helper_Config extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_OPTIMIZED_URLS_ENABLED                   = 'mageworx_seo/seoextended/optimized_urls';
+    const XML_PATH_USE_SEO_FILTERS                          = 'mageworx_seo/seoextended/use_seo_for_category_filters';
+    const XML_PATH_USE_ON_SINGLE_FILTER                     = 'mageworx_seo/seoextended/use_on_single_filter';
     const XML_PATH_DYNAMIC_META_TITLE                       = 'mageworx_seo/seoextended/status_dynamic_meta_title';
     const XML_PATH_DYNAMIC_META_DESCRIPTION                 = 'mageworx_seo/seoextended/status_dynamic_meta_description';
     const XML_PATH_DYNAMIC_META_KEYWORDS                    = 'mageworx_seo/seoextended/status_dynamic_meta_keywords';
@@ -35,6 +37,28 @@ class MageWorx_SeoExtended_Helper_Config extends Mage_Core_Helper_Abstract
         return false;
     }
 
+    /**
+     * @param null|int $store
+     * @return bool
+     */
+    public function isUseSeoForCategoryFilters($store = null)
+    {
+        return Mage::getStoreConfigFlag(self::XML_PATH_USE_SEO_FILTERS, $store);
+    }
+
+    /**
+     * @param int|null $store
+     * @return bool
+     */
+    public function isUseOnSingleFilterOnly($store = null)
+    {
+        return Mage::getStoreConfigFlag(self::XML_PATH_USE_ON_SINGLE_FILTER);
+    }
+
+    /**
+     * @param string $metaType
+     * @return null|string
+     */
     public function getStatusPagerNumForMeta($metaType)
     {
         switch ($metaType) {
@@ -51,7 +75,7 @@ class MageWorx_SeoExtended_Helper_Config extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * @param type $type
+     * @param string $type
      * @return string
      */
     public function getStatusDynamicMetaType($metaType)
@@ -71,51 +95,81 @@ class MageWorx_SeoExtended_Helper_Config extends Mage_Core_Helper_Abstract
         return $ret;
     }
 
+    /**
+     * @return string
+     */
     public function getStatusPagerNumForMetaTitle()
     {
         return (string) Mage::getStoreConfig(self::XML_PATH_PAGE_NUM_FOR_TITLE);
     }
 
+    /**
+     * @return string
+     */
     public function getStatusPagerNumForMetaDescription()
     {
         return (string) Mage::getStoreConfig(self::XML_PATH_PAGE_NUM_FOR_DESCRIPTION);
     }
 
+    /**
+     * @return bool
+     */
     public function isCutPrefixSuffixFromProductAndCategoryPages()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_CUT_TITLE_PREFIX_SUFFIX);
     }
 
+    /**
+     * @return string
+     */
     public function getStatusDynamicMetaTitle()
     {
         return ((string) Mage::getStoreConfig(self::XML_PATH_DYNAMIC_META_TITLE));
     }
 
+    /**
+     * @return string
+     */
     public function getStatusDynamicMetaDescription()
     {
         return ((string) Mage::getStoreConfig(self::XML_PATH_DYNAMIC_META_DESCRIPTION));
     }
 
+    /**
+     * @return string
+     */
     public function getStatusDynamicMetaKeywords()
     {
         return ((string) Mage::getStoreConfig(self::XML_PATH_DYNAMIC_META_KEYWORDS));
     }
 
+    /**
+     * @return bool
+     */
     public function isExtendedMetaTitleForLNEnabled()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_EXTENDED_META_TITLE_FOR_LN_ENABLED);
     }
 
+    /**
+     * @return bool
+     */
     public function isExtendedMetaDescriptionForLNEnabled()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_EXTENDED_META_DESCRIPTION_FOR_LN_ENABLED);
     }
 
+    /**
+     * @return string
+     */
     public function getStatusCropMetaKeywordsTag()
     {
         return ((string) Mage::getStoreConfig(self::XML_PATH_EXTENDED_META_CROP_KEYWORDS));
     }
 
+    /**
+     * @return array
+     */
     public function getIgnorePagesForMetaKeywords()
     {
         $ignorePages = array_filter(preg_split('/\r?\n/',

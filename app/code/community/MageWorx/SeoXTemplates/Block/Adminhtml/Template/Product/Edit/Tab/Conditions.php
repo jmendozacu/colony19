@@ -231,7 +231,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product_Edit_Tab_Condition
     }
 
     /**
-     * Retrive product ids from template model
+     * Retrieve product ids from template model
      * @return array|null
      */
     protected function _getSelectedProducts()
@@ -245,7 +245,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product_Edit_Tab_Condition
     }
 
     /**
-     * Retrive attribute set ids from template model
+     * Retrieve attribute set ids from template model
      * @return array
      */
     protected function _getSelectedAttributesets()
@@ -321,7 +321,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product_Edit_Tab_Condition
     }
 
     /**
-     * Retrive attribute set option array, filtered by some type templates.
+     * Retrieve attribute set option array, filtered by some type templates.
      * @return array
      */
     protected function _getAttributeSetOptions()
@@ -384,7 +384,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product_Edit_Tab_Condition
     }
 
     /**
-     * Retrive HTML attributes for switcher
+     * Retrieve HTML attributes for switcher
      * @param MageWorx_SeoXTemplates_Model_Mysql4_Template_Product_Collection $duplicate|null
      * @return array
      */

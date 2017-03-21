@@ -261,7 +261,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_BlogContr
     }
 
     /**
-     * Retrive template model
+     * Retrieve template model
      * @return MageWorx_SeoXTemplates_Model_Template_Blog
      */
     protected function _createModel()

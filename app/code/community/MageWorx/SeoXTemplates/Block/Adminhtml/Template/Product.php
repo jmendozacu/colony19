@@ -45,7 +45,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product extends Mage_Admin
     }
 
     /**
-     * Retrive product template labels
+     * Retrieve product template labels
      * @return array
      */
     public function getEntityNames()

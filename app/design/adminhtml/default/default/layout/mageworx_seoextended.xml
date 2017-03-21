@@ -6,7 +6,7 @@
  * 
  * @category   MageWorx
  * @package    MageWorx_SeoExtended
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 -->
 <layout>    
@@ -15,8 +15,8 @@
             <action method="addItem"><type>skin_js</type><name>js/mageworx/seoextended/meta_labels.js</name></action>
         </reference>
         <reference name="before_body_end">
-            <block type="seoextended/wrapper" name="seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
-        </reference>        
+            <block type="mageworx_seoextended/wrapper" name="mageworx_seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
+        </reference>
     </adminhtml_catalog_product_edit>
     
     <adminhtml_catalog_category_edit>
@@ -24,7 +24,7 @@
             <action method="addItem"><type>skin_js</type><name>js/mageworx/seoextended/meta_labels.js</name></action>
         </reference>
         <reference name="before_body_end">
-            <block type="seoextended/wrapper" name="seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
+            <block type="mageworx_seoextended/wrapper" name="mageworx_seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
         </reference>        
     </adminhtml_catalog_category_edit>
     
@@ -33,16 +33,35 @@
             <action method="addItem"><type>skin_js</type><name>js/mageworx/seoextended/meta_labels.js</name></action>
         </reference>
         <reference name="before_body_end">
-            <block type="seoextended/wrapper" name="seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
-        </reference>        
-    </adminhtml_cms_page_edit>    
-      
-    <adminhtml_cms_page_revision_edit>
+            <block type="mageworx_seoextended/wrapper" name="mageworx_seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
+        </reference>
+    </adminhtml_cms_page_edit>
+
+    <adminhtml_mageworx_seoextended_catalog_category_index>
+        <update handle="editor" />
+        <reference name="content">
+            <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+                <action method="setUseConfirm">
+                    <params>0</params>
+                </action>
+                <action method="hasDefaultOption">
+                    <params>0</params>
+                </action>
+            </block>
+            <block type="mageworx_seoextended/adminhtml_catalog_category"
+                   name="adminhtml_template_seoextended_category"
+                   template="mageworx/seoextended/catalog/category.phtml">
+            </block>
+        </reference>
+    </adminhtml_mageworx_seoextended_catalog_category_index>
+
+    <adminhtml_mageworx_seoextended_catalog_category_edit>
+        <update handle="editor" />
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/mageworx/seoextended/meta_labels.js</name></action>
         </reference>
-        <reference name="before_body_end">
-            <block type="seoextended/wrapper" name="seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
-        </reference>        
-    </adminhtml_cms_page_revision_edit>
+        <reference name="content">
+            <block type="mageworx_seoextended/wrapper" name="mageworx_seoextended_wrapper" template="mageworx/seoextended/wrapper.phtml"/>
+        </reference>
+    </adminhtml_mageworx_seoextended_catalog_category_edit>
 </layout>

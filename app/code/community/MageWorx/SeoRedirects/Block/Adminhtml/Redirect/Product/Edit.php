@@ -36,6 +36,12 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Edit extends Mage_A
      */
     public function getHeaderText()
     {
-        return $this->__('SEO Deleted Product Redirect Edit');
+        $storeId   = $this->getRequest()->getParam('store');
+        $storeName = '';
+
+        if ($storeId) {
+            $storeName = Mage::app()->getStore($storeId)->getName();
+        }
+        return $this->__('SEO Deleted Product Redirect Edit for "%s" Store', $storeName);
     }
 }

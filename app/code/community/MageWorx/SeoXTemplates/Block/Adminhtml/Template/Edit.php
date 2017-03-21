@@ -22,10 +22,10 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit extends Mage_Adminhtm
             $this->_removeButton('reset');
             $this->_updateButton('save', '',
                 array(
-                'label'      => Mage::helper('mageworx_seoxtemplates')->__('Continue Edit'),
-                'onclick'    => 'continueEdit()',
-                'class'      => 'save',
-                'sort_order' => 20
+                    'label'      => Mage::helper('mageworx_seoxtemplates')->__('Continue Edit'),
+                    'onclick'    => 'continueEdit()',
+                    'class'      => 'save',
+                    'sort_order' => 20
                 ), -100);
 
             $this->_formScripts[] = "
@@ -52,7 +52,6 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit extends Mage_Adminhtm
                 'class'      => 'delete',
                 'sort_order' => 10
             ));
-
 
             $this->_formScripts[] = $this->_getFormScript();
         }
@@ -103,7 +102,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit extends Mage_Adminhtm
     }
 
     /**
-     * Retrive store name
+     * Retrieve store name
      * @return string
      */
     protected function _getStoreViewAsString()
@@ -112,7 +111,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit extends Mage_Adminhtm
             $storeview = Mage::app()->getStore($storeId)->getName();
         }
         else {
-            $storeview = Mage::helper('core')->__('Default');
+            $storeview = Mage::helper('mageworx_seoxtemplates')->__('Each');
         }
         return $storeview;
     }

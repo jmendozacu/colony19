@@ -71,7 +71,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Edit_Tab_General ex
             )
         );
 
-        $categoryOptionArray = Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray();
+        $categoryOptionArray = Mage::getSingleton('mageworx_seoall/source_category')->toArray();
 
         if ($this->_isInvalidCategoryId($data['category_id'], $categoryOptionArray)) {
             $categoryNote = $this->_getInvalidCategoryNote($data['category_id']);
@@ -152,7 +152,7 @@ class MageWorx_SeoRedirects_Block_Adminhtml_Redirect_Product_Edit_Tab_General ex
      */
     protected function _isInvalidCategoryId($categoryId)
     {
-        return !array_key_exists($categoryId, Mage::getSingleton('mageworx_seoredirects/source_category')->toOptionArray());
+        return !array_key_exists($categoryId, Mage::getSingleton('mageworx_seoall/source_category')->toArray());
     }
 
     /**

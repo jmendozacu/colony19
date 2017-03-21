@@ -121,14 +121,16 @@ class MageWorx_SeoBase_Controller_Router extends Mage_Core_Controller_Varien_Rou
                             ->setParam('store_id', $storeId);
                         break;
                     case 'specials':
-                        $request->setActionName('special')
-                            ->setParam('cid', $d[3])
-                            ->setParam('store_id', $storeId);
+                        $request->setActionName('special')->setParam('store_id', $storeId);
+                        if (!empty($d[3])) {
+                            $request->setParam('cid', $d[3]);
+                        }
                         break;
                     case 'discounts':
-                        $request->setActionName('salesrule')
-                            ->setParam('cid', $d[3])
-                            ->setParam('store_id', $storeId);
+                        $request->setActionName('salesrule')->setParam('store_id', $storeId);
+                        if (!empty($d[3])) {
+                            $request->setParam('cid', $d[3]);
+                        }
                         break;
                     default:
                         $category = Mage::getModel('catalog/category')->setStoreId($storeId)->loadByAttribute('url_key',

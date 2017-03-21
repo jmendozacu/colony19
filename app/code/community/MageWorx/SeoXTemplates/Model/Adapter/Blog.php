@@ -77,7 +77,7 @@ abstract class MageWorx_SeoXTemplates_Model_Adapter_Blog extends MageWorx_SeoXTe
     }
 
     /**
-     * Retrive header for report
+     * Retrieve header for report
      * @return array
      */
     protected function _getHeaderData()

@@ -202,8 +202,6 @@ if(!$installer->getConnection()->isTableExists($installer->getTable('mageworx_se
      $installer->getConnection()->createTable($table);
 }
 
-
-
 ///// Template Category
 
 if(!$installer->getConnection()->isTableExists($installer->getTable('mageworx_seoxtemplates/template_category'))){

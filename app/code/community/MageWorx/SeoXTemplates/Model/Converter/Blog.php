@@ -100,4 +100,9 @@ abstract class MageWorx_SeoXTemplates_Model_Converter_Blog extends MageWorx_SeoX
         return trim(strip_tags($convertValue));
     }
 
+    protected function _stopProccess($templateCode)
+    {
+        return false;
+    }
+
 }

@@ -688,4 +688,10 @@ class MageWorx_SeoMarkup_Helper_Data extends Mage_Core_Helper_Abstract
         return false;
     }
 
+    public function isFile($filename) {
+        if (Mage::helper('core/file_storage_database')->checkDbUsage() && !is_file($filename)) {
+            Mage::helper('core/file_storage_database')->saveFileToFilesystem($filename);
+        }
+        return is_file($filename);
+    }
 }

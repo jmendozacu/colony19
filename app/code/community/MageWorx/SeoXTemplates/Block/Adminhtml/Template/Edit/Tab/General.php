@@ -45,9 +45,10 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit_Tab_General extends M
 
         $fieldset->addField('type_id', 'hidden',
             array(
-            'name'   => 'general[type_id]',
-            'values' => Mage::getSingleton('adminhtml/system_store')->getStoreOptionHash(false),
+            'name'   => 'general[type_id]'
         ));
+
+        $this->_addCustomField($fieldset);
 
         if (!Mage::app()->isSingleStoreMode()) {
 
@@ -101,9 +102,18 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Edit_Tab_General extends M
 
         $useCron->setAfterElementHtml('<p><font color="#ea7601">' . $cronNoticeMessage . '</font></p>');
 
-        $form->setValues($data);
+        $form->addValues($data);
         $this->setForm($form);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * @param $fieldset
+     * @return $this
+     */
+    protected function _addCustomField($fieldset)
+    {
+        return $this;
     }
 }

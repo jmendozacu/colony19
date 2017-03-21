@@ -6,7 +6,7 @@
  *
  * @category   MageWorx
  * @package    MageWorx_SeoXTemplates
- * @copyright  Copyright (c) 2015 MageWorx (http://www.mageworx.com/)
+ * @copyright  Copyright (c) 2016 MageWorx (http://www.mageworx.com/)
  */
 class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryController extends MageWorx_SeoXTemplates_Controller_Adminhtml_Seoxtemplates_Template
 {
@@ -22,10 +22,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryC
 
         if ($data) {
             if ($this->getRequest()->getParam('prepare')) {
-                $params = array(
-                    'type_id'  => $data['general']['type_id'],
-                    'store' => $data['general']['store_id']
-                );
+                $params = $this->_getUrlParamsForPrepareRedirect($data);
                 $this->_redirect('*/*/edit', $params);
                 return;
             }
@@ -39,7 +36,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryC
             }
 
             if($this->_getHelper()->isAssignForAllItems($this->_model->getAssignType()) && $this->_model->getAllTypeDuplicateTemplate()){
-                Mage::getSingleton('adminhtml/session')->addWarning($this->__('The template cannot be saved. There is another template assigned for all products.'));
+                Mage::getSingleton('adminhtml/session')->addWarning($this->__('The template cannot be saved. There is another template assigned for all categories.'));
                 $this->_redirect('*/*/');
             }else{
                 $this->_model->setDateModified(Mage::getSingleton('core/date')->gmtDate());
@@ -65,14 +62,13 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryC
 
                 $analogItemIds = $this->_model->getAssignForAnalogTemplateCategoryIds();
 
-                if(array_intersect(array_map('intval', $itemIds), array_map('intval', $analogItemIds))){
+                if (array_intersect(array_map('intval', $itemIds), array_map('intval', $analogItemIds))) {
                     Mage::getSingleton('adminhtml/session')->addWarning($this->__('The template was saved without assigned categories. Please add categories manually.'));
                     $this->_redirect('*/*/');
                     return;
                 }
 
                 try {
-                    //
                     $this->_setTemplateIndividualItemRelation($itemIds);
                     Mage::getSingleton('adminhtml/session')->addSuccess($this->__("Template '%s' was successfully saved", $this->_model->getName()));
                 }
@@ -123,7 +119,7 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryC
     }
 
     /**
-     * Retrive template model
+     * Retrieve template model
      * @return MageWorx_SeoXTemplates_Model_Template_Category
      */
     protected function _createModel()
@@ -141,6 +137,18 @@ class MageWorx_SeoXTemplates_Adminhtml_Mageworx_Seoxtemplates_Template_CategoryC
             $relationIndividual = $this->_model->getIndividualRelatedModel();
             $relationIndividual->getResource()->deleteTemplateItemRelation($this->_model->getId());
         }
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function _getUrlParamsForPrepareRedirect($data)
+    {
+        return array(
+            'type_id'  => $data['general']['type_id'],
+            'store' => $data['general']['store_id']
+        );
     }
 
 }

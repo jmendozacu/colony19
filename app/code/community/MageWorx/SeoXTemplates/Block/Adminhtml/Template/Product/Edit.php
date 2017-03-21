@@ -17,7 +17,7 @@ class MageWorx_SeoXTemplates_Block_Adminhtml_Template_Product_Edit extends MageW
     }
 
     /**
-     * Retrive JS code for save action
+     * Retrieve JS code for save action
      * @return string
      */
     protected function _getFormScript()
