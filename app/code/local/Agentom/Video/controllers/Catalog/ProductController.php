@@ -19,6 +19,7 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
 
     public function viewAction()
     {
+        die('test!');
         // Get initial data from request
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
@@ -31,7 +32,7 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $params->setCategoryId($categoryId);
         $params->setSpecifyOptions($specifyOptions);
 
-        $category = Mage::getModel('catalog/cateogy')->load($categoryId);
+        $category = Mage::getModel('catalog/category')->load($categoryId);
 
         if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerData = Mage::getSingleton('customer/session')->getCustomer();
