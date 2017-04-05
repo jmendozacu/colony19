@@ -10,6 +10,9 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         // Get initial data from request
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
+
+        die('product id : ' . $productId);
+
         $specifyOptions = $this->getRequest()->getParam('options');
 
         $product = Mage::getModel('catalog/product')->load($productId);
