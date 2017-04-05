@@ -115,6 +115,7 @@ class Mage_Catalog_ProductController extends Mage_Core_Controller_Front_Action
      */
     public function viewAction()
     {
+        die('passing here!');
         // Get initial data from request
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
