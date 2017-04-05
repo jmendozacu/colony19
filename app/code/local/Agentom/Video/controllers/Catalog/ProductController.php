@@ -11,13 +11,12 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
 
-        die('product id : ' . $productId);
-
-        $specifyOptions = $this->getRequest()->getParam('options');
 
         $product = Mage::getModel('catalog/product')->load($productId);
         Mage::register('product', $product);
         Mage::register('current_product', $product);
+
+        $specifyOptions = $this->getRequest()->getParam('options');
 
         // Prepare helper and params
         $viewHelper = Mage::helper('catalog/product_view');
