@@ -65,6 +65,7 @@ class Mage_Catalog_ProductController extends Mage_Core_Controller_Front_Action
      */
     protected function _initProductLayout($product)
     {
+        Mage::log("test core 2",0,"debug_agentom_video.log");
         Mage::helper('catalog/product_view')->initProductLayout($product, $this);
         return $this;
     }
