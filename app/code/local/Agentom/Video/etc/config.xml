@@ -95,7 +95,10 @@
             <video>
                 <use>standard</use>
                 <args>
-                    <module before="Mage_Catalog">Agentom_Video</module>
+                    <modules>
+                        <agentom_video before="Mage_Catalog">Agentom_Video</agentom_video>
+                    </modules>
+                    <module>Agentom_Video</module>
                     <frontName>video</frontName>
                 </args>
             </video>
