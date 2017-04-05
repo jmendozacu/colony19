@@ -17,7 +17,9 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $params->setSpecifyOptions($specifyOptions);
 
         if($categoryId){
+
             $category = Mage::getModel('catalog/category')->load($categoryId);
+            Mage::log("test product",0,"debug_agentom_video.log");
 
             if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $customerData = Mage::getSingleton('customer/session')->getCustomer();
@@ -29,7 +31,7 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
                 }
             }elseif($category->getHiddenFromCustomer()){
 
-                Mage::log("not logged in",0,"debug_agentom_video.log");
+                Mage::log("product not logged",0,"debug_agentom_video.log");
 
                 Mage::getSingleton('core/session')->addError($this->__('Si vous avez accès au pack vidéo, veuillez-vous connecter.'));
                 $this->_redirect('customer/account/login');
