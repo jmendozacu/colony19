@@ -27,6 +27,8 @@
                           <view><to>video/catalog_category/view</to></view>
                       </actions>
                   </category>
+              </rewrite>
+              <rewrite>
                   <product>
                       <to>/video/catalog_product</to>
                       <override_action>true</override_action>

@@ -1,5 +1,5 @@
 <?php
-require_once(Mage::getModuleDir('controllers','Mage_Catalog').DS.'ProductController.php');
+require_once 'Mage/Catalog/controllers/ProductController.php';
 class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductController{
     /**
      * Current applied design settings
