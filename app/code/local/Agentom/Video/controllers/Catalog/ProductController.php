@@ -4,7 +4,13 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
 
     public function viewAction()
     {
-        return parent::viewAction();
+        // Get initial data from request
+        $categoryId = (int) $this->getRequest()->getParam('category', false);
+        $productId  = (int) $this->getRequest()->getParam('id');
+        $specifyOptions = $this->getRequest()->getParam('options');
+        
+        die($productId);
+        //return parent::viewAction();
     }
 
 }
