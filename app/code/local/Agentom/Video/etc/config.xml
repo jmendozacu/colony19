@@ -16,10 +16,13 @@
                           <view><to>video/catalog_category/view</to></view>
                       </actions>
                   </category>
-                      <agentom_video_catalog_product>
-                          <from><![CDATA[#^/catalog/product/#]]></from> <!-- traduit par http://www.store.com/customer/account/ -->
-                          <to>video/catalog_product</to> <!-- traduit par /Mynamespace/Mymodule/controllers/Customer/AccountController.php -->
-                      </agentom_video_catalog_product>
+                  <product>
+                      <to>/video/catalog_product</to>
+                      <override_action>true</override_action>
+                      <actions>
+                          <view><to>video/catalog_product/view</to></view>
+                      </actions>
+                  </product>
               </rewrite>
           </catalog>
       </routers>
