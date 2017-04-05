@@ -4,7 +4,7 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
 
     protected function _initProduct()
     {
-        die('it works');
+        Mage::log("test module",0,"debug_agentom_video.log");
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
 

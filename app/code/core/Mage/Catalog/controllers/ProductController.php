@@ -47,7 +47,7 @@ class Mage_Catalog_ProductController extends Mage_Core_Controller_Front_Action
      */
     protected function _initProduct()
     {
-        die('test');
+        Mage::log("test core",0,"debug_agentom_video.log");
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
 
