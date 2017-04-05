@@ -31,6 +31,7 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $params->setCategoryId($categoryId);
         $params->setSpecifyOptions($specifyOptions);
 
+        $category = Mage::getModel('catalog/cateogy')->load($categoryId);
 
         if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerData = Mage::getSingleton('customer/session')->getCustomer();
