@@ -5,17 +5,6 @@
       <version>0.1.0</version>
     </Agentom_Video>
   </modules>
-  <frontend>
-    <routers>
-      <video>
-        <use>standard</use>
-          <args>
-            <module>Agentom_Video</module>
-            <frontName>video</frontName>
-          </args>
-      </video>
-    </routers>
-  </frontend>
   <global>
       <routers>
           <catalog>
@@ -27,12 +16,21 @@
                           <view><to>video/catalog_category/view</to></view>
                       </actions>
                   </category>
+                  <!--<product>-->
+                      <!--<to>/video/catalog_product</to>-->
+                      <!--<override_action>true</override_action>-->
+                      <!--<actions>-->
+                          <!--<view><to>video/catalog_product/view</to></view>-->
+                      <!--</actions>-->
+                  <!--</product>-->
+              </rewrite>
+              <rewrite>
                   <product>
-                      <to>/video/catalog_product</to>
-                      <override_action>true</override_action>
-                      <actions>
-                          <view><to>video/catalog_product/view</to></view>
-                      </actions>
+                    <to>/video/catalog_product</to>
+                    <override_action>true</override_action>
+                    <actions>
+                        <view><to>video/catalog_product/view</to></view>
+                    </actions>
                   </product>
               </rewrite>
           </catalog>
@@ -101,6 +99,17 @@
       </sales_order_invoice_save_after>
     </events>
   </global>
+    <frontend>
+        <routers>
+            <video>
+                <use>standard</use>
+                <args>
+                    <module>Agentom_Video</module>
+                    <frontName>video</frontName>
+                </args>
+            </video>
+        </routers>
+    </frontend>
   <admin>
 	<routers>
 	  <video>
