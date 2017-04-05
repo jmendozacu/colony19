@@ -18,7 +18,7 @@
                   </category>
                       <agentom_video_catalog_product>
                           <from><![CDATA[#^/catalog/product/#]]></from> <!-- traduit par http://www.store.com/customer/account/ -->
-                          <to>/video/catalog_product/</to> <!-- traduit par /Mynamespace/Mymodule/controllers/Customer/AccountController.php -->
+                          <to>video/catalog_product</to> <!-- traduit par /Mynamespace/Mymodule/controllers/Customer/AccountController.php -->
                       </agentom_video_catalog_product>
               </rewrite>
           </catalog>
