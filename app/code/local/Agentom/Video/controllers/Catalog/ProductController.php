@@ -16,28 +16,28 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $params->setCategoryId($categoryId);
         $params->setSpecifyOptions($specifyOptions);
 
-        if($categoryId){
-
-            $category = Mage::getModel('catalog/category')->load($categoryId);
-            Mage::log("test product :" .$categoryId,0,"debug_agentom_video.log");
-
-            if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
-                $customerData = Mage::getSingleton('customer/session')->getCustomer();
-                $authorizedIds = explode(",",$customerData->getAllowedCategoryIds());
-                if(!in_array($category->getId(),$authorizedIds)){
-                    Mage::getSingleton('core/session')->addError($this->__('Accès réservé aux personnes ayant acheté le pack vidéo.'));
-                    $this->_redirect('customer/account/login');
-                    return false;
-                }
-            }elseif($category->getHiddenFromCustomer()){
-
-                Mage::log("product not logged",0,"debug_agentom_video.log");
-
-                Mage::getSingleton('core/session')->addError($this->__('Si vous avez accès au pack vidéo, veuillez-vous connecter.'));
-                $this->_redirect('customer/account/login');
-                return false;
-            }
-        }
+//        if($categoryId){
+//
+//            $category = Mage::getModel('catalog/category')->load($categoryId);
+//            Mage::log("test product :" .$categoryId,0,"debug_agentom_video.log");
+//
+//            if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
+//                $customerData = Mage::getSingleton('customer/session')->getCustomer();
+//                $authorizedIds = explode(",",$customerData->getAllowedCategoryIds());
+//                if(!in_array($category->getId(),$authorizedIds)){
+//                    Mage::getSingleton('core/session')->addError($this->__('Accès réservé aux personnes ayant acheté le pack vidéo.'));
+//                    $this->_redirect('customer/account/login');
+//                    return false;
+//                }
+//            }elseif($category->getHiddenFromCustomer()){
+//
+//                Mage::log("product not logged",0,"debug_agentom_video.log");
+//
+//                Mage::getSingleton('core/session')->addError($this->__('Si vous avez accès au pack vidéo, veuillez-vous connecter.'));
+//                $this->_redirect('customer/account/login');
+//                return false;
+//            }
+//        }
 
 
         // Render page
