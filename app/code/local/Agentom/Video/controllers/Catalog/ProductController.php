@@ -13,8 +13,6 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $productId  = (int) $this->getRequest()->getParam('id');
 
         $product = Mage::getModel('catalog/product')->load($productId);
-        Mage::register('product', $product);
-        Mage::register('current_product', $product);
 
         $params = new Varien_Object();
         $params->setCategoryId($categoryId);
