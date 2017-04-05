@@ -11,9 +11,26 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
         $params = new Varien_Object();
         $params->setCategoryId($categoryId);
 
-        if($categoryId){
-            $category = Mage::getModel('catalog/category')->load($categoryId);
-        }
+
+
+        return Mage::helper('catalog/product')->initProduct($productId, $this, $params);
+    }
+
+
+    public function viewAction()
+    {
+        // Get initial data from request
+        $categoryId = (int) $this->getRequest()->getParam('category', false);
+        $productId  = (int) $this->getRequest()->getParam('id');
+        $specifyOptions = $this->getRequest()->getParam('options');
+
+        // Prepare helper and params
+        $viewHelper = Mage::helper('catalog/product_view');
+
+        $params = new Varien_Object();
+        $params->setCategoryId($categoryId);
+        $params->setSpecifyOptions($specifyOptions);
+
 
         if($category->getHiddenFromCustomer() && Mage::getSingleton('customer/session')->isLoggedIn()) {
             $customerData = Mage::getSingleton('customer/session')->getCustomer();
@@ -32,14 +49,21 @@ class Agentom_Video_Catalog_ProductController extends Mage_Catalog_ProductContro
             return false;
         }
 
-        return Mage::helper('catalog/product')->initProduct($productId, $this, $params);
+        // Render page
+        try {
+            $viewHelper->prepareAndRender($productId, $this, $params);
+        } catch (Exception $e) {
+            if ($e->getCode() == $viewHelper->ERR_NO_PRODUCT_LOADED) {
+                if (isset($_GET['store'])  && !$this->getResponse()->isRedirect()) {
+                    $this->_redirect('');
+                } elseif (!$this->getResponse()->isRedirect()) {
+                    $this->_forward('noRoute');
+                }
+            } else {
+                Mage::logException($e);
+                $this->_forward('noRoute');
+            }
+        }
     }
-
-    public function viewAction(){
-
-        return parent::viewAction();
-    }
-
-
 }
 				

@@ -115,7 +115,6 @@ class Mage_Catalog_ProductController extends Mage_Core_Controller_Front_Action
      */
     public function viewAction()
     {
-        Mage::log('test core view product',0,"debug_agentom_video.log");
         // Get initial data from request
         $categoryId = (int) $this->getRequest()->getParam('category', false);
         $productId  = (int) $this->getRequest()->getParam('id');
