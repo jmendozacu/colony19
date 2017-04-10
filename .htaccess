@@ -256,3 +256,9 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
         Deny from all
 
     </Files>
+
+#HTPASSWD
+AuthUserFile /home/agentom/domains/colony19.agentom.com/public_html/.htpasswd
+AuthName "L'accès à ce répertoire est sécurisé."
+AuthType Basic
+Require valid-user

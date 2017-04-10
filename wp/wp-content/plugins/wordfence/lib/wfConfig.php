@@ -35,7 +35,6 @@ class wfConfig {
 			"scheduledScansEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"lowResourceScansEnabled" => array('value' => false, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_public" => array('value' => false, 'autoload' => self::AUTOLOAD),
-			"scansEnabled_heartbleed" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_checkHowGetIPs" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_core" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_themes" => array('value' => false, 'autoload' => self::AUTOLOAD),
@@ -57,6 +56,7 @@ class wfConfig {
 			"scansEnabled_highSense" => array('value' => false, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_oldVersions" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"scansEnabled_suspiciousAdminUsers" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"liveActivityPauseEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"firewallEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"blockFakeBots" => array('value' => false, 'autoload' => self::AUTOLOAD),
 			"autoBlockScanners" => array('value' => true, 'autoload' => self::AUTOLOAD),
@@ -66,6 +66,12 @@ class wfConfig {
 			"loginSec_blockAdminReg" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"loginSec_disableAuthorScan" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"loginSec_disableOEmbedAuthor" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"notification_updatesNeeded" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"notification_securityAlerts" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"notification_promotions" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"notification_blogHighlights" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"notification_productUpdates" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"notification_scanStatus" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"other_hideWPVersion" => array('value' => false, 'autoload' => self::AUTOLOAD),
 			"other_noAnonMemberComments" => array('value' => true, 'autoload' => self::AUTOLOAD),
 			"other_blockBadPOST" => array('value' => false, 'autoload' => self::AUTOLOAD),
@@ -89,6 +95,7 @@ class wfConfig {
 			'ajaxWatcherDisabled_admin' => array('value' => false, 'autoload' => self::AUTOLOAD),
 			'wafAlertOnAttacks' => array('value' => true, 'autoload' => self::AUTOLOAD),
 			'disableWAFIPBlocking' => array('value' => false, 'autoload' => self::AUTOLOAD),
+			'showAdminBarMenu' => array('value' => true, 'autoload' => self::AUTOLOAD),
 		),
 		"otherParams" => array(
 			"scan_include_extra" => "",
@@ -115,14 +122,15 @@ class wfConfig {
 			'maxScanHits_action' => "throttle",
 			'blockedTime' => "300",
 			'email_summary_interval' => 'weekly',
-			'email_summary_excluded_directories' => 'wp-content/cache,wp-content/plugins/wordfence/tmp',
+			'email_summary_excluded_directories' => 'wp-content/cache,wp-content/wflogs',
 			'allowed404s' => "/favicon.ico\n/apple-touch-icon*.png\n/*@2x.png\n/browserconfig.xml",
 			'wafAlertWhitelist' => '',
 			'wafAlertInterval' => 600,
 			'wafAlertThreshold' => 100,
+			'howGetIPs_trusted_proxies' => '',
 		)
 	);
-	public static $serializedOptions = array('lastAdminLogin', 'scanSched', 'emailedIssuesList', 'wf_summaryItems', 'adminUserList', 'twoFactorUsers', 'alertFreqTrack', 'wfStatusStartMsgs', 'vulnerabilities_plugin', 'vulnerabilities_theme');
+	public static $serializedOptions = array('lastAdminLogin', 'scanSched', 'emailedIssuesList', 'wf_summaryItems', 'adminUserList', 'twoFactorUsers', 'alertFreqTrack', 'wfStatusStartMsgs', 'vulnerabilities_plugin', 'vulnerabilities_theme', 'dashboardData', 'malwarePrefixes');
 	public static function setDefaults() {
 		foreach (self::$defaultConfig['checkboxes'] as $key => $config) {
 			$val = $config['value'];
@@ -230,16 +238,24 @@ class wfConfig {
 		}
 		return $ret;
 	}
-	public static function parseOptions(){
+	public static function parseOptions($excludeOmitted = false) {
 		$ret = array();
-		foreach(self::$defaultConfig['checkboxes'] as $key => $val){ //value is not used. We just need the keys for validation
-			$ret[$key] = isset($_POST[$key]) ? '1' : '0';
+		foreach (self::$defaultConfig['checkboxes'] as $key => $val) { //value is not used. We just need the keys for validation
+			if ($excludeOmitted && isset($_POST[$key])) {
+				$ret[$key] = (int) $_POST[$key];
+			}
+			else if (!$excludeOmitted || isset($_POST[$key])) {
+				$ret[$key] = isset($_POST[$key]) ? '1' : '0';
+			}
 		}
-		foreach(self::$defaultConfig['otherParams'] as $key => $val){
-			if(isset($_POST[$key])){
-				$ret[$key] = stripslashes($_POST[$key]);
-			} else {
-				error_log("Missing options param \"$key\" when parsing parameters.");
+		foreach (self::$defaultConfig['otherParams'] as $key => $val) {
+			if (!$excludeOmitted || isset($_POST[$key])) {
+				if (isset($_POST[$key])) {
+					$ret[$key] = stripslashes($_POST[$key]);
+				}
+				else {
+					error_log("Missing options param \"$key\" when parsing parameters.");
+				}
 			}
 		}
 		/* for debugging only:
@@ -265,6 +281,33 @@ class wfConfig {
 			$val = 0;
 		}
 		self::set($key, $val + 1);
+		return $val + 1;
+	}
+	public static function atomicInc($key) {
+		if (!self::$tableExists) {
+			return false;
+		}
+		
+		global $wpdb;
+		$old_suppress_errors = $wpdb->suppress_errors(true);
+		$table = self::table();
+		$rowExists = false;
+		do {
+			if (!$rowExists && $wpdb->query($wpdb->prepare("INSERT INTO {$table} (name, val, autoload) values (%s, %s, %s)", $key, 1, self::DONT_AUTOLOAD))) {
+				$val = 1;
+				$successful = true;
+			}
+			else {
+				$rowExists = true;
+				$val = self::get($key, 1);
+				if ($wpdb->query($wpdb->prepare("UPDATE {$table} SET val = %s WHERE name = %s AND val = %s", $val + 1, $key, $val))) {
+					$val++;
+					$successful = true;
+				}
+			}
+		} while (!$successful);
+		$wpdb->suppress_errors($old_suppress_errors);
+		return $val;
 	}
 	public static function set($key, $val, $autoload = self::AUTOLOAD) {
 		global $wpdb;
@@ -348,7 +391,7 @@ class wfConfig {
 		return 'wordfence_chunked_' . $key . '_';
 	}
 	
-	public static function get_ser($key, $default, $cache = true) {
+	public static function get_ser($key, $default = false, $cache = true) {
 		if (self::hasCachedOption($key)) {
 			return self::getCachedOption($key);
 		}
@@ -566,6 +609,9 @@ class wfConfig {
 	public static function f($key){
 		echo esc_attr(self::get($key));
 	}
+	public static function p() {
+		return self::get('isPaid');
+	}
 	public static function cbp($key){
 		if(self::get('isPaid') && self::get($key)){
 			echo ' checked ';
@@ -616,8 +662,15 @@ class wfConfig {
 			return 0;
 		}
 	}
-	public static function liveTrafficEnabled(){
-		return self::get('liveTrafficEnabled');
+	public static function liveTrafficEnabled(&$overriden = null){
+		$enabled = self::get('liveTrafficEnabled');
+		if (WORDFENCE_DISABLE_LIVE_TRAFFIC || function_exists('wpe_site')) {
+			$enabled = false;
+			if ($overriden !== null) {
+				$overriden = true;
+			}
+		}
+		return $enabled;
 	}
 	public static function enableAutoUpdate(){
 		wfConfig::set('autoUpdate', '1');

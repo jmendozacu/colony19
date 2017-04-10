@@ -202,3 +202,33 @@ Stack trace:
 2016-11-10T16:36:18+00:00 DEBUG (7): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'colony19_blog.wp_sitemeta' doesn't exist, query was: SELECT `wp_sitemeta`.`meta_value` FROM `wp_sitemeta` WHERE (meta_key = 'active_sitewide_plugins') AND (site_id=1) LIMIT 1
 2016-11-10T16:36:18+00:00 DEBUG (7): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'colony19_blog.wp_sitemeta' doesn't exist, query was: SELECT `wp_sitemeta`.`meta_value` FROM `wp_sitemeta` WHERE (meta_key = 'active_sitewide_plugins') AND (site_id=1) LIMIT 1
 2016-11-10T16:36:18+00:00 DEBUG (7): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'colony19_blog.wp_sitemeta' doesn't exist, query was: SELECT `wp_sitemeta`.`meta_value` FROM `wp_sitemeta` WHERE (meta_key = 'active_sitewide_plugins') AND (site_id=1) LIMIT 1
+2017-04-06T15:37:06+00:00 DEBUG (7): exception 'Exception' with message 'WordPress Auto Login Failed: HTTP/1.1 401 Unauthorized
+Date: Thu, 06 Apr 2017 15:37:06 GMT
+Server: Apache/2.4.10
+WWW-Authenticate: Basic realm="L'accès à ce répertoire est sécurisé."
+Content-Length: 381
+Content-Type: text/html; charset=iso-8859-1' in /home/agentom/domains/colony19.agentom.com/public_html/app/code/community/Fishpig/Wordpress/Helper/System.php:387
+Stack trace:
+#0 /home/agentom/domains/colony19.agentom.com/public_html/app/code/community/Fishpig/Wordpress/controllers/Adminhtml/WordpressController.php(34): Fishpig_Wordpress_Helper_System->loginToWordPress('Jaco', 'Psittacuseritha...', 'http://colony19...')
+#1 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Action.php(418): Fishpig_Wordpress_Adminhtml_WordpressController->loginAction()
+#2 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Router/Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('login')
+#3 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#4 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#5 /home/agentom/domains/colony19.agentom.com/public_html/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#6 /home/agentom/domains/colony19.agentom.com/public_html/index.php(83): Mage::run('', 'store')
+#7 {main}
+2017-04-06T16:59:27+00:00 DEBUG (7): exception 'Exception' with message 'WordPress Auto Login Failed: HTTP/1.1 401 Unauthorized
+Date: Thu, 06 Apr 2017 16:59:27 GMT
+Server: Apache/2.4.10
+WWW-Authenticate: Basic realm="L'accès à ce répertoire est sécurisé."
+Content-Length: 381
+Content-Type: text/html; charset=iso-8859-1' in /home/agentom/domains/colony19.agentom.com/public_html/app/code/community/Fishpig/Wordpress/Helper/System.php:387
+Stack trace:
+#0 /home/agentom/domains/colony19.agentom.com/public_html/app/code/community/Fishpig/Wordpress/controllers/Adminhtml/WordpressController.php(34): Fishpig_Wordpress_Helper_System->loginToWordPress('Jaco', 'Psittacuseritha...', 'http://colony19...')
+#1 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Action.php(418): Fishpig_Wordpress_Adminhtml_WordpressController->loginAction()
+#2 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Router/Standard.php(254): Mage_Core_Controller_Varien_Action->dispatch('login')
+#3 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Controller/Varien/Front.php(172): Mage_Core_Controller_Varien_Router_Standard->match(Object(Mage_Core_Controller_Request_Http))
+#4 /home/agentom/domains/colony19.agentom.com/public_html/app/code/core/Mage/Core/Model/App.php(365): Mage_Core_Controller_Varien_Front->dispatch()
+#5 /home/agentom/domains/colony19.agentom.com/public_html/app/Mage.php(684): Mage_Core_Model_App->run(Array)
+#6 /home/agentom/domains/colony19.agentom.com/public_html/index.php(83): Mage::run('', 'store')
+#7 {main}

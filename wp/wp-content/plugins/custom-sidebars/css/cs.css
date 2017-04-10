@@ -151,7 +151,6 @@
 .widgets-php .widget-liquid-left {
   width: 100%;
 }
-
 .widgets-php .widget-liquid-right {
   padding: 0 0 75px 0;
   margin: -10px -214% 0 0;
@@ -166,12 +165,22 @@
 .widgets-php .widget-liquid-right #widgets-right {
   margin: 20px;
 }
-
+.widgets-php .widget-liquid-right .overview {
+  list-style: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: auto;
+  right: 0;
+  padding-left: 20px;
+  border-left: 1px solid #DDD;
+}
 .widgets-php #wpcontent {
   position: relative;
 }
-.widgets-php #wpcontent .wrap {
+.widgets-php #wpcontent .wrap .cs-wrap {
   margin-right: 68%;
+  padding-top: 1em;
   position: relative;
 }
 .widgets-php #wpcontent #screen-meta-links {
@@ -182,30 +191,54 @@
   position: relative;
   z-index: 10;
 }
-
 .widgets-php #widgets-left {
   margin-right: 0 !important;
 }
-
 .widgets-php #footer {
   background: #fff;
   margin-right: 0px;
   padding-right: 20px;
 }
-
-.widgets-php .wrap h2 {
-  margin-bottom: 10px;
+.widgets-php .sidebars-column-1 .custom-sidebars-add-new {
+  background-color: #fff;
+  padding: 15px;
 }
-
-.widget-liquid-right .overview {
-  list-style: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: auto;
-  right: 0;
-  padding-left: 20px;
-  border-left: 1px solid #DDD;
+.widgets-php .sidebars-column-1 .custom-sidebars-add-new p {
+  border-radius: 4px;
+  border: 3px dashed #ddd;
+  color: #777;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 0;
+  padding: 90px 10px;
+  text-align: center;
+}
+.widgets-php .sidebars-column-1 .inner .custom-sidebars-upfront {
+  border-radius: 4px;
+  background-color: #f9c200;
+  margin: 55px 0 16px 0;
+}
+.widgets-php .sidebars-column-1 .inner .custom-sidebars-upfront .devman {
+  min-height: 145px;
+  margin-right: -16px;
+  background: url(../img/devman.png) no-repeat 100% 50%;
+  padding: 50px 120px 45px 20px;
+}
+.widgets-php .sidebars-column-1 .inner .custom-sidebars-upfront .devman p {
+  font-size: 1.4em;
+  color: #000;
+  margin-top: 0;
+}
+.widgets-php .sidebars-column-1 .inner .custom-sidebars-upfront .devman p:last-of-type {
+  margin-bottom: 0;
+}
+.widgets-php .sidebars-column-1 .inner .custom-sidebars-upfront .devman .button {
+  background-color: #00a7e6;
+  color: #fff;
+  font-weight: bold;
+  height: auto;
+  padding: 15px 16px;
+  text-transform: uppercase;
 }
 
 #cs-options .cs-action {
