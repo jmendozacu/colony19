@@ -6,6 +6,7 @@ class Agentom_Video_ProductController extends Mage_Catalog_ProductController{
      */
     public function viewAction()
     {
+        die("debug : passingf here !");
         return parent::viewAction();
     }
 }
