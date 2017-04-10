@@ -105,7 +105,7 @@
 			<catalog>
 				<args>
 					<modules>
-						<agentom_video before="Mage_Catalog">SDW_Catalog</agentom_video>
+						<agentom_video before="Mage_Catalog">Agentom_Video</agentom_video>
 					</modules>
 				</args>
 			</catalog>
