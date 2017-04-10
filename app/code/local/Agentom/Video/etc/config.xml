@@ -16,13 +16,13 @@
                           <view><to>video/catalog_category/view</to></view>
                       </actions>
                   </category>
-                  <product>
-                      <to>/video/catalog_product</to>
-                      <override_action>true</override_action>
-                      <actions>
-                          <view><to>video/catalog_product/view</to></view>
-                      </actions>
-                  </product>
+                  <!--<product>-->
+                      <!--<to>/video/catalog_product</to>-->
+                      <!--<override_action>true</override_action>-->
+                      <!--<actions>-->
+                          <!--<view><to>video/catalog_product/view</to></view>-->
+                      <!--</actions>-->
+                  <!--</product>-->
               </rewrite>
           </catalog>
       </routers>
@@ -102,6 +102,13 @@
                     <frontName>video</frontName>
                 </args>
             </video>
+			<catalog>
+				<args>
+					<modules>
+						<agentom_video before="Mage_Catalog">SDW_Catalog</agentom_video>
+					</modules>
+				</args>
+			</catalog>
         </routers>
     </frontend>
   <admin>
