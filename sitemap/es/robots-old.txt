@@ -1,0 +1,29 @@
+User-agent: *
+Disallow: /stats/
+    Disallow:    /404/
+    Disallow:      /admin/
+    Disallow:      /api/
+    Disallow:      /app/
+    Disallow:      /catalogsearch/
+    Disallow:      /cgi-bin/
+    Disallow:      /checkout/
+    Disallow:      /contacts/
+    Disallow:      /customer/
+    Disallow:      /downloader/
+    Disallow:      /js/
+    Disallow:      /lib/
+    Disallow:      /newsletter/
+    Disallow:      /pkginfo/
+    Disallow:      /private/
+    Disallow:      /poll/
+    Disallow:      /sendfriend/
+    Disallow:      /skin/
+    Disallow:      /tag/
+    Disallow:      /var/
+    Disallow:      /wishlist/
+	Disallow: /catalog/seo_sitemap/
+	Disallow: /review/product/view/id/
+Sitemap: http://www.colony-loros.es/sitemap/es/sitemap.xml
+
+
+

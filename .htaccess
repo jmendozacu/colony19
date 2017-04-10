@@ -1,3 +1,5 @@
+#php_flag display_errors off
+
 SetEnvIf Host colonyandco.agentom.com MAGE_RUN_CODE=colonyco
 SetEnvIf Host colonyandco.agentom.com MAGE_RUN_TYPE=website
 
@@ -41,7 +43,7 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
 ## adjust memory limit
 
 #    php_value memory_limit 64M
-    php_value memory_limit 256M
+    php_value memory_limit 1024M
     php_value max_execution_time 18000
 
 ############################################
@@ -87,25 +89,31 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
 ## http://developer.yahoo.com/performance/rules.html#gzip
 
     # Insert filter on all content
-    ###SetOutputFilter DEFLATE
+    SetOutputFilter DEFLATE
     # Insert filter on selected content types only
-    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
 
     # Netscape 4.x has some problems...
-    #BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
 
     # Netscape 4.06-4.08 have some more problems
-    #BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
 
     # MSIE masquerades as Netscape, but it is fine
-    #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
 
     # Don't compress images
-    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
 
     # Make sure proxies don't deliver the wrong content
-    #Header append Vary User-Agent env=!dont-vary
+    Header append Vary User-Agent env=!dont-vary
 
+	BrowserMatch ^Mozilla/4  gzip-only-text/html
+	BrowserMatch ^Mozilla/4\.0[678] no-gzip
+	BrowserMatch \bMSIE !no-gzip  !gzip-only-text/html
+	BrowserMatch \bMSI[E] !no-gzip  !gzip-only-text/html
+	Header append Vary User-Agent  env=!dont-vary
+	AddOutputFilterByType DEFLATE text/css  application/x-javascript text/x-component text/html text/richtext image/svg+xml  text/plain text/xsd text/xsl text/xml image/x-icon
 </IfModule>
 
 <IfModule mod_ssl.c>
@@ -122,15 +130,36 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
 ############################################
 ## enable rewrites
 
-    #Options +FollowSymLinks
+    Options +FollowSymLinks
     RewriteEngine on
 
 ############################################
 ## you can put here your magento root folder
 ## path relative to web root
 
+## ajouté par maxime le 07/10/2013 pour la redirection vers les sitemap et robots dans sous répertoire
+
+RewriteCond %{HTTP_HOST} ^.*colony-perroquet\.fr$ [NC]
+RewriteRule ^sitemap.xml$ sitemap/fr/sitemap.xml [NC]  # <-- rewrites /sitemap.xml for the domain
+
+RewriteCond %{HTTP_HOST} ^.*colony-perroquet\.fr$ [NC]
+RewriteRule ^robots.txt$ sitemap/fr/robots.txt [NC]  # <-- rewrites /robots.txt for the domain
+
+RewriteCond %{HTTP_HOST} ^.*colony-loros\.es$ [NC]
+RewriteRule ^sitemap.xml$ sitemap/es/sitemap.xml [NC]  # <-- rewrites /sitemap.xml for the domain
+
+RewriteCond %{HTTP_HOST} ^.*colony-loros\.es$ [NC]
+RewriteRule ^robots.txt$ sitemap/es/robots.txt [NC]  # <-- rewrites /robots.txt for the domain
+
+## fin d'ajout par maxime le 07/10/2013....
     #RewriteBase /magento/
 
+	RewriteCond %{HTTP_HOST} ^.*colony-perroquet\.fr$ [NC]
+	RewriteRule ^(.*)-html.html$ / [R=301,L]
+
+
+#### Fin Redirection 301 ######
+	
 ############################################
 ## uncomment next line to enable light API calls processing
 
@@ -208,7 +237,28 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
 ## Add default Expires header
 ## http://developer.yahoo.com/performance/rules.html#expires
 
-    ExpiresDefault "access plus 1 year"
+ExpiresActive on
+ExpiresByType image/jpg "access plus 6  months"
+ExpiresByType image/png "access plus 6  months"
+ExpiresByType image/jpeg "access plus 6  months"
+ExpiresByType image/gif "access plus 6  months"
+ExpiresByType image/png "access plus 6  months"
+ExpiresByType text/ico "access plus 6  months"
+ExpiresByType image/ico "access plus 6  months"
+ExpiresByType image/icon "access plus 6  months"
+ExpiresByType image/x-icon "access plus  6 months"
+ExpiresByType application/x-shockwave-flash  "modification plus 6 months"
+ExpiresByType text/css "access plus 1  week"
+ExpiresByType text/javascript "access  plus 1 week"
+ExpiresByType text/html "modification  plus 1 week"
+ExpiresByType text/xml "modification  plus 2 hours"
+ExpiresByType image/vnd.microsoft.icon  "access plus 6 months"
+ExpiresDefault "access plus 1 month"
+#Header set Cache-Control  "max-age=86400, public"
+Header set Cache-Control  "max-age=2592000, public"
+Header set Cache-Control  "max-age=2592000, private"
+Header set Cache-Control "max-age=7200,  public"
+Header unset Cache-Control
 
 </IfModule>
 

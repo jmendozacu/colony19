@@ -1,0 +1,18 @@
+User-agent: SemrushBot-SA
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: / 
+
+User-agent : *
+Disallow: /app/
+Disallow: /downloader/
+Disallow: /errors/
+Disallow: /includes/
+Disallow: /lib/
+Disallow: /pkginfo/
+Disallow: /shell/
+Disallow: /skin/
+Disallow: /var/
+Disallow: /cron.php
+Disallow: /cron.sh
