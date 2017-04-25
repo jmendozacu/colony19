@@ -180,8 +180,8 @@
                         <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_description')): ?>
                         <?php
                         $desc = $this->stripTags($_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description'));
-                        if(strlen($desc)>80) {
-                            $strCutTitle = substr($desc, 0, 80);
+                        if(strlen($desc)>160) {
+                            $strCutTitle = substr($desc, 0, 160);
                             $desc = substr($strCutTitle, 0, strrpos($strCutTitle, ' '))."&hellip;";
                         }
                         ?>
