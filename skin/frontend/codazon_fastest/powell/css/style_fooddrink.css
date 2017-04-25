@@ -4483,3 +4483,9 @@ margin-top:5px;
 .header .cdz-bottom-logo-cart {
     padding: 0px;
 }
+.product-options ul.options-list .label {
+    display: inline;
+}
+.label {
+	color: #282828;
+}

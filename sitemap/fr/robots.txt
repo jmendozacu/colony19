@@ -16,3 +16,7 @@ Disallow: /skin/
 Disallow: /var/
 Disallow: /cron.php
 Disallow: /cron.sh
+
+User-agent: Googlebot
+Disallow: /customer/
+Disallow: /sales/
