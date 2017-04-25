@@ -180,15 +180,32 @@
                         <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_description')): ?>
                         <?php
                         $desc = $this->stripTags($_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description'));
-                        if(strlen($desc)>160) {
-                            $strCutTitle = substr($desc, 0, 160);
+                        if(strlen($desc)>80) {
+                            $strCutTitle = substr($desc, 0, 80);
                             $desc = substr($strCutTitle, 0, strrpos($strCutTitle, ' '))."&hellip;";
                         }
                         ?>
                         <div class="desc product-item-description"><?php echo $desc; ?></div>
                         <?php endif ?>
                         <?php echo $this->getPriceHtml($_product, true) ?>
-						<div class="<?php echo ($_themeHelper->getConfig('codazon_settings/category_view/enable_hover_effect'))?'cdz-product-bottom':'cdz-bottom-no-effect' ?>">
+                        <?php
+							$_nameAfterChildHtml = '';
+							if ($this->getChild('name.after')) {
+								$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+								foreach ($_nameAfterChildren as $_nameAfterChildName) {
+									$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+									$_nameAfterChild->setProduct($_product);
+									$_nameAfterChildHtml .= $_nameAfterChild->toHtml();
+								}
+							}
+							echo $_nameAfterChildHtml;
+						?>
+                        <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_rating')): ?>
+						<?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                        <?php endif; ?>
+                        <?php endif ?>
+                        <div class="<?php echo ($_themeHelper->getConfig('codazon_settings/category_view/enable_hover_effect'))?'cdz-product-bottom':'cdz-bottom-no-effect' ?>">
                             <div class="cdz-buttons-container">
                                 <div class="cdz-buttons-inner actions">
 									<?php echo $_nameAfterChildHtml; ?>
@@ -210,24 +227,6 @@
                             </div>
 
                         </div>
-                        <?php
-							$_nameAfterChildHtml = '';
-							if ($this->getChild('name.after')) {
-								$_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
-								foreach ($_nameAfterChildren as $_nameAfterChildName) {
-									$_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
-									$_nameAfterChild->setProduct($_product);
-									$_nameAfterChildHtml .= $_nameAfterChild->toHtml();
-								}
-							}
-							echo $_nameAfterChildHtml;
-						?>
-                        <?php if($_themeHelper->getConfig('codazon_settings/category_view/show_rating')): ?>
-						<?php if($_product->getRatingSummary()): ?>
-                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                        <?php endif; ?>
-                        <?php endif ?>
-
                     </div>
                 </li>
             <?php endforeach ?>
