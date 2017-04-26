@@ -261,7 +261,7 @@ endforeach;
     </div>
 
     <div class="product-collateral">
-                    <h2 class="agentom-product-name-h2"><?php echo $this->__("Description : ") . "<span class='agentom-product-attr-h2-inner'>" . $_product->getName() . " " . $_product->getShortDescription() . "</span>"; ?></h2>
+                    <div class="agentom-product-name-h2"><?php echo $this->__("Description : ") . "<h2><span class='agentom-product-attr-h2-inner'>" . $_product->getName() . " " . $_product->getShortDescription() . "</span>"; ?></h2></div>
                 <?php echo $attr_array[0]; ?>
         <?php for ($i = 1; $i <= 3; $i++): ?>
             <?php if (0/*$_themeHelper->getConfig('codazon_settings/custom_tabs/show_block_tab_'.$i)==1*/): ?>
