@@ -1,0 +1,12 @@
+.zblock img {
+    display: inline;
+	max-width: 100%;
+}
+.zblock-slider img {
+    display: inline;
+	max-width: 100%;
+}
+
+.zblock-item {
+    overflow: hidden;
+}
