@@ -130,7 +130,7 @@ SetEnvIf Host abcperroquet.agentom.com MAGE_RUN_TYPE=website
 ############################################
 ## enable rewrites
 
-    Options +FollowSymLinks
+#    Options +FollowSymLinks
     RewriteEngine on
 
 ############################################
