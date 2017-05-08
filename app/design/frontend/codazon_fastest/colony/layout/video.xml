@@ -5,13 +5,18 @@
       <action method="setTemplate"><template>page/1column.phtml</template></action>   
     </reference>   
     <reference name="content">
-      <block type="customer/form_login" name="customer_form_login" template="customer/form/login.phtml"/>
-      <block type="video/index" name="video_index" template="video/index.phtml">
-          <block type="cms/block" name="cms_agentom_achat_video" before="-">
-              <action method="setBlockId"><block_id>agentom_achat_video</block_id></action>
-          </block>
-      </block>
+        <block type="video/index" name="video_index" template="video/index.phtml">
+            <block type="cms/block" name="cms_agentom_achat_video" before="-">
+                <action method="setBlockId"><block_id>agentom_achat_video</block_id></action>
+            </block>
+        </block>
+      <block type="customer/form_login" name="customer_form_login" template="customer/form/login.phtml" after="-" />
     </reference>   
-  </video_index_index>   
+  </video_index_index>
+    <customer_logged_in>
+        <reference name="content">
+            <remove name="customer_form_login"></remove>
+        </reference>
+    </customer_logged_in>
 </layout>   
 	
