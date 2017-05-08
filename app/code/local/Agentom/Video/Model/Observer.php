@@ -11,7 +11,7 @@ class Agentom_Video_Model_Observer
                 foreach ($order->getAllItems() as $item) {
                     $product = $item->getProduct();
                     $product = Mage::getModel('catalog/product')->load($product->getId());
-                    if($product->getGrantAccessToCategory()){
+                    if(!is_null($product->getGrantAccessToCategory()) && !empty($product->getGrantAccessToCategory())){
                         $authorizedId[] = $product->getGrantAccessToCategory();
                     }
                 }
@@ -19,13 +19,13 @@ class Agentom_Video_Model_Observer
                 if(count($authorizedId)){
                     $customerId = $order->getCustomerId();
                     $customer = Mage::getModel('customer/customer')->load($customerId);
-                    $previousIds = explode(",",$customer->getAllowedCategoryIds());
-                    if(count($previousIds)){
+                    $previousIds = $customer->getAllowedCategoryIds();
+                    if(!is_null($previousIds) && !empty($previousIds)){
                         $customer->setAllowedCategoryIds(implode(",",array_merge($previousIds,$authorizedId)));
                     }else{
                         $customer->setAllowedCategoryIds(implode(",",$authorizedId));
                     }
-                    
+
                     $customer->save();
                 }
 
