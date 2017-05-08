@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Controller_Abstract
+ */
 class IWD_OrderManager_Controller_Abstract extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function getFormAction()
     {
         try {
@@ -14,6 +20,9 @@ class IWD_OrderManager_Controller_Abstract extends Mage_Adminhtml_Controller_Act
         $this->prepareResponse($result);
     }
 
+    /**
+     * @return void
+     */
     public function updateInfoAction()
     {
         Mage::dispatchEvent('iwd_ordermanager_update_order_before', array('order_id' => $this->getOrderId()));
@@ -63,9 +72,20 @@ class IWD_OrderManager_Controller_Abstract extends Mage_Adminhtml_Controller_Act
         return Mage::getModel('sales/order')->load($orderId);
     }
 
+    /**
+     * @param $result
+     */
     protected function prepareResponse($result)
     {
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('admin');
     }
 }

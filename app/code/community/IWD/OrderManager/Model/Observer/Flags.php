@@ -46,17 +46,17 @@ class IWD_OrderManager_Model_Observer_Flags
     {
         $flagsStatus = Mage::getModel('iwd_ordermanager/flags_autoapply')->getCollection()
             ->addFieldToFilter('apply_type', IWD_OrderManager_Model_Flags_Autoapply::TYPE_ORDER_STATUS)
-            ->addFieldToFilter('key', $order->getStatus())
+            ->addFieldToFilter('method_key', $order->getStatus())
             ->getColumnValues('flag_id');
 
         $flagsPayments = Mage::getModel('iwd_ordermanager/flags_autoapply')->getCollection()
             ->addFieldToFilter('apply_type', IWD_OrderManager_Model_Flags_Autoapply::TYPE_PAYMENT_METHOD)
-            ->addFieldToFilter('key', $order->getPayment()->getMethod())
+            ->addFieldToFilter('method_key', $order->getPayment()->getMethod())
             ->getColumnValues('flag_id');
 
         $flagsShipping = Mage::getModel('iwd_ordermanager/flags_autoapply')->getCollection()
             ->addFieldToFilter('apply_type', IWD_OrderManager_Model_Flags_Autoapply::TYPE_SHIPPING_METHOD)
-            ->addFieldToFilter('key', $order->getShippingMethod())
+            ->addFieldToFilter('method_key', $order->getShippingMethod())
             ->getColumnValues('flag_id');
 
         $flags = array_merge($flagsStatus, $flagsPayments, $flagsShipping);
@@ -80,7 +80,7 @@ class IWD_OrderManager_Model_Observer_Flags
         if ($oldStatus != $newStatus) {
             $flags = Mage::getModel('iwd_ordermanager/flags_autoapply')->getCollection()
                 ->addFieldToFilter('apply_type', IWD_OrderManager_Model_Flags_Autoapply::TYPE_ORDER_STATUS)
-                ->addFieldToFilter('key', $newStatus)
+                ->addFieldToFilter('method_key', $newStatus)
                 ->getColumnValues('flag_id');
 
             $typeFlagRelation = $this->getTypeFlagRelation($flags);

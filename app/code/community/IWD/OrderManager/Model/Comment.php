@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Comment
+ */
 class IWD_OrderManager_Model_Comment extends Mage_Core_Model_Abstract
 {
     /**
@@ -89,13 +92,19 @@ class IWD_OrderManager_Model_Comment extends Mage_Core_Model_Abstract
 
         try {
             $comment = Mage::getModel('sales/' . $model)->load($id);
-            Mage::dispatchEvent('iwd_ordermanager_sales_comment_update_after', array('comment' => $comment, 'type' => $type));
+            Mage::dispatchEvent(
+                'iwd_ordermanager_sales_comment_update_after',
+                array('comment' => $comment, 'type' => $type)
+            );
 
             $newComment = Mage::helper('core')->escapeHtml($newComment, array('b', 'br', 'strong', 'i', 'u'));
             $comment->setComment($newComment);
             $comment->save();
 
-            Mage::dispatchEvent('iwd_ordermanager_sales_comment_update_before', array('comment' => $comment, 'type' => $type));
+            Mage::dispatchEvent(
+                'iwd_ordermanager_sales_comment_update_before',
+                array('comment' => $comment, 'type' => $type)
+            );
             return $comment->getComment();
         } catch (Exception $e) {
             IWD_OrderManager_Model_Logger::log($e->getMessage());
@@ -107,15 +116,22 @@ class IWD_OrderManager_Model_Comment extends Mage_Core_Model_Abstract
     {
         try {
             $comment = Mage::getModel('sales/' . $model)->load($id);
-            Mage::dispatchEvent('iwd_ordermanager_sales_comment_delete_after', array('comment' => $comment, 'type' => $type));
+            Mage::dispatchEvent(
+                'iwd_ordermanager_sales_comment_delete_after',
+                array('comment' => $comment, 'type' => $type)
+            );
 
             $comment->delete();
 
-            Mage::dispatchEvent('iwd_ordermanager_sales_comment_delete_before', array('comment' => $comment, 'type' => $type));
+            Mage::dispatchEvent(
+                'iwd_ordermanager_sales_comment_delete_before',
+                array('comment' => $comment, 'type' => $type)
+            );
         } catch (Exception $e) {
             IWD_OrderManager_Model_Logger::log($e->getMessage());
             return 0;
         }
+
         return 1;
     }
 }

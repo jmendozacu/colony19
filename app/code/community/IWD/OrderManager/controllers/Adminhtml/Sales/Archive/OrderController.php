@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController
+ */
 class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->loadLayout()
@@ -30,20 +36,26 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         }
 
         $this->_redirect('*/sales_order/');
-        return;
     }
 
+    /**
+     * @return void
+     */
     public function archiveManuallyAction()
     {
         $result = Mage::getModel('iwd_ordermanager/archive')->addSalesToArchive();
         $this->_addResultOfArchiveToLog($result);
         $this->_redirect('adminhtml/system_config/edit/section/iwd_ordermanager');
-        return;
     }
 
+    /**
+     * @param $result
+     */
     protected function _addResultOfArchiveToLog($result)
     {
-        $linkToArchive = ' (<a href="' . Mage::helper("adminhtml")->getUrl("*/sales_archive_order/index") . '" title="' . $this->__('Refer to Archive Orders') . '">' . $this->__('Refer to "Archive Orders"') . '</a>)';
+        $linkToArchive = ' (<a href="' . Mage::helper("adminhtml")->getUrl("*/sales_archive_order/index")
+            . '" title="' . $this->__('Refer to Archive Orders') . '">'
+            . $this->__('Refer to "Archive Orders"') . '</a>)';
 
         $error = $result->resultError();
         $notAllowedOrders = $result->getNotAllowedOrders();
@@ -59,10 +71,14 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         }
 
         if (!empty($error)) {
-            $this->_getSession()->addError($this->__('Error archive order(s)') . ": " . $error->getMessage() . $linkToArchive);
+            $this->_getSession()->addError(
+                $this->__('Error archive order(s)') . ": " . $error->getMessage() . $linkToArchive
+            );
         } else {
             if ($countOrderIds - $notArchived > 0) {
-                $this->_getSession()->addSuccess(sprintf($this->__('Orders have been archived successfully. %s'), $linkToArchive));
+                $this->_getSession()->addSuccess(
+                    sprintf($this->__('Orders have been archived successfully. %s'), $linkToArchive)
+                );
             }
         }
     }
@@ -82,27 +98,36 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         }
 
         $this->_redirect('*/sales_archive_order/index');
-        return;
     }
 
+    /**
+     * @return void
+     */
     public function restoreManuallyAction()
     {
         $result = Mage::getModel('iwd_ordermanager/archive')->restoreSalesFromArchive();
         $this->_addResultOfRestoreToLog($result);
         $this->_redirect('adminhtml/system_config/edit/section/iwd_ordermanager');
-        return;
     }
 
+    /**
+     * @param $result
+     */
     protected function _addResultOfRestoreToLog($result)
     {
-        $linkToOrderPage = ' (<a href="' . Mage::helper("adminhtml")->getUrl("*/sales_order/") . '" title="' . $this->__('Refer to Orders') . '">' . $this->__('Refer to "Orders"') . '</a>)';
+        $linkToOrderPage = ' (<a href="' . Mage::helper("adminhtml")->getUrl("*/sales_order/")
+            . '" title="' . $this->__('Refer to Orders') . '">' . $this->__('Refer to "Orders"') . '</a>)';
 
         $error = $result->resultError();
 
         if (!empty($error)) {
-            $this->_getSession()->addError($this->__('Error restore order(s)') . ": " . $error->getMessage() . $linkToOrderPage);
+            $this->_getSession()->addError(
+                $this->__('Error restore order(s)') . ": " . $error->getMessage() . $linkToOrderPage
+            );
         } else {
-            $this->_getSession()->addSuccess(sprintf($this->__('Orders have been restored successfully %s'), $linkToOrderPage));
+            $this->_getSession()->addSuccess(
+                sprintf($this->__('Orders have been restored successfully %s'), $linkToOrderPage)
+            );
         }
     }
     /******************************************************** end RESTORE */
@@ -121,6 +146,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
 
+    /**
+     * @return void
+     */
     public function exportExcelAction()
     {
         $fileName = 'archived_orders.xml';
@@ -141,16 +169,25 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         $this->_forward('massCancel', 'sales_order', null, array('origin' => 'archive'));
     }
 
+    /**
+     * @return void
+     */
     public function massHoldAction()
     {
         $this->_forward('massHold', 'sales_order', null, array('origin' => 'archive'));
     }
 
+    /**
+     * @return void
+     */
     public function massUnholdAction()
     {
         $this->_forward('massUnhold', 'sales_order', null, array('origin' => 'archive'));
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -159,6 +196,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_OrderController extends Mage_Admi
         );
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {

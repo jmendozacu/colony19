@@ -107,7 +107,7 @@ class IWD_OrderManager_Model_Invoice extends Mage_Sales_Model_Order_Invoice
         try {
             $resource = Mage::getSingleton('core/resource');
             $readConnection = $resource->getConnection('core_read');
-            $query = 'DELETE FROM `' . $resource->getTableName('sales_flat_invoice_grid') . '` WHERE `' . Mage::getSingleton('core/resource')->getTableName('sales_flat_invoice_grid') . '`.`entity_id` = ' . $this->getEntityID();
+            $query = 'DELETE FROM `' . $resource->getTableName('sales_flat_invoice_grid') . '` WHERE `' . Mage::getSingleton('core/resource')->getTableName('sales_flat_invoice_grid') . '`.`entity_id` = ' . $this->getEntityId();
             $readConnection->fetchAll($query);
         } catch (Exception $e) {
             return false;

@@ -163,17 +163,6 @@
                                     <show_in_store>0</show_in_store>
                                     <comment><![CDATA[Manage if comments for an order are visible to customers on front-end]]></comment>
                                 </is_visible_comment_on_front>
-                                <is_checkout_progress_block_flag>
-                                    <label>Enable Authorize.Net Payment Method Block on Order Details Page</label>
-                                    <config_path>iwd_ordermanager/edit/is_checkout_progress_block_flag</config_path>
-                                    <frontend_type>select</frontend_type>
-                                    <source_model>adminhtml/system_config_source_yesno</source_model>
-                                    <sort_order>50</sort_order>
-                                    <show_in_default>1</show_in_default>
-                                    <show_in_website>0</show_in_website>
-                                    <show_in_store>0</show_in_store>
-                                </is_checkout_progress_block_flag>
-
                                 <deferred_re_authorization>
                                     <label>Re-Authorize Payment Automatically</label>
                                     <config_path>iwd_ordermanager/edit/deferred_re_authorization</config_path>
@@ -279,6 +268,30 @@
                                     <depends><enable_custom_amount>1</enable_custom_amount></depends>
                                     <comment><![CDATA[Allow custom amount to be added during checkout by admin]]></comment>
                                 </enable_custom_amount_new>
+                                <manage_tax translate="label">
+                                    <label>Apply Tax to Custom Amount</label>
+                                    <config_path>iwd_ordermanager/edit/manage_custom_amount_tax</config_path>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>30</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <depends><enable_custom_amount>1</enable_custom_amount></depends>
+                                </manage_tax>
+                                <display_custom_amount translate="label">
+                                    <label>Display Custom Amount</label>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>tax/system_config_source_tax_display_type</source_model>
+                                    <backend_model>tax/config_notification</backend_model>
+                                    <config_path>iwd_ordermanager/edit/display_custom_amount</config_path>
+                                    <sort_order>40</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>1</show_in_store>
+                                    <depends><enable_custom_amount>1</enable_custom_amount></depends>
+                                    <comment><![CDATA[Orders, Invoices, Credit Memos Display Settings]]></comment>
+                                </display_custom_amount>
                             </fields>
                         </custom_amount>
                         <confirmation type="group" translate="label">
@@ -420,6 +433,26 @@
                         </default>
                      </fields>
                 </edit>
+                <order_options>
+                    <label>Order Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>25</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <hide translate="label">
+                            <label>Allow Hide Order On Front</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Allow hide order from customer view in "My Account" area]]></comment>
+                        </hide>
+                    </fields>
+                </order_options>
                 <archive translate="label">
                     <label>Archive Sales</label>
                     <frontend_type>text</frontend_type>
@@ -525,6 +558,16 @@
                             <show_in_store>0</show_in_store>
                             <comment><![CDATA[Enable custom order grid]]></comment>
                         </enable>
+                        <save_grid_params>
+                            <label>Save Order Table Params</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Save parameters (filters, sorting, rows per page) of order table for next login. Separate for each admin.]]></comment>
+                        </save_grid_params>
                         <columns translate="label">
                             <label>Order Table Columns</label>
                             <frontend_type>multiselect</frontend_type>
@@ -534,8 +577,21 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <can_be_empty>0</can_be_empty>
-                            <comment><![CDATA[Select and arrange order of columns to display order information. Options in the right column will appear on the Order Table once saved]]></comment>
+                            <comment>
+                                <![CDATA[Select and arrange order of columns to display order information.<br>
+                                Options in the left column will appear on the Order Table once saved.<br>
+                                Manage table columns width in pixels (Note: width of column can be ignored in some cases).]]>
+                            </comment>
                         </columns>
+                        <columns_width>
+                            <label> </label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                        </columns_width>
                         <status_color>
                             <label>Colors For Statuses</label>
                             <frontend_type>text</frontend_type>
@@ -595,7 +651,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <can_be_empty>0</can_be_empty>
-                            <comment><![CDATA[Rearrange, remove, or add columns to the orders table that customers view in their account]]></comment>
+                            <comment><![CDATA[Rearrange, remove, or add columns to the orders grid that can be seen in the customers' account in Magento admin panel.]]></comment>
                         </orders_grid_columns>
                         <resent_orders_grid_columns translate="label">
                             <label>Customer Recent Orders Table</label>
@@ -606,7 +662,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <can_be_empty>0</can_be_empty>
-                            <comment><![CDATA[Rearrange, remove, or add columns to the recent orders table that customers view in their account]]></comment>
+                            <comment><![CDATA[Rearrange, remove, or add columns to the recent orders grid that can be seen in the customers' account in Magento admin panel.]]></comment>
                         </resent_orders_grid_columns>
                         <resent_orders_count translate="label">
                             <label>Recent Orders Count</label>
@@ -635,41 +691,52 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                                <fields>
-                                    <allow_del_orders translate="label">
-                                        <label>Enable</label>
-                                        <frontend_type>select</frontend_type>
-                                        <config_path>iwd_ordermanager/iwd_delete_orders/allow_del_orders</config_path>
-                                        <source_model>adminhtml/system_config_source_yesno</source_model>
-                                        <sort_order>10</sort_order>
-                                        <show_in_default>1</show_in_default>
-                                        <show_in_website>0</show_in_website>
-                                        <show_in_store>0</show_in_store>
-                                        <comment><![CDATA[Related invoices, shipments and credit memos will also be deleted]]></comment>
-                                    </allow_del_orders>
-                                    <order_status translate="label">
-                                        <label>Orders statuses</label>
-                                        <frontend_type>multiselect</frontend_type>
-                                        <config_path>iwd_ordermanager/iwd_delete_orders/order_status</config_path>
-                                        <source_model>iwd_ordermanager/system_config_status_order</source_model>
-                                        <sort_order>20</sort_order>
-                                        <show_in_default>1</show_in_default>
-                                        <show_in_website>0</show_in_website>
-                                        <show_in_store>0</show_in_store>
-                                        <comment><![CDATA[Delete orders only with status(es)]]></comment>
-                                    </order_status>
-                                    <delete_downloadable translate="label">
-                                        <label>Delete Downloadable Products</label>
-                                        <frontend_type>select</frontend_type>
-                                        <config_path>iwd_ordermanager/iwd_delete_orders/delete_downloadable</config_path>
-                                        <source_model>adminhtml/system_config_source_yesno</source_model>
-                                        <sort_order>30</sort_order>
-                                        <show_in_default>1</show_in_default>
-                                        <show_in_website>0</show_in_website>
-                                        <show_in_store>0</show_in_store>
-                                        <comment><![CDATA[Delete downloadable products after deleting an order]]></comment>
-                                    </delete_downloadable>
-                                </fields>
+                            <fields>
+                                <allow_del_orders translate="label">
+                                    <label>Enable</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/allow_del_orders</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>10</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Related invoices, shipments and credit memos will also be deleted]]></comment>
+                                </allow_del_orders>
+                                <double_confirmation>
+                                    <label>Double Confirmation</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/double_confirmation</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>15</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Double confirmation before delete orders]]></comment>
+                                </double_confirmation>
+                                <order_status translate="label">
+                                    <label>Orders statuses</label>
+                                    <frontend_type>multiselect</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/order_status</config_path>
+                                    <source_model>iwd_ordermanager/system_config_status_order</source_model>
+                                    <sort_order>20</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Delete orders only with status(es)]]></comment>
+                                </order_status>
+                                <delete_downloadable translate="label">
+                                    <label>Delete Downloadable Products</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/delete_downloadable</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>30</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Delete downloadable products after deleting an order]]></comment>
+                                </delete_downloadable>
+                            </fields>
                         </delete_orders>
                         <delete_invoices type="group" translate="label">
                             <label>Delete Invoices</label>
@@ -690,6 +757,17 @@
                                     <show_in_store>0</show_in_store>
                                     <comment><![CDATA[]]></comment>
                                 </allow_del_invoices>
+                                <double_confirmation>
+                                    <label>Double Confirmation</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/double_confirmation</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>15</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Double confirmation before delete invoice]]></comment>
+                                </double_confirmation>
                                 <allow_del_related_cm_for_invoices translate="label">
                                     <label>Allow Deletion Of Related Credit Memos</label>
                                     <frontend_type>select</frontend_type>
@@ -733,6 +811,17 @@
                                     <show_in_store>0</show_in_store>
                                     <comment><![CDATA[]]></comment>
                                 </allow_del_creditmemos>
+                                <double_confirmation>
+                                    <label>Double Confirmation</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/double_confirmation</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>15</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Double confirmation before delete credit memos]]></comment>
+                                </double_confirmation>
                                 <creditmemo_status translate="label">
                                     <label>Credit Memos Statuses</label>
                                     <frontend_type>multiselect</frontend_type>
@@ -765,6 +854,17 @@
                                     <show_in_store>0</show_in_store>
                                     <comment><![CDATA[]]></comment>
                                 </allow_del_shipments>
+                                <double_confirmation>
+                                    <label>Double Confirmation</label>
+                                    <frontend_type>select</frontend_type>
+                                    <config_path>iwd_ordermanager/iwd_delete_orders/double_confirmation</config_path>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>15</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment><![CDATA[Double confirmation before delete shipments]]></comment>
+                                </double_confirmation>
                             </fields>
                         </delete_shipments>
                     </fields>
@@ -777,45 +877,23 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
-                        <sr_default type="group" translate="label">
-                            <label>Default</label>
-                            <sort_order>20</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <fields>
-                                <limit_period translate="label">
-                                    <label>Limit Period</label>
-                                    <frontend_type>select</frontend_type>
-                                    <source_model>adminhtml/system_config_source_yesno</source_model>
-                                    <sort_order>10</sort_order>
-                                    <show_in_default>1</show_in_default>
-                                    <show_in_website>0</show_in_website>
-                                    <show_in_store>0</show_in_store>
-                                    <config_path>iwd_settlementreport/default/limit_period</config_path>
-                                    <comment>Choose to limit the date range the report automatically displays</comment>
-                                </limit_period>
-                                <last_days translate="label">
-                                    <label>Show Last "X" Days</label>
-                                    <frontend_type>text</frontend_type>
-                                    <sort_order>20</sort_order>
-                                    <show_in_default>1</show_in_default>
-                                    <show_in_website>0</show_in_website>
-                                    <show_in_store>0</show_in_store>
-                                    <depends><limit_period>1</limit_period></depends>
-                                    <validate>required-entry</validate>
-                                    <config_path>iwd_settlementreport/default/last_days</config_path>
-                                    <comment>If limiting the report period, then enter the amount of days to limit the report by</comment>
-                                </last_days>
-                            </fields>
-                        </sr_default>
                         <sr_connection type="group" translate="label">
-                            <label>Connection</label>
-                            <sort_order>30</sort_order>
+                            <label>General</label>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                             <fields>
+                                <enabled>
+                                    <label>Enable Settlement Report</label>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>0</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <config_path>iwd_settlementreport/connection/enabled</config_path>
+                                </enabled>
                                 <status>
                                     <label>Status</label>
                                     <frontend_type>text</frontend_type>
@@ -877,6 +955,38 @@
                                 </test>
                             </fields>
                         </sr_connection>
+                        <sr_default type="group" translate="label">
+                            <label>Default</label>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <fields>
+                                <limit_period translate="label">
+                                    <label>Limit Period</label>
+                                    <frontend_type>select</frontend_type>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <sort_order>10</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <config_path>iwd_settlementreport/default/limit_period</config_path>
+                                    <comment>Choose to limit the date range the report automatically displays</comment>
+                                </limit_period>
+                                <last_days translate="label">
+                                    <label>Show Last "X" Days</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>20</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>0</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <depends><limit_period>1</limit_period></depends>
+                                    <validate>required-entry</validate>
+                                    <config_path>iwd_settlementreport/default/last_days</config_path>
+                                    <comment>If limiting the report period, then enter the amount of days to limit the report by</comment>
+                                </last_days>
+                            </fields>
+                        </sr_default>
                         <sr_emailing type="group" translate="label">
                             <label>Email Reports</label>
                             <sort_order>40</sort_order>

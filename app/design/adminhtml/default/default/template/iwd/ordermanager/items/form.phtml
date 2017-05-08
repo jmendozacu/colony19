@@ -599,8 +599,8 @@
                                             value="<?php echo $item->getSku(); ?>"
                                             name="items[<?php echo $item->getId(); ?>][sku]"/>
                                     </div>
-                                    <?php if ($this->getOrderOptions($item)): ?>
-                                        <dl class="item-options item_options_<?php echo $item->getId(); ?>">
+                                    <dl class="item-options item_options_<?php echo $item->getId(); ?>">
+                                        <?php if ($this->getOrderOptions($item)): ?>
                                             <?php foreach ($this->getOrderOptions($item) as $_option): ?>
                                                 <dt <?php if(isset($_option["option_id"])): ?>
                                                     data-id="<?php echo $_option['option_id'] ?>" class="<?php echo 'option'; ?>"
@@ -622,8 +622,8 @@
                                                     <?php endif; ?>
                                                 </dd>
                                             <?php endforeach; ?>
-                                        </dl>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                    </dl>
                                     <div class="notice notice_<?php echo $item->getId(); ?>" style="display:none">
                                         <div class="notice_qty" style="font-size:95%; display:none">The requested
                                             quantity is not available. Allow: <?php echo $stock_qty ?></div>

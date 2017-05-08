@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Settlementreport_TransactionsController
+ */
 class IWD_OrderManager_Adminhtml_Settlementreport_TransactionsController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return $this
+     */
     protected function _initAction()
     {
         $this->loadLayout()
@@ -16,9 +22,12 @@ class IWD_OrderManager_Adminhtml_Settlementreport_TransactionsController extends
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
-        $connection = Mage::helper('iwd_ordermanager')->checkApiCredentials();
+        $connection = Mage::helper('iwd_ordermanager/settlementReport')->checkApiCredentials();
 
         if ($connection['error'] == 0) {
             $this->_showLastExecutionTime();
@@ -26,34 +35,41 @@ class IWD_OrderManager_Adminhtml_Settlementreport_TransactionsController extends
             $this->_addContent($this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions'));
         } else {
             $this->_initAction();
-            $error_block = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_error');
-            $error_block->setData('message', $connection['message']);
-            $this->_addContent($error_block);
+            $errorBlock = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_error');
+            $errorBlock->setData('message', $connection['message']);
+            $this->_addContent($errorBlock);
         }
 
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function sendreportAction()
     {
+        $helper = Mage::helper('iwd_ordermanager');
+
         try {
             $email = $this->getRequest()->getParam('email', null);
             if (empty($email)) {
-                throw new Exception('Email is empty.');
+                Mage::throwException('Email is empty.');
             }
 
-            //Mage::getModel("iwd_settlementreport/transactions")->refresh();
+            /* Mage::getModel("iwd_settlementreport/transactions")->refresh(); */
             Mage::getModel('iwd_ordermanager/notify_report')->sendEmail($email);
 
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('The reports were successfully sent.'));
+            Mage::getSingleton('adminhtml/session')->addSuccess($helper->__('The reports were successfully sent.'));
         } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('iwd_ordermanager')->__('Error: ') . $e->getMessage());
+            Mage::getSingleton('adminhtml/session')->addError($helper->__('Error: ') . $e->getMessage());
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -62,53 +78,68 @@ class IWD_OrderManager_Adminhtml_Settlementreport_TransactionsController extends
         );
     }
 
+    /**
+     * @return void
+     */
     public function updateAction()
     {
+        $helper = Mage::helper('iwd_ordermanager');
         try {
             Mage::getModel("iwd_ordermanager/transactions")->refresh();
 
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Refreshed Successfully'));
+            Mage::getSingleton('adminhtml/session')->addSuccess($helper->__('Refreshed Successfully'));
         } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('iwd_ordermanager')->__('Error: ') . $e->getMessage());
+            Mage::getSingleton('adminhtml/session')->addError($helper->__('Error: ') . $e->getMessage());
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
+    /**
+     * @return void
+     */
     public function exportCsvAction()
     {
-        $file_name = 'transactions.csv';
-        $content = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_grid')
-            ->getCsvFile();
+        $fileName = 'transactions.csv';
+        $content = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_grid')->getCsvFile();
 
-        $this->_prepareDownloadResponse($file_name, $content);
+        $this->_prepareDownloadResponse($fileName, $content);
     }
 
+    /**
+     * @return void
+     */
     public function exportExcelAction()
     {
-        $file_name = 'transactions.xml';
-        $content = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_grid')
-            ->getExcelFile();
+        $fileName = 'transactions.xml';
+        $content = $this->getLayout()->createBlock('iwd_ordermanager/adminhtml_transactions_grid')->getExcelFile();
 
-        $this->_prepareDownloadResponse($file_name, $content);
+        $this->_prepareDownloadResponse($fileName, $content);
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('admin/report/iwd_settlementreport');
     }
 
+    /**
+     * @return $this
+     */
     protected function _showLastExecutionTime()
     {
         $flag = Mage::getModel('reports/flag')->setReportFlagCode('iwd_settlementreport_transactions')->loadSelf();
-        $updated_at = ($flag->hasData())
-            ? Mage::app()->getLocale()->storeDate(
-                0, new Zend_Date($flag->getLastUpdate(), Varien_Date::DATETIME_INTERNAL_FORMAT), true
-            )
+        $format = Varien_Date::DATETIME_INTERNAL_FORMAT;
+        $updatedAt = ($flag->hasData())
+            ? Mage::app()->getLocale()->storeDate(0, new Zend_Date($flag->getLastUpdate(), $format), true)
             : 'undefined';
 
-        Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('adminhtml')->__('Last updated: %s.', $updated_at));
+        Mage::getSingleton('adminhtml/session')->addNotice(
+            Mage::helper('adminhtml')->__('Last updated: %s.', $updatedAt)
+        );
+
         return $this;
     }
 }

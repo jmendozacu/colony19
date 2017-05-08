@@ -226,7 +226,7 @@ class IWD_OrderManager_Model_Shipping extends Mage_Core_Model_Abstract
 
     public function prepareShippingRequest($order)
     {
-        if($order->getIsVirtual()){
+        if ($order->getIsVirtual()) {
             return null;
         }
 
@@ -361,7 +361,7 @@ class IWD_OrderManager_Model_Shipping extends Mage_Core_Model_Abstract
         $shipping->setDescription($params['s_description'][$method])
             ->setAmount($params['s_amount_excl_tax'][$method])
             ->setAmountInclTax($params['s_amount_incl_tax'][$method])
-            ->setTaxPrtcent($params['s_tax_percent'][$method])
+            ->setTaxPercent($params['s_tax_percent'][$method])
             ->setMethod($method);
 
         return $shipping;

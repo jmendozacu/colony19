@@ -19,6 +19,7 @@
 class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
 {
     protected $allowImageFormats = array('jpg', 'jpeg', 'png', 'gif');
+
     const FILES_DISPERSION = true;
     const BASE_IWD_OM_MEDIA_DIR = 'iwd_ordermanager';
     const IMAGE_DIR = 'flags';
@@ -124,7 +125,7 @@ class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
         return Mage::getModel('iwd_ordermanager/flags_autoapply')->getCollection()
             ->addFieldToFilter('flag_id', array($equal => $this->getId()))
             ->addFieldToFilter('apply_type', $type)
-            ->getColumnValues('key');
+            ->getColumnValues('method_key');
     }
 
     /**
@@ -254,7 +255,7 @@ class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
             ->addFieldToFilter('apply_type', $type);
 
         foreach ($flagsAutoApply as $item) {
-            if(($key = array_search($item->getKey(), $options)) !== false) {
+            if (($key = array_search($item->getMethodKey(), $options)) !== false) {
                 unset($options[$key]);
             } else {
                 $item->delete();
@@ -278,7 +279,7 @@ class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
             $flagsAutoApply = Mage::getModel('iwd_ordermanager/flags_autoapply');
             $flagsAutoApply->setFlagId($this->getId())
                 ->setApplyType($type)
-                ->setKey($option)
+                ->setMethodKey($option)
                 ->save();
         }
     }
@@ -292,7 +293,7 @@ class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
             ->addFieldToFilter('flag_id', $this->getId());
 
         foreach ($flagsTypes as $item) {
-            if(($key = array_search($item->getTypeId(), $types)) !== false) {
+            if (($key = array_search($item->getTypeId(), $types)) !== false) {
                 unset($types[$key]);
             } else {
                 $item->delete();
@@ -305,5 +306,17 @@ class IWD_OrderManager_Model_Flags_Flags extends Mage_Core_Model_Abstract
                 ->setTypeId($type)
                 ->save();
         }
+    }
+
+    public function delete()
+    {
+        $flagsTypes = Mage::getModel('iwd_ordermanager/flags_flag_type')->getCollection()
+            ->addFieldToFilter('flag_id', $this->getId());
+
+        foreach ($flagsTypes as $item) {
+            $item->delete();
+        }
+
+        parent::delete();
     }
 }

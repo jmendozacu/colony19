@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController
+ */
 class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController extends Mage_Adminhtml_Controller_Action
 {
     /**
@@ -7,6 +10,9 @@ class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController extends Mage_Adminh
      */
     protected $order = null;
 
+    /**
+     *
+     */
     public function reauthorizeAction()
     {
         if ($this->reauthorizePayment()) {
@@ -16,11 +22,17 @@ class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController extends Mage_Adminh
         $this->_redirect('*/sales_order/view', array('order_id' => $this->getOrderId()));
     }
 
+    /**
+     * @return mixed
+     */
     protected function getOrderId()
     {
         return Mage::app()->getRequest()->getParam('order_id');
     }
 
+    /**
+     * @return Mage_Core_Model_Abstract|Mage_Sales_Model_Order
+     */
     protected function getOrder()
     {
         if (empty($this->order)) {
@@ -31,12 +43,18 @@ class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController extends Mage_Adminh
         return $this->order;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getOldOrder()
     {
         $backupId = $this->getOrder()->getIwdBackupId();
         return Mage::getModel('iwd_ordermanager/backup_sales')->loadSalesObject($backupId);
     }
 
+    /**
+     * @return int
+     */
     protected function reauthorizePayment()
     {
         $orderId = $this->getOrderId();
@@ -48,6 +66,9 @@ class IWD_OrderManager_Adminhtml_Sales_ReauthorizeController extends Mage_Adminh
         return $payment->reauthorizeOrderPayment($orderId, $oldOrder);
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;

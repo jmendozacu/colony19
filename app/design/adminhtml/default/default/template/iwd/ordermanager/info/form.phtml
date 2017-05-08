@@ -101,6 +101,24 @@
             </td>
         </tr>
 
+        <?php if (Mage::helper('iwd_ordermanager')->isAllowHideOrders()): ?>
+            <tr>
+                <td class="label">
+                    <label><?php echo $helper->__("Hide On Front"); ?></label>
+                </td>
+                <td class="value">
+                    <select name="hide_on_front">
+                        <option value="0" <?php if($order->getIwdOmStatus() == 0): ?>selected="selected"<?php endif; ?>>
+                            <?php echo $helper->__("No"); ?>
+                        </option>
+                        <option value="1" <?php if($order->getIwdOmStatus() == 1): ?>selected="selected"<?php endif; ?>>
+                            <?php echo $helper->__("Yes"); ?>
+                        </option>
+                    </select>
+                </td>
+            </tr>
+        <?php endif; ?>
+
         <?php if($this->isInvoicePage()): ?>
             <tr>
                 <td colspan="2">

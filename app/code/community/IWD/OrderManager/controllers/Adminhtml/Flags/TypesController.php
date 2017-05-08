@@ -105,23 +105,26 @@ class IWD_OrderManager_Adminhtml_Flags_TypesController extends Mage_Adminhtml_Co
      */
     public function saveAction()
     {
+        $helper = Mage::helper('iwd_ordermanager');
         try {
             $type = $this->saveType();
             $this->assignFlagsToType($type);
 
             Mage::getSingleton('adminhtml/session')->setFormData(false);
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Type was successfully saved'));
+            Mage::getSingleton('adminhtml/session')->addSuccess($helper->__('Type was successfully saved'));
 
             if ($this->getRequest()->getParam('back')) {
                 $this->_redirect('*/*/edit', array('id' => $type->getId()));
                 return;
             }
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Type was not saved.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                $helper->__('Type was not saved.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**
@@ -129,20 +132,26 @@ class IWD_OrderManager_Adminhtml_Flags_TypesController extends Mage_Adminhtml_Co
      */
     public function deleteAction()
     {
+        $helper = Mage::helper('iwd_ordermanager');
+
         try {
             $type = $this->getTypeObj();
             if ($type->getId() == 1) {
-                Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('iwd_ordermanager')->__('You can not remove default type of flags.'));
+                Mage::getSingleton('adminhtml/session')->addNotice(
+                    $helper->__('You can not remove default type of flags.')
+                );
             } else {
                 $type->delete();
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Type was successfully deleted'));
+                Mage::getSingleton('adminhtml/session')->addSuccess($helper->__('Type was successfully deleted'));
             }
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Type was not deleted.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                Mage::helper('iwd_ordermanager')->__('Type was not deleted.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**
@@ -150,6 +159,8 @@ class IWD_OrderManager_Adminhtml_Flags_TypesController extends Mage_Adminhtml_Co
      */
     public function massDeleteAction()
     {
+        $helper = Mage::helper('iwd_ordermanager');
+
         try {
             $deleted = 0;
             $ids = $this->getRequest()->getParam('id', array());
@@ -159,19 +170,23 @@ class IWD_OrderManager_Adminhtml_Flags_TypesController extends Mage_Adminhtml_Co
                     $flag->delete();
                     $deleted++;
                 } else {
-                    Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('iwd_ordermanager')->__('You can not remove default type of flags.'));
+                    Mage::getSingleton('adminhtml/session')->addNotice(
+                        Mage::helper('iwd_ordermanager')->__('You can not remove default type of flags.')
+                    );
                 }
             }
 
             if ($deleted) {
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Type(s) was successfully deleted'));
+                Mage::getSingleton('adminhtml/session')->addSuccess($helper->__('Type(s) was successfully deleted'));
             }
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Type(s) was not deleted.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                $helper->__('Type(s) was not deleted.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**

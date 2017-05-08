@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_CouponController
+ */
 class IWD_OrderManager_Adminhtml_Sales_CouponController extends IWD_OrderManager_Controller_Abstract
 {
     /**
@@ -119,7 +122,10 @@ class IWD_OrderManager_Adminhtml_Sales_CouponController extends IWD_OrderManager
                 $this->getLogger()->addToLog($message);
             } else {
                 $this->result['status'] = 0;
-                $this->result['message']['error'] = $this->__('Coupon code "%s" is not valid.', Mage::helper('core')->escapeHtml($couponCode));
+                $this->result['message']['error'] = $this->__(
+                    'Coupon code "%s" is not valid.',
+                    Mage::helper('core')->escapeHtml($couponCode)
+                );
             }
         } else {
             $message = $this->__('Coupon code was canceled');

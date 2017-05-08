@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Archive
+ */
 class IWD_OrderManager_Model_Archive
 {
     const ORDER      = 'order';
@@ -122,7 +125,7 @@ class IWD_OrderManager_Model_Archive
 
     protected function _archive($orderIds)
     {
-        if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
+        if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
             return $this;
         }
 
@@ -156,7 +159,7 @@ class IWD_OrderManager_Model_Archive
 
     public function restoreSalesFromArchiveByIds($orderIds)
     {
-        if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
+        if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
             return $this;
         }
 
@@ -186,7 +189,7 @@ class IWD_OrderManager_Model_Archive
 
     public function restoreSalesFromArchive()
     {
-        if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
+        if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
             return $this;
         }
 
@@ -210,10 +213,9 @@ class IWD_OrderManager_Model_Archive
         return $this;
     }
 
-
     public function detectArchiveEntity($object)
     {
-        if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
+        if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
             return false;
         }
 
@@ -224,6 +226,7 @@ class IWD_OrderManager_Model_Archive
                 return $archiveEntity;
             }
         }
+
         return false;
     }
 

@@ -5,7 +5,7 @@ class IWD_OrderManager_Model_Logger_Invoice extends IWD_OrderManager_Model_Logge
     /**
      * @var array
      */
-    protected $order_params = array(
+    protected $orderParams = array(
         'invoice_increment_id' => "Changed invoice number from '%s' to '%s'",
         'invoice_created_at' => "Changed invoice date from '%s' to '%s'",
         'invoice_status' => "Changed invoice date status '%s' to '%s'"
@@ -20,11 +20,12 @@ class IWD_OrderManager_Model_Logger_Invoice extends IWD_OrderManager_Model_Logge
     public function addCommentToHistory($orderId, $invoiceId, $status = false, $isCustomerNotified = false)
     {
         $this->addToLogOutputInfoAboutOrderChanges();
-        if (empty($this->log_output)) {
+        if (empty($this->logOutput)) {
             return;
         }
-        $this->addInvoiceStatusHistoryComment($this->log_output, $invoiceId, $status, $isCustomerNotified);
-        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->log_output);
+
+        $this->addInvoiceStatusHistoryComment($this->logOutput, $invoiceId, $status, $isCustomerNotified);
+        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->logOutput);
     }
 
     /**

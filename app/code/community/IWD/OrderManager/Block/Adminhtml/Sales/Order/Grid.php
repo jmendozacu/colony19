@@ -2,14 +2,131 @@
 
 class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_Block_Sales_Order_Grid
 {
+    const XPATH_GRID_SAVED_LIMIT = 'iwd_ordermanager/grid_order/saved_params';
+    const XPATH_IS_SAVE_GRID_PARAMS = 'iwd_ordermanager/grid_order/save_grid_params';
+
+    protected $gridParams = null;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setDefaultGridParams();
+        $this->setColumnFilters(
+            array('iwd_multiselect' => 'iwd_ordermanager/adminhtml_widget_grid_column_filter_multiselect')
+        )->setColumnRenderers(
+            array('iwd_multiselect' => 'adminhtml/widget_grid_column_renderer_options')
+        );
+    }
+
+    protected function isSaveGridParams()
+    {
+        return Mage::getStoreConfig(self::XPATH_IS_SAVE_GRID_PARAMS);
+    }
+
+    protected function setDefaultGridParams()
+    {
+        if ($this->isSaveGridParams()) {
+            $limit = $this->getGirdLimit();
+            $this->setDefaultLimit($limit);
+
+            $sort = $this->getGirdSort();
+            $this->setDefaultSort($sort);
+
+            $dir = $this->getGirdDir();
+            $this->setDefaultDir($dir);
+
+            $filter = $this->getGirdFilter();
+            $this->setDefaultFilter($filter);
+        }
+    }
+
+    protected function saveGirdParams()
+    {
+        if ($this->isSaveGridParams()) {
+            $params = $this->getSavedGridParams();
+            $adminId = Mage::getSingleton('admin/session')->getUser()->getUserId();
+            $params[$adminId]['limit'] = (int)$this->getParam($this->getVarNameLimit(), $this->_defaultLimit);
+            $params[$adminId]['sort'] = $this->getParam($this->getVarNameSort(), $this->_defaultSort);
+            $params[$adminId]['dir'] = $this->getParam($this->getVarNameDir(), $this->_defaultDir);
+            $params[$adminId]['filter'] = $this->getParam($this->getVarNameFilter(), $this->_defaultFilter);
+
+            Mage::getModel('core/config')->saveConfig(self::XPATH_GRID_SAVED_LIMIT, serialize($params));
+        }
+    }
+
+    protected function getGirdLimit()
+    {
+        $params = $this->getSavedGridParams();
+        $adminId = Mage::getSingleton('admin/session')->getUser()->getUserId();
+
+        return isset($params[$adminId]['limit']) ? $params[$adminId]['limit'] : $this->_defaultLimit;
+    }
+
+    protected function getGirdSort()
+    {
+        $params = $this->getSavedGridParams();
+        $adminId = Mage::getSingleton('admin/session')->getUser()->getUserId();
+
+        return isset($params[$adminId]['sort']) ? $params[$adminId]['sort'] : $this->_defaultSort;
+    }
+
+    protected function getGirdDir()
+    {
+        $params = $this->getSavedGridParams();
+        $adminId = Mage::getSingleton('admin/session')->getUser()->getUserId();
+
+        return isset($params[$adminId]['dir']) ? $params[$adminId]['dir'] : $this->_defaultDir;
+    }
+
+    protected function getGirdFilter()
+    {
+        $params = $this->getSavedGridParams();
+        $adminId = Mage::getSingleton('admin/session')->getUser()->getUserId();
+
+        return isset($params[$adminId]['filter']) ? $params[$adminId]['filter'] : $this->_defaultFilter;
+    }
+
+    protected function getSavedGridParams()
+    {
+        if ($this->gridParams == null) {
+            $params = Mage::getStoreConfig(self::XPATH_GRID_SAVED_LIMIT);
+            $params = unserialize($params);
+            $this->gridParams = empty($params) || !is_array($params) ? array() : $params;
+        }
+
+        return $this->gridParams;
+    }
+
     protected function _prepareCollection()
     {
         $filter = $this->prepareFilters();
-        $collection = Mage::getResourceModel("sales/order_grid_collection");
-        $collection = Mage::getModel('iwd_ordermanager/order_grid')->prepareCollection($filter, $collection);
 
-        $this->setCollection($collection);
-        Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
+        try {
+            $collection = Mage::getResourceModel("sales/order_grid_collection");
+            $collection = Mage::getModel('iwd_ordermanager/order_grid')->prepareCollection($filter, $collection);
+
+            $this->setCollection($collection);
+            Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
+        } catch (Exception $e) {
+            Mage::log($e->getMessage());
+
+            $session = Mage::getSingleton('adminhtml/session');
+            $session->unsetData($this->getId().$this->getVarNameFilter());
+            $session->unsetData($this->getId().$this->getVarNameSort());
+            $this->setDefaultFilter(array());
+            $this->getRequest()->setParam($this->getVarNameFilter(), null);
+            $this->setDefaultSort(null);
+            $this->getRequest()->setParam($this->getVarNameSort(), null);
+
+            $collection = Mage::getResourceModel("sales/order_grid_collection");
+            $collection = Mage::getModel('iwd_ordermanager/order_grid')->prepareCollection($filter, $collection);
+            $this->setCollection($collection);
+            Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();
+            Mage::getSingleton('adminhtml/session')->addError($this->__('An error occurred during filtering or sorting. Filter and sort were reset.'));
+        }
+
+        $this->saveGirdParams();
 
         $this->getOrderManagerTotals();
 
@@ -66,6 +183,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid extends Mage_Adminhtml_B
         if (Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
             return $this->getUrl('*/sales_order/view', array('order_id' => $row->getId()));
         }
+
         return false;
     }
 

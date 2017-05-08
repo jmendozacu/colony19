@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController
+ */
 class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->loadLayout()
@@ -17,6 +23,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController extends Mage_A
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function exportCsvAction()
     {
         $fileName = 'archive_shipments.csv';
@@ -29,6 +38,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController extends Mage_A
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
 
+    /**
+     * @return void
+     */
     public function exportExcelAction()
     {
         $fileName = 'archive_shipments.xml';
@@ -41,6 +53,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController extends Mage_A
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile());
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -49,6 +64,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_ShipmentController extends Mage_A
         );
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {

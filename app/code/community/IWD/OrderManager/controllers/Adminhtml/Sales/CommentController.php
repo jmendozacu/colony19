@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_CommentController
+ */
 class IWD_OrderManager_Adminhtml_Sales_CommentController extends IWD_OrderManager_Controller_Abstract
 {
+    /**
+     * @return void
+     */
     public function deleteAction()
     {
         $type = $this->getType();
@@ -12,6 +18,9 @@ class IWD_OrderManager_Adminhtml_Sales_CommentController extends IWD_OrderManage
         $this->prepareResponse($result);
     }
 
+    /**
+     * @return void
+     */
     public function updateAction()
     {
         $type = $this->getType();
@@ -23,6 +32,9 @@ class IWD_OrderManager_Adminhtml_Sales_CommentController extends IWD_OrderManage
         $this->prepareResponse($result);
     }
 
+    /**
+     * @return void
+     */
     public function getCommentAction()
     {
         $type = $this->getType();
@@ -41,16 +53,25 @@ class IWD_OrderManager_Adminhtml_Sales_CommentController extends IWD_OrderManage
         $this->prepareResponse($result);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getType()
     {
         return $this->getRequest()->getParam('type');
     }
 
+    /**
+     * @return mixed
+     */
     protected function getCommentId()
     {
         return $this->getRequest()->getParam('comment_id');
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         $action = $this->getRequest()->getActionName();
@@ -59,6 +80,7 @@ class IWD_OrderManager_Adminhtml_Sales_CommentController extends IWD_OrderManage
         if ($action == 'getcomment' || $action == 'update') {
             return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/edit_comment');
         }
+
         if ($action == 'delete') {
             return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/delete_comment');
         }

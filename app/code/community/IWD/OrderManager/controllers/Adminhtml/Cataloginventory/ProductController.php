@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController
+ */
 class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return $this
+     */
     protected function actionInit()
     {
         $this->loadLayout()
@@ -16,6 +22,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->actionInit();
@@ -24,6 +33,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -32,6 +44,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage
         );
     }
 
+    /**
+     * @return void
+     */
     public function saveAction()
     {
         try {
@@ -58,17 +73,20 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage
                     $stockItem->save();
                 }
             }
+
+            $message = '<ul class="messages"><li class="success-msg"><ul><li><span>'
+                . Mage::helper('iwd_ordermanager')->__('Stock data was updated.')
+                . '</span></li></ul></li></ul>';
         } catch (Exception $e) {
             IWD_OrderManager_Model_Logger::log($e->getMessage());
 
-            $message = Mage::helper('iwd_ordermanager')->__('Something went wrong. Stock data was not updated.');
-            echo '<ul class="messages"><li class="error-msg"><ul><li><span>' . $message . '</span></li></ul></li></ul>';
-            return;
+            $message = '<ul class="messages"><li class="error-msg"><ul><li><span>'
+                . Mage::helper('iwd_ordermanager')->__('Something went wrong. Stock data was not updated.')
+                . '</span></li></ul></li></ul>';
         }
 
-        $message = Mage::helper('iwd_ordermanager')->__('Stock data was updated.');
-        echo '<ul class="messages"><li class="success-msg"><ul><li><span>' . $message . '</span></li></ul></li></ul>';
-        return;
+        $this->getResponse()->setHeader('Content-type', 'application/html', true);
+        $this->getResponse()->setBody($message);
     }
 
 
@@ -86,6 +104,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_ProductController extends Mage
         return $stockItem->getFirstitem();
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::helper('iwd_ordermanager')->isMultiInventoryEnable();

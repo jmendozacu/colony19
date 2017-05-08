@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_BulkController
+ */
 class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Controller_Action
 {
     /**
@@ -44,8 +47,14 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                     $historyItem->save();
                 }
 
-                $invoiceUrl = Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $invoice->getId()));
-                $this->_getSession()->addSuccess($this->__('The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a> has been sent.', $invoiceUrl, $invoice->getIncrementId()));
+                $id = $invoice->getId();
+                $this->_getSession()->addSuccess(
+                    $this->__(
+                        'The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a> has been sent.',
+                        Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $id)),
+                        $invoice->getIncrementId()
+                    )
+                );
             }
         } catch (Mage_Core_Exception $e) {
             $this->addErrorInvoiceMessage($invoice, $e->getMessage());
@@ -88,8 +97,14 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                     $historyItem->save();
                 }
 
-                $shipmentUrl = Mage::helper('adminhtml')->getUrl('*/sales_shipment/view', array('shipment_id' => $shipment->getId()));
-                $this->_getSession()->addSuccess($this->__('The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a> has been sent.', $shipmentUrl, $shipment->getIncrementId()));
+                $id = $shipment->getId();
+                $this->_getSession()->addSuccess(
+                    $this->__(
+                        'The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a> has been sent.',
+                        Mage::helper('adminhtml')->getUrl('*/sales_shipment/view', array('shipment_id' => $id)),
+                        $shipment->getIncrementId()
+                    )
+                );
             }
         } catch (Mage_Core_Exception $e) {
             $this->addErrorShipmentMessage($shipment, $e->getMessage());
@@ -110,7 +125,10 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
         if ($this->getIsPrint()) {
             $this->_getSession()->setData(
                 'iwd_bulk_actions',
-                array('invoice' => $this->getIsInvoice(), 'shipment' => $this->getIsShipment(), 'print' => 1, 'order_ids' => $orderIds)
+                array(
+                    'invoice' => $this->getIsInvoice(),
+                    'shipment' => $this->getIsShipment(),
+                    'print' => 1, 'order_ids' => $orderIds)
             );
         }
 
@@ -180,8 +198,6 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                 ->addObject($invoice->getOrder());
             $transactionSave->save();
 
-            $invoiceUrl = Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $invoice->getId()));
-
             try {
                 $invoice->sendEmail($this->getIsNotify(), '');
             } catch (Exception $e) {
@@ -189,7 +205,13 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                 $this->addErrorInvoiceMessage($invoice, 'Unable to send email.');
             }
 
-            $this->_getSession()->addSuccess($this->__('The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a> has been created.', $invoiceUrl, $invoice->getIncrementId()));
+            $this->_getSession()->addSuccess(
+                $this->__(
+                    'The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a> has been created.',
+                    Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $invoice->getId())),
+                    $invoice->getIncrementId()
+                )
+            );
         } catch (Exception $e) {
             $this->addErrorOrderMessage($e->getMessage());
             return false;
@@ -203,9 +225,13 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
      */
     protected function addErrorOrderMessage($message)
     {
-        $orderUrl = Mage::helper('adminhtml')->getUrl('*/sales_order/view', array('order_id' => $this->order->getId()));
         $this->_getSession()->addError(
-            $this->__('The order <a href="%s" target="_blank" title="Go to order">#%s</a>: %s', $orderUrl, $this->order->getIncrementId(), $message)
+            $this->__(
+                'The order <a href="%s" target="_blank" title="Go to order">#%s</a>: %s',
+                Mage::helper('adminhtml')->getUrl('*/sales_order/view', array('order_id' => $this->order->getId())),
+                $this->order->getIncrementId(),
+                $message
+            )
         );
     }
 
@@ -215,9 +241,13 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
      */
     protected function addErrorInvoiceMessage($invoice, $message)
     {
-        $invoiceUrl = Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $invoice->getId()));
         $this->_getSession()->addError(
-            $this->__('The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a>: %s', $invoiceUrl, $invoice->getIncrementId(), $message)
+            $this->__(
+                'The invoice <a href="%s" target="_blank" title="Go to invoice">#%s</a>: %s',
+                Mage::helper('adminhtml')->getUrl('*/sales_invoice/view', array('invoice_id' => $invoice->getId())),
+                $invoice->getIncrementId(),
+                $message
+            )
         );
     }
 
@@ -227,9 +257,13 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
      */
     protected function addErrorShipmentMessage($shipment, $message)
     {
-        $shipmentUrl = Mage::helper('adminhtml')->getUrl('*/sales_shipment/view', array('shipment_id' => $shipment->getId()));
         $this->_getSession()->addError(
-            $this->__('The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a>: %s', $shipmentUrl, $shipment->getIncrementId(), $message)
+            $this->__(
+                'The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a>: %s',
+                Mage::helper('adminhtml')->getUrl('*/sales_shipment/view', array('shipment_id' => $shipment->getId())),
+                $shipment->getIncrementId(),
+                $message
+            )
         );
     }
 
@@ -280,8 +314,15 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                 $this->addErrorShipmentMessage($shipment, 'Unable to send email.');
             }
 
-            $shipmentUrl = Mage::helper('adminhtml')->getUrl('*/sales_shipment/view', array('shipment_id' => $shipment->getId()));
-            $this->_getSession()->addSuccess($this->__('The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a> has been created.', $shipmentUrl, $shipment->getIncrementId()));
+            $shipmentUrl = Mage::helper('adminhtml')
+                ->getUrl('*/sales_shipment/view', array('shipment_id' => $shipment->getId()));
+            $this->_getSession()->addSuccess(
+                $this->__(
+                    'The shipment <a href="%s" target="_blank" title="Go to shipment">#%s</a> has been created.',
+                    $shipmentUrl,
+                    $shipment->getIncrementId()
+                )
+            );
         } catch (Exception $e) {
             $this->addErrorOrderMessage($e->getMessage());
             return false;
@@ -306,7 +347,7 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                 $this->pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
             } else {
                 $pages = Mage::getModel('sales/order_pdf_invoice')->getPdf($invoices);
-                $this->pdf->pages = array_merge ($this->pdf->pages, $pages->pages);
+                $this->pdf->pages = array_merge($this->pdf->pages, $pages->pages);
             }
         }
     }
@@ -327,7 +368,7 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
                 $this->pdf = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
             } else {
                 $pages = Mage::getModel('sales/order_pdf_shipment')->getPdf($shipments);
-                $this->pdf->pages = array_merge ($this->pdf->pages, $pages->pages);
+                $this->pdf->pages = array_merge($this->pdf->pages, $pages->pages);
             }
         }
     }
@@ -348,7 +389,8 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
             }
 
             return $this->_prepareDownloadResponse(
-                $title . Mage::getSingleton('core/date')->date('Y-m-d_H-i-s') . '.pdf', $this->pdf->render(),
+                $title . Mage::getSingleton('core/date')->date('Y-m-d_H-i-s') . '.pdf',
+                $this->pdf->render(),
                 'application/pdf'
             );
         }
@@ -386,5 +428,13 @@ class IWD_OrderManager_Adminhtml_Sales_BulkController extends Mage_Adminhtml_Con
     protected function getIsNotify()
     {
         return (bool)(int)$this->getRequest()->getParam('notify', 0);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return true;
     }
 }

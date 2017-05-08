@@ -213,9 +213,9 @@ $stocksCount = $stocks->getSize();
         </div>
         <div class="actions">
             <?php if($this->getIsOrderView()): ?>
-                <button onclick="IWD.OrderManager.Stock.Order.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
+                <button disabled="disabled" class="disabled" onclick="IWD.OrderManager.Stock.Order.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
             <?php else: ?>
-                <button onclick="IWD.OrderManager.Stock.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
+                <button disabled="disabled" class="disabled" onclick="IWD.OrderManager.Stock.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
             <?php endif; ?>
         </div>
     </div>

@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_PaymentController
+ */
 class IWD_OrderManager_Adminhtml_Sales_PaymentController extends IWD_OrderManager_Controller_Abstract
 {
+    /**
+     * @return array
+     */
     protected function getForm()
     {
         $result = array('status' => 1);
@@ -18,6 +24,9 @@ class IWD_OrderManager_Adminhtml_Sales_PaymentController extends IWD_OrderManage
         return $result;
     }
 
+    /**
+     * @return array
+     */
     protected function updateInfo()
     {
         $result = array('status' => 1);
@@ -28,6 +37,9 @@ class IWD_OrderManager_Adminhtml_Sales_PaymentController extends IWD_OrderManage
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/edit_payment');

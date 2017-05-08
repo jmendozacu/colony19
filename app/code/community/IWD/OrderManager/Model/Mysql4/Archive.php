@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Mysql4_Archive
+ */
 class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_Abstract
 {
     const ORDER      = IWD_OrderManager_Model_Archive::ORDER;
@@ -28,17 +31,28 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         self::CREDITMEMO => 'iwd_ordermanager/archive_creditmemo'
     );
 
+    /**
+     *
+     */
     protected function _construct()
     {
         $this->_setResource('iwd_ordermanager_archive');
     }
 
+    /**
+     * @param $entity
+     * @return bool|mixed
+     */
     public function getEntityModel($entity)
     {
         $entities = $this->entities;
         return isset($entities[$entity]) ? $entities[$entity] : false;
     }
 
+    /**
+     * @param $entity
+     * @return bool|string
+     */
     public function getArchiveTable($entity)
     {
         if (!isset($this->archive_tables[$entity])) {
@@ -47,6 +61,10 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this->getTable($this->archive_tables[$entity]);
     }
 
+    /**
+     * @param $entity
+     * @return bool|string
+     */
     public function getStandardTable($entity)
     {
         if (!isset($this->standard_tables[$entity])) {
@@ -56,6 +74,10 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
     }
 
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setForeignKeyChecks($value)
     {
         $adapter = $this->_getWriteAdapter();
@@ -63,6 +85,11 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this;
     }
 
+    /**
+     * @param $entity
+     * @param $ids
+     * @return array
+     */
     public function getIdsInArchive($entity, $ids)
     {
         if (!is_array($ids)) {
@@ -76,6 +103,12 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this->_getReadAdapter()->fetchCol($select);
     }
 
+    /**
+     * @param $entity
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function addToArchiveFromStandard($entity, $field, $value)
     {
         $adapter = $this->_getWriteAdapter();
@@ -96,6 +129,12 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this;
     }
 
+    /**
+     * @param $entity
+     * @param $field
+     * @param $value
+     * @return $this
+     */
     public function removeFromStandard($entity, $field, $value)
     {
         $adapter = $this->_getWriteAdapter();
@@ -116,6 +155,12 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this;
     }
 
+    /**
+     * @param $entity
+     * @param string $field
+     * @param null $value
+     * @return $this
+     */
     public function restoreFromArchive($entity, $field = '', $value = null)
     {
         $adapter = $this->_getWriteAdapter();
@@ -157,7 +202,9 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $this;
     }
 
-
+    /**
+     * @return Zend_Db_Expr
+     */
     public function getOrderIdsForArchiveExpression()
     {
         $statuses = Mage::getModel('iwd_ordermanager/archive')->getArchiveOrderStatuses();
@@ -168,6 +215,11 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return new Zend_Db_Expr($select);
     }
 
+    /**
+     * @param $statuses
+     * @param $period
+     * @return Varien_Db_Select
+     */
     protected function _getOrderIdsForArchiveSelect($statuses, $period)
     {
         $adapter = $this->_getReadAdapter();
@@ -182,6 +234,11 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
         return $select;
     }
 
+    /**
+     * @param array $orderIds
+     * @param bool $usePeriod
+     * @return array
+     */
     public function getOrderIdsForArchive($orderIds = array(), $usePeriod = false)
     {
         $statuses = Mage::getModel('iwd_ordermanager/archive')->getArchiveOrderStatuses();
@@ -201,6 +258,11 @@ class IWD_OrderManager_Model_Mysql4_Archive extends Mage_Core_Model_Resource_Db_
     }
 
 
+    /**
+     * @param $entity
+     * @param $ids
+     * @return $this
+     */
     public function updateGridRecords($entity, $ids)
     {
         $gridColumns = array_keys($this->_getWriteAdapter()->describeTable($this->getArchiveTable($entity)));

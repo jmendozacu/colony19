@@ -8,10 +8,13 @@
     if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
 
     if($ji("#sales_order_grid_table").length) {
-        IWD.OrderManager.Grid.ColorGridRow();
+        IWD.OrderManager.Grid.colorGridRow();
+        IWD.OrderManager.Grid.initComplexFilterSelect();
         IWD.OrderManager.Grid.initCellsWithLongString();
+        IWD.OrderManager.Grid.initGridColumnWidth();
+        IWD.OrderManager.Massaction.reInit();
 
-        <?php /* FIX HEADER IN ORDER GRID */ ?>
+    <?php /* FIX HEADER IN ORDER GRID */ ?>
         <?php if($this->isFixHeaderEnabled()): ?>
             if ($ji.isFunction($ji.fn.stickyTableHeaders)) {
                 $ji("#sales_order_grid_table").stickyTableHeaders();

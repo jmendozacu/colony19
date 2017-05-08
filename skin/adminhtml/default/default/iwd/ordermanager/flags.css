@@ -34,8 +34,9 @@ table .iwd-om-flag-cell:hover .hint {
     left:calc(100% + 5px); top:-12px; width:auto; height:40px; line-height:40px; border:5px solid rgba(0,0,0,0.05); background:#ffffff; color:#000000; word-wrap:normal; overflow: hidden;
     white-space:nowrap; padding:0 10px; position:absolute; z-index:98; -webkit-background-clip: padding-box; background-clip:padding-box; display:block; max-width:500px; text-overflow:ellipsis;
 }
+table .last-column .iwd-om-flag-cell:hover .hint {right:calc(100% + 5px); left:inherit;}
 
-/*** popup ***/
+    /*** popup ***/
 #iwd_om_flags_popup .om-iwd-modal-content {max-width:900px; width:90%; top:120px;}
 #iwd_om_flags_popup .om-iwd-modal-header .close {color:#b7b7b7; font-size:20px; padding-right:  5px;}
 #iwd_om_flags_popup .om-iwd-modal-header h4 {font-size:16px; border-bottom:4px solid #dfdfdf; margin:0 50px; color:#eb5e00; padding:46px 0 0 0;}

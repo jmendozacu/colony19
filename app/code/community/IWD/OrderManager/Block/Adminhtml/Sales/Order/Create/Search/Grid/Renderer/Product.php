@@ -9,7 +9,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Create_Search_Grid_Renderer_P
     public function render(Varien_Object $row)
     {
         $product = Mage::getModel('catalog/product')->load($row->getId());
-        if(!$product->isVisibleInSiteVisibility()){
+        if (!$product->isVisibleInSiteVisibility()) {
             return parent::render($row);
         } else {
             $productLink = $product->getProductUrl();

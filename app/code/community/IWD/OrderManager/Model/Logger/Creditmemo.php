@@ -1,11 +1,14 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Logger_Creditmemo
+ */
 class IWD_OrderManager_Model_Logger_Creditmemo extends IWD_OrderManager_Model_Logger
 {
     /**
      * @var array
      */
-    protected $order_params = array(
+    protected $orderParams = array(
         'creditmemo_increment_id' => "Changed creditmemo number from '%s' to '%s'",
         'creditmemo_created_at' => "Changed creditmemo date from '%s' to '%s'",
         'creditmemo_status' => "Changed creditmemo status from '%s' to '%s'"
@@ -20,11 +23,12 @@ class IWD_OrderManager_Model_Logger_Creditmemo extends IWD_OrderManager_Model_Lo
     public function addCommentToHistory($orderId, $creditmemoId, $status = false, $isCustomerNotified = false)
     {
         $this->addToLogOutputInfoAboutOrderChanges();
-        if (empty($this->log_output)) {
+        if (empty($this->logOutput)) {
             return;
         }
-        $this->addCreditmemoStatusHistoryComment($this->log_output, $creditmemoId, $status, $isCustomerNotified);
-        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->log_output);
+
+        $this->addCreditmemoStatusHistoryComment($this->logOutput, $creditmemoId, $status, $isCustomerNotified);
+        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->logOutput);
     }
 
     /**

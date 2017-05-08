@@ -12,10 +12,8 @@ class IWD_OrderManager_Model_System_Config_Gridcolumn_Order
         $columns = Mage::getModel('iwd_ordermanager/order_grid')->getOrderGridColumns();
 
         $options = array();
-        foreach ($selected as $sel)
-        {
-            if(isset($columns[$sel]))
-            {
+        foreach ($selected as $sel) {
+            if (isset($columns[$sel])) {
                 $options[] = array(
                     'value' => $sel,
                     'label' => $columns[$sel]

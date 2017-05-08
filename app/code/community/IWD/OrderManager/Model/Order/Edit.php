@@ -107,15 +107,21 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         if (empty($backupId)) {
             return $this->reauthorizeOrderPayment($orderId, $oldOrder);
         }
-        Mage::getSingleton('adminhtml/session')->addNotice(Mage::helper('iwd_ordermanager')->__('Payment did not re-authorized automatically. You can manually select when to re-authorize payment.'));
+
+        Mage::getSingleton('adminhtml/session')->addNotice(
+            Mage::helper('iwd_ordermanager')->__(
+                'Payment did not re-authorized automatically. You can manually select when to re-authorize payment.'
+            )
+        );
+
         return 0;
     }
 
     public function reauthorizeOrderPayment($orderId, $oldOrder)
     {
         try {
-            /* @var $newOrder Mage_Sales_Model_Order */
-            /* @var $oldOrder Mage_Sales_Model_Order */
+            /** @var $newOrder Mage_Sales_Model_Order */
+            /** @var $oldOrder Mage_Sales_Model_Order */
             $newOrder = $this->loadOrder($orderId);
 
             $oldTotal = $oldOrder->getGrandTotal() - $oldOrder->getTotalRefunded();
@@ -129,18 +135,19 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         } catch (Exception $e) {
             return -1;
         }
+
         return 1;
     }
 
     public function updateCreditMemos($orderId)
     {
         try {
-            /* @var $order Mage_Sales_Model_Order */
+            /** @var $order Mage_Sales_Model_Order */
             $order = $this->loadOrder($orderId);
             if ($order->hasCreditmemos()) {
                 $creditMemos = $order->getCreditmemosCollection();
                 foreach ($creditMemos as $creditMemo) {
-                    /* @var $creditmemo IWD_OrderManager_Model_Creditmemo */
+                    /** @var $creditmemo IWD_OrderManager_Model_Creditmemo */
                     $creditmemo = Mage::getModel('iwd_ordermanager/creditmemo')->load($creditMemo->getEntityId());
                     $creditmemo->deleteCreditmemoWithoutCheck();
                 }
@@ -149,16 +156,17 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
             IWD_OrderManager_Model_Logger::log($e->getMessage(), true);
             return false;
         }
+
         return true;
     }
 
     public function updateInvoice($orderId)
     {
         try {
-            /* @var $order Mage_Sales_Model_Order */
+            /** @var $order Mage_Sales_Model_Order */
             $order = $this->loadOrder($orderId);
             if ($order->getTotalPaid() > 0 || $this->removeInvoice) {
-                /* @var $invoice IWD_OrderManager_Model_Invoice */
+                /** @var $invoice IWD_OrderManager_Model_Invoice */
                 $invoice = Mage::getModel('iwd_ordermanager/invoice');
                 $invoice->updateInvoice($order);
             }
@@ -166,12 +174,13 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
             IWD_OrderManager_Model_Logger::log($e->getMessage(), true);
             return false;
         }
+
         return true;
     }
 
     protected function reauthorizePayment($orderId, $oldOrder)
     {
-        /* @var $payment IWD_OrderManager_Model_Payment_Payment */
+        /** @var $payment IWD_OrderManager_Model_Payment_Payment */
         $payment = Mage::getModel('iwd_ordermanager/payment_payment');
 
         if ($payment->reauthorizePayment($orderId, $oldOrder) === -1) {
@@ -211,12 +220,13 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
                 $this->updateQtyProduct($simpleOrderItem, $newQty);
             }
         }
+
         $this->updateQtyProduct($orderItem, $newQty);
     }
 
     protected function updateQtyProduct($orderItem, $newQty)
     {
-        /*
+        /**
          *  $newQty is a NOT fact qty for customer NOW !!!
          *  it is the order item ORDERED QTY !!!
          */
@@ -293,6 +303,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         if ($this->baseCurrencyCode === $this->orderCurrencyCode) {
             return $price;
         }
+
         return Mage::helper('directory')->currencyConvert($price, $this->baseCurrencyCode, $this->orderCurrencyCode);
     }
 
@@ -970,7 +981,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         Mage::dispatchEvent('iwd_sales_order_item_removed', array('order_item' => $orderItem));
 
         if (!$this->removeInvoice) {
-            /* @var $invoice IWD_OrderManager_Model_Invoice */
+            /** @var $invoice IWD_OrderManager_Model_Invoice */
             $invoice = Mage::getModel('iwd_ordermanager/invoice');
             $this->removeInvoice = $invoice->cancelInvoices($orderItem->getOrder());
         }
@@ -1021,7 +1032,6 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
                     'tax_percent' => $tax->getPercent()
                 );
                 Mage::getModel('tax/sales_order_tax_item')->setData($data)->save();
-                Mage::log('!!!test!!!', null, 'debug.log');
             }
         } else {
             $address = $quote_item->getQuote()->getShippingAddress();
@@ -1197,6 +1207,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         }
 
         $rates = Mage::getModel('sales/order_tax')->getCollection()->loadByOrder($source);
+        $itemTaxes = array();
         foreach ($rates as $rate) {
             $id = $rate->getPercent();
             if (isset($taxes[$id])) {
@@ -1308,7 +1319,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
 
     public function collectOrderTotals($orderId)
     {
-        /* @var $order Mage_Sales_Model_Order */
+        /** @var $order Mage_Sales_Model_Order */
         $order = $this->loadOrder($orderId);
 
         $totalQtyOrdered = 0;
@@ -1321,7 +1332,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         $baseSubtotal = 0;
         $baseSubtotalInclTax = 0;
 
-        /* @var $orderItem Mage_Sales_Model_Order_Item */
+        /** @var $orderItem Mage_Sales_Model_Order_Item */
         foreach ($order->getItemsCollection() as $orderItem) {
             $baseDiscountAmount += $orderItem->getBaseDiscountAmount();
 
@@ -1347,7 +1358,7 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         $baseCurrencyCode = $order->getBaseCurrencyCode();
         $orderCurrencyCode = $order->getOrderCurrencyCode();
 
-        /* @var $directory Mage_Directory_Helper_Data */
+        /** @var $directory Mage_Directory_Helper_Data */
         $directory = Mage::helper('directory');
         if ($baseCurrencyCode === $orderCurrencyCode) {
             $discountAmount = $baseDiscountAmount;
@@ -1379,12 +1390,17 @@ class IWD_OrderManager_Model_Order_Edit extends Mage_Sales_Model_Order_Item
         $this->updateOrderTaxTable($orderId);
     }
 
-    /* @var $order Mage_Sales_Model_Order */
-    public function calculateGrandTotal($order)
+    /**
+     * @param $order Mage_Sales_Model_Order
+     */
+    protected function calculateGrandTotal($order)
     {
+        $feeTaxAmount = $order->getIwdOmFeeAmountInclTax() - $order->getIwdOmFeeAmount();
+        $baseFeeTaxAmount = $order->getIwdOmFeeBaseAmountInclTax() - $order->getIwdOmFeeBaseAmount();
+
         // shipping tax
-        $tax = $order->getTaxAmount() + $order->getShippingTaxAmount();
-        $baseTax = $order->getBaseTaxAmount() + $order->getBaseShippingTaxAmount();
+        $tax = $order->getTaxAmount() + $order->getShippingTaxAmount() + $feeTaxAmount;
+        $baseTax = $order->getBaseTaxAmount() + $order->getBaseShippingTaxAmount() + $baseFeeTaxAmount;
 
         $order->setTaxAmount($tax)->setBaseTaxAmount($baseTax)->save();
 

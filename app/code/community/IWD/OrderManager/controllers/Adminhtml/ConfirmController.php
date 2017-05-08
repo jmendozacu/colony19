@@ -1,12 +1,21 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_ConfirmController
+ */
 class IWD_OrderManager_Adminhtml_ConfirmController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->logAction();
     }
 
+    /**
+     * @return void
+     */
     public function logAction()
     {
         $this->loadLayout()
@@ -22,6 +31,9 @@ class IWD_OrderManager_Adminhtml_ConfirmController extends Mage_Adminhtml_Contro
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -45,16 +57,16 @@ class IWD_OrderManager_Adminhtml_ConfirmController extends Mage_Adminhtml_Contro
             return;
         }
 
-        /** confirm **/
         if ($action == 'confirm') {
+            /** confirm **/
             $status = Mage::getModel('iwd_ordermanager/confirm_operations')->confirmById($id);
             if ($status) {
                 $this->_getSession()->addSuccess($helper->__('Query was confirmed.'));
             } else {
                 $this->_getSession()->addError($helper->__('Error confirm query.'));
             }
-        } /** confirm **/
-        else if ($action == 'cancel') {
+        } else if ($action == 'cancel') {
+            /** confirm **/
             $status = Mage::getModel('iwd_ordermanager/confirm_operations')->cancelConfirmById($id);
 
             if ($status) {
@@ -63,10 +75,13 @@ class IWD_OrderManager_Adminhtml_ConfirmController extends Mage_Adminhtml_Contro
                 $this->_getSession()->addError($helper->__('Error cancel query.'));
             }
         }
+
         $this->_redirect('*/confirm/log');
-        return;
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;

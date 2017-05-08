@@ -1,14 +1,38 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Address
+ */
 class IWD_OrderManager_Model_Address
 {
+    /**
+     * Billing Address
+     */
     const TYPE_BILLING = 'billing';
+
+    /**
+     * Shipping Address
+     */
     const TYPE_SHIPPING = 'shipping';
 
-    protected $order_address;
+    /**
+     * @var Mage_Sales_Model_Order_Address
+     */
+    protected $orderAddress;
+
+    /**
+     * @var
+     */
     protected $address;
+
+    /**
+     * @var Mage_Sales_Model_Quote
+     */
     protected $quote;
 
+    /**
+     * @return array
+     */
     public function getOrderAddressFields()
     {
         $helper = Mage::helper('iwd_ordermanager');
@@ -36,11 +60,17 @@ class IWD_OrderManager_Model_Address
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function isAllowEditAddress()
     {
         return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/edit_address');
     }
 
+    /**
+     * @param $newAddress
+     */
     public function updateOrderAddress($newAddress)
     {
         $this->init($newAddress);
@@ -53,6 +83,10 @@ class IWD_OrderManager_Model_Address
         }
     }
 
+    /**
+     * @param null $address
+     * @return bool
+     */
     public function editOrderAddress($address = null)
     {
         if ($address !== null) {
@@ -67,6 +101,9 @@ class IWD_OrderManager_Model_Address
         return true;
     }
 
+    /**
+     * @return void
+     */
     protected function notifyEmail()
     {
         $notify = isset($this->address['notify']) ? $this->address['notify'] : null;
@@ -79,19 +116,25 @@ class IWD_OrderManager_Model_Address
         }
     }
 
+    /**
+     * @param $params
+     */
     protected function init($params)
     {
         if (!isset($params['address_id'])) {
             Mage::throwException("Address id is not defined");
         }
 
-        $this->order_address = Mage::getModel('sales/order_address')->load($params['address_id']);
+        $this->orderAddress = Mage::getModel('sales/order_address')->load($params['address_id']);
         $this->address = $params;
 
         $this->setRegion();
         $this->setStreet();
     }
 
+    /**
+     * @return void
+     */
     protected function setStreet()
     {
         if (is_array($this->address['street'])) {
@@ -99,14 +142,22 @@ class IWD_OrderManager_Model_Address
         }
     }
 
+    /**
+     * @param $streetArray
+     * @return string
+     */
     protected function getStreetString($streetArray)
     {
         if (is_array($streetArray)) {
             return trim(implode("\n", $streetArray));
         }
+
         return $streetArray;
     }
 
+    /**
+     * @return void
+     */
     protected function setRegion()
     {
         if (isset($this->address['region']) && empty($this->address['region'])
@@ -116,12 +167,16 @@ class IWD_OrderManager_Model_Address
         }
     }
 
+    /**
+     * @return void
+     */
     public function addChangesToConfirm()
     {
         $logger = Mage::getSingleton('iwd_ordermanager/logger');
         $orderId = Mage::getModel('sales/order_address')->load($this->address['address_id'])->getParentId();
-        $type = $this->order_address->getAddressType() == self::TYPE_BILLING ?
-            IWD_OrderManager_Model_Confirm_Options_Type::BILLING_ADDRESS : IWD_OrderManager_Model_Confirm_Options_Type::SHIPPING_ADDRESS;
+        $type = $this->orderAddress->getAddressType() == self::TYPE_BILLING
+            ? IWD_OrderManager_Model_Confirm_Options_Type::BILLING_ADDRESS
+            : IWD_OrderManager_Model_Confirm_Options_Type::SHIPPING_ADDRESS;
 
         $this->estimateUpdateOrderAddressFields();
         $this->estimateUpdateOrderAmounts();
@@ -134,35 +189,39 @@ class IWD_OrderManager_Model_Address
         Mage::getSingleton('adminhtml/session')->addNotice($message);
     }
 
+    /**
+     * @return void
+     */
     protected function addChangesToLog()
     {
         $logger = Mage::getSingleton('iwd_ordermanager/logger');
         $orderId = Mage::getModel('sales/order_address')->load($this->address['address_id'])->getParentId();
 
-        $type = $this->order_address->getAddressType() == self::TYPE_BILLING ?
-            IWD_OrderManager_Model_Confirm_Options_Type::BILLING_ADDRESS : IWD_OrderManager_Model_Confirm_Options_Type::SHIPPING_ADDRESS;
+        $type = $this->orderAddress->getAddressType() == self::TYPE_BILLING
+            ? IWD_OrderManager_Model_Confirm_Options_Type::BILLING_ADDRESS
+            : IWD_OrderManager_Model_Confirm_Options_Type::SHIPPING_ADDRESS;
 
         $logger->addCommentToOrderHistory($orderId);
         $logger->addLogToLogTable($type, $orderId);
     }
 
+    /**
+     * @return bool
+     */
     protected function estimateUpdateOrderAmounts()
     {
-        if ($this->isNeedRecalculateOrderTotalAmount($this->address, $this->order_address)) {
+        if ($this->isNeedRecalculateOrderTotalAmount($this->address, $this->orderAddress)) {
             $baseShippingInclTax = $this->recalculateOrderTotalAmount(true);
 
             if ($baseShippingInclTax !== null) {
-                $orderId = $this->order_address->getParentId();
+                $orderId = $this->orderAddress->getParentId();
                 $order = Mage::getModel('sales/order')->load($orderId);
 
-                $base_currency_code = $order->getBaseCurrencyCode();
-                $order_currency_code = $order->getOrderCurrencyCode();
-                $base_grand_total = $order->getBaseGrandTotal() - $order->getBaseShippingInclTax() + $baseShippingInclTax;
-                $grand_total = Mage::helper('directory')->currencyConvert($base_grand_total, $base_currency_code, $order_currency_code);
-                $totals = array(
-                    'grand_total' => $grand_total,
-                    'base_grand_total' => $base_grand_total,
-                );
+                $baseCurrencyCode = $order->getBaseCurrencyCode();
+                $orderCurrencyCode = $order->getOrderCurrencyCode();
+                $baseGrandTotal = $order->getBaseGrandTotal() - $order->getBaseShippingInclTax() + $baseShippingInclTax;
+                $grandTotal = Mage::helper('directory')->currencyConvert($baseGrandTotal, $baseCurrencyCode, $orderCurrencyCode);
+                $totals = array('grand_total' => $grandTotal, 'base_grand_total' => $baseGrandTotal);
 
                 Mage::getSingleton('iwd_ordermanager/logger')->addNewTotalsToLog($totals);
             }
@@ -173,15 +232,21 @@ class IWD_OrderManager_Model_Address
         return true;
     }
 
+    /**
+     * @return bool
+     */
     protected function updateOrderAmounts()
     {
-        if ($this->isNeedRecalculateOrderTotalAmount($this->address, $this->order_address)) {
-            $orderId = $this->order_address->getParentId();
+        if ($this->isNeedRecalculateOrderTotalAmount($this->address, $this->orderAddress)) {
+            $orderId = $this->orderAddress->getParentId();
             $order = Mage::getModel('sales/order')->load($orderId);
 
             $baseShippingInclTax = $this->recalculateOrderTotalAmount(false);
             if ($baseShippingInclTax !== null) {
-                Mage::dispatchEvent('iwd_ordermanager_update_order_amount_before', array('order' => $order, 'order_items' => $order->getItemsCollection()));
+                Mage::dispatchEvent(
+                    'iwd_ordermanager_update_order_amount_before',
+                    array('order' => $order, 'order_items' => $order->getItemsCollection())
+                );
 
                 /**
                  * @var $orderEdit IWD_OrderManager_Model_Order_Edit
@@ -197,7 +262,12 @@ class IWD_OrderManager_Model_Address
         return true;
     }
 
-    public function isNeedRecalculateOrderTotalAmount($address, $order_address)
+    /**
+     * @param $address
+     * @param $orderAddress
+     * @return bool
+     */
+    public function isNeedRecalculateOrderTotalAmount($address, $orderAddress)
     {
         if (isset($address['recalculate_amount']) && $address['recalculate_amount']) {
             $fieldsWhichAffectToTotals = array('street', 'city', 'region', 'country', 'region_id', 'country_id', 'postcode');
@@ -208,7 +278,7 @@ class IWD_OrderManager_Model_Address
                         $address[$field] = $this->getStreetString($address[$field]);
                     }
 
-                    if ($address[$field] != $order_address->getData($field)) {
+                    if ($address[$field] != $orderAddress->getData($field)) {
                         return true;
                     }
                 }
@@ -218,9 +288,13 @@ class IWD_OrderManager_Model_Address
         return false;
     }
 
+    /**
+     * @param $estimate
+     * @return mixed
+     */
     protected function recalculateOrderTotalAmount($estimate)
     {
-        $orderId = $this->order_address->getParentId();
+        $orderId = $this->orderAddress->getParentId();
         $order = Mage::getModel('sales/order')->load($orderId);
 
         $shipping = Mage::getModel('iwd_ordermanager/shipping');
@@ -232,20 +306,23 @@ class IWD_OrderManager_Model_Address
             ->setDestPostcode($this->address['postcode'])
             ->setDestCity($this->address['city']);
 
-        $shipping_amount = $shipping->estimateShippingAmount($order, $request, $estimate);
+        $shippingAmount = $shipping->estimateShippingAmount($order, $request, $estimate);
 
-        if (empty($shipping_amount)) {
+        if (empty($shippingAmount)) {
             //TODO: show form with available shipping methods and change method
-            $shipping_amount = $order->getBaseShippingAmount();
+            $shippingAmount = $order->getBaseShippingAmount();
         }
 
-        return $shipping_amount;
+        return $shippingAmount;
     }
 
+    /**
+     * @return void
+     */
     protected function updateOrderAddressFields()
     {
         $logger = Mage::getSingleton('iwd_ordermanager/logger');
-        $addressType = $this->order_address->getAddressType();
+        $addressType = $this->orderAddress->getAddressType();
 
         $addressFields = $this->getOrderAddressFields();
         foreach ($addressFields as $field => $title) {
@@ -255,34 +332,41 @@ class IWD_OrderManager_Model_Address
 
             $logger->addAddressFieldChangesToLog(
                 $addressType, $field, $title,
-                $this->order_address->getData($field),
+                $this->orderAddress->getData($field),
                 $this->address[$field]
             );
 
-            $this->order_address->setData($field, $this->address[$field]);
+            $this->orderAddress->setData($field, $this->address[$field]);
         }
 
-        $this->order_address->save();
+        $this->orderAddress->save();
     }
 
+    /**
+     * @return void
+     */
     protected function estimateUpdateOrderAddressFields()
     {
         $logger = Mage::getSingleton('iwd_ordermanager/logger');
-        $addressType = $this->order_address->getAddressType();
+        $addressType = $this->orderAddress->getAddressType();
 
         $addressFields = $this->getOrderAddressFields();
         foreach ($addressFields as $field => $title) {
             if (!isset($this->address[$field])) {
                 continue;
             }
+
             $logger->addAddressFieldChangesToLog(
                 $addressType, $field, $title,
-                $this->order_address->getData($field),
+                $this->orderAddress->getData($field),
                 $this->address[$field]
             );
         }
     }
 
+    /**
+     * @param $quote
+     */
     protected function updateQuoteAddress($quote)
     {
         $address = $quote->getShippingAddress();
@@ -293,8 +377,10 @@ class IWD_OrderManager_Model_Address
                 if (!isset($this->address[$field])) {
                     continue;
                 }
+
                 $address->setData($field, $this->address[$field]);
             }
+
             $address->save();
         }
     }

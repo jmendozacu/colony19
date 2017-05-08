@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Confirm_Options_Type
+ */
 class IWD_OrderManager_Model_Confirm_Options_Type extends IWD_OrderManager_Model_Confirm_Options_Abstract
 {
     const PAYMENT = 1;
@@ -10,6 +13,9 @@ class IWD_OrderManager_Model_Confirm_Options_Type extends IWD_OrderManager_Model
     const BILLING_ADDRESS = 6;
     const SHIPPING_ADDRESS = 7;
 
+    /**
+     * @return array
+     */
     public function toOption()
     {
         $helper = Mage::helper('iwd_ordermanager');

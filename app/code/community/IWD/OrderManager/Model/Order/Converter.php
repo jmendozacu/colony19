@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Order_Converter
+ */
 class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
 {
     /**
@@ -76,6 +79,9 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
         }
     }
 
+    /**
+     * @param $order
+     */
     protected function assignAddressesToQuote($order)
     {
         $orderBillingAddress = $order->getBillingAddress();
@@ -92,11 +98,13 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
 
         foreach ($attributes as $attribute) {
             if (isset($orderShippingAddress[$attribute->getAttributeCode()])) {
-                $this->quote->getShippingAddress()->setData($attribute->getAttributeCode(), $orderShippingAddress[$attribute->getAttributeCode()]);
+                $this->quote->getShippingAddress()
+                    ->setData($attribute->getAttributeCode(), $orderShippingAddress[$attribute->getAttributeCode()]);
             }
 
             if (isset($orderBillingAddress[$attribute->getAttributeCode()])) {
-                $this->quote->getBillingAddress()->setData($attribute->getAttributeCode(), $orderBillingAddress[$attribute->getAttributeCode()]);
+                $this->quote->getBillingAddress()
+                    ->setData($attribute->getAttributeCode(), $orderBillingAddress[$attribute->getAttributeCode()]);
             }
         }
 
@@ -190,6 +198,7 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
         foreach ($allQuoteItems as $item) {
             $quote->removeItem($item->getId())->save();
         }
+
         return $quote;
     }
 
@@ -236,10 +245,13 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
 
         foreach ($attributes as $attribute) {
             if (isset($shippingAddress[$attribute->getAttributeCode()])) {
-                $quote->getShippingAddress()->setData($attribute->getAttributeCode(), $shippingAddress[$attribute->getAttributeCode()]);
+                $quote->getShippingAddress()
+                    ->setData($attribute->getAttributeCode(), $shippingAddress[$attribute->getAttributeCode()]);
             }
+
             if (isset($billingAddress[$attribute->getAttributeCode()])) {
-                $quote->getBillingAddress()->setData($attribute->getAttributeCode(), $billingAddress[$attribute->getAttributeCode()]);
+                $quote->getBillingAddress()
+                    ->setData($attribute->getAttributeCode(), $billingAddress[$attribute->getAttributeCode()]);
             }
         }
 
@@ -290,7 +302,12 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
         $orderItem = Mage::getModel('sales/order_item')->load($orderItemId);
         $options['product'] = $orderItem->getProductId();
 
-        $options = $this->_processFiles($options, $orderItemId);
+        $processingParams = new Varien_Object();
+        $processingParams->setData('files_prefix', 'item_' . $orderItemId . '_');
+        $options['_processing_params'] = $processingParams;
+
+        $this->_processFiles($options, $orderItemId);
+
         $quoteItemId = $orderItem->getQuoteItemId();
         $quoteItem = Mage::getModel('sales/quote_item')->load($quoteItemId);
         $store = Mage::app()->getStore($quoteItem->getStoreId());
@@ -299,7 +316,11 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
         $quoteItem->setQuote($quote);
 
         $quoteItem = $quote->updateItem($quoteItemId, $options);
+
+        $quoteItem->save();
         $quote->collectTotals();
+
+        $orderItem->setQuoteItemId($quoteItem->getId())->save();
 
         return Mage::getModel('sales/convert_quote')->itemToOrderItem($quoteItem);
     }
@@ -317,9 +338,7 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
 
         if ($buyRequest->hasData()) {
             $product = Mage::getModel('catalog/product')->load($options['product']);
-            $product->getTypeInstance(true)
-                ->prepareForCartAdvanced($buyRequest, $product, Mage_Catalog_Model_Product_Type_Abstract::PROCESS_MODE_LITE);
-
+            $product->getTypeInstance(true)->processFileQueue();
             return $buyRequest->getData();
         }
 
@@ -381,6 +400,9 @@ class IWD_OrderManager_Model_Order_Converter extends Mage_Core_Model_Abstract
         return null;
     }
 
+    /**
+     * @param $order
+     */
     public function syncQuote($order)
     {
         $quoteItemsInUse = array();

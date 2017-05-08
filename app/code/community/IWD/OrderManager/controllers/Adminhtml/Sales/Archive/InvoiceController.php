@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController
+ */
 class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->loadLayout()
@@ -17,6 +23,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController extends Mage_Ad
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function exportCsvAction()
     {
         $fileName = 'archived_invoices.csv';
@@ -29,6 +38,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController extends Mage_Ad
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
 
+    /**
+     * @return void
+     */
     public function exportExcelAction()
     {
         $fileName = 'archived_invoices.xml';
@@ -41,6 +53,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController extends Mage_Ad
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile());
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -49,11 +64,15 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_InvoiceController extends Mage_Ad
         );
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
             return false;
         }
+
         return Mage::getSingleton('admin/session')->isAllowed('sales/iwd_ordermanager_archive/archive_invoices');
     }
 }

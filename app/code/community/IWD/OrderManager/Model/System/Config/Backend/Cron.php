@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_System_Config_Backend_Cron
+ */
 class IWD_OrderManager_Model_System_Config_Backend_Cron extends Mage_Core_Model_Config_Data
 {
+    /**
+     * Config xml path
+     */
     const CRON_STRING_PATH = 'crontab/jobs/iwd_archive_orders/schedule/cron_expr';
 
     /**
@@ -24,8 +30,8 @@ class IWD_OrderManager_Model_System_Config_Backend_Cron extends Mage_Core_Model_
             $day = ($frequncy == $frequencyMonthly) ? '1' : '*';
             $week = ($frequncy == $frequencyWeekly) ? '1' : '*';
             $cronExprArray = array(
-                intval($time[1]), # Minute
-                intval($time[0]), # Hour
+                (int)($time[1]), # Minute
+                (int)($time[0]), # Hour
                 $day,             # Day of the Month
                 '*',              # Month of the Year
                 $week,            # Day of the Week

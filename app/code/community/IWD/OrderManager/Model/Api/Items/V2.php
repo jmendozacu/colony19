@@ -57,8 +57,11 @@ class IWD_OrderManager_Model_Api_Items_v2 extends IWD_OrderManager_Model_Api_Abs
 
     protected function _calculateRowTotal()
     {
-        $this->item['row_total'] = $this->item['subtotal'] + $this->item['tax_amount'] + $this->item['hidden_tax_amount']
-            + $this->item['weee_tax_applied_row_amount'] - $this->item['discount_amount'];
+        $this->item['row_total'] = $this->item['subtotal']
+            + $this->item['tax_amount']
+            + $this->item['hidden_tax_amount']
+            + $this->item['weee_tax_applied_row_amount']
+            - $this->item['discount_amount'];
     }
 
     protected function _baseCalculation()
@@ -270,6 +273,7 @@ class IWD_OrderManager_Model_Api_Items_v2 extends IWD_OrderManager_Model_Api_Abs
             $this->item['hidden_tax_amount'] = number_format($item->getHiddenTaxAmount(), 2, '.', '');
             $this->item['weee_tax_applied_row_amount'] = number_format($item->getWeeeTaxAppliedRowAmount(), 2, '.', '');
         }
+
         $this->item['product_id'] = $item->getProductId();
         $this->item['item_obj'] = $item;
     }

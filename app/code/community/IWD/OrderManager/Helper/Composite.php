@@ -1,7 +1,16 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Helper_Composite
+ */
 class IWD_OrderManager_Helper_Composite extends Mage_Adminhtml_Helper_Catalog_Product_Composite
 {
+    /**
+     * @param Mage_Adminhtml_Controller_Action $controller
+     * @param bool $isOk
+     * @param string $productType
+     * @return $this
+     */
     protected function _initConfigureResultLayout($controller, $isOk, $productType)
     {
         $update = $controller->getLayout()->getUpdate();
@@ -17,6 +26,7 @@ class IWD_OrderManager_Helper_Composite extends Mage_Adminhtml_Helper_Catalog_Pr
             $update->addHandle('ADMINHTML_CATALOG_PRODUCT_COMPOSITE_CONFIGURE_ERROR');
         }
         $controller->loadLayoutUpdates()->generateLayoutXml()->generateLayoutBlocks();
+
         return $this;
     }
 }

@@ -7,10 +7,9 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
     protected $methods = array(
         'authorizenet',            /* standard Authorize.net */
         'iwd_authorizecim',        /* IWD Authorize.net CIM */
-        'iwd_authorizecim_echeck', /* IWD Authorize.net eCheck*/
+        'iwd_authorizecim_echeck', /* IWD Authorize.net eCheck */
         //'authnetcim',            /* ParadoxLabs Authorize.net CIM */
         //'authnetcim_ach',        /* ParadoxLabs Authorize.net CIM */
-        //...
     );
 
     public function _construct()
@@ -18,17 +17,17 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         $this->_init('iwd_ordermanager/transactions');
     }
 
-    public function refresh($for_email = false)
+    public function refresh($forEmail = false)
     {
         $collection = $this->getCollectionForRefresh();
 
         /* add filter for reduce load time */
-        $collection = $this->addPeriodFilter($collection, $for_email);
+        $collection = $this->addPeriodFilter($collection, $forEmail);
 
-        foreach ($collection as $mage_transaction) {
-            $auth_transaction = (array)$this->getTransactionDetails($mage_transaction->getNormalTxnId(), $mage_transaction->getStoreId());
-            if (!empty($auth_transaction)) {
-                $this->saveTransactionData($auth_transaction, $mage_transaction);
+        foreach ($collection as $mageTransaction) {
+            $authTransaction = (array)$this->getTransactionDetails($mageTransaction->getNormalTxnId(), $mageTransaction->getStoreId());
+            if (!empty($authTransaction)) {
+                $this->saveTransactionData($authTransaction, $mageTransaction);
             }
         }
 
@@ -43,13 +42,15 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         $tableName_sales_flat_order = Mage::getSingleton('core/resource')->getTableName('sales_flat_order');
 
         $collection = Mage::getModel('sales/order_payment_transaction')->getCollection()
-            ->addFieldToSelect(array(
-                'normal_txn_id' => new Zend_Db_Expr("SUBSTRING_INDEX(`main_table`.`txn_id`, '-', 1)"),
-                'created_at' => 'created_at',
-                'txn_type' => new Zend_Db_Expr('group_concat(DISTINCT `main_table`.`txn_type` SEPARATOR ",")'),
-                'order_id' => 'order_id',
-                'mage_amount' => 'amount'
-            ));
+            ->addFieldToSelect(
+                array(
+                    'normal_txn_id' => new Zend_Db_Expr("SUBSTRING_INDEX(`main_table`.`txn_id`, '-', 1)"),
+                    'created_at' => 'created_at',
+                    'txn_type' => new Zend_Db_Expr('group_concat(DISTINCT `main_table`.`txn_type` SEPARATOR ",")'),
+                    'order_id' => 'order_id',
+                    'mage_amount' => 'amount'
+                )
+            );
 
         $collection->getSelect()->joinLeft($tableName_sales_flat_order_payment,
             "main_table.payment_id = {$tableName_sales_flat_order_payment}.entity_id",
@@ -78,26 +79,26 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         return $collection;
     }
 
-    protected function addPeriodFilter($collection, $for_email)
+    protected function addPeriodFilter($collection, $forEmail)
     {
-        $limit_period = Mage::getStoreConfig('iwd_settlementreport/default/limit_period');
-        $last_days = Mage::getStoreConfig('iwd_settlementreport/emailing/last_days');
+        $limitPeriod = Mage::getStoreConfig('iwd_settlementreport/default/limit_period');
+        $lastDays = Mage::getStoreConfig('iwd_settlementreport/emailing/last_days');
 
-        if (($for_email && $last_days != 0) || $limit_period) {
+        if (($forEmail && $lastDays != 0) || $limitPeriod) {
             $from = null;
             $to = null;
 
-            if ($limit_period) {
+            if ($limitPeriod) {
                 $filter_from = Mage::getSingleton('adminhtml/session')->getData("iwd_settlementreport_filter_from");
                 $filter_to = Mage::getSingleton('adminhtml/session')->getData("iwd_settlementreport_filter_to");
                 if (isset($filter_from) && isset($filter_to)) {
                     $from = DateTime::createFromFormat('m/d/Y', $filter_from)->modify('-1 day')->format('Y-m-d');
                     $to = DateTime::createFromFormat('m/d/Y', $filter_to)->modify('+1 day')->format('Y-m-d');
                 }
-            } elseif ($for_email) {
+            } elseif ($forEmail) {
                 $from = new DateTime();
-                $last_days++;
-                $from = $from->modify("-{$last_days} day")->format('Y-m-d');
+                $lastDays++;
+                $from = $from->modify("-{$lastDays} day")->format('Y-m-d');
 
                 $to = new DateTime();
                 $to = $to->modify('+1 day')->format('Y-m-d');
@@ -107,11 +108,10 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
                 $from = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s', $from);
                 $to = Mage::getModel('core/date')->gmtDate('Y-m-d H:i:s', $to);
 
-                $collection->addFieldToFilter('main_table.created_at', array(
-                    'from' => $from,
-                    'to' => $to,
-                    'date' => true,
-                ));
+                $collection->addFieldToFilter(
+                    'main_table.created_at',
+                    array('from' => $from, 'to' => $to, 'date' => true)
+                );
             }
         }
 
@@ -119,10 +119,10 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         return $collection;
     }
 
-    protected function getPaymentTransactionByTxnId($txn_id)
+    protected function getPaymentTransactionByTxnId($txnId)
     {
         $collection = Mage::getModel('sales/order_payment_transaction')->getCollection()
-            ->addFieldToFilter('txn_id', array("like" => "{$txn_id}%"));
+            ->addFieldToFilter('txn_id', array("like" => "{$txnId}%"));
 
         $collection->getSelect()->order(new Zend_Db_Expr('`main_table`.`created_at` DESC'));
 
@@ -133,59 +133,60 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         return null;
     }
 
-    protected function saveTransactionData($auth_transaction, $mage_transaction)
+    protected function saveTransactionData($authTransaction, $mageTransaction)
     {
-        if (!isset($auth_transaction['transId'])) {
+        if (!isset($authTransaction['transId'])) {
             return null;
         }
-        $trans_id = $auth_transaction['transId'];
 
-        $iwd_auth_payment_transaction = $this->loadTransactionByTransId($trans_id);
+        $transId = $authTransaction['transId'];
 
-        if (isset($auth_transaction['transactionType'])) {
-            $iwd_auth_payment_transaction->setData('transaction_type', $auth_transaction['transactionType']);
+        $iwdAuthPaymentTransaction = $this->loadTransactionByTransId($transId);
+
+        if (isset($authTransaction['transactionType'])) {
+            $iwdAuthPaymentTransaction->setData('transaction_type', $authTransaction['transactionType']);
         }
 
-        $transaction_status = null;
+        $transactionStatus = null;
 
-        if (isset($auth_transaction['transactionStatus'])) {
-            $transaction_status = $auth_transaction['transactionStatus'];
-            $iwd_auth_payment_transaction->setData('auth_transaction_status', $auth_transaction['transactionStatus']);
+        if (isset($authTransaction['transactionStatus'])) {
+            $transactionStatus = $authTransaction['transactionStatus'];
+            $iwdAuthPaymentTransaction->setData('auth_transaction_status', $authTransaction['transactionStatus']);
         }
 
-        $payment_trans = $this->getPaymentTransactionByTxnId($trans_id);
-        $txn_type = (!empty($payment_trans)) ? $payment_trans->getTxnType() : $mage_transaction->getTxnType();
-        $txn_type = explode(',', $txn_type);
-        $txn_type = array_pop($txn_type);
+        $paymentTrans = $this->getPaymentTransactionByTxnId($transId);
+        $txnType = (!empty($paymentTrans)) ? $paymentTrans->getTxnType() : $mageTransaction->getTxnType();
+        $txnType = explode(',', $txnType);
+        $txnType = array_pop($txnType);
 
         /* Reset */
-        $iwd_auth_payment_transaction->setData('mage_amount_authorized', NULL);
-        $iwd_auth_payment_transaction->setData('mage_amount_settlement', NULL);
-        $iwd_auth_payment_transaction->setData('mage_amount_captured', NULL);
-        $iwd_auth_payment_transaction->setData('mage_amount_refund', NULL);
-        $iwd_auth_payment_transaction->setData('auth_amount_authorized', NULL);
-        $iwd_auth_payment_transaction->setData('auth_amount_settlement', NULL);
-        $iwd_auth_payment_transaction->setData('auth_amount_captured', NULL);
-        $iwd_auth_payment_transaction->setData('auth_amount_refund', NULL);
+        $iwdAuthPaymentTransaction->setData('mage_amount_authorized', NULL);
+        $iwdAuthPaymentTransaction->setData('mage_amount_settlement', NULL);
+        $iwdAuthPaymentTransaction->setData('mage_amount_captured', NULL);
+        $iwdAuthPaymentTransaction->setData('mage_amount_refund', NULL);
+        $iwdAuthPaymentTransaction->setData('auth_amount_authorized', NULL);
+        $iwdAuthPaymentTransaction->setData('auth_amount_settlement', NULL);
+        $iwdAuthPaymentTransaction->setData('auth_amount_captured', NULL);
+        $iwdAuthPaymentTransaction->setData('auth_amount_refund', NULL);
 
         /* Voided */
-        if ($transaction_status == "voided" && $txn_type != "void") {
-            $iwd_auth_payment_transaction->setData('mage_amount_authorized', $mage_transaction->getMageAmountAuthorized());
-            $iwd_auth_payment_transaction->setData('mage_amount_captured', $mage_transaction->getMageAmountCaptured());
+        if ($transactionStatus == "voided" && $txnType != "void") {
+            $iwdAuthPaymentTransaction->setData('mage_amount_authorized', $mageTransaction->getMageAmountAuthorized());
+            $iwdAuthPaymentTransaction->setData('mage_amount_captured', $mageTransaction->getMageAmountCaptured());
         }
 
 
         /* Refunded */
-        if (isset($auth_transaction['authAmount']) && ($transaction_status == 'refundPendingSettlement' || $transaction_status == 'refundSettledSuccessfully')) {
+        if (isset($authTransaction['authAmount']) && ($transactionStatus == 'refundPendingSettlement' || $transactionStatus == 'refundSettledSuccessfully')) {
 
-            $authAmount = $auth_transaction['authAmount'];
+            $authAmount = $authTransaction['authAmount'];
 
-            $iwd_auth_payment_transaction->setData('auth_amount_refund', $authAmount);
-            if ($transaction_status == 'refundSettledSuccessfully' && isset($auth_transaction['settleAmount'])) {
-                $iwd_auth_payment_transaction->setData('auth_amount_settlement', $auth_transaction['settleAmount']);
+            $iwdAuthPaymentTransaction->setData('auth_amount_refund', $authAmount);
+            if ($transactionStatus == 'refundSettledSuccessfully' && isset($authTransaction['settleAmount'])) {
+                $iwdAuthPaymentTransaction->setData('auth_amount_settlement', $authTransaction['settleAmount']);
             }
 
-            $credit_memos = Mage::getModel('sales/order_creditmemo')->getCollection()
+            $creditMemos = Mage::getModel('sales/order_creditmemo')->getCollection()
                 ->addFieldToSelect(
                     array(
                         "base_grand_total" => "base_grand_total",
@@ -193,131 +194,130 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
                         "order_id" => "order_id"
                     )
                 )
-                ->addFieldToFilter('order_id', $mage_transaction->getOrderId());
+                ->addFieldToFilter('order_id', $mageTransaction->getOrderId());
 
-            $mage_amount_refund = NULL;
-            if ($credit_memos->getSize() == 1) {
-                $mage_amount_refund = $credit_memos->getFirstItem()->getBaseGrandTotal();
+            $mageAmountRefund = NULL;
+            if ($creditMemos->getSize() == 1) {
+                $mageAmountRefund = $creditMemos->getFirstItem()->getBaseGrandTotal();
             } else {
-                /* by created at */
-                $base_grand_total = array();
+                /** by created at */
+                $baseGrandTotal = array();
 
-                $transaction_created_at = DateTime::createFromFormat('Y-m-d H:i:s', $mage_transaction->getCreatedAt());
-                foreach ($credit_memos as $credit_memo) {
+                $transaction_created_at = DateTime::createFromFormat('Y-m-d H:i:s', $mageTransaction->getCreatedAt());
+                foreach ($creditMemos as $credit_memo) {
                     $credit_memo_created_at = DateTime::createFromFormat('Y-m-d H:i:s', $credit_memo->getCreatedAt());
                     $diff = $transaction_created_at->getTimestamp() - $credit_memo_created_at->getTimestamp();
                     if (abs($diff) < 30) {
-                        $base_grand_total[] = $credit_memo->getBaseGrandTotal();
+                        $baseGrandTotal[] = $credit_memo->getBaseGrandTotal();
                     }
                 }
 
-                /* by total */
-                if (count($base_grand_total) == 1) {
-                    $mage_amount_refund = $base_grand_total[0];
-                } elseif (count($base_grand_total) >= 2) {
-                    if (in_array($authAmount, $base_grand_total)) {
-                        $mage_amount_refund = $authAmount;
+                /** by total */
+                if (count($baseGrandTotal) == 1) {
+                    $mageAmountRefund = $baseGrandTotal[0];
+                } elseif (count($baseGrandTotal) >= 2) {
+                    if (in_array($authAmount, $baseGrandTotal)) {
+                        $mageAmountRefund = $authAmount;
                     } else {
-                        $mage_amount_refund = array_sum($base_grand_total);
+                        $mageAmountRefund = array_sum($baseGrandTotal);
                     }
                 }
             }
 
-            $amount = $mage_transaction->getMageAmount();
-            $amount = !empty($amount) ? $amount : $mage_amount_refund;
+            $amount = $mageTransaction->getMageAmount();
+            $amount = !empty($amount) ? $amount : $mageAmountRefund;
 
-            $iwd_auth_payment_transaction->setData('mage_amount_refund', $amount);
-            $iwd_auth_payment_transaction->setData('mage_amount_settlement', $amount);
-            $iwd_auth_payment_transaction->setData('mage_amount_captured', NULL);
+            $iwdAuthPaymentTransaction->setData('mage_amount_refund', $amount);
+            $iwdAuthPaymentTransaction->setData('mage_amount_settlement', $amount);
+            $iwdAuthPaymentTransaction->setData('mage_amount_captured', NULL);
         }
 
 
         /* Authorized / Captured / Settled */
-        if ($transaction_status == 'authorizedPendingCapture' || $transaction_status == 'settledSuccessfully' || $transaction_status == 'capturedPendingSettlement') {
-            $iwd_auth_payment_transaction->setData('auth_amount_authorized', $auth_transaction['authAmount']);
+        if ($transactionStatus == 'authorizedPendingCapture' || $transactionStatus == 'settledSuccessfully' || $transactionStatus == 'capturedPendingSettlement') {
+            $iwdAuthPaymentTransaction->setData('auth_amount_authorized', $authTransaction['authAmount']);
 
-            if ($txn_type == 'authorization') {
-                $amount = $mage_transaction->getMageAmount();
-                $amount = !empty($amount) ? $amount : $mage_transaction->getMageAmountAuthorized();
-                $iwd_auth_payment_transaction->setData('mage_amount_authorized', $amount);
+            if ($txnType == 'authorization') {
+                $amount = $mageTransaction->getMageAmount();
+                $amount = !empty($amount) ? $amount : $mageTransaction->getMageAmountAuthorized();
+                $iwdAuthPaymentTransaction->setData('mage_amount_authorized', $amount);
             }
 
-            if ($txn_type == 'capture') {
-                $amount_capture = Mage::getModel('sales/order_payment_transaction')->getCollection()
-                    ->addFieldToFilter('parent_txn_id', $mage_transaction->getNormalTxnId())
+            if ($txnType == 'capture') {
+                $amountCapture = Mage::getModel('sales/order_payment_transaction')->getCollection()
+                    ->addFieldToFilter('parent_txn_id', $mageTransaction->getNormalTxnId())
                     ->addFieldToFilter('txn_type', 'capture')
                     ->getFirstItem()->getAmount();
 
-                $amount_capture = !empty($amount_capture) ? $amount_capture : $mage_transaction->getMageAmountCaptured();
-                if ($amount_capture != 0) {
-                    $iwd_auth_payment_transaction->setData('mage_amount_captured', $amount_capture);
+                $amountCapture = !empty($amountCapture) ? $amountCapture : $mageTransaction->getMageAmountCaptured();
+                if ($amountCapture != 0) {
+                    $iwdAuthPaymentTransaction->setData('mage_amount_captured', $amountCapture);
                 }
 
                 $amount = Mage::getModel('sales/order_payment_transaction')->getCollection()
-                    ->addFieldToFilter('txn_id', $mage_transaction->getNormalTxnId())
+                    ->addFieldToFilter('txn_id', $mageTransaction->getNormalTxnId())
                     ->addFieldToFilter('txn_type', 'authorization')
                     ->getFirstItem()->getAmount();
                 if ($amount != 0) {
-                    $iwd_auth_payment_transaction->setData('mage_amount_authorized', $amount);
-                } else if ($amount_capture != 0) {
-                    $iwd_auth_payment_transaction->setData('mage_amount_authorized', $amount_capture);
+                    $iwdAuthPaymentTransaction->setData('mage_amount_authorized', $amount);
+                } else if ($amountCapture != 0) {
+                    $iwdAuthPaymentTransaction->setData('mage_amount_authorized', $amountCapture);
                 }
             }
 
-            if ($transaction_status == 'settledSuccessfully') {
-                if (isset($auth_transaction['settleAmount'])) {
-                    $iwd_auth_payment_transaction->setData('auth_amount_settlement', $auth_transaction['settleAmount']);
-                    $iwd_auth_payment_transaction->setData('auth_amount_captured', $auth_transaction['settleAmount']);
+            if ($transactionStatus == 'settledSuccessfully') {
+                if (isset($authTransaction['settleAmount'])) {
+                    $iwdAuthPaymentTransaction->setData('auth_amount_settlement', $authTransaction['settleAmount']);
+                    $iwdAuthPaymentTransaction->setData('auth_amount_captured', $authTransaction['settleAmount']);
                 }
 
-                $amount = $mage_transaction->getMageAmount();
-                $amount = !empty($amount) ? $amount : $mage_transaction->getMageAmountSettlement();
+                $amount = $mageTransaction->getMageAmount();
+                $amount = !empty($amount) ? $amount : $mageTransaction->getMageAmountSettlement();
                 if ($amount != 0) {
-                    $iwd_auth_payment_transaction->setData('mage_amount_settlement', $amount);
+                    $iwdAuthPaymentTransaction->setData('mage_amount_settlement', $amount);
                 }
             }
 
-            if ($transaction_status == 'capturedPendingSettlement') {
-                if (isset($auth_transaction['settleAmount'])) {
-                    $iwd_auth_payment_transaction->setData('auth_amount_captured', $auth_transaction['settleAmount']);
+            if ($transactionStatus == 'capturedPendingSettlement') {
+                if (isset($authTransaction['settleAmount'])) {
+                    $iwdAuthPaymentTransaction->setData('auth_amount_captured', $authTransaction['settleAmount']);
                 }
-                //$iwd_auth_payment_transaction->setData('mage_amount_settlement', $mage_transaction->getMageAmountSettlement());
             }
         }
 
-        $iwd_auth_payment_transaction->setData('payment_transaction_id', $mage_transaction->getTransactionId());
-        $iwd_auth_payment_transaction->setData('transaction_id', $trans_id);
-        $iwd_auth_payment_transaction->setData('created_at', $mage_transaction->getCreatedAt());
-        $iwd_auth_payment_transaction->setData('order_id', $mage_transaction->getOrderId());
-        $iwd_auth_payment_transaction->setData('order_increment_id', $mage_transaction->getOrderIncrementId());
+        $iwdAuthPaymentTransaction->setData('payment_transaction_id', $mageTransaction->getTransactionId());
+        $iwdAuthPaymentTransaction->setData('transaction_id', $transId);
+        $iwdAuthPaymentTransaction->setData('created_at', $mageTransaction->getCreatedAt());
+        $iwdAuthPaymentTransaction->setData('order_id', $mageTransaction->getOrderId());
+        $iwdAuthPaymentTransaction->setData('order_increment_id', $mageTransaction->getOrderIncrementId());
 
-        $iwd_auth_payment_transaction->setData('mage_transaction_status', $txn_type);
+        $iwdAuthPaymentTransaction->setData('mage_transaction_status', $txnType);
 
 
-        $iwd_auth_payment_transaction->save();
+        $iwdAuthPaymentTransaction->save();
 
-        $this->updateStatus($iwd_auth_payment_transaction, $mage_transaction);
+        $this->updateStatus($iwdAuthPaymentTransaction);
 
-        return $iwd_auth_payment_transaction;
+        return $iwdAuthPaymentTransaction;
     }
 
-    protected function updateStatus($iwd_auth_payment_transaction)
+    protected function updateStatus($iwdAuthPaymentTransaction)
     {
-        $status = $this->checkAmountDifference($iwd_auth_payment_transaction);
+        $status = $this->checkAmountDifference($iwdAuthPaymentTransaction);
 
         if ($status == 1) {
-            $status = $this->checkTransactionStatusDifference($iwd_auth_payment_transaction) ? 1 : 0;
+            $status = $this->checkTransactionStatusDifference($iwdAuthPaymentTransaction) ? 1 : 0;
         }
 
-        $iwd_auth_payment_transaction->setData('status', $status)->save();
+        $iwdAuthPaymentTransaction->setData('status', $status)->save();
     }
 
-    protected function checkAmountDifference($auth_transaction)
+    protected function checkAmountDifference($authTransaction)
     {
-        if ($auth_transaction->getData('auth_amount_authorized') != $auth_transaction->getData('mage_amount_authorized') ||
-            $auth_transaction->getData('auth_amount_captured') != $auth_transaction->getData('mage_amount_captured') ||
-            $auth_transaction->getData('auth_amount_settlement') != $auth_transaction->getData('mage_amount_settlement') ||
-            $auth_transaction->getData('auth_amount_refund') != $auth_transaction->getData('mage_amount_refund')
+        if ($authTransaction->getData('auth_amount_authorized') != $authTransaction->getData('mage_amount_authorized') ||
+            $authTransaction->getData('auth_amount_captured') != $authTransaction->getData('mage_amount_captured') ||
+            $authTransaction->getData('auth_amount_settlement') != $authTransaction->getData('mage_amount_settlement') ||
+            $authTransaction->getData('auth_amount_refund') != $authTransaction->getData('mage_amount_refund')
         ) {
             return 0;
         }
@@ -331,9 +331,9 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
 
         switch ($transaction->getData('mage_transaction_status')) {
             case Mage_Sales_Model_Order_Payment_Transaction::TYPE_PAYMENT:
-                return false; /* I don't know when this status uses */
+                return false;
             case Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER:
-                return ($status == "authorizedPendingCapture"); /* Pending approval on gateway */
+                return ($status == "authorizedPendingCapture");
             case Mage_Sales_Model_Order_Payment_Transaction::TYPE_AUTH:
                 return ($status == "authorizedPendingCapture");
             case Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE:
@@ -347,13 +347,13 @@ class IWD_OrderManager_Model_Transactions extends Mage_Core_Model_Abstract
         return false;
     }
 
-    public function loadTransactionByTransId($trans_id)
+    public function loadTransactionByTransId($transId)
     {
-        $auth_transaction = Mage::getModel('iwd_ordermanager/transactions')->getCollection()
-            ->addFieldToFilter('transaction_id', $trans_id);
+        $authTransaction = Mage::getModel('iwd_ordermanager/transactions')->getCollection()
+            ->addFieldToFilter('transaction_id', $transId);
 
-        if ($auth_transaction->getSize() > 0) {
-            return $auth_transaction->getFirstItem();
+        if ($authTransaction->getSize() > 0) {
+            return $authTransaction->getFirstItem();
         }
 
         return Mage::getModel('iwd_ordermanager/transactions');

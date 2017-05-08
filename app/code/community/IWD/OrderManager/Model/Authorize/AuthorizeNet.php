@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Authorize_AuthorizeNet
+ */
 class IWD_OrderManager_Model_Authorize_AuthorizeNet extends Mage_Core_Model_Abstract
 {
     protected $_api_login;
@@ -45,28 +48,39 @@ class IWD_OrderManager_Model_Authorize_AuthorizeNet extends Mage_Core_Model_Abst
     protected function _sendRequest()
     {
         $this->_setPostString();
-        $post_url = $this->_getPostUrl();
-        $curl_request = curl_init($post_url);
-        curl_setopt($curl_request, CURLOPT_POSTFIELDS, $this->_post_string);
-        curl_setopt($curl_request, CURLOPT_HEADER, 0);
-        curl_setopt($curl_request, CURLOPT_TIMEOUT, 45);
-        curl_setopt($curl_request, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl_request, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($curl_request, CURLOPT_SSL_VERIFYPEER, false);
+        $postUrl = $this->_getPostUrl();
+        $curlRequest = curl_init($postUrl);
+        curl_setopt($curlRequest, CURLOPT_POSTFIELDS, $this->_post_string);
+        curl_setopt($curlRequest, CURLOPT_HEADER, 0);
+        curl_setopt($curlRequest, CURLOPT_TIMEOUT, 45);
+        curl_setopt($curlRequest, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curlRequest, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curlRequest, CURLOPT_SSL_VERIFYPEER, false);
 
-        if (preg_match('/xml/', $post_url)) {
-            curl_setopt($curl_request, CURLOPT_HTTPHEADER, Array("Content-Type: text/xml"));
+        if (preg_match('/xml/', $postUrl)) {
+            curl_setopt($curlRequest, CURLOPT_HTTPHEADER, Array("Content-Type: text/xml"));
         }
 
-        $response = curl_exec($curl_request);
+        $response = curl_exec($curlRequest);
 
-        curl_close($curl_request);
+        curl_close($curlRequest);
 
         return $this->_handleResponse($response);
     }
 
-    public function getSettledBatchList($includeStatistics = false, $firstSettlementDate = false, $lastSettlementDate = false, $utc = true)
-    {
+    /**
+     * @param bool $includeStatistics
+     * @param bool $firstSettlementDate
+     * @param bool $lastSettlementDate
+     * @param bool $utc
+     * @return IWD_OrderManager_Model_Authorize_Response
+     */
+    public function getSettledBatchList(
+        $includeStatistics = false,
+        $firstSettlementDate = false,
+        $lastSettlementDate = false,
+        $utc = true
+    ) {
         $utc = ($utc ? "Z" : "");
         $this->_constructXml("getSettledBatchListRequest");
         ($includeStatistics ?
@@ -79,12 +93,18 @@ class IWD_OrderManager_Model_Authorize_AuthorizeNet extends Mage_Core_Model_Abst
         return $this->_sendRequest();
     }
 
+    /**
+     * @param bool $month
+     * @param bool $year
+     * @return IWD_OrderManager_Model_Authorize_Response
+     */
     public function getSettledBatchListForMonth($month = false, $year = false)
     {
         $month = ($month ? $month : date('m'));
         $year = ($year ? $year : date('Y'));
         $firstSettlementDate = substr(date('c', mktime(0, 0, 0, $month, 1, $year)), 0, -6);
         $lastSettlementDate = substr(date('c', mktime(0, 0, 0, $month + 1, 0, $year)), 0, -6);
+
         return $this->getSettledBatchList(true, $firstSettlementDate, $lastSettlementDate);
     }
 
@@ -111,6 +131,7 @@ class IWD_OrderManager_Model_Authorize_AuthorizeNet extends Mage_Core_Model_Abst
             $tran_list = $request->getTransactionList($batch_id);
             $transactions = array_merge($transactions, $tran_list->xpath("transactions/transaction"));
         }
+
         return $transactions;
     }
 
@@ -149,9 +170,12 @@ class IWD_OrderManager_Model_Authorize_AuthorizeNet extends Mage_Core_Model_Abst
         $this->_post_string = $this->_xml->asXML();
     }
 
-    private function _constructXml($request_type)
+    /**
+     * @param $requestType
+     */
+    private function _constructXml($requestType)
     {
-        $string = '<?xml version="1.0" encoding="utf-8"?><' . $request_type . '></' . $request_type . '>';
+        $string = '<?xml version="1.0" encoding="utf-8"?><' . $requestType . '></' . $requestType . '>';
 
         $this->_xml = @new SimpleXMLElement($string);
         $this->_xml->addAttribute('xmlns', 'AnetApi/xml/v1/schema/AnetApiSchema.xsd');

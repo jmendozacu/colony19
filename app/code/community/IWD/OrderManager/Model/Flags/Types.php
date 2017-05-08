@@ -8,14 +8,19 @@
  * @method string getComment()
  * @method IWD_OrderManager_Model_Flags_Types setComment(string $value)
  */
-
 class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         $this->_init('iwd_ordermanager/flags_types');
     }
 
+    /**
+     * @return bool
+     */
     public function isTypeActive()
     {
         $columns = Mage::getStoreConfig('iwd_ordermanager/grid_order/columns');
@@ -59,6 +64,9 @@ class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
         $this->setData('flags', $flags);
     }
 
+    /**
+     * @return array
+     */
     public function getAssignedFlags()
     {
         $tableFlags = Mage::getSingleton('core/resource')->getTableName('iwd_om_flags');
@@ -89,7 +97,7 @@ class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
             ->addFieldToFilter('type_id', $this->getId());
 
         foreach ($flagsTypes as $item) {
-            if(($key = array_search($item->getFlagId(), $flags)) !== false) {
+            if (($key = array_search($item->getFlagId(), $flags)) !== false) {
                 unset($flags[$key]);
             } else {
                 $item->delete();
@@ -104,6 +112,9 @@ class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addColumnToOrderGrid()
     {
         $items = Mage::getModel('core/config_data')->getCollection()
@@ -120,6 +131,9 @@ class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
         }
     }
 
+    /**
+     * @return $this
+     */
     protected function _afterSave()
     {
         parent::_afterSave();
@@ -131,6 +145,9 @@ class IWD_OrderManager_Model_Flags_Types extends Mage_Core_Model_Abstract
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getOrderGridId()
     {
         return 'iwd_om_flags_' . $this->getId();

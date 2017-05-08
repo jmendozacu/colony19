@@ -259,7 +259,7 @@ class IWD_OrderManager_Model_Cataloginventory_Stock_Order_Item extends Mage_Core
 
     /**
      * @param $orderItem
-     * @return bool
+     * @return void
      */
     public function updateStockAfterRemoveItem($orderItem)
     {

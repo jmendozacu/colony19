@@ -52,7 +52,9 @@ class IWD_OrderManager_Adminhtml_Sales_AddressController extends IWD_OrderManage
     protected function isNeedReloadPage($address)
     {
         $orderAddress = Mage::getModel('sales/order_address')->load($address['address_id']);
-        $recalculate = Mage::getModel('iwd_ordermanager/address')->isNeedRecalculateOrderTotalAmount($address, $orderAddress);
+        $recalculate = Mage::getModel('iwd_ordermanager/address')
+            ->isNeedRecalculateOrderTotalAmount($address, $orderAddress);
+
         return $this->reload = ($recalculate || isset($address["confirm_edit"]));
     }
 
@@ -66,14 +68,17 @@ class IWD_OrderManager_Adminhtml_Sales_AddressController extends IWD_OrderManage
             $address["country_id"] = $address["country_id_" . $id];
             unset($address["country_id_" . $id]);
         }
+
         if (isset($address["region_" . $id])) {
             $address["region"] = $address["region_" . $id];
             unset($address["region_" . $id]);
         }
+
         if (isset($address["region_id_" . $id])) {
             $address["region_id"] = $address["region_id_" . $id];
             unset($address["region_id_" . $id]);
         }
+
         if (isset($address["vat_id_" . $id])) {
             $address["vat_id"] = $address["vat_id_" . $id];
             unset($address["vat_id_" . $id]);

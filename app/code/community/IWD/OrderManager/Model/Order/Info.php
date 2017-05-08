@@ -27,6 +27,10 @@ class IWD_OrderManager_Model_Order_Info extends IWD_OrderManager_Model_Order
         $this->init($params);
         $this->validation();
 
+        if (isset($this->params['hide_on_front'])) {
+            $this->showHideOrderOnFront($this, $this->params['hide_on_front']);
+        }
+
         if (isset($params['confirm_edit']) && !empty($params['confirm_edit'])) {
             $this->addChangesToConfirm();
         } else {
@@ -34,6 +38,22 @@ class IWD_OrderManager_Model_Order_Info extends IWD_OrderManager_Model_Order
             $this->updateOrderAmounts();
             $this->addChangesToLog();
             $this->notifyEmail();
+        }
+    }
+
+    public function showHideOrderOnFront($order, $status)
+    {
+        $helper = Mage::helper('iwd_ordermanager');
+        if ($helper->isAllowHideOrders()) {
+            $comment = $status
+                ? $helper->__('Order is hidden on front in customer account')
+                : $helper->__('Order is shown on front in customer account');
+
+            $order->setIwdOmStatus($status);
+            $order->addStatusHistoryComment($comment)
+                ->setIsCustomerNotified(false)
+                ->setIsVisibleOnFront(false);
+            $order->save();
         }
     }
 

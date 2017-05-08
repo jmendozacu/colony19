@@ -2,3 +2,13 @@
 #iwd_ordermanager_edit table, #iwd_ordermanager_iwd_settlementreport table, #iwd_ordermanager_delete table {width:100%}
 #row_iwd_ordermanager_archive_auto_archive_start_time select {width:50px !important;}
 #iwd_ordermanager_sr_emailing_files {height: 50px;}
+.ui-multiselect .col-width {width:20px; margin-right:5px;}
+.ui-multiselect .col-width.min {margin-right:0;}
+
+#row_iwd_ordermanager_grid_order_columns .note,
+#row_iwd_ordermanager_customer_orders_orders_grid_columns .note,
+#row_iwd_ordermanager_customer_orders_resent_orders_grid_columns .note {
+    width: 95%;
+}
+
+#row_iwd_ordermanager_grid_order_columns_width {display:none!important;}

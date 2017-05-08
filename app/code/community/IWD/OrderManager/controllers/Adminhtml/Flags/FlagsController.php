@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Flags_FlagsController
+ */
 class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->_initAction();
@@ -10,6 +16,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         $this->renderLayout();
     }
 
+    /**
+     * @return $this
+     */
     protected function _initAction()
     {
         $this->loadLayout()
@@ -24,6 +33,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -32,6 +44,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         );
     }
 
+    /**
+     * @return void
+     */
     public function newAction()
     {
         $this->_initAction();
@@ -39,6 +54,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         $this->flagsForm();
     }
 
+    /**
+     * @return void
+     */
     public function editAction()
     {
         $this->_initAction();
@@ -46,6 +64,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         $this->flagsForm();
     }
 
+    /**
+     * @return void
+     */
     protected function flagsForm()
     {
         $this->_addContent($this->getLayout()->createBlock('iwd_ordermanager/adminhtml_flags_flags_edit'))
@@ -54,6 +75,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     protected function prepareFormData()
     {
         $id = $this->getRequest()->getParam('id');
@@ -67,6 +91,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         }
     }
 
+    /**
+     * @return void
+     */
     protected function prepareDefaultFormData()
     {
         $flag = Mage::getModel('iwd_ordermanager/flags_flags');
@@ -89,18 +116,22 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
             $this->saveAutoApplyOptions($flag);
 
             Mage::getSingleton('adminhtml/session')->setFormData(false);
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Flag was successfully saved'));
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('iwd_ordermanager')->__('Flag was successfully saved')
+            );
 
             if ($this->getRequest()->getParam('back')) {
                 $this->_redirect('*/*/edit', array('id' => $flag->getId()));
                 return;
             }
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Flag was not saved.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                Mage::helper('iwd_ordermanager')->__('Flag was not saved.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**
@@ -111,13 +142,17 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         try {
             $flag = $this->getFlagObj();
             $flag->delete();
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Flag was successfully deleted'));
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('iwd_ordermanager')->__('Flag was successfully deleted')
+            );
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Flag was not deleted.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                Mage::helper('iwd_ordermanager')->__('Flag was not deleted.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**
@@ -132,13 +167,17 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
                 $flag->delete();
             }
 
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Flag(s) was successfully deleted'));
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('iwd_ordermanager')->__('Flag(s) was successfully deleted')
+            );
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(), Mage::helper('iwd_ordermanager')->__('Flag(s) was not deleted.') . ' ' . $e->getMessage());
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
+                Mage::helper('iwd_ordermanager')->__('Flag(s) was not deleted.') . ' ' . $e->getMessage()
+            );
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
     /**
@@ -202,6 +241,9 @@ class IWD_OrderManager_Adminhtml_Flags_FlagsController extends Mage_Adminhtml_Co
         return $flag;
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('system/iwdall/iwd_ordermanager/iwd_flags');

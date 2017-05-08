@@ -6,7 +6,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Backup_Comments_Renderer_Comm
     {
         $result = "";
 
-        if(isset($row['deletion_row'])) {
+        if (isset($row['deletion_row'])) {
             $commentObj = unserialize($row['deletion_row']);
 
             if (isset($commentObj['status'])) {

@@ -25,7 +25,7 @@ abstract class IWD_OrderManager_Block_Adminhtml_Cataloginventory_Stock_Edit_Tab_
     protected function setValuesToForm()
     {
         $data = $this->getStockData();
-        if(isset($data) && !empty($data)){
+        if (isset($data) && !empty($data)) {
             $this->form->setValues($data);
         }
     }

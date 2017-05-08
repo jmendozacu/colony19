@@ -5,7 +5,7 @@ class IWD_OrderManager_Model_Logger_Shipment extends IWD_OrderManager_Model_Logg
     /**
      * @var array
      */
-    protected $order_params = array(
+    protected $orderParams = array(
         'shipping_increment_id' => "Changed shipping number from '%s' to '%s'",
         'shipping_created_at' => "Changed shipping date from '%s' to '%s'"
     );
@@ -19,11 +19,12 @@ class IWD_OrderManager_Model_Logger_Shipment extends IWD_OrderManager_Model_Logg
     public function addCommentToHistory($orderId, $shipmentId, $status = false, $isCustomerNotified = false)
     {
         $this->addToLogOutputInfoAboutOrderChanges();
-        if (empty($this->log_output)) {
+        if (empty($this->logOutput)) {
             return;
         }
-        $this->addShipmentStatusHistoryComment($this->log_output, $shipmentId, $status, $isCustomerNotified);
-        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->log_output);
+
+        $this->addShipmentStatusHistoryComment($this->logOutput, $shipmentId, $status, $isCustomerNotified);
+        Mage::getSingleton('iwd_ordermanager/logger')->addToLog($this->logOutput);
     }
 
     /**

@@ -24,7 +24,7 @@ class IWD_OrderManager_Block_Adminhtml_Transactions_Grid extends Mage_Adminhtml_
         $this->addFiltersToCollection();
 
         $export_for_email = $this->getData('export_for_email');
-        if(Mage::helper('iwd_ordermanager')->isGridExport() || (isset($export_for_email) && !empty($export_for_email))) {
+        if (Mage::helper('iwd_ordermanager')->isGridExport() || (isset($export_for_email) && !empty($export_for_email))) {
             return $this;
         }
 
@@ -59,14 +59,14 @@ class IWD_OrderManager_Block_Adminhtml_Transactions_Grid extends Mage_Adminhtml_
     protected function addFiltersToCollection()
     {
         $export_for_email = $this->getData('export_for_email');
-        if(isset($export_for_email) && !empty($export_for_email)){
+        if (isset($export_for_email) && !empty($export_for_email)) {
             $this->addFiltersToCollectionForExport();
             return;
         }
 
         $filter = $this->prepareFilters();
 
-        if(!Mage::getStoreConfig('iwd_settlementreport/default/limit_period')){
+        if (!Mage::getStoreConfig('iwd_settlementreport/default/limit_period')) {
             if (isset($filter['created_at'])) {
                 $from = isset($filter['created_at']['from']) ? date('m/d/Y', strtotime($filter['created_at']['from'])) : "";
                 $to = isset($filter['created_at']['to']) ? date('m/d/Y', strtotime($filter['created_at']['to'])) : "";

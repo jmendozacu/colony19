@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_ShipmentController
+ */
 class IWD_OrderManager_Adminhtml_Sales_ShipmentController extends Mage_Adminhtml_Sales_ShipmentController
 {
+    /**
+     * @return void
+     */
     public function deleteAction()
     {
         if (Mage::getModel('iwd_ordermanager/shipment')->isAllowDeleteShipments()) {
@@ -31,9 +37,25 @@ class IWD_OrderManager_Adminhtml_Sales_ShipmentController extends Mage_Adminhtml
             return;
         }
 
-        $this->_redirect('*/*/index');
+        $this->redirect();
     }
 
+    /**
+     * Set redirect into response
+     */
+    protected function redirect()
+    {
+        $orderId = $this->getRequest()->getParam('order_id', null);
+        if (empty($orderId)) {
+            $this->_redirect('*/*/index');
+        } else {
+            $this->_redirect('*/sales_order/view', array('order_id' => $orderId));
+        }
+    }
+
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/shipment/actions/delete');

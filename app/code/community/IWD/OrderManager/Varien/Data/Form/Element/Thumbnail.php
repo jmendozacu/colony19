@@ -1,13 +1,23 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Varien_Data_Form_Element_Thumbnail
+ */
 class IWD_OrderManager_Varien_Data_Form_Element_Thumbnail extends Varien_Data_Form_Element_Abstract
 {
+    /**
+     * IWD_OrderManager_Varien_Data_Form_Element_Thumbnail constructor.
+     * @param array $data
+     */
     public function __construct($data)
     {
         parent::__construct($data);
         $this->setType('file');
     }
 
+    /**
+     * @return string
+     */
     public function getElementHtml()
     {
         $html = '';
@@ -26,11 +36,17 @@ class IWD_OrderManager_Varien_Data_Form_Element_Thumbnail extends Varien_Data_Fo
         return $html . parent::getElementHtml();
     }
 
+    /**
+     * @return mixed
+     */
     protected function _getUrl()
     {
         return $this->getValue();
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->getData('name');

@@ -1,90 +1,34 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_AdditionalController
+ */
 class IWD_OrderManager_Adminhtml_Sales_AdditionalController extends IWD_OrderManager_Controller_Abstract
 {
-    /**
-     * @var array
-     */
-    protected $result = array();
-
     /**
      * return void
      */
     public function applyFeeAction()
     {
-        $this->result = array('status' => 1);
+        $result = array('status' => 1);
 
         try {
-            $this->applyFee();
-            $this->addLogInfo();
+            /**
+             * @var $additionalFee IWD_OrderManager_Model_Order_AdditionalFee
+             */
+            $additionalFee = Mage::getModel('iwd_ordermanager/order_additionalFee');
+
+            $additionalFee->setAdditionalAmount($this->getAdditionalAmount())
+                ->setAdditionalAmountInclTax($this->getAdditionalAmountInclTax())
+                ->setAdditionalTaxPercent($this->getAdditionalTaxPercent())
+                ->setFeeDescription($this->getAdditionalDescription());
+
+            $additionalFee->applyAdditionalFeeToOrder($this->getOrder());
         } catch (Exception $e) {
-            $this->result = array('status' => 0, 'error' => $e->getMessage());
+            $result = array('status' => 0, 'error' => $e->getMessage());
         }
 
-        $this->prepareResponse($this->result);
-    }
-
-    protected function addLogInfo()
-    {
-        $orderId = $this->getOrderId();
-        $log = Mage::getSingleton('iwd_ordermanager/logger');
-
-        $additionalAmount = $this->getAdditionalAmount();
-        $additionalDescription = $this->getAdditionalDescription();
-        if (empty($additionalAmount)) {
-            $message = Mage::helper('iwd_ordermanager')->__('Custom order amount was removed');
-        } else {
-            $message = sprintf(Mage::helper(
-                'iwd_ordermanager')->__('Custom order amount was applied: %s - %s'),
-                $additionalDescription,
-                Mage::helper('core')->currency($additionalAmount, true, false)
-            );
-        }
-        $log->addToLog($message);
-        $log->addCommentToOrderHistory($orderId, false);
-    }
-
-    /**
-     * return void
-     * @throws Exception
-     */
-    protected function applyFee()
-    {
-        $additionalAmount = $this->getAdditionalAmount();
-        $additionalBaseAmount = $this->getAdditionalBaseAmount();
-        $additionalDescription = $this->getAdditionalDescription();
-
-        $oldOrder = $this->getOrder();
-        $orderId = $this->getOrderId();
-
-        $order = $this->getOrder();
-        $oldAdditionalAmount = (float)$this->getOrder()->getIwdOmFeeAmount();
-        $oldAdditionalBaseAmount = (float)$this->getOrder()->getIwdOmFeeAmount();
-
-        if ($oldAdditionalAmount != $additionalAmount) {
-            $grandTotal = $order->getGrandTotal();
-            $grandTotal += $additionalAmount - $oldAdditionalAmount;
-
-            $baseGrandTotal = $order->getBaseGrandTotal();
-            $baseGrandTotal += $additionalBaseAmount - $oldAdditionalBaseAmount;
-
-            if ($grandTotal < 0) {
-                $additionalAmount += abs($grandTotal);
-                $additionalBaseAmount += abs($baseGrandTotal);
-                $grandTotal = 0;
-                $baseGrandTotal = 0;
-            }
-
-            $order->setIwdOmFeeAmount($additionalAmount)
-                ->setIwdOmFeeBaseAmount($additionalBaseAmount)
-                ->setGrandTotal($grandTotal)
-                ->setBaseGrandTotal($baseGrandTotal);
-        }
-
-        $order->setIwdOmFeeDescription($additionalDescription)
-            ->save();
-
-        Mage::getModel('iwd_ordermanager/order_edit')->updateOrderPayment($orderId, $oldOrder);
+        $this->prepareResponse($result);
     }
 
     /**
@@ -98,19 +42,17 @@ class IWD_OrderManager_Adminhtml_Sales_AdditionalController extends IWD_OrderMan
     /**
      * @return float
      */
-    protected function getAdditionalBaseAmount()
+    protected function getAdditionalAmountInclTax()
     {
-        $additionalAmount = $this->getAdditionalAmount();
+        return $this->getRequest()->getParam('amount_incl_tax', 0);
+    }
 
-        $baseCurrencyCode = $this->getOrder()->getBaseCurrency();
-        $currentCurrencyCode = $this->getOrder()->getOrderCurrency();
-
-        $additionalBaseAmount = $additionalAmount;
-        if ($baseCurrencyCode != $currentCurrencyCode) {
-            $additionalBaseAmount = Mage::helper('directory')->currencyConvert($additionalAmount, $currentCurrencyCode, $baseCurrencyCode);
-        }
-
-        return round($additionalBaseAmount, 2);
+    /**
+     * @return float
+     */
+    protected function getAdditionalTaxPercent()
+    {
+        return $this->getRequest()->getParam('percent', 0);
     }
 
     /**

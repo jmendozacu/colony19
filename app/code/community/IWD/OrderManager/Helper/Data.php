@@ -1,43 +1,74 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Helper_Data
+ */
 class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
 {
+    /**#@+
+     * Config xml path
+     */
     const CONFIG_XML_PATH_SHOW_ITEM_IMAGE = 'iwd_ordermanager/edit/show_item_image';
     const CONFIG_XML_CUSTOM_GRID_ENABLE = 'iwd_ordermanager/grid_order/enable';
     const CONFIG_XML_CONFIRM_EDIT_CHECKED = 'iwd_ordermanager/edit/confirm_edit_checked';
     const CONFIG_XML_NOTIFY_CUSTOMER_CHECKED = 'iwd_ordermanager/edit/notify_checked';
     const CONFIG_XML_PATH_RECALCULATE_ORDER_AMOUNT = 'iwd_ordermanager/edit/recalculate_amount_checked';
     const CONFIG_XML_PATH_VALIDATE_INVENTORY = 'iwd_ordermanager/edit/validate_inventory';
+    const CONFIG_XML_PATH_MANAGE_CUSTOM_AMOUNT_TAX = 'iwd_ordermanager/edit/manage_custom_amount_tax';
+    const CONFIG_XML_PATH_CUSTOM_CREATE_PROCESS = 'iwd_ordermanager/crate_process/enable';
+    const CONFIG_XML_PATH_MULTI_INVENTORY_ENABLED = 'iwd_ordermanager/multi_inventory/enable';
+    const CONFIG_XML_PATH_DEFERRED_RE_AUTHORIZATION = 'iwd_ordermanager/edit/deferred_re_authorization';
+    const CONFIG_XML_PATH_ORDER_OPTIONS_HIDE = 'iwd_ordermanager/order_options/hide';
+    /**#@-*/
 
+    /**
+     * @return bool
+     */
     public function isGridExport()
     {
         $path = "";
         if (isset($_SERVER['PATH_INFO'])) {
             $path = $_SERVER['PATH_INFO'];
-        } else if (isset($_SERVER['REQUEST_URI'])) {
+        } elseif (isset($_SERVER['REQUEST_URI'])) {
             $path = $_SERVER['REQUEST_URI'];
         }
+
         $exportCsv = (strstr($path, 'exportCsv') !== false);
         $exportExcel = (strstr($path, 'exportExcel') !== false);
         return $exportCsv || $exportExcel;
     }
 
 
+    /**
+     * @return string
+     */
     public function isRecalculateOrderAmountChecked()
     {
-        return Mage::getStoreConfig(self::CONFIG_XML_PATH_RECALCULATE_ORDER_AMOUNT, Mage::app()->getStore()) ? 'checked="checked"' : "";
+        return Mage::getStoreConfig(self::CONFIG_XML_PATH_RECALCULATE_ORDER_AMOUNT, Mage::app()->getStore())
+            ? 'checked="checked"'
+            : "";
     }
 
+    /**
+     * @return int
+     */
     public function isValidateInventory()
     {
         return Mage::getStoreConfig(self::CONFIG_XML_PATH_VALIDATE_INVENTORY, Mage::app()->getStore()) ? 1 : 0;
     }
 
+    /**
+     * @return mixed
+     */
     public function getExtensionVersion()
     {
         return Mage::getConfig()->getModuleConfig("IWD_OrderManager")->version;
     }
 
+    /**
+     * @param $table
+     * @return bool|string
+     */
     public function CheckTableEngine($table)
     {
         $cache = Mage::app()->getCache();
@@ -62,85 +93,126 @@ class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     public function isShowItemImage()
     {
         return Mage::getStoreConfig(self::CONFIG_XML_PATH_SHOW_ITEM_IMAGE, Mage::app()->getStore());
     }
 
+    /**
+     * @return string
+     */
     public function isConfirmEditChecked()
     {
         return Mage::getStoreConfig(self::CONFIG_XML_CONFIRM_EDIT_CHECKED) ? 'checked="checked"' : "";
     }
 
+    /**
+     * @return mixed
+     */
     public function isNotifyCustomerCheckedDefault()
     {
         return Mage::getStoreConfig(self::CONFIG_XML_NOTIFY_CUSTOMER_CHECKED);
     }
 
+    /**
+     * @return string
+     */
     public function isNotifyCustomerChecked()
     {
         return $this->isNotifyCustomerCheckedDefault() ? 'checked="checked"' : "";
     }
 
+    /**
+     * @return mixed
+     */
     public function enableCustomGrid()
     {
         return Mage::getStoreConfig(self::CONFIG_XML_CUSTOM_GRID_ENABLE);
     }
 
+    /**
+     * @return mixed
+     */
+    public function isAllowHideOrders()
+    {
+        return Mage::getStoreConfig(self::CONFIG_XML_PATH_ORDER_OPTIONS_HIDE);
+    }
+
+    /**
+     * @return bool|string
+     */
     public function CheckOrderTableEngine()
     {
         $table = Mage::getSingleton('core/resource')->getTableName('sales_flat_order');
         return $this->CheckTableEngine($table);
     }
 
+    /**
+     * @return bool|string
+     */
     public function CheckCreditmemoTableEngine()
     {
         $table = Mage::getSingleton('core/resource')->getTableName('sales_flat_creditmemo');
         return $this->CheckTableEngine($table);
     }
 
+    /**
+     * @return bool|string
+     */
     public function CheckInvoiceTableEngine()
     {
         $table = Mage::getSingleton('core/resource')->getTableName('sales_flat_invoice');
         return $this->CheckTableEngine($table);
     }
 
+    /**
+     * @return bool|string
+     */
     public function CheckShipmentTableEngine()
     {
         $table = Mage::getSingleton('core/resource')->getTableName('sales_flat_shipment');
         return $this->CheckTableEngine($table);
     }
 
+    /**
+     * @var string
+     */
     protected $_version = 'CE';
 
+    /**
+     * @return bool
+     */
     public function isEnterpriseMagentoEdition()
     {
         return ($this->getEdition() == 'Enterprise');
     }
 
+    /**
+     * @return bool
+     */
     public function isAvailableVersion()
     {
-        if ($this->isEnterpriseMagentoEdition() && $this->_version == 'CE') {
-            return false;
-        }
-
-        return true;
+        return !($this->isEnterpriseMagentoEdition() && $this->_version == 'CE');
     }
 
+    /**
+     * @return string
+     */
     public function getEdition()
     {
         $mage = new Mage();
-        if (!is_callable(array($mage, 'getEdition'))) {
-            $edition = 'Community';
-        } else {
-            $edition = Mage::getEdition();
-        }
-
+        $edition = (!is_callable(array($mage, 'getEdition'))) ? 'Community' : Mage::getEdition();
         unset($mage);
 
         return $edition;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCurrentIpAddress()
     {
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -154,11 +226,18 @@ class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
         return $ip;
     }
 
+    /**
+     * @return string
+     */
     public function getDataTimeFormat()
     {
         return 'm-d-Y H:i:s';
     }
 
+    /**
+     * @param $date
+     * @return string
+     */
     public function getDateTime($date)
     {
         $storeId = null;
@@ -169,55 +248,28 @@ class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
         return $date->get('MM-dd-Y H:m:s');
     }
 
+    /**
+     * @return mixed
+     */
     public function isCustomCreationProcess()
     {
-        return Mage::getStoreConfig('iwd_ordermanager/crate_process/enable');
+        return Mage::getStoreConfig(self::CONFIG_XML_PATH_CUSTOM_CREATE_PROCESS);
     }
 
+    /**
+     * @return mixed
+     */
     public function isMultiInventoryEnable()
     {
-        return Mage::getStoreConfig('iwd_ordermanager/multi_inventory/enable');
+        return Mage::getStoreConfig(self::CONFIG_XML_PATH_MULTI_INVENTORY_ENABLED);
     }
 
+    /**
+     * @return bool
+     */
     public function isAutoReAuthorization()
     {
-        return (bool)(int)Mage::getStoreConfig('iwd_ordermanager/edit/deferred_re_authorization');
-    }
-
-    public function checkApiCredentials()
-    {
-        $standard_auth = Mage::getStoreConfig('iwd_settlementreport/connection/standard');
-        if($standard_auth){
-            $active = Mage::getStoreConfig('payment/authorizenet/active');
-
-            if(!$active){
-                $message = $this->__('Authorize.net payment method is disabled.');
-                return array('error'=>1, 'message'=>$message);
-            }
-        } else {
-            $login = Mage::getStoreConfig('iwd_settlementreport/connection/login');
-            $trans_key = Mage::getStoreConfig('iwd_settlementreport/connection/trans_key');
-
-            if(!$login || !$trans_key){
-                $message = $this->__('Enter API credentials and save to test.');
-                return array('error'=>1, 'message'=>$message);
-            }
-        }
-
-        try {
-            $date = substr(date('c',time()),0,-6);
-            $details = Mage::getModel('iwd_ordermanager/authorize_authorizeNet')->getSettledBatchList(false, $date, $date);
-            $result = (array)$details->xml->messages;
-
-            if(!isset($result['resultCode']) || $result['resultCode'] == 'Error'){
-                $message = (array)$result['message'];
-                return array('error'=>1, 'message'=>$message["code"] . ": " . $message["text"]);
-            }
-        } catch (Exception $e) {
-            return array('error'=>1, 'message'=>$this->__($e->getMessage()));
-        }
-
-        return array('error'=>0, 'message'=>$this->__('Connected successfully.'));
+        return (bool)(int)Mage::getStoreConfig(self::CONFIG_XML_PATH_DEFERRED_RE_AUTHORIZATION);
     }
 
     /**
@@ -241,5 +293,13 @@ class IWD_OrderManager_Helper_Data extends Mage_Core_Helper_Data
         }
 
         return round($percent, 2);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isManageTaxForCustomFee()
+    {
+        return (bool)(int)Mage::getStoreConfig(self::CONFIG_XML_PATH_MANAGE_CUSTOM_AMOUNT_TAX);
     }
 }

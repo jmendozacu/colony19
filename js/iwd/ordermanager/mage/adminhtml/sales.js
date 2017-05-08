@@ -12,7 +12,9 @@ AdminOrder.prototype.setDefaultStoreView = function(id){
     if(this.storeId == false){
         this.setStoreId(id);
     }
-    $('store_switcher').setValue(this.storeId);
+    if ($('store_switcher')) {
+        $('store_switcher').setValue(this.storeId);
+    }
 };
 
 AdminOrder.prototype.addCancelButtonToCustomerGrid = function(id){

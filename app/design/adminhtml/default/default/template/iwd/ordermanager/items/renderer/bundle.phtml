@@ -3,19 +3,15 @@
  * @see Mage_Bundle_Block_Adminhtml_Sales_Order_View_Items_Renderer
  */
 ?>
+<?php $imageHelper = Mage::helper('iwd_ordermanager/image'); ?>
 <?php $_item = $this->getItem() ?>
 <?php $items = array_merge(array($_item), $_item->getChildrenItems()); ?>
 <?php $_count = count($items) ?>
 <?php $_index = 0 ?>
-
 <?php $_prevOptionId = '' ?>
+<?php $_showlastRow = ($this->getOrderOptions() || $_item->getDescription() || $this->canDisplayGiftmessage()); ?>
 
-<?php if ($this->getOrderOptions() || $_item->getDescription() || $this->canDisplayGiftmessage()): ?>
-    <?php $_showlastRow = true ?>
-<?php else: ?>
-    <?php $_showlastRow = false ?>
-<?php endif; ?>
-
+<?php $params = array(); ?>
 <?php foreach ($items as $_item): ?>
     <?php $this->setPriceDataObject($_item) ?>
     <?php $attributes = $this->getSelectionAttributes($_item) ?>
@@ -48,17 +44,16 @@
     <tr<?php echo (++$_index == $_count && !$_showlastRow) ? ' class="border"' : '' ?>>
         <?php if (!$_item->getParentItem()): ?>
             <td>
-                <?php if (Mage::helper('iwd_ordermanager')->isShowItemImage()):
+                <?php
+                if (Mage::helper('iwd_ordermanager')->isShowItemImage()) {
                     try {
-                        $product = Mage::getModel('catalog/product')->setStoreId($_item->getOrder()->getStoreId())->load($_item->getProductId());
-                        $img = Mage::helper('iwd_ordermanager/image')->init($product, 'small_image')->resize(75);
-                        ?>
-                        <img src="<?php echo $img; ?>" class="order_item_image" width="75" height="75"/>
-                        <?php
+                        $image = (string)$imageHelper->init($_item->getProduct(), 'image')->resize(75);
                     } catch (Exception $e) {
-                        IWD_OrderManager_Model_Logger::log($e->getMessage());
+                        $image = Mage::getDesign()->getSkinUrl($imageHelper->getPlaceholder(), array('_area' => 'frontend'));
                     }
-                endif; ?>
+                }
+                ?>
+                <img src="<?php echo $image ?>" class="order_item_image" />
 
                 <h5 class="title">
                 <span id="order_item_<?php echo $_item->getId() ?>_title">
@@ -75,17 +70,16 @@
             </td>
         <?php else: ?>
             <td>
-                <?php if (Mage::helper('iwd_ordermanager')->isShowItemImage()):
+                <?php
+                if (Mage::helper('iwd_ordermanager')->isShowItemImage()) {
                     try {
-                        $product = Mage::getModel('catalog/product')->setStoreId($_item->getOrder()->getStoreId())->load($_item->getProductId());
-                        $img = Mage::helper('iwd_ordermanager/image')->init($product, 'small_image')->resize(75);
-                        ?>
-                        <img src="<?php echo $img; ?>" class="order_item_image" width="75" height="75"/>
-                        <?php
+                        $image = (string)$imageHelper->init($_item->getProduct(), 'image')->resize(75);
                     } catch (Exception $e) {
-                        IWD_OrderManager_Model_Logger::log($e->getMessage());
+                        $image = Mage::getDesign()->getSkinUrl($imageHelper->getPlaceholder(), array('_area' => 'frontend'));
                     }
-                endif; ?>
+                }
+                ?>
+                <img src="<?php echo $image ?>" class="order_item_image" />
                 <div class="option-value"><?php echo $this->getValueHtml($_item) ?></div>
 
                 <i title="<?php echo $this->helper('sales')->__('Description'); ?>"><?php echo $this->htmlEscape($_item->getDescription()) ?></i>
@@ -414,6 +408,46 @@
             <td class="a-right last">&nbsp;</td>
         <?php endif; ?>
     </tr>
+
+    <?php
+    $product = $_item->getProduct();
+    $productInfo = array(
+        'Sku' => $product->getSku(),
+        'Title' => $product->getName(),
+        'Type' => $product->getTypeId(),
+        'Price' => $_item->getOrder()->getStore()->formatPrice($product->getPrice()),
+        'Qty' => (string)$product->getStockItem()->getQty() * 1,
+        'Visible' => Mage_Catalog_Model_Product_Visibility::getOptionText($product->getVisibility()),
+        'In Stock' => $product->getStockItem()->getIsInStock() ? 'Yes' : 'No'
+    );
+
+    if (!$_item->getParentItem()) {
+        $params = $productInfo;
+        $params['frontUrl'] = $product->isVisibleInSiteVisibility()
+            ? sprintf('<a href="%s" target="_blank">%s</a>', $product->getProductUrl(), 'Go to product')
+            : '';
+
+        try {
+            $params['productImage'] = (string)$imageHelper->init($_item->getProduct(), 'image')->resize(200);
+        } catch (Exception $e) {
+            $params['productImage'] = Mage::getDesign()->getSkinUrl($imageHelper->getPlaceholder(), array('_area' => 'frontend'));
+        }
+
+        $adminUrl = Mage::helper('adminhtml')->getUrl('*/catalog_product/edit', array('id' => $product->getId()));
+        $params['adminUrl'] = sprintf('<a href="%s" target="_blank">%s</a>', $adminUrl, 'Edit product');
+    } else {
+        $adminUrl = Mage::helper('adminhtml')->getUrl('*/catalog_product/edit', array('id' => $product->getId()));
+        $frontUrl = $product->isVisibleInSiteVisibility()
+            ? sprintf('<a href="%s" target="_blank">%s</a>', $product->getProductUrl(), $productInfo['Title'])
+            : $productInfo['Title'];
+
+        $productInfo['Title'] = sprintf('%s (<a href="%s" target="_blank">%s</a>)', $frontUrl, $adminUrl, 'edit product');
+
+        $attributes = $this->getSelectionAttributes($_item);
+        $key = isset($attributes['option_label']) ? $attributes['option_label'] : $product->getName();
+        $params['children'][$key] = $productInfo;
+    }
+    ?>
 <?php endforeach; ?>
 <?php if ($_showlastRow): ?>
     <tr<?php if (!$this->canDisplayGiftmessage()) echo ' class="border"' ?>>
@@ -466,3 +500,11 @@
         <td class="last">&nbsp;</td>
     </tr>
 <?php endif; ?>
+
+<script type="text/javascript">
+    IWD.OrderManager.OrderedItemProductInfo = IWD.OrderManager.OrderedItemProductInfo || {};
+    IWD.OrderManager.OrderedItemProductInfo.addItem(
+        'order_item_<?php echo $this->getItem()->getId() ?>_title',
+        <?php echo json_encode($params); ?>
+    );
+</script>

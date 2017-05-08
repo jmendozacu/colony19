@@ -5,30 +5,36 @@ class IWD_OrderManager_Model_Observer
     /************************ CHECK REQUIRED MODULES *************************/
     public function checkRequiredModules()
     {
-        $cache = Mage::app()->getCache();
-
         if (Mage::getSingleton('admin/session')->isLoggedIn()) {
             if (!Mage::getConfig()->getModuleConfig('IWD_All')->is('active', 'true')) {
-                if ($cache->load("iwd_order_manager") === false) {
-                    $message = 'Important: Please setup IWD_ALL in order to finish <strong>IWD Order Manager</strong> installation.<br />
-                    Please download <a href="http://iwdextensions.com/media/modules/iwd_all.tgz" target="_blank">IWD_ALL</a> and set it up via Magento Connect.<br />
-                    Please refer link to <a href="https://docs.google.com/document/d/1UjKKMBoJlSLPru6FanetfEBI5GlOdVjQOM_hb3kn8p0/edit" target="_blank">installation guide</a>';
-
-                    Mage::getSingleton('adminhtml/session')->addNotice($message);
-                    $cache->save('true', 'iwd_order_manager', array("iwd_order_manager"), $lifeTime = 5);
-                }
+                $message = 'Please setup IWD_ALL in order to finish <strong>IWD Order Manager</strong> installation.';
+                $this->addMessage($message);
             } else {
                 $version = Mage::getConfig()->getModuleConfig('IWD_All')->version;
-                if(version_compare($version, "2.0.0", "<")){
-                    $message = 'Important: Please update IWD_ALL extension because some features of <strong>IWD Order Manager</strong> can be not available.<br />
-                    Please download <a href="http://iwdextensions.com/media/modules/iwd_all.tgz" target="_blank">IWD_ALL</a> and set it up via Magento Connect.<br />
-                    Please refer link to <a href="https://docs.google.com/document/d/1UjKKMBoJlSLPru6FanetfEBI5GlOdVjQOM_hb3kn8p0/edit" target="_blank">installation guide</a>';
-
-                    Mage::getSingleton('adminhtml/session')->addNotice($message);
-                    $cache->save('true', 'iwd_order_manager', array("iwd_order_manager"), $lifeTime = 5);
+                if (version_compare($version, "2.0.0", "<")) {
+                    $message = 'Please update IWD_ALL extension because some features of <strong>IWD Order Manager</strong> can be not available.';
+                    $this->addMessage($message);
                 }
             }
         }
+    }
+
+    protected function addMessage($message)
+    {
+        $cache = Mage::app()->getCache();
+
+        $iwdAllUrl = 'http://iwdextensions.com/media/modules/iwd_all.tgz';
+        $iwdUserGuideUrl = 'https://docs.google.com/document/d/1UjKKMBoJlSLPru6FanetfEBI5GlOdVjQOM_hb3kn8p0/edit';
+
+        $noticeMessage = 'Important: ' . $message . '<br />' .
+            'Please download <a href="' . $iwdAllUrl . '" target="_blank">IWD_ALL</a> and set it up via Magento Connect.<br />' .
+            'Please refer link to <a href="' .$iwdUserGuideUrl . '" target="_blank">installation guide</a>';
+
+        if ($cache->load("iwd_order_manager") === false) {
+            Mage::getSingleton('adminhtml/session')->addNotice($noticeMessage);
+        }
+
+        $cache->save('true', 'iwd_order_manager', array("iwd_order_manager"), $lifeTime = 5);
     }
     /******************************************* end CHECK REQUIRED MODULES **/
 
@@ -45,18 +51,23 @@ class IWD_OrderManager_Model_Observer
             | $this->_orderReauthorize($block)
             | $this->_orderArchive($block)
             | $this->_orderDelete($block)
+            | $this->_orderShowHide($block)
             | $this->_orderUpdateStatus($block)
             | $this->_orderBulkActions($block)
             | $this->_orderAssignFlags($block)
+            | $this->_orderComments($block)
         ) {
             return;
         }
+
         if ($this->_invoiceDelete($block)) {
             return;
         }
+
         if ($this->_shipmentDelete($block)) {
             return;
         }
+
         if ($this->_creditmemoDelete($block)) {
             return;
         }
@@ -72,32 +83,40 @@ class IWD_OrderManager_Model_Observer
     private function _orderDelete($block)
     {
         if (Mage::getModel('iwd_ordermanager/order')->isAllowDeleteOrders()) {
+            $helper = Mage::helper('adminhtml');
+
             if ($block->getId() == 'sales_order_grid') {
                 $massactionBlock = $block->getMassactionBlock();
                 if ($massactionBlock) {
-                    $massactionBlock->addItem('iwd_delete_orders', array(
-                        'label' => Mage::helper('iwd_ordermanager')->__('Delete Selected Order(s)'),
-                        'url' => Mage::helper('adminhtml')->getUrl('*/sales_grid/delete', array('redirect' => 'sales_order')),
-                        'confirm' => Mage::helper('iwd_ordermanager')->__('Are you sure to delete the selected sales order(s)?  (Related Invoices, Shipments & Credit memos will be deleted too!)'),
-                    ));
+                    $massactionBlock->addItem(
+                        'iwd_delete_sales',
+                        array(
+                            'label' => $helper->__('Delete Selected Order(s)'),
+                            'url' => $helper->getUrl('*/sales_grid/delete', array('redirect' => 'sales_order')),
+                            'confirm' => $helper->__('Are you sure to delete the selected sales order(s)?  (Related Invoices, Shipments & Credit memos will be deleted too!)')
+                        )
+                    );
                 }
 
                 return true;
             }
+
             if (get_class($block) == 'Mage_Adminhtml_Block_Sales_Order_View') {
                 $orderId = $block->getRequest()->getParam('order_id');
                 if (Mage::getModel('iwd_ordermanager/order')->load($orderId)->canDelete()) {
                     $block->addButton('delete', array(
-                        'label' => Mage::helper('adminhtml')->__('Delete'),
+                        'label' => $helper->__('Delete'),
                         'class' => 'delete',
                         'onclick' =>
-                            'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure to delete this order? (Related Invoices, Shipments & Credit memos will be deleted too!)') . '\', \''
-                            . Mage::helper('adminhtml')->getUrl('*/sales_grid/delete', array('order_ids' => $orderId, 'redirect' => 'sales_order')) . '\')',
+                            'deleteConfirm(\'' . $helper->__('Are you sure to delete this order? (Related Invoices, Shipments & Credit memos will be deleted too!)') . '\', \'' .
+                            $helper->getUrl('*/sales_grid/delete', array('order_ids' => $orderId, 'redirect' => 'sales_order')) . '\')'
                     ), -1, 110);
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -108,18 +127,21 @@ class IWD_OrderManager_Model_Observer
     private function _invoiceDelete($block)
     {
         if (Mage::getModel('iwd_ordermanager/invoice')->isAllowDeleteInvoices()) {
+            $helper = Mage::helper('adminhtml');
+
             if ($block->getId() == 'sales_invoice_grid') {
                 $massactionBlock = $block->getMassactionBlock();
                 if ($massactionBlock) {
                     $confirm = (Mage::getModel('iwd_ordermanager/invoice')->allowDeleteRelatedCreditMemo()) ?
-                        Mage::helper('adminhtml')->__('Are you sure to delete the selected invoice(s)? Attention: All related credit memo(s) will be removed too!') :
-                        Mage::helper('adminhtml')->__('Are you sure to delete the selected invoice(s)? Invoice(s) with related credit memo(s) will not be removed.');
-                    $massactionBlock->addItem('iwd_delete_invoices', array(
-                        'label' => Mage::helper('iwd_ordermanager')->__('Delete selected invoice(s)'),
-                        'url' => Mage::helper('adminhtml')->getUrl('*/sales_invoice/delete'),
+                        $helper->__('Are you sure to delete the selected invoice(s)? Attention: All related credit memo(s) will be removed too!') :
+                        $helper->__('Are you sure to delete the selected invoice(s)? Invoice(s) with related credit memo(s) will not be removed.');
+                    $massactionBlock->addItem('iwd_delete_sales', array(
+                        'label' => $helper->__('Delete selected invoice(s)'),
+                        'url' => $helper->getUrl('*/sales_invoice/delete'),
                         'confirm' => $confirm,
                     ));
                 }
+
                 return true;
             }
 
@@ -127,16 +149,17 @@ class IWD_OrderManager_Model_Observer
                 $invoiceId = $block->getRequest()->getParam('invoice_id');
                 if (Mage::getModel('iwd_ordermanager/invoice')->load($invoiceId)->canDelete()) {
                     $block->addButton('delete', array(
-                        'label' => Mage::helper('adminhtml')->__('Delete'),
+                        'label' => $helper->__('Delete'),
                         'class' => 'delete',
                         'onclick' =>
-                            'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure to delete this invoice?') . '\', \''
-                            . Mage::helper('adminhtml')->getUrl('*/sales_invoice/delete', array('invoice_ids' => $invoiceId)) . '\')',
+                            'deleteConfirm(\'' . $helper->__('Are you sure to delete this invoice?') . '\', \'' .
+                            $helper->getUrl('*/sales_invoice/delete', array('_current' => true, 'invoice_ids' => $invoiceId)) . '\')',
                     ), -1, 111);
                 }
                 return true;
             }
         }
+
         return false;
     }
 
@@ -147,32 +170,43 @@ class IWD_OrderManager_Model_Observer
     private function _creditmemoDelete($block)
     {
         if (Mage::getModel('iwd_ordermanager/creditmemo')->isAllowDeleteCreditmemos()) {
+            $helper = Mage::helper('adminhtml');
+
             if ($block->getId() == 'sales_creditmemo_grid') {
                 $massactionBlock = $block->getMassactionBlock();
                 if ($massactionBlock) {
-                    $massactionBlock->addItem('iwd_delete_creditmemo', array(
-                        'label' => Mage::helper('iwd_ordermanager')->__('Delete selected credit memo(s)'),
-                        'url' => Mage::helper('adminhtml')->getUrl('*/sales_creditmemo/delete'),
-                        'confirm' => Mage::helper('iwd_ordermanager')->__('Are you sure to delete the selected credit memo(s)?'),
-                    ));
+                    $massactionBlock->addItem(
+                        'iwd_delete_sales',
+                        array(
+                            'label' => $helper->__('Delete selected credit memo(s)'),
+                            'url' => $helper->getUrl('*/sales_creditmemo/delete'),
+                            'confirm' => $helper->__('Are you sure to delete the selected credit memo(s)?'),
+                        )
+                    );
                 }
+
                 return true;
             }
 
             if (get_class($block) == 'Mage_Adminhtml_Block_Sales_Order_Creditmemo_View') {
-                $creditmemo_id = $block->getRequest()->getParam('creditmemo_id');
-                if (Mage::getModel('iwd_ordermanager/creditmemo')->load($creditmemo_id)->canDelete()) {
-                    $block->addButton('delete', array(
-                        'label' => Mage::helper('adminhtml')->__('Delete'),
-                        'class' => 'delete',
-                        'onclick' =>
-                            'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure to delete this credit memo?') . '\', \''
-                            . Mage::helper('adminhtml')->getUrl('*/sales_creditmemo/delete', array('creditmemo_ids' => $creditmemo_id)) . '\')',
-                    ), -1, 112);
+                $creditmemoId = $block->getRequest()->getParam('creditmemo_id');
+                if (Mage::getModel('iwd_ordermanager/creditmemo')->load($creditmemoId)->canDelete()) {
+                    $block->addButton(
+                        'delete',
+                        array(
+                            'label' => $helper->__('Delete'),
+                            'class' => 'delete',
+                            'onclick' =>
+                                'deleteConfirm(\'' . $helper->__('Are you sure to delete this credit memo?') . '\', \'' .
+                                $helper->getUrl('*/sales_creditmemo/delete', array('_current' => true, 'creditmemo_ids' => $creditmemoId)) . '\')',
+                        ), -1, 112
+                    );
                 }
+
                 return true;
             }
         }
+
         return false;
     }
 
@@ -183,31 +217,38 @@ class IWD_OrderManager_Model_Observer
     private function _shipmentDelete($block)
     {
         if (Mage::getModel('iwd_ordermanager/shipment')->isAllowDeleteShipments()) {
+            $helper = Mage::helper('adminhtml');
+
             if ($block->getId() == 'sales_shipment_grid') {
                 $massactionBlock = $block->getMassactionBlock();
                 if ($massactionBlock) {
-                    $massactionBlock->addItem('iwd_delete_shipment', array(
-                        'label' => Mage::helper('iwd_ordermanager')->__('Delete selected shipment(s)'),
-                        'url' => Mage::helper('adminhtml')->getUrl('*/sales_shipment/delete'),
-                        'confirm' => Mage::helper('iwd_ordermanager')->__('Are you sure to delete the selected shipment(s)?'),
-                    ));
+                    $massactionBlock->addItem(
+                        'iwd_delete_sales',
+                        array(
+                            'label' => $helper->__('Delete selected shipment(s)'),
+                            'url' => $helper->getUrl('*/sales_shipment/delete'),
+                            'confirm' => $helper->__('Are you sure to delete the selected shipment(s)?')
+                        )
+                    );
                 }
+
                 return true;
             }
 
             if (get_class($block) == 'Mage_Adminhtml_Block_Sales_Order_Shipment_View') {
-                $shipment_id = $block->getRequest()->getParam('shipment_id');
+                $shipmentId = $block->getRequest()->getParam('shipment_id');
                 $block->addButton('delete', array(
-                    'label' => Mage::helper('adminhtml')->__('Delete'),
+                    'label' => $helper->__('Delete'),
                     'class' => 'delete',
                     'onclick' =>
-                        'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure to delete this shipment?') . '\', \''
-                        . Mage::helper('adminhtml')->getUrl('*/sales_shipment/delete', array('shipment_ids' => $shipment_id)) . '\')',
+                        'deleteConfirm(\'' . $helper->__('Are you sure to delete this shipment?') . '\', \'' .
+                        $helper->getUrl('*/sales_shipment/delete', array('_current' => true, 'shipment_ids' => $shipmentId)) . '\')',
                 ), -1, 113);
 
                 return true;
             }
         }
+
         return false;
     }
     /*********************************************************** end DELETE **/
@@ -223,23 +264,26 @@ class IWD_OrderManager_Model_Observer
         if (Mage::getModel('iwd_ordermanager/order')->isAllowChangeOrderStatus() && $block->getId() == 'sales_order_grid') {
             $massactionBlock = $block->getMassactionBlock();
             if ($massactionBlock) {
+                $helper = Mage::helper('adminhtml');
                 $massactionBlock->addItem('iwd_update_status', array(
-                    'label' => Mage::helper('iwd_ordermanager')->__('Change status'),
+                    'label' => $helper->__('Change status'),
                     'url' => Mage::helper('adminhtml')->getUrl('*/sales_grid/changestatus', array('redirect' => 'sales_order')),
-                    'confirm' => Mage::helper('iwd_ordermanager')->__('Are you sure to change status for the selected order(s)?'),
+                    'confirm' => $helper->__('Are you sure to change status for the selected order(s)?'),
                     'additional' => array(
                         'visibility' => array(
                             'name' => 'status',
                             'type' => 'select',
                             'class' => 'required-entry',
-                            'label' => Mage::helper('iwd_ordermanager')->__('Status'),
+                            'label' => $helper->__('Status'),
                             'values' => Mage::getSingleton('sales/order_config')->getStatuses()
                         )
                     )
                 ));
             }
+
             return true;
         }
+
         return false;
     }
     /**************************************************** end UPDATE STATUS **/
@@ -258,16 +302,18 @@ class IWD_OrderManager_Model_Observer
 
         if (Mage::getModel('iwd_ordermanager/archive')->isAllowArchiveOrders() && $block->getId() == 'sales_order_grid') {
             $massactionBlock = $block->getMassactionBlock();
+            $helper = Mage::helper('adminhtml');
             if ($massactionBlock) {
                 $massactionBlock->addItem('iwd_archive_orders', array(
-                    'label' => Mage::helper('iwd_ordermanager')->__('Archive Selected Order(s)'),
-                    'url' => Mage::helper('adminhtml')->getUrl('*/sales_archive_order/archive'),
-                    'confirm' => Mage::helper('iwd_ordermanager')->__('Do you really want to archive these orders?'),
+                    'label' => $helper->__('Archive Selected Order(s)'),
+                    'url' => $helper->getUrl('*/sales_archive_order/archive'),
+                    'confirm' => $helper->__('Do you really want to archive these orders?'),
                 ));
             }
 
             return true;
         }
+
         return false;
     }
     /********************************************************** end ARCHIVE **/
@@ -281,16 +327,18 @@ class IWD_OrderManager_Model_Observer
     private function _orderReauthorize($block)
     {
         if (get_class($block) == 'Mage_Adminhtml_Block_Sales_Order_View') {
+            $helper = Mage::helper('adminhtml');
             $orderId = $block->getRequest()->getParam('order_id');
             if (Mage::getModel('iwd_ordermanager/order')->load($orderId)->getIwdBackupId()) {
                 $block->addButton('reauthorize', array(
-                    'label' => Mage::helper('adminhtml')->__('Re-Authorize'),
+                    'label' => $helper->__('Re-Authorize'),
                     'class' => 'add',
                     'onclick' =>
-                        'confirmSetLocation(\'' . Mage::helper('adminhtml')->__('Are you sure to re-authorize payment.') . '\', \''
-                        . Mage::helper('adminhtml')->getUrl('*/sales_reauthorize/reauthorize', array('order_id' => $orderId)) . '\')',
+                        'confirmSetLocation(\'' . $helper->__('Are you sure to re-authorize payment.') . '\', \'' .
+                        $helper->getUrl('*/sales_reauthorize/reauthorize', array('order_id' => $orderId)) . '\')'
                 ), -1, 114);
             }
+
             return true;
         }
 
@@ -306,12 +354,14 @@ class IWD_OrderManager_Model_Observer
      */
     private function _orderPrint($block)
     {
+        $helper = Mage::helper('adminhtml');
+
         if (get_class($block) == 'Mage_Adminhtml_Block_Sales_Order_View') {
             $orderId = $block->getRequest()->getParam('order_id');
             $block->addButton('print', array(
-                'label' => Mage::helper('adminhtml')->__('Print'),
+                'label' => $helper->__('Print'),
                 'class' => 'save',
-                'onclick' => 'setLocation(\'' . Mage::helper('adminhtml')->getUrl('*/sales_orderr/print', array('order_id' => $orderId)) . '\')',
+                'onclick' => 'setLocation(\'' . $helper->getUrl('*/sales_orderr/print', array('order_id' => $orderId)) . '\')',
             ), -1, 115);
             return true;
         }
@@ -319,10 +369,13 @@ class IWD_OrderManager_Model_Observer
         if ($block->getId() == 'sales_order_grid') {
             $massactionBlock = $block->getMassactionBlock();
             if ($massactionBlock) {
-                $massactionBlock->addItem('iwd_print_order', array(
-                    'label' => Mage::helper('iwd_ordermanager')->__('Print Order(s)'),
-                    'url' => Mage::helper('adminhtml')->getUrl('*/sales_orderr/pdforders', array('redirect' => 'sales_order'))
-                ));
+                $massactionBlock->addItem(
+                    'iwd_print_order',
+                    array(
+                        'label' => $helper->__('Print Order(s)'),
+                        'url' => $helper->getUrl('*/sales_orderr/pdforders', array('redirect' => 'sales_order'))
+                    )
+                );
             }
 
             return true;
@@ -340,9 +393,9 @@ class IWD_OrderManager_Model_Observer
     private function _orderBulkActions($block)
     {
         if ($block->getId() == 'sales_order_grid') {
+            $helper = Mage::helper('adminhtml');
             $massactionBlock = $block->getMassactionBlock();
             if ($massactionBlock) {
-                $helper = Mage::helper('iwd_ordermanager');
                 $additional = array(
                     'notify' => array(
                         'name' => 'notify',
@@ -355,7 +408,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_invoice', array(
                     'label' => $helper->__('Invoice'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 1, 'shipment' => 0, 'print' => 0)
                     ),
@@ -364,7 +417,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_invoice_print', array(
                     'label' => $helper->__('Invoice + Print'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 1, 'shipment' => 0, 'print' => 1)
                     ),
@@ -373,7 +426,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_ship', array(
                     'label' => $helper->__('Ship'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 0, 'shipment' => 1, 'print' => 0)
                     ),
@@ -382,7 +435,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_ship_print', array(
                     'label' => $helper->__('Ship + Print'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 0, 'shipment' => 1, 'print' => 1)
                     ),
@@ -391,7 +444,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_invoice_ship', array(
                     'label' => $helper->__('Invoice + Ship'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 1, 'shipment' => 1, 'print' => 0)
                     ),
@@ -400,7 +453,7 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_invoice_ship_print', array(
                     'label' => $helper->__('Invoice + Ship + Print'),
-                    'url' => Mage::helper('adminhtml')->getUrl(
+                    'url' => $helper->getUrl(
                         '*/sales_bulk/create',
                         array('invoice' => 1, 'shipment' => 1, 'print' => 1)
                     ),
@@ -409,12 +462,12 @@ class IWD_OrderManager_Model_Observer
 
                 $massactionBlock->addItem('iwd_resent_invoice', array(
                     'label' => $helper->__('Re-send invoice email'),
-                    'url' => Mage::helper('adminhtml')->getUrl('*/sales_bulk/resentInvoice', array('redirect' => 'sales_order'))
+                    'url' => $helper->getUrl('*/sales_bulk/resentInvoice', array('redirect' => 'sales_order'))
                 ));
 
                 $massactionBlock->addItem('iwd_resent_shipment', array(
                     'label' => $helper->__('Re-send shipment email'),
-                    'url' => Mage::helper('adminhtml')->getUrl('*/sales_bulk/resentShipment', array('redirect' => 'sales_order'))
+                    'url' => $helper->getUrl('*/sales_bulk/resentShipment', array('redirect' => 'sales_order'))
                 ));
             }
 
@@ -427,7 +480,7 @@ class IWD_OrderManager_Model_Observer
 
     /**
      * @param $block
-     * @return bool
+     * @return void
      */
     private function _orderAssignFlags($block)
     {
@@ -461,6 +514,47 @@ class IWD_OrderManager_Model_Observer
                         )
                     ));
                 }
+            }
+        }
+    }
+
+    /**
+     * @param $block
+     * @return void
+     */
+    private function _orderComments($block)
+    {
+        if ($block->getId() == 'sales_order_grid') {
+            $massactionBlock = $block->getMassactionBlock();
+            if ($massactionBlock) {
+                $helper = Mage::helper('iwd_ordermanager');
+                $massactionBlock->addItem(
+                    'iwd_order_comments', array(
+                    'label' => $helper->__('Add Comments To Order(s)'),
+                    'url' => Mage::helper('adminhtml')->getUrl('*/sales_grid/orderComments'),
+                    'additional' => array(
+                        'iwd_om_visible' => array(
+                            'name' => 'iwd_om_visible',
+                            'type' => 'select',
+                            'class' => 'required-entry',
+                            'label' => $helper->__('Visible on Front'),
+                            'values' => Mage::getSingleton('iwd_ordermanager/adminhtml_options_notifyYesNo')->toOptionArray()
+                        ),
+                        'iwd_om_notified' => array(
+                            'name' => 'iwd_om_notified',
+                            'type' => 'select',
+                            'class' => 'required-entry',
+                            'label' => $helper->__('Customer Notified'),
+                            'values' => Mage::getSingleton('iwd_ordermanager/adminhtml_options_notifyYesNo')->toOptionArray()
+                        ),
+                        'iwd_om_comment' => array(
+                            'name' => 'iwd_om_comment',
+                            'type' => 'textarea',
+                            'class' => 'input-text required-entry iwd_order_massaction_comments',
+                            'label' => $helper->__('Comment'),
+                        )
+                    )
+                ));
             }
         }
     }
@@ -546,8 +640,9 @@ class IWD_OrderManager_Model_Observer
     /**
      * @return void
      */
-    public function scheduledArchiveOrders(){
-        try{
+    public function scheduledArchiveOrders()
+    {
+        try {
             if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
                 Mage::getModel('iwd_ordermanager/archive')->addSalesToArchive();
             }
@@ -565,7 +660,7 @@ class IWD_OrderManager_Model_Observer
     public function salesOrderAfterUpdate(Varien_Event_Observer $observer)
     {
         try {
-            if (!Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
+            if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
                 return;
             }
 
@@ -574,19 +669,59 @@ class IWD_OrderManager_Model_Observer
                 $orderIds = array($orderIds);
             }
 
-            $archived_orders = Mage::getModel('iwd_ordermanager/archive_order')->getCollection()
+            $archivedOrders = Mage::getModel('iwd_ordermanager/archive_order')->getCollection()
                 ->addFieldToSelect('entity_id')
                 ->addFieldToFilter('entity_id', array('in' => $orderIds));
 
-            $archived_ids = array();
-            foreach ($archived_orders as $order) {
-                $archived_ids[] = $order->getEntityId();
+            $archivedIds = array();
+            foreach ($archivedOrders as $order) {
+                $archivedIds[] = $order->getEntityId();
             }
 
-            Mage::getModel('iwd_ordermanager/archive')->addSalesToArchiveByIds($archived_ids);
+            Mage::getModel('iwd_ordermanager/archive')->addSalesToArchiveByIds($archivedIds);
         } catch (Exception $e) {
             Mage::log($e->getMessage(), null, 'iwd_om_archive.log');
         }
     }
     /********************************************** end AFTER UPDATE SALE **/
+
+
+    /**************************** Show/Hide Orders *************************/
+    /**
+     * @param $block
+     * @return bool
+     */
+    private function _orderShowHide($block)
+    {
+        if (Mage::helper('iwd_ordermanager')->isAllowHideOrders()) {
+            $helper = Mage::helper('adminhtml');
+
+            if ($block->getId() == 'sales_order_grid') {
+                $massactionBlock = $block->getMassactionBlock();
+                if ($massactionBlock) {
+                    $massactionBlock->addItem(
+                        'iwd_hide_order',
+                        array(
+                            'label' => $helper->__('Hide Order(s) On Front'),
+                            'url' => $helper->getUrl('*/sales_grid/hide', array('redirect' => 'sales_order')),
+                            'confirm' => $helper->__('Are you sure to show/hide the selected sales order(s) on frontend in customer account?'),
+                            'additional' => array(
+                                'visibility' => array(
+                                    'name' => 'status',
+                                    'type' => 'select',
+                                    'class' => 'required-entry',
+                                    'label' => $helper->__('Status'),
+                                    'values' => Mage::getSingleton('iwd_ordermanager/adminhtml_options_notifyYesNo')->toOptionArray()
+                                )
+                            )
+                        )
+                    );
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

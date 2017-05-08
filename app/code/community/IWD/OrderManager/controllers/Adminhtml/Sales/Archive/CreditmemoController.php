@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController
+ */
 class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->loadLayout()
@@ -19,6 +25,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController extends Mage
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function exportCsvAction()
     {
         $fileName = 'archive_credit_memos.csv';
@@ -31,6 +40,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController extends Mage
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
 
+    /**
+     * @return void
+     */
     public function exportExcelAction()
     {
         $fileName = 'archive_credit_memos.xml';
@@ -43,6 +55,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController extends Mage
         $this->_prepareDownloadResponse($fileName, $grid->getExcelFile());
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -51,6 +66,9 @@ class IWD_OrderManager_Adminhtml_Sales_Archive_CreditmemoController extends Mage
         );
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {

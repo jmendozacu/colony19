@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Cataloginventory_StockController
+ */
 class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return $this
+     */
     protected function actionInit()
     {
         $this->loadLayout()
@@ -16,6 +22,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->actionInit();
@@ -24,6 +33,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function massDeleteAction()
     {
         $ids = $this->getRequest()->getParam('stock', array());
@@ -50,6 +62,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->_redirect('*/*/index');
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -58,6 +73,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         );
     }
 
+    /**
+     * @return void
+     */
     public function newAction()
     {
         $this->actionInit();
@@ -65,6 +83,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->stockForm();
     }
 
+    /**
+     * @return void
+     */
     public function editAction()
     {
         $this->actionInit();
@@ -72,6 +93,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->stockForm();
     }
 
+    /**
+     * @return void
+     */
     public function saveAction()
     {
         try {
@@ -79,14 +103,17 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
             $stockId = Mage::getModel('iwd_ordermanager/cataloginventory_stock')->saveStockData($data);
 
             Mage::getSingleton('adminhtml/session')->setFormData(false);
-            Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('iwd_ordermanager')->__('Stock was successfully saved'));
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('iwd_ordermanager')->__('Stock was successfully saved')
+            );
 
             if ($this->getRequest()->getParam('back')) {
                 $this->_redirect('*/*/edit', array('stock_id' => $stockId));
                 return;
             }
         } catch (Exception $e) {
-            IWD_OrderManager_Model_Logger::log($e->getMessage(),
+            IWD_OrderManager_Model_Logger::log(
+                $e->getMessage(),
                 Mage::helper('iwd_ordermanager')->__('Stock was not saved')
             );
 
@@ -100,9 +127,11 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         }
 
         $this->_redirect('*/*/');
-        return;
     }
 
+    /**
+     *
+     */
     protected function prepareFormData()
     {
         $id = $this->getRequest()->getParam('stock_id');
@@ -116,6 +145,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         }
     }
 
+    /**
+     *
+     */
     protected function prepareDefaultFormData()
     {
         $stock = Mage::getModel('iwd_ordermanager/cataloginventory_stock');
@@ -129,6 +161,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         Mage::register('iwd_om_stock_data', $stock);
     }
 
+    /**
+     *
+     */
     protected function stockForm()
     {
         $this->_addContent($this->getLayout()->createBlock('iwd_ordermanager/adminhtml_cataloginventory_stock_edit'))
@@ -137,6 +172,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->renderLayout();
     }
 
+    /**
+     *
+     */
     protected function validateAction()
     {
         $response = new Varien_Object();
@@ -145,6 +183,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_StockController extends Mage_A
         $this->getResponse()->setBody($response->toJson());
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::helper('iwd_ordermanager')->isMultiInventoryEnable();

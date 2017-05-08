@@ -1,22 +1,34 @@
 ;IWD.OrderManager.Popup = {
+    showModal: function (title, content) {
+        $ji('#iwd_om_popup').modaliwd({"backdrop": "static", "show": true});
+        $ji('#iwd_om_popup .om-iwd-modal-title').html(title);
+        $ji('#iwd_om_popup .om-iwd-modal-body').html(content);
+
+        setTimeout(function () {$ji(window).trigger('resize');}, 500);
+    },
+
+    hideModal: function () {
+        $ji('#iwd_om_popup').modaliwd('hide');
+    }
+};
+
+IWD.OrderManager.NotifyPopup = {
     currentPopup: null,
     popupValues: {},
     popupTitles: {},
+    content: '',
 
     showModal: function (block) {
-        var options = {"backdrop": "static", "show": true};
-        $ji('#iwd_om_popup').modaliwd(options);
-        IWD.OrderManager.Popup.currentPopup = block;
+        this.currentPopup = block;
+        IWD.OrderManager.Popup.showModal(this.popupTitles[this.currentPopup], this.content);
 
-        var block_id = '#control_form_' + IWD.OrderManager.Popup.currentPopup;
-        var form = $ji(block_id).html();
-
+        var form = $ji('#control_form_' + this.currentPopup).html();
         if (form.length) {
             $ji('#iwd_om_popup_form').html("<form>" + form + "</form>");
         }
 
-        if (typeof(IWD.OrderManager.Popup.popupValues[IWD.OrderManager.Popup.currentPopup]) != "undefined") {
-            $ji.each(IWD.OrderManager.Popup.popupValues[IWD.OrderManager.Popup.currentPopup], function () {
+        if (typeof(this.popupValues[this.currentPopup]) != "undefined") {
+            $ji.each(this.popupValues[this.currentPopup], function () {
                 $ji('#iwd_om_popup_form [name="' + this.name + '"]').val(this.value);
             });
         } else {
@@ -24,12 +36,6 @@
                 $ji(this).val($ji(this).attr("value"));
             });
         }
-
-        $ji(".om-iwd-modal-title").html(IWD.OrderManager.Popup.popupTitles[IWD.OrderManager.Popup.currentPopup]);
-    },
-
-    hideModal: function () {
-        $ji('#iwd_om_popup').modaliwd('hide');
     },
 
     cancelModal: function () {
@@ -37,24 +43,25 @@
     },
 
     updateModal: function () {
-        if (!IWD.OrderManager.Popup.validatePopupForm()) {
+        if (!this.validatePopupForm()) {
             return;
         }
 
-        var block_id = '#control_form_' + IWD.OrderManager.Popup.currentPopup;
+        var blockId = '#control_form_' + this.currentPopup;
 
         var form = $ji('#iwd_om_popup_form').html();
-        $ji(block_id).html(form);
+        $ji(blockId).html(form);
 
-        IWD.OrderManager.Popup.popupValues[IWD.OrderManager.Popup.currentPopup] = $ji('#iwd_om_popup_form form').serializeArray();
-        $ji.each(IWD.OrderManager.Popup.popupValues[IWD.OrderManager.Popup.currentPopup], function () {
-            $ji(block_id + ' [name="' + this.name + '"]').val(this.value);
+        this.popupValues[this.currentPopup] = $ji('#iwd_om_popup_form form').serializeArray();
+        $ji.each(this.popupValues[this.currentPopup], function () {
+            $ji(blockId + ' [name="' + this.name + '"]').val(this.value);
         });
 
         IWD.OrderManager.Popup.hideModal();
     },
 
     validatePopupForm: function () {
+        var self = this;
         var result = true;
         $ji.each($ji('#iwd_om_popup_form input, #iwd_om_popup_form textarea'), function () {
             $ji(this).removeClass('validation-failed');
@@ -66,7 +73,7 @@
             }
 
             if ($ji(this).attr('name') == "comment_email") {
-                if (IWD.OrderManager.Popup.isEmail($ji(this).val()) == false) {
+                if (self.isEmail($ji(this).val()) == false) {
                     $ji(this).addClass('validation-failed');
                     result = false;
                     return true;
@@ -75,7 +82,6 @@
         });
         return result;
     },
-
 
     isEmail: function (email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -108,8 +114,9 @@ IWD.OrderManager.OrderedItems = {
     },
 
     init: function () {
+        var self = this;
         $ji("#ordered_items_edit").on("click", function (event) {
-            IWD.OrderManager.OrderedItems.editOrderedItemsForm(event);
+            self.editOrderedItemsForm(event);
         });
     },
 
@@ -120,7 +127,7 @@ IWD.OrderManager.OrderedItems = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.OrderedItems.urlEditOrderedItemsForm,
+            url: this.urlEditOrderedItemsForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId,
@@ -159,7 +166,7 @@ IWD.OrderManager.OrderedItems = {
 
         var formData = $ji('#ordered_items_form').serialize();
         $ji.ajax({
-            url: IWD.OrderManager.OrderedItems.urlEditOrderedItems,
+            url: this.urlEditOrderedItems,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&" + formData,
@@ -188,12 +195,13 @@ IWD.OrderManager.OrderedItems = {
 
     /**** add new items ****/
     addOrderedItemsForm: function () {
+        var self = this;
         IWD.OrderManager.ShowLoadingMask();
 
         $ji('#button_add_selected_items').show();
         $ji('#button_search_items_form').hide();
 
-        IWD.OrderManager.OrderedItems.order.gridProducts = $H({});
+        this.order.gridProducts = $H({});
 
         if ($ji("#add_ordered_items_form").length > 0) {
             $ji("#add_ordered_items_form").show();
@@ -202,7 +210,7 @@ IWD.OrderManager.OrderedItems = {
         }
 
         $ji.ajax({
-            url: IWD.OrderManager.OrderedItems.urlAddOrderedItemsForm,
+            url: this.urlAddOrderedItemsForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId,
@@ -219,14 +227,14 @@ IWD.OrderManager.OrderedItems = {
                         $ji('#product_composite_configure').remove();
 
                         $ji("#anchor-content").append(result.configure_form.toString());
-                        IWD.OrderManager.OrderedItems.initProductConfigure();
+                        self.initProductConfigure();
 
                         $ji("#ordered_items_box").append('<div id="add_ordered_items_form">' + result.form.toString() + '</div>');
 
                         $ji('form#product_composite_configure_form button[type="submit"]').on('click', function () {
                             var formData = $ji('form#product_composite_configure_form').serializeArray();
                             var productId = productConfigure.current.itemId;
-                            IWD.OrderManager.OrderedItems.configureItems[productId] = formData;
+                            self.configureItems[productId] = formData;
                         });
 
                         IWD.OrderManager.HideLoadingMask();
@@ -240,9 +248,10 @@ IWD.OrderManager.OrderedItems = {
     },
 
     addOrderedItems: function () {
+        var self = this;
         IWD.OrderManager.ShowLoadingMask();
 
-        var selected_items = IWD.OrderManager.OrderedItems.order.gridProducts.toObject();
+        var selected_items = self.order.gridProducts.toObject();
 
         if (Object.keys(selected_items).length <= 0) {
             $ji("#add_ordered_items_form").hide();
@@ -251,15 +260,14 @@ IWD.OrderManager.OrderedItems = {
             IWD.OrderManager.HideLoadingMask();
             return;
         }
-        //console.log(IWD.OrderManager.OrderedItems.urlAddOrderedItems);
         $ji.ajax({
-            url: IWD.OrderManager.OrderedItems.urlAddOrderedItems,
+            url: self.urlAddOrderedItems,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY +
             "&order_id=" + IWD.OrderManager.orderId +
             "&items=" + JSON.stringify(selected_items, null, 2) +
-            "&options=" + JSON.stringify(IWD.OrderManager.OrderedItems.configureItems, null, 2),
+            "&options=" + JSON.stringify(self.configureItems, null, 2),
             success: function (result) {
                 if (result.ajaxExpired) {
                     location.reload();
@@ -269,8 +277,8 @@ IWD.OrderManager.OrderedItems = {
                     $ji('#button_add_selected_items').hide();
                     $ji('#button_search_items_form').show();
 
-                    IWD.OrderManager.OrderedItems.order.gridProducts = $H({});
-                    IWD.OrderManager.OrderedItems.enabledSubmitButton();
+                    self.order.gridProducts = $H({});
+                    self.enabledSubmitButton();
                     $ji("#ordered_items_edit_table").append(result.form);
                 }
                 else if (result.status == 0) {
@@ -289,7 +297,7 @@ IWD.OrderManager.OrderedItems = {
         IWD.OrderManager.ShowLoadingMask();
 
         var form = new FormData($('iwd_om_product_composite_configure_form'));
-        var url = IWD.OrderManager.OrderedItems.urlEditOrderedItemsOptions + "&form_key=" + FORM_KEY
+        var url = this.urlEditOrderedItemsOptions + "&form_key=" + FORM_KEY
             + "&order_id=" + IWD.OrderManager.orderId + "&item_id=" + item_id;
 
         $ji.ajax({
@@ -416,10 +424,11 @@ IWD.OrderManager.Address = {
     urlEditAddressSubmit: '',
 
     init: function () {
+        var self = this;
         $ji(".order_address_edit").on("click", function (event) {
             event.preventDefault();
             var address_id = this.id.split('_').last();
-            IWD.OrderManager.Address.editAddressForm(address_id);
+            self.editAddressForm(address_id);
         });
     },
 
@@ -427,7 +436,7 @@ IWD.OrderManager.Address = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.Address.urlEditAddressForm,
+            url: this.urlEditAddressForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&address_id=" + address_id,
@@ -473,7 +482,7 @@ IWD.OrderManager.Address = {
         var formData = form.serialize();
 
         $ji.ajax({
-            url: IWD.OrderManager.Address.urlEditAddressSubmit,
+            url: this.urlEditAddressSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&" + formData,
@@ -503,9 +512,10 @@ IWD.OrderManager.AccountInfo = {
     urlEditAccountSubmit: '',
 
     init: function () {
+        var self = this;
         $ji(".account_information_edit").click(function (event) {
             event.preventDefault();
-            IWD.OrderManager.AccountInfo.editCustomerInfoForm();
+            self.editCustomerInfoForm();
         });
     },
 
@@ -513,7 +523,7 @@ IWD.OrderManager.AccountInfo = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.AccountInfo.urlEditAccountForm,
+            url: this.urlEditAccountForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId,
@@ -547,7 +557,7 @@ IWD.OrderManager.AccountInfo = {
         var formData = form.serialize();
 
         $ji.ajax({
-            url: IWD.OrderManager.AccountInfo.urlEditAccountSubmit,
+            url: this.urlEditAccountSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&" + formData,
@@ -574,9 +584,10 @@ IWD.OrderManager.OrderInfo = {
     urlEditOrderInfoSubmit: '',
 
     init: function () {
+        var self = this;
         $ji(".order_information_edit").on("click", function (event) {
             event.preventDefault();
-            IWD.OrderManager.OrderInfo.editOrderInformationForm();
+            self.editOrderInformationForm();
         });
     },
 
@@ -605,10 +616,10 @@ IWD.OrderManager.OrderInfo = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.OrderInfo.urlEditOrderInfoForm,
+            url: this.urlEditOrderInfoForm,
             type: "POST",
             dataType: 'json',
-            data: "form_key=" + FORM_KEY + IWD.OrderManager.OrderInfo.getParams(),
+            data: "form_key=" + FORM_KEY + this.getParams(),
             success: function (result) {
                 if (result.ajaxExpired) {
                     location.reload();
@@ -645,7 +656,7 @@ IWD.OrderManager.OrderInfo = {
         var formData = form.serialize();
 
         $ji.ajax({
-            url: IWD.OrderManager.OrderInfo.urlEditOrderInfoSubmit,
+            url: this.urlEditOrderInfoSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&" + formData,
@@ -675,29 +686,30 @@ IWD.OrderManager.Comments = {
     confirmText: "Are you sure?",
 
     init: function (type) {
-        IWD.OrderManager.Comments.type = type;
+        var self = this;
+        self.type = type;
 
         $ji(".delete_history_icon").on('click', function () {
-            IWD.OrderManager.Comments.deleteComment(this);
+            self.deleteComment(this);
         });
 
         $ji(".update_history_icon").on('click', function () {
-            IWD.OrderManager.Comments.editCommentForm(this);
+            self.editCommentForm(this);
         });
     },
 
     deleteComment: function (item) {
-        if (confirm(IWD.OrderManager.Comments.confirmText)) {
+        if (confirm(this.confirmText)) {
             IWD.OrderManager.ShowLoadingMask();
 
             var comment_id = item.id.split('_').last();
 
             $ji.ajax({
-                url: IWD.OrderManager.Comments.urlDeleteCommentSubmit,
+                url: this.urlDeleteCommentSubmit,
                 type: "POST",
                 dataType: 'json',
                 data: "form_key=" + FORM_KEY +
-                "&type=" + IWD.OrderManager.Comments.type +
+                "&type=" + this.type +
                 "&comment_id=" + comment_id,
                 success: function (result) {
                     if (result.ajaxExpired) {
@@ -722,11 +734,11 @@ IWD.OrderManager.Comments = {
         var comment_id = item.id.split('_').last();
 
         $ji.ajax({
-            url: IWD.OrderManager.Comments.urlEditCommentForm,
+            url: this.urlEditCommentForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY +
-            "&type=" + IWD.OrderManager.Comments.type +
+            "&type=" + this.type +
             "&comment_id=" + comment_id,
             success: function (result) {
                 if (result.ajaxExpired) {
@@ -750,12 +762,12 @@ IWD.OrderManager.Comments = {
         var comment_text = $ji("textarea#updated_comment_text_" + comment_id).val();
 
         $ji.ajax({
-            url: IWD.OrderManager.Comments.urlEditCommentSubmit,
+            url: this.urlEditCommentSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY +
             "&comment_id=" + comment_id +
-            "&type=" + IWD.OrderManager.Comments.type +
+            "&type=" + this.type +
             "&comment_text=" + comment_text,
             success: function (result) {
                 if (result.ajaxExpired) {
@@ -787,23 +799,25 @@ IWD.OrderManager.Shipping = {
     urlEditShippingSubmit: '',
 
     init: function () {
+        var self = this;
         $ji(".order_shipping_edit").on("click", function (event) {
             event.preventDefault();
-            IWD.OrderManager.Shipping.editShippingForm();
+            self.editShippingForm();
         });
 
-        IWD.OrderManager.Shipping.radioInit();
-        IWD.OrderManager.Shipping.interactiveForm();
+        self.radioInit();
+        self.interactiveForm();
     },
 
     radioInit: function () {
+        var self = this;
         $ji(document).on("change", "#order-shipping-method-choose input[type=radio]", function () {
-            IWD.OrderManager.Shipping.showEditTable();
+            self.showEditTable();
         });
 
         $ji(document).on('keypress', "#order-shipping-method-choose input.validate-number", function (e) {
             if (e.which == 13) return 1;
-            var letters = '1234567890.,';
+            var letters = '1234567890.';
             return (letters.indexOf(String.fromCharCode(e.which)) != -1);
         });
     },
@@ -854,7 +868,7 @@ IWD.OrderManager.Shipping = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.Shipping.urlEditShippingForm,
+            url: this.urlEditShippingForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId,
@@ -887,7 +901,7 @@ IWD.OrderManager.Shipping = {
         var formData = form.serialize();
 
         $ji.ajax({
-            url: IWD.OrderManager.Shipping.urlEditShippingSubmit,
+            url: this.urlEditShippingSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId + "&" + formData,
@@ -907,7 +921,6 @@ IWD.OrderManager.Shipping = {
         $ji('#iwd_shipping_edit_form').remove();
         $ji("#order_shipping").show();
     }
-
 };
 
 IWD.OrderManager.Payment = {
@@ -915,13 +928,13 @@ IWD.OrderManager.Payment = {
     urlEditPaymentSubmit: '',
 
     init: function () {
+        var self = this;
         $ji(".order_payment_edit").on("click", function (event) {
             event.preventDefault();
-            IWD.OrderManager.Payment.editPaymentForm();
-
+            self.editPaymentForm();
         });
 
-        IWD.OrderManager.Payment.radioInit();
+        self.radioInit();
     },
 
     radioInit: function () {
@@ -934,7 +947,7 @@ IWD.OrderManager.Payment = {
         IWD.OrderManager.ShowLoadingMask();
 
         $ji.ajax({
-            url: IWD.OrderManager.Payment.urlEditPaymentForm,
+            url: this.urlEditPaymentForm,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId,
@@ -973,7 +986,7 @@ IWD.OrderManager.Payment = {
         var formData = $ji('#iwd_payment_edit_form').serialize();
 
         $ji.ajax({
-            url: IWD.OrderManager.Payment.urlEditPaymentSubmit,
+            url: this.urlEditPaymentSubmit,
             type: "POST",
             dataType: 'json',
             data: "form_key=" + FORM_KEY + "&order_id=" + IWD.OrderManager.orderId + "&" + formData,
@@ -1011,69 +1024,68 @@ IWD.OrderManager.TaxCalculation = {
     CALC_TAX_AFTER_DISCOUNT_ON_INCL: '1_1',
 
     init: function () {
+        var self = this;
         $ji(document).on('keypress', "input.validate-number", function (e) {
             if (e.which == 13 || e.which == 8) return 1;
-            var letters = '1234567890.,';
+            var letters = '1234567890.';
             return (letters.indexOf(String.fromCharCode(e.which)) != -1);
         });
 
         $ji(document).on('change', "input.edit_order_item", function () {
-            IWD.OrderManager.TaxCalculation.updateOrderItemInput(this);
-            IWD.OrderManager.TaxCalculation.enabledSubmitButton();
+            self.updateOrderItemInput(this);
+            self.enabledSubmitButton();
         });
 
         $ji(document).on('change', "input[type=checkbox].remove_ordered_item", function () {
-            IWD.OrderManager.TaxCalculation.removeItemRow(this);
-            IWD.OrderManager.TaxCalculation.enabledSubmitButton();
+            self.removeItemRow(this);
+            self.enabledSubmitButton();
         });
     },
 
     removeItemRow: function (item) {
         var parent_id = $ji(item).attr('data-parent-id') || null;
         var id = $ji(item).attr('data-item-id') || null;
-        var result = true;
 
-        if ($ji(item).prop("checked")) {
-            result = IWD.OrderManager.TaxCalculation.disabledRow(id, parent_id);
-        } else {
-            result = IWD.OrderManager.TaxCalculation.enabledRow(id, parent_id);
-        }
+        var result = $ji(item).prop("checked")
+            ? this.disabledRow(id, parent_id)
+            : this.enabledRow(id, parent_id);
 
         if (parent_id && result) {
-            var bundle_items = IWD.OrderManager.TaxCalculation.getBundleItems(parent_id);
-            if (!IWD.OrderManager.TaxCalculation.isRemoveAllBundleItems(bundle_items, parent_id)) {
-                IWD.OrderManager.TaxCalculation.calculateBundleTotals(bundle_items, parent_id);
+            var bundle_items = this.getBundleItems(parent_id);
+            if (!this.isRemoveAllBundleItems(bundle_items, parent_id)) {
+                this.calculateBundleTotals(bundle_items, parent_id);
             }
         }
     },
 
-    disabledRow: function (row_id, parent_id) {
-        var row_item = $ji('#ordered_items_edit_table tr[data-item-id="' + row_id + '"]');
-        row_item.addClass('removed_item');
-        row_item.find('input[type=text], button').attr('disabled', 'disabled');
-        row_item.find('button').addClass('disabled');
+    disabledRow: function (rowId, parent_id) {
+        var rowItem = $ji('#ordered_items_edit_table tr[data-item-id="' + rowId + '"]');
+        rowItem.addClass('removed_item');
+        rowItem.find('input[type=text], button').attr('disabled', 'disabled');
+        rowItem.find('button').addClass('disabled');
 
         /* for bundle product */
-        $ji('input.remove_ordered_item.has_parent_' + row_id).prop("checked", true).click(IWD.OrderManager.TaxCalculation.deactivator);
-        $ji('tr.has_parent_' + row_id).addClass('removed_item');
-        $ji('tr.has_parent_' + row_id + ' input[type=text]').attr('disabled', 'disabled');
+        $ji('input.remove_ordered_item.has_parent_' + rowId).prop("checked", true).click(this.deactivator);
+        $ji('tr.has_parent_' + rowId).addClass('removed_item');
+        $ji('tr.has_parent_' + rowId + ' input[type=text]').attr('disabled', 'disabled');
 
         return true;
     },
 
-    enabledRow: function (row_id, parent_id) {
-        if (parent_id && $ji('#remove_' + parent_id).prop("checked"))
+    enabledRow: function (rowId, parent_id) {
+        if (parent_id && $ji('#remove_' + parent_id).prop("checked")) {
             return false;
+        }
 
-        var row_item = $ji('#ordered_items_edit_table tr[data-item-id="' + row_id + '"]');
-        row_item.removeClass('removed_item');
-        row_item.find('input[type=text], button').removeAttr('disabled');
-        row_item.find('button').removeClass('disabled');
+        var rowItem = $ji('#ordered_items_edit_table tr[data-item-id="' + rowId + '"]');
+        rowItem.removeClass('removed_item');
+        rowItem.find('input[type=text], button').removeAttr('disabled');
+        rowItem.find('button').removeClass('disabled');
 
         /* for bundle product */
-        $ji('input.remove_ordered_item.has_parent_' + row_id).prop("checked", false).unbind('click', IWD.OrderManager.TaxCalculation.deactivator);
-        $ji('tr.has_parent_' + row_id).removeClass('removed_item');
-        $ji('tr.has_parent_' + row_id + ' input[type=text]').removeAttr('disabled');
+        $ji('input.remove_ordered_item.has_parent_' + rowId).prop("checked", false).unbind('click', this.deactivator);
+        $ji('tr.has_parent_' + rowId).removeClass('removed_item');
+        $ji('tr.has_parent_' + rowId + ' input[type=text]').removeAttr('disabled');
 
         return true;
     },
@@ -1084,12 +1096,13 @@ IWD.OrderManager.TaxCalculation = {
             return false;
         }
 
+        var self = this;
         var total_price_tax_incl = 0;
         var total_price_tax_excl = 0;
         var total_subtotal_tax_incl = 0;
         var total_subtotal_tax_excl = 0;
         var total_tax_amount = 0;
-        var bundle = IWD.OrderManager.TaxCalculation.getInputs(bundle_id);
+        var bundle = this.getInputs(bundle_id);
 
         var bundle_qty = parseFloat(bundle.fact_qty.val());
         $ji.each(bundle_items, function (i, input) {
@@ -1104,7 +1117,7 @@ IWD.OrderManager.TaxCalculation = {
             total_subtotal_tax_excl += parseFloat(input.subtotal.val());
             total_tax_amount += parseFloat(input.tax_amount.val());
 
-            IWD.OrderManager.TaxCalculation.updateQtyInBundle(input, bundle);
+            self.updateQtyInBundle(input, bundle);
         });
 
         bundle.price_incl_tax.val(total_price_tax_incl.toFixed(2));
@@ -1125,9 +1138,9 @@ IWD.OrderManager.TaxCalculation = {
         /* checked all bundle items */
         if (count_removed_items == Object.keys(bundle_items).length) {
             $ji('input.remove_ordered_item.has_parent_' + bundle_id).prop("checked", false);
-            IWD.OrderManager.TaxCalculation.calculateBundleTotals(bundle_items, bundle_id);
+            this.calculateBundleTotals(bundle_items, bundle_id);
             $ji('input[name="items[' + bundle_id + '][remove]"').prop("checked", true);
-            IWD.OrderManager.TaxCalculation.disabledRow(bundle_id, null);
+            this.disabledRow(bundle_id, null);
             return true;
         }
 
@@ -1135,34 +1148,31 @@ IWD.OrderManager.TaxCalculation = {
     },
 
     updateBundleItems: function (name, id) {
-        var bundle_items = IWD.OrderManager.TaxCalculation.getBundleItems(id);
+        var self = this;
+        var bundle_items = this.getBundleItems(id);
         if (Object.keys(bundle_items).length == 0) {
             return;
         }
 
         switch (name) {
             case "qty":
-                var bundle = IWD.OrderManager.TaxCalculation.getInputs(id);
+                var bundle = this.getInputs(id);
                 var bundle_qty = parseFloat(bundle.fact_qty.val());
-
                 $ji.each(bundle_items, function (i, input) {
                     var qty_item_in_bundle = parseFloat(input.qty_item_in_bundle.val());
                     input.fact_qty.val(bundle_qty * qty_item_in_bundle).change();
-                    IWD.OrderManager.TaxCalculation.updateQtyInBundle(input, bundle);
+                    self.updateQtyInBundle(input, bundle);
                 });
-
                 break;
 
             case "fact_qty":
-                var bundle = IWD.OrderManager.TaxCalculation.getInputs(id);
+                var bundle = this.getInputs(id);
                 var bundle_qty = parseFloat(bundle.fact_qty.val());
-
                 $ji.each(bundle_items, function (i, input) {
                     var qty_item_in_bundle = parseFloat(input.qty_item_in_bundle.val());
                     input.fact_qty.val(bundle_qty * qty_item_in_bundle).change();
-                    IWD.OrderManager.TaxCalculation.updateQtyInBundleFact(input, bundle);
+                    self.updateQtyInBundleFact(input, bundle);
                 });
-
                 break;
         }
     },
@@ -1211,20 +1221,16 @@ IWD.OrderManager.TaxCalculation = {
         $ji(".has_parent_" + bundle_id).each(function () {
             var item_id = $ji(this).attr('data-item-id');
             if (item_id != bundle_id) {
-                children[item_id] = IWD.OrderManager.TaxCalculation.getInputs(item_id);
+                children[item_id] = this.getInputs(item_id);
             }
         });
         return children;
     },
     getCalculationSequence: function () {
-        if (IWD.OrderManager.TaxCalculation.applyTaxAfterDiscount) {
-            if (IWD.OrderManager.TaxCalculation.discountTax)
-                return IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_INCL;
-            return IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_EXCL;
+        if (this.applyTaxAfterDiscount) {
+            return this.discountTax ? this.CALC_TAX_AFTER_DISCOUNT_ON_INCL : this.CALC_TAX_AFTER_DISCOUNT_ON_EXCL;
         } else {
-            if (IWD.OrderManager.TaxCalculation.discountTax)
-                return IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_INCL;
-            return IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL;
+            return this.discountTax ? this.CALC_TAX_BEFORE_DISCOUNT_ON_INCL : this.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL;
         }
     },
     enabledSubmitButton: function () {
@@ -1244,7 +1250,7 @@ IWD.OrderManager.TaxCalculation = {
             qty_value = 1;
         }
 
-        if (IWD.OrderManager.TaxCalculation.validateStockQty == 1) {
+        if (this.validateStockQty == 1) {
             /* check max sales qty */
             if (qty_value > data_stock_max_sales_qty) {
                 qty_value = data_stock_max_sales_qty;
@@ -1258,7 +1264,7 @@ IWD.OrderManager.TaxCalculation = {
 
         /* check stock qty */
         if (data_stock_qty < qty_value) {
-            if (IWD.OrderManager.TaxCalculation.validateStockQty == 1) {
+            if (this.validateStockQty == 1) {
                 qty_value = data_stock_qty;
             }
             $ji('.notice_' + item.item_id).show();
@@ -1294,9 +1300,9 @@ IWD.OrderManager.TaxCalculation = {
 
     /* 1. After every change */
     updateOrderItemInput: function (item) {
-        var id = IWD.OrderManager.TaxCalculation.getInputId(item);
-        var name = IWD.OrderManager.TaxCalculation.getInputName(item);
-        var input = IWD.OrderManager.TaxCalculation.getInputs(id);
+        var id = this.getInputId(item);
+        var name = this.getInputName(item);
+        var input = this.getInputs(id);
 
         /* !canShowPriceInfo */
         if (!input.price.val())
@@ -1306,16 +1312,16 @@ IWD.OrderManager.TaxCalculation = {
             case "original_price":
                 break;
             case "price":
-                IWD.OrderManager.TaxCalculation._calculatePriceExclTax(input);
-                IWD.OrderManager.TaxCalculation._calculateSubtotal(input);
+                this._calculatePriceExclTax(input);
+                this._calculateSubtotal(input);
                 break;
             case "price_incl_tax":
-                IWD.OrderManager.TaxCalculation._calculatePriceInclTax(input);
-                IWD.OrderManager.TaxCalculation._calculateSubtotal(input);
+                this._calculatePriceInclTax(input);
+                this._calculateSubtotal(input);
                 break;
             case "fact_qty":
-                IWD.OrderManager.TaxCalculation._checkFactQty(input);
-                IWD.OrderManager.TaxCalculation._calculateSubtotal(input);
+                this._checkFactQty(input);
+                this._calculateSubtotal(input);
                 break;
             case "tax_amount":
                 break;
@@ -1323,8 +1329,8 @@ IWD.OrderManager.TaxCalculation = {
                 if (parseFloat(input.tax_percent.val()) == 0 || input.tax_percent.val().trim() == "") {
                     input.tax_percent.val(0.00);
                 }
-                IWD.OrderManager.TaxCalculation._changePrice(input);
-                IWD.OrderManager.TaxCalculation._calculateSubtotal(input);
+                this._changePrice(input);
+                this._calculateSubtotal(input);
                 break;
             case "discount_amount":
                 break;
@@ -1335,31 +1341,31 @@ IWD.OrderManager.TaxCalculation = {
                 break;
         }
 
-        IWD.OrderManager.TaxCalculation.baseCalculation(input);
-        IWD.OrderManager.TaxCalculation._calculateRowTotal(input);
+        this.baseCalculation(input);
+        this._calculateRowTotal(input);
 
         /* update related items */
-        IWD.OrderManager.TaxCalculation.updateBundleItems(name, id);
+        this.updateBundleItems(name, id);
 
         /* item is a part of bundle product (has parent) */
         if (input.parent.val()) {
             var parent_id = input.parent.val();
-            var bundle_items = IWD.OrderManager.TaxCalculation.getBundleItems(parent_id);
-            IWD.OrderManager.TaxCalculation.calculateBundleTotals(bundle_items, parent_id);
+            var bundle_items = this.getBundleItems(parent_id);
+            this.calculateBundleTotals(bundle_items, parent_id);
         }
     },
 
     /* 2. Select a tax calculation method */
     baseCalculation: function (input) {
-        switch (IWD.OrderManager.TaxCalculation.taxCalculationMethodBasedOn) {
+        switch (this.taxCalculationMethodBasedOn) {
             case 'UNIT_BASE_CALCULATION':
-                IWD.OrderManager.TaxCalculation._unitBaseCalculation(input);
+                this._unitBaseCalculation(input);
                 break;
             case 'ROW_BASE_CALCULATION':
-                IWD.OrderManager.TaxCalculation._rowBaseCalculation(input);
+                this._rowBaseCalculation(input);
                 break;
             case 'TOTAL_BASE_CALCULATION':
-                IWD.OrderManager.TaxCalculation._totalBaseCalculation(input);
+                this._totalBaseCalculation(input);
                 break;
         }
     },
@@ -1369,18 +1375,18 @@ IWD.OrderManager.TaxCalculation = {
         var tax_amount = 0;
         var hidden_tax_amount = 0;
 
-        switch (IWD.OrderManager.TaxCalculation.getCalculationSequence()) {
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
+        switch (this.getCalculationSequence()) {
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
+                tax_amount = this._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
+                this._calculateDiscountAmount(input, input.subtotal.val());
                 break;
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
+                tax_amount = this._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
+                this._calculateDiscountAmount(input, input.subtotal.val());
 
                 var qty = parseFloat(input.fact_qty.val());
                 var discountAmount = parseFloat(input.discount_amount.val()) / qty;
@@ -1388,15 +1394,15 @@ IWD.OrderManager.TaxCalculation = {
                 var unitTaxDiscount = 0;
                 var unitTax = 0;
 
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-                    unitTax = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 1);
+                if (this.catalogPrices) {
+                    unitTax = this._calcTaxAmount(price, input.tax_percent.val(), 1);
                     var discountRate = (price > 0) ? ((unitTax / price) * 100) : 0;
-                    unitTaxDiscount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, discountRate, 0);  /*1*/
-                    hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, input.tax_percent.val(), 1);
+                    unitTaxDiscount = this._calcTaxAmount(discountAmount, discountRate, 0);  /*1*/
+                    hidden_tax_amount = this._calcTaxAmount(discountAmount, input.tax_percent.val(), 1);
                 } else {
                     price = parseFloat(input.price.val());
-                    unitTax = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 0);
-                    unitTaxDiscount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, input.tax_percent.val(), 0);
+                    unitTax = this._calcTaxAmount(price, input.tax_percent.val(), 0);
+                    unitTaxDiscount = this._calcTaxAmount(discountAmount, input.tax_percent.val(), 0);
                 }
 
                 unitTax = Math.max(unitTax - unitTaxDiscount, 0);
@@ -1404,8 +1410,8 @@ IWD.OrderManager.TaxCalculation = {
                 hidden_tax_amount = Math.max(qty * hidden_tax_amount, 0);
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
 
                 var qty = parseFloat(input.fact_qty.val());
                 var discountAmount = parseFloat(input.discount_amount.val()) / qty;
@@ -1413,15 +1419,15 @@ IWD.OrderManager.TaxCalculation = {
                 var unitTax = 0;
                 var unitTaxDiscount = 0;
 
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-                    unitTax = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 1);
+                if (this.catalogPrices) {
+                    unitTax = this._calcTaxAmount(price, input.tax_percent.val(), 1);
                     var discountRate = (price > 0) ? (unitTax / price) * 100 : 0;
-                    unitTaxDiscount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, discountRate, 0); /*1*/
-                    hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, input.tax_percent.val(), 1);
+                    unitTaxDiscount = this._calcTaxAmount(discountAmount, discountRate, 0); /*1*/
+                    hidden_tax_amount = this._calcTaxAmount(discountAmount, input.tax_percent.val(), 1);
                 } else {
                     price = parseFloat(input.price.val());
-                    unitTax = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 0);
-                    unitTaxDiscount = IWD.OrderManager.TaxCalculation._calcTaxAmount(discountAmount, input.tax_percent.val(), 0);
+                    unitTax = this._calcTaxAmount(price, input.tax_percent.val(), 0);
+                    unitTaxDiscount = this._calcTaxAmount(discountAmount, input.tax_percent.val(), 0);
                 }
 
                 unitTax = Math.max(unitTax - unitTaxDiscount, 0);
@@ -1439,36 +1445,36 @@ IWD.OrderManager.TaxCalculation = {
         var tax_amount = 0;
         var hidden_tax_amount = 0;
 
-        switch (IWD.OrderManager.TaxCalculation.getCalculationSequence()) {
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
+        switch (this.getCalculationSequence()) {
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
+                tax_amount = this._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
+                this._calculateDiscountAmount(input, input.subtotal.val());
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
+                tax_amount = this._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-                    hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
-                    tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
+                this._calculateDiscountAmount(input, input.subtotal.val());
+                if (this.catalogPrices) {
+                    hidden_tax_amount = this._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
+                    tax_amount = this._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
                     tax_amount -= hidden_tax_amount;
                 } else {
-                    tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val() - input.discount_amount.val(), input.tax_percent.val(), 0);
+                    tax_amount = this._calcTaxAmount(input.subtotal.val() - input.discount_amount.val(), input.tax_percent.val(), 0);
                 }
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-                    hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
-                    tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+                if (this.catalogPrices) {
+                    hidden_tax_amount = this._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
+                    tax_amount = this._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
                     tax_amount -= hidden_tax_amount;
                 } else {
-                    tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val() - input.discount_amount.val(), input.tax_percent.val(), 0);
+                    tax_amount = this._calcTaxAmount(input.subtotal.val() - input.discount_amount.val(), input.tax_percent.val(), 0);
                 }
                 break;
         }
@@ -1483,39 +1489,39 @@ IWD.OrderManager.TaxCalculation = {
         var price = 0;
         var hidden_tax_amount = 0;
 
-        switch (IWD.OrderManager.TaxCalculation.getCalculationSequence()) {
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
+        switch (this.getCalculationSequence()) {
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_EXCL:
+                tax_amount = this._calcTaxAmount(input.subtotal.val(), input.tax_percent.val(), 0);
+                this._calculateDiscountAmount(input, input.subtotal.val());
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+            case this.CALC_TAX_BEFORE_DISCOUNT_ON_INCL:
+                tax_amount = this._calcTaxAmount(input.subtotal_incl_tax.val(), input.tax_percent.val(), 1);
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal.val());
-                hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 0);
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_EXCL:
+                this._calculateDiscountAmount(input, input.subtotal.val());
+                hidden_tax_amount = this._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 0);
+                if (this.catalogPrices) {
                     price = input.subtotal.val() - input.discount_amount.val();
                 } else {
                     price = input.subtotal.val() - input.discount_amount.val() - hidden_tax_amount;
                     hidden_tax_amount = 0;
                 }
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 0);
+                tax_amount = this._calcTaxAmount(price, input.tax_percent.val(), 0);
                 break;
 
-            case IWD.OrderManager.TaxCalculation.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
-                IWD.OrderManager.TaxCalculation._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
-                if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-                    hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
+            case this.CALC_TAX_AFTER_DISCOUNT_ON_INCL:
+                this._calculateDiscountAmount(input, input.subtotal_incl_tax.val());
+                if (this.catalogPrices) {
+                    hidden_tax_amount = this._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
                     price = parseFloat(input.subtotal.val()) - parseFloat(input.discount_amount.val()) + parseFloat(hidden_tax_amount);
                 } else {
                     hidden_tax_amount = 0;
                     price = input.subtotal.val() - input.discount_amount.val();
                 }
-                tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(price, input.tax_percent.val(), 0);
+                tax_amount = this._calcTaxAmount(price, input.tax_percent.val(), 0);
                 break;
         }
 
@@ -1541,10 +1547,10 @@ IWD.OrderManager.TaxCalculation = {
         return tax.toFixed(2);
     },
     _calculateSubtotal: function (input) {
-        if (IWD.OrderManager.TaxCalculation.catalogPrices) {
+        if (this.catalogPrices) {
             var subtotal = parseFloat(input.price.val()) * parseFloat(input.fact_qty.val());
-            var hidden_tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
-            var tax_amount = IWD.OrderManager.TaxCalculation._calcTaxAmount(subtotal, input.tax_percent.val(), 0);
+            var hidden_tax_amount = this._calcTaxAmount(input.discount_amount.val(), input.tax_percent.val(), 1);
+            var tax_amount = this._calcTaxAmount(subtotal, input.tax_percent.val(), 0);
             tax_amount -= hidden_tax_amount;
             var subtotal_incl_tax = parseFloat(input.price_incl_tax.val()) * parseFloat(input.fact_qty.val());
             subtotal = subtotal_incl_tax - tax_amount;
@@ -1588,10 +1594,10 @@ IWD.OrderManager.TaxCalculation = {
         input.tax_percent.val(tax_percent.toFixed(2));
     },
     _changePrice: function (input) {
-        if (IWD.OrderManager.TaxCalculation.catalogPrices) {
-            IWD.OrderManager.TaxCalculation._calculatePriceInclTax(input); /* incl tax fixed */
+        if (this.catalogPrices) {
+            this._calculatePriceInclTax(input); /* incl tax fixed */
         } else {
-            IWD.OrderManager.TaxCalculation._calculatePriceExclTax(input); /* excl tax fixed */
+            this._calculatePriceExclTax(input); /* excl tax fixed */
         }
     }
 };
@@ -1696,5 +1702,63 @@ IWD.OrderManager.CouponCode = {
 
     hideRemoveButton: function () {
         $ji(this.removeButton).hide();
+    }
+};
+
+IWD.OrderManager.OrderedItemProductInfo = {
+    items: {},
+    titleSelector: '#ordered_items_table h5.title',
+
+    init: function () {
+        this.initTitleClick();
+    },
+
+    initTitleClick: function () {
+        var self = this;
+        $ji(document).off('click', this.titleSelector);
+        $ji(document).on('click', this.titleSelector, function () {
+            var id = $ji(this).find('span').attr('id');
+            var product = self.items[id];
+
+            var content = '<div id="iwd-om-ordered-item-product-info">';
+
+            if (product.productImage) {
+                content += '<div class="product-image"><img src="' + product.productImage + '"/></div>';
+            }
+
+            var urls = '<div class="product-urls">' + product.frontUrl + product.adminUrl + '<a href="javascript:void()" class="close-popup" onclick="IWD.OrderManager.Popup.hideModal()">Close</a></div>';
+
+            content += '<div class="product-info">';
+            $ji.each(product, function (title, value) {
+                if (['adminUrl','frontUrl','productImage','children'].indexOf(title) == -1 && title && value) {
+                    content += '<div><div class="title">' + title +'</div><div class="value">' + value + '</div></div>';
+                }
+            });
+            if (product.children) {
+                $ji.each(product.children, function (title, value) {
+                    content += '<div><div class="child-title">' + title +'</div></div>';
+                    $ji.each(value, function (t, v) {
+                        content += '<div><div class="title">' + t +'</div><div class="value">' + v + '</div></div>';
+                    });
+                });
+            }
+            content += '</div>';
+            content += urls;
+            content += '</div>';
+
+            IWD.OrderManager.Popup.showModal('Product ' + product.Title, content);
+        });
+    },
+
+    addItem: function (id, data) {
+        this.items[id] = data;
+    }
+};
+
+IWD.OrderManager.SalesGrids = {
+    init: function () {
+        $ji('#order_shipments_table tr, #order_creditmemos_table tr').each(function () {
+            $ji(this).attr('title',  $ji(this).attr('title') + 'order_id/' + IWD.OrderManager.orderId);
+        });
     }
 };

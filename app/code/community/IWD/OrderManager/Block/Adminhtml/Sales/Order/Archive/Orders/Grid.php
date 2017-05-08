@@ -14,6 +14,11 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Archive_Orders_Grid extends I
         $this->setUseAjax(true);
     }
 
+    protected function isSaveGridParams()
+    {
+        return false;
+    }
+
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('iwd_ordermanager/archive')->getArchiveOrdersCollection();
@@ -37,7 +42,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Archive_Orders_Grid extends I
             return parent::_prepareColumns();
         } else {
             $helper = Mage::helper('iwd_ordermanager');
-            $grid = Mage::getModel('iwd_ordermanager/order_grid')->prepareColumns($this);
+            $grid = Mage::getModel('iwd_ordermanager/order_grid')->prepareColumns($this, null);
             $grid = Mage::getModel('iwd_ordermanager/order_grid')->addHiddenColumnWithStatus($grid);
 
             $grid->addRssList('rss/order/new', $helper->__('New Order RSS'));
@@ -87,7 +92,8 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Archive_Orders_Grid extends I
         $script = '<script type="text/javascript">
                       if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
                       if($ji("#sales_order_archive_grid").length){
-                        IWD.OrderManager.Grid.ColorGridRow();
+                        IWD.OrderManager.Grid.colorGridRow();
+                        IWD.OrderManager.Grid.initGridColumnWidth();
                         if($ji.isFunction($ji.fn.stickyTableHeaders)){$ji("#sales_order_archive_grid").stickyTableHeaders();}
                       }
                  </script>';

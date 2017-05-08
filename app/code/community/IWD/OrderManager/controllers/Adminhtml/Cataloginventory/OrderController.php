@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController
+ */
 class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_OrderManager_Controller_Abstract
 {
+    /**
+     * @return array
+     */
     protected function getForm()
     {
         return array(
@@ -10,6 +16,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_Or
         );
     }
 
+    /**
+     * @return mixed
+     */
     protected function prepareStocksForm()
     {
         $orderId = $this->getRequest()->getPost('order_id');
@@ -22,6 +31,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_Or
             ->toHtml();
     }
 
+    /**
+     * @return array
+     */
     protected function updateInfo()
     {
         $this->updateStocks();
@@ -41,6 +53,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_Or
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     protected function updateStocks()
     {
         $stockItem = $this->getRequest()->getPost('stock_item', array());
@@ -53,6 +68,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_Or
         return $orderStockItems->updateAssignedStockOrderItems($items, $orderId);
     }
 
+    /**
+     * @return mixed
+     */
     protected function prepareAssignedStocks()
     {
         $isOrderViewPage = $this->getRequest()->getPost('order_view', 0);
@@ -63,6 +81,9 @@ class IWD_OrderManager_Adminhtml_Cataloginventory_OrderController extends IWD_Or
         return $block->getStockMessageForOrder($orderId, $isOrderViewPage);
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::helper('iwd_ordermanager')->isMultiInventoryEnable();

@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_System_Config_Backend_Settlementreport_Cron
+ */
 class IWD_OrderManager_Model_System_Config_Backend_Settlementreport_Cron extends Mage_Core_Model_Config_Data
 {
+    /**
+     * Config xml pth
+     */
     const CRON_STRING_PATH = 'crontab/jobs/iwd_settlementreport_email_report/schedule/cron_expr';
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _afterSave()
     {
         $enabled = $this->getData('groups/emailing/fields/enable/value');

@@ -7,7 +7,7 @@ class IWD_OrderManager_Model_Observer_Settlementreport
     {
         try {
             if (Mage::getStoreConfig('iwd_settlementreport/emailing/enable')) {
-                $request = Mage::helper('iwd_ordermanager')->checkApiCredentials();
+                $request = Mage::helper('iwd_ordermanager/settlementReport')->checkApiCredentials();
                 if (isset($request['error']) && $request['error'] == 0) {
                     Mage::getModel("iwd_ordermanager/transactions")->refresh(true);
                     Mage::getModel('iwd_ordermanager/email_report')->sendEmail();
@@ -39,6 +39,8 @@ class IWD_OrderManager_Model_Observer_Settlementreport
                 $amount = isset($matches[0]) ? $matches[0] : "NULL";
             } else if (isset($data['amount'])) {
                 $amount = $data['amount'];
+            } else {
+                $amount = 0;
             }
 
             $resource = Mage::getSingleton('core/resource');

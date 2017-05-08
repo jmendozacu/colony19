@@ -48,8 +48,13 @@
 
     function qtyChanged(item)
     {
+        var value = item.value.trim();
+        value = (value == '') ? 0 : parseFloat(value);
+        item.value = isNaN(value) ? 0 : value;
+
         dataGrid[item.name] = item.value;
         var checkbox = $$('input[name="' + item.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (item.value > 0) ? 1 : 0;
         dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
 
         var productId = item.getAttribute('data-product-id');
@@ -65,6 +70,7 @@
 
         dataGrid[totalQty.name] = totalQty.value;
         checkbox = $$('input[name="' + totalQty.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (totalQty.value > 0) ? 1 : 0;
         dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
 
         item.writeAttribute("value", item.value);
@@ -74,8 +80,16 @@
 
     function qtyChangedDefault(item)
     {
+        var value = item.value.trim();
+        value = (value == '') ? 0 : parseFloat(value);
+        item.value = isNaN(value) ? 0 : value;
+
         dataGrid[item.name] = item.value;
         item.writeAttribute("value", item.value);
+        var checkbox = $$('input[name="' + item.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (item.value > 0) ? 1 : 0;
+        dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
+
         closeIt();
     }
 

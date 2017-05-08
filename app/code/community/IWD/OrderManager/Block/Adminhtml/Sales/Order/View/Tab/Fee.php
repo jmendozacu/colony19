@@ -15,6 +15,7 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_View_Tab_Fee extends IWD_Orde
         if (is_null($this->_order) && ($orderId = $this->getOrderId())) {
             $this->_order = Mage::getModel('sales/order')->load($orderId);
         }
+
         return $this->_order;
     }
 
@@ -50,7 +51,26 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_View_Tab_Fee extends IWD_Orde
     public function getAdditionalAmount()
     {
         $amount = (float)($this->getOrder() ? $this->getOrder()->getIwdOmFeeAmount() : 0);
-        return empty($amount) ? '' : (string)number_format($amount, 2);
+        return empty($amount) ? '' : (string)number_format($amount, 2, '.', '');
+    }
+
+    /**
+     * @return float
+     */
+    public function getAdditionalAmountInclTax()
+    {
+        $amount = (float)($this->getOrder() ? $this->getOrder()->getIwdOmFeeAmountInclTax() : 0);
+        return empty($amount) ? $this->getAdditionalAmount() : (string)number_format($amount, 2, '.', '');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTaxPercent()
+    {
+        $percent = (float)($this->getOrder() ? $this->getOrder()->getIwdOmFeeTaxPercent() : 0);
+        return empty($percent) ? '0.00' : (string)number_format($percent, 2, '.', '');
     }
 
     /**

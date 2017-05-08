@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Resource_Order_Grid_Collection
+ */
 class IWD_OrderManager_Model_Resource_Order_Grid_Collection extends Mage_Sales_Model_Resource_Order_Grid_Collection
 {
     /**
@@ -25,6 +28,7 @@ class IWD_OrderManager_Model_Resource_Order_Grid_Collection extends Mage_Sales_M
         } else {
             $countSelect = parent::getSelectCountSql();
         }
+
         return $countSelect;
     }
 }

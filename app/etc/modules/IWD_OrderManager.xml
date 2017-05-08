@@ -5,8 +5,9 @@
             <active>true</active>
             <codePool>community</codePool>
             <depends>
-                <Mage_Sales />
                 <Mage_Adminhtml />
+                <Mage_CatalogInventory />
+                <Mage_Sales />
             </depends>
         </IWD_OrderManager>
     </modules>

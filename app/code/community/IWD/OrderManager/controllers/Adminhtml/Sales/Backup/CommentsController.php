@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_Backup_CommentsController
+ */
 class IWD_OrderManager_Adminhtml_Sales_Backup_CommentsController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->loadLayout()
@@ -17,6 +23,9 @@ class IWD_OrderManager_Adminhtml_Sales_Backup_CommentsController extends Mage_Ad
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function massDeleteAction()
     {
         $backupIds = $this->getRequest()->getParam('backup');
@@ -28,15 +37,20 @@ class IWD_OrderManager_Adminhtml_Sales_Backup_CommentsController extends Mage_Ad
                     $comment = Mage::getModel('iwd_ordermanager/backup_comments')->load($id);
                     $comment->delete();
                 }
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')
-                    ->__('Total of %d record(s) were successfully deleted', count($backupIds)));
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('adminhtml')->__('Total of %d record(s) were successfully deleted', count($backupIds))
+                );
             } catch (Exception $e) {
                 IWD_OrderManager_Model_Logger::log($e->getMessage(), true);
             }
         }
+
         $this->_redirect('*/*/index');
     }
 
+    /**
+     * @return void
+     */
     public function gridAction()
     {
         $this->loadLayout();
@@ -45,6 +59,9 @@ class IWD_OrderManager_Adminhtml_Sales_Backup_CommentsController extends Mage_Ad
         );
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('sales/iwd_ordermanager_backups/comments');

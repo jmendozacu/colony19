@@ -1,24 +1,27 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Logger_Abstract
+ */
 class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
 {
-    protected $delete_log_success = array();
-    protected $delete_log_error = array();
-    protected $notices = array();
-    protected $changes_log = array();
-    protected $order_address_log = array();
-    protected $edited_order_items = array();
-    protected $added_order_items = array();
-    protected $ordered_items_name = array();
-    protected $remove_order_items = array();
-
-    protected $new_totals = array();
-    protected $log_output = "";
-    protected $log_notices = "";
-
     const BR = "&nbsp;<br/>";
 
-    protected $order_params = array(
+    protected $deleteLogSuccess = array();
+    protected $deleteLogError = array();
+    protected $notices = array();
+    protected $changesLog = array();
+    protected $orderAddressLog = array();
+    protected $editedOrderItems = array();
+    protected $addedOrderItems = array();
+    protected $orderedItemsName = array();
+    protected $removeOrderItems = array();
+
+    protected $newTotals = array();
+    protected $logOutput = "";
+    protected $logNotices = "";
+
+    protected $orderParams = array(
         'order_status' => "Changed status from '%s' to '%s'",
         'order_state' => "Changed state from '%s' to '%s'",
         'order_store_name' => "Changed purchased from store '%s' to '%s'",
@@ -49,15 +52,16 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
     public function addOrderItemEdit($orderItem, $description, $old, $new = null)
     {
         $description = Mage::helper('iwd_ordermanager')->__($description);
-        $this->ordered_items_name[$orderItem->getId()] = $orderItem->getName();
+        $id = $orderItem->getId();
+        $this->orderedItemsName[$id] = $orderItem->getName();
 
         if ($new === null) {
-            $this->edited_order_items[$orderItem->getId()][] = sprintf(' - %s: "%s"', $description, $old) . self::BR;
+            $this->editedOrderItems[$id][] = sprintf(' - %s: "%s"', $description, $old) . self::BR;
             return;
         }
 
         if ($old != $new) {
-            $this->edited_order_items[$orderItem->getId()][] = sprintf(' - %s: "%s" to "%s"', $description, $old, $new) . self::BR;
+            $this->editedOrderItems[$id][] = sprintf(' - %s: "%s" to "%s"', $description, $old, $new) . self::BR;
         }
     }
 
@@ -66,8 +70,8 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addOrderItemAdd($orderItem)
     {
-        $this->added_order_items[$orderItem->getId()] = $orderItem->getName();
-        $this->ordered_items_name[$orderItem->getId()] = $orderItem->getName();
+        $this->addedOrderItems[$orderItem->getId()] = $orderItem->getName();
+        $this->orderedItemsName[$orderItem->getId()] = $orderItem->getName();
     }
 
     /**
@@ -76,8 +80,8 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addOrderItemRemove($orderItem, $refund = false)
     {
-        $this->remove_order_items[$orderItem->getId()] = $refund;
-        $this->ordered_items_name[$orderItem->getId()] = $orderItem->getName();
+        $this->removeOrderItems[$orderItem->getId()] = $refund;
+        $this->orderedItemsName[$orderItem->getId()] = $orderItem->getName();
     }
 
     /**
@@ -88,7 +92,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
     public function addChangesToLog($item, $oldValue, $newValue)
     {
         if ($newValue != $oldValue) {
-            $this->changes_log[$item] = array(
+            $this->changesLog[$item] = array(
                 "new" => $newValue,
                 "old" => $oldValue,
             );
@@ -110,11 +114,16 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
                 $newValue = Mage::getModel('directory/region')->load($newValue)->getName();
                 $oldValue = Mage::getModel('directory/region')->load($oldValue)->getName();
 
-                if (isset($this->order_address_log[$addressType][$filed]['new']) && !empty($this->order_address_log[$addressType][$filed]['new'])) {
-                    $newValue = $this->order_address_log[$addressType][$filed]['new'];
+                if (isset($this->orderAddressLog[$addressType][$filed]['new'])
+                    && !empty($this->orderAddressLog[$addressType][$filed]['new'])
+                ) {
+                    $newValue = $this->orderAddressLog[$addressType][$filed]['new'];
                 }
-                if (isset($this->order_address_log[$addressType][$filed]['old']) && !empty($this->order_address_log[$addressType][$filed]['old'])) {
-                    $oldValue = $this->order_address_log[$addressType][$filed]['old'];
+
+                if (isset($this->orderAddressLog[$addressType][$filed]['old'])
+                    && !empty($this->orderAddressLog[$addressType][$filed]['old'])
+                ) {
+                    $oldValue = $this->orderAddressLog[$addressType][$filed]['old'];
                 }
             }
 
@@ -124,7 +133,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
                 $oldValue = Mage::getModel('directory/country')->loadByCode($oldValue)->getName();
             }
 
-            $this->order_address_log[$addressType][$filed] = array(
+            $this->orderAddressLog[$addressType][$filed] = array(
                 "new" => $newValue,
                 "old" => $oldValue,
                 "title" => $title
@@ -138,7 +147,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function itemDeleteSuccess($item, $itemIncrementId)
     {
-        $this->delete_log_success[$item][] = $itemIncrementId;
+        $this->deleteLogSuccess[$item][] = $itemIncrementId;
     }
 
     /**
@@ -147,7 +156,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function itemDeleteError($item, $itemIncrementId)
     {
-        $this->delete_log_error[$item][] = $itemIncrementId;
+        $this->deleteLogError[$item][] = $itemIncrementId;
     }
 
     /**
@@ -164,19 +173,20 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     protected function addInfoAboutSuccessAddedItemsToMessage($item)
     {
-        $count = isset($this->delete_log_success[$item]) ? count($this->delete_log_success[$item]) : 0;
+        $count = isset($this->deleteLogSuccess[$item]) ? count($this->deleteLogSuccess[$item]) : 0;
 
         if ($count > 0) {
             if ($count == 1) {
                 $message = Mage::helper('iwd_ordermanager')->__("The sale %s #%s has been deleted successfully.");
                 $itemTitle = Mage::helper('iwd_ordermanager')->__($item);
-                $message = sprintf($message, $itemTitle, $this->delete_log_success[$item][0]);
+                $message = sprintf($message, $itemTitle, $this->deleteLogSuccess[$item][0]);
             } else {
                 $message = Mage::helper('iwd_ordermanager')->__("%i %s have been deleted successfully: %s");
-                $ids = '#' . implode(', #', $this->delete_log_success[$item]);
+                $ids = '#' . implode(', #', $this->deleteLogSuccess[$item]);
                 $itemTitle = Mage::helper('iwd_ordermanager')->__($item);
                 $message = sprintf($message, $count, $itemTitle, $ids);
             }
+
             Mage::getSingleton('adminhtml/session')->addSuccess($message);
         }
     }
@@ -186,19 +196,20 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     protected function addInfoAboutErrorAddedItemsToMessage($item)
     {
-        $count = isset($this->delete_log_error[$item]) ? count($this->delete_log_error[$item]) : 0;
+        $count = isset($this->deleteLogError[$item]) ? count($this->deleteLogError[$item]) : 0;
 
         if ($count > 0) {
             if ($count == 1) {
                 $message = Mage::helper('iwd_ordermanager')->__("The sale %s #%s can not be deleted.");
                 $itemTitle = Mage::helper('iwd_ordermanager')->__($item);
-                $message = sprintf($message, $itemTitle, $this->delete_log_error[$item][0]);
+                $message = sprintf($message, $itemTitle, $this->deleteLogError[$item][0]);
             } else {
                 $message = Mage::helper('iwd_ordermanager')->__("%i %s can not be deleted: %s");
-                $ids = '#' . implode(', #', $this->delete_log_error[$item]);
+                $ids = '#' . implode(', #', $this->deleteLogError[$item]);
                 $itemTitle = Mage::helper('iwd_ordermanager')->__($item);
                 $message = sprintf($message, $count, $itemTitle, $ids);
             }
+
             Mage::getSingleton('adminhtml/session')->addError($message);
         }
     }
@@ -225,8 +236,8 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function getLogOutput($orderId = null)
     {
-        if (empty($this->log_output)) {
-            $this->log_output = "";
+        if (empty($this->logOutput)) {
+            $this->logOutput = "";
             $this->addToLogOutputInfoAboutOrderChanges();
             $this->addToLogOutputInfoAboutOrderAddress();
             $this->addToLogOutputInfoAboutOrderItems();
@@ -243,9 +254,13 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
     protected function addToLogOutputInfoAboutOrderChanges()
     {
         $helper = Mage::helper('iwd_ordermanager');
-        foreach ($this->order_params as $itemCode => $itemMessage) {
-            if (isset($this->changes_log[$itemCode])) {
-                $this->log_output .= sprintf($helper->__($itemMessage), $this->changes_log[$itemCode]['old'], $this->changes_log[$itemCode]['new']) . self::BR;
+        foreach ($this->orderParams as $itemCode => $itemMessage) {
+            if (isset($this->changesLog[$itemCode])) {
+                $this->logOutput .= sprintf(
+                        $helper->__($itemMessage),
+                        $this->changesLog[$itemCode]['old'],
+                        $this->changesLog[$itemCode]['new']
+                    ) . self::BR;
             }
         }
     }
@@ -258,10 +273,15 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
         $helper = Mage::helper('iwd_ordermanager');
 
         foreach (array("billing", "shipping") as $addressType) {
-            if (isset($this->order_address_log[$addressType]) && !empty($this->order_address_log[$addressType])) {
-                $this->log_output .= $helper->__("Order {$addressType} address updated: ") . self::BR;
-                foreach ($this->order_address_log[$addressType] as $id => $field) {
-                    $this->log_output .= sprintf(' - %s from "%s" to "%s"', $field['title'], $field['old'], $field['new']) . self::BR;
+            if (isset($this->orderAddressLog[$addressType]) && !empty($this->orderAddressLog[$addressType])) {
+                $this->logOutput .= $helper->__("Order {$addressType} address updated: ") . self::BR;
+                foreach ($this->orderAddressLog[$addressType] as $id => $field) {
+                    $this->logOutput .= sprintf(
+                            ' - %s from "%s" to "%s"',
+                            $field['title'],
+                            $field['old'],
+                            $field['new']
+                        ) . self::BR;
                 }
             }
         }
@@ -275,27 +295,27 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
         $helper = Mage::helper('iwd_ordermanager');
 
         /*** add order items ***/
-        if (!empty($this->added_order_items)) {
-            foreach ($this->added_order_items as $itemId => $item_name) {
-                $this->log_output .= "<b>{$item_name}</b> {$helper->__('was added')}" . self::BR;
+        if (!empty($this->addedOrderItems)) {
+            foreach ($this->addedOrderItems as $itemId => $itemName) {
+                $this->logOutput .= "<b>{$itemName}</b> {$helper->__('was added')}" . self::BR;
             }
         }
 
         /*** edit order items ***/
-        if (!empty($this->edited_order_items)) {
-            foreach ($this->edited_order_items as $itemId => $_edited) {
-                $this->log_output .= '<b>' . $this->ordered_items_name[$itemId] . '</b> ' . $helper->__('was edited') . ':' . self::BR;
-                foreach ($_edited as $e) {
-                    $this->log_output .= $e;
+        if (!empty($this->editedOrderItems)) {
+            foreach ($this->editedOrderItems as $itemId => $edited) {
+                $this->logOutput .= '<b>' . $this->orderedItemsName[$itemId] . '</b> ' . $helper->__('was edited') . ':' . self::BR;
+                foreach ($edited as $e) {
+                    $this->logOutput .= $e;
                 }
             }
         }
 
         /*** remove order items ***/
-        if (!empty($this->remove_order_items)) {
-            foreach ($this->remove_order_items as $itemId => $refunded) {
+        if (!empty($this->removeOrderItems)) {
+            foreach ($this->removeOrderItems as $itemId => $refunded) {
                 $message = ($refunded) ? $helper->__('was removed (refunded)') : $helper->__('was removed');
-                $this->log_output .= "<b>{$this->ordered_items_name[$itemId]}</b> {$message}" . self::BR;
+                $this->logOutput .= "<b>{$this->orderedItemsName[$itemId]}</b> {$message}" . self::BR;
             }
         }
     }
@@ -306,17 +326,22 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addtoLogOutputInfoAboutOrderTotals($orderId)
     {
-        if (empty($orderId) || empty($this->new_totals)) {
+        if (empty($orderId) || empty($this->newTotals)) {
             return;
         }
 
         $order = Mage::getModel('sales/order')->load($orderId);
         $helper = Mage::helper('iwd_ordermanager');
 
-        $this->log_output .= self::BR .
-            $helper->__('Old grand total: ') . Mage::helper('core')->currency($order->getBaseGrandTotal(), true, false) . self::BR .
-            $helper->__('New grand total: ') . Mage::helper('core')->currency($this->new_totals['base_grand_total'], true, false) . self::BR .
-            $helper->__('Changes: ') . Mage::helper('core')->currency($this->new_totals['base_grand_total'] - $order->getBaseGrandTotal(), true, false) . self::BR;
+        $baseGrandTotal = isset($this->newTotals['base_grand_total']) ? $this->newTotals['base_grand_total'] : 0;
+        $oldGrandTotal = Mage::helper('core')->currency($order->getBaseGrandTotal(), true, false);
+        $newGrandTotal = Mage::helper('core')->currency($baseGrandTotal, true, false);
+        $changes = Mage::helper('core')->currency($baseGrandTotal - $order->getBaseGrandTotal(), true, false);
+
+        $this->logOutput .= self::BR .
+            $helper->__('Old grand total: ') . $oldGrandTotal . self::BR .
+            $helper->__('New grand total: ') . $newGrandTotal . self::BR .
+            $helper->__('Changes: ') . $changes . self::BR;
     }
 
     /**
@@ -325,7 +350,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addNewTotalsToLog($totals)
     {
-        $this->new_totals = $totals;
+        $this->newTotals = $totals;
     }
 
     /**
@@ -333,7 +358,7 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addNoticeToLog($message)
     {
-        $this->log_notices .= $message . self::BR;
+        $this->logNotices .= $message . self::BR;
     }
 
     /**
@@ -341,11 +366,11 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addToLogOutputNotices()
     {
-        if (empty($this->log_notices)) {
-            return $this->log_output;
+        if (empty($this->logNotices)) {
+            return $this->logOutput;
         }
 
-        return $this->log_output .= self::BR . $this->log_notices;
+        return $this->logOutput .= self::BR . $this->logNotices;
     }
 
     /**
@@ -354,6 +379,6 @@ class IWD_OrderManager_Model_Logger_Abstract extends Mage_Core_Model_Abstract
      */
     public function addToLog($message)
     {
-        return $this->log_output .= $message;
+        return $this->logOutput .= $message;
     }
 }

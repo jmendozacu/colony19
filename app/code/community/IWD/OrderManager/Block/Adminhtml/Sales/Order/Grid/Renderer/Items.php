@@ -10,7 +10,8 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Items extends I
         $items = array();
 
         foreach ($orderItemCollection as $item) {
-            $items[] = $item->getName();
+            $url = Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id' => $item->getProductId()));
+            $items[] = '<a href="' . $url . '" target="_blank">' . $item->getName() . '</a>';
         }
 
         return $items;

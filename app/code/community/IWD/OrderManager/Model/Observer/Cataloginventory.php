@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Observer_Cataloginventory
+ */
 class IWD_OrderManager_Model_Observer_Cataloginventory
 {
     /**
@@ -58,34 +61,42 @@ class IWD_OrderManager_Model_Observer_Cataloginventory
         if (!isset($stock['use_config_manage_stock']) || is_null($stock['use_config_manage_stock'])) {
             $item->setData('use_config_manage_stock', false);
         }
+
         if (isset($stock['min_qty']) && !is_null($stock['min_qty'])
             && (!isset($stock['use_config_min_qty']) || is_null($stock['use_config_min_qty']))) {
             $item->setData('use_config_min_qty', false);
         }
+
         if (isset($stock['min_sale_qty']) && !is_null($stock['min_sale_qty'])
             && (!isset($stock['use_config_min_sale_qty']) || is_null($stock['use_config_min_sale_qty']))) {
             $item->setData('use_config_min_sale_qty', false);
         }
+
         if (isset($stock['max_sale_qty']) && !is_null($stock['max_sale_qty'])
             && (!isset($stock['use_config_max_sale_qty']) || is_null($stock['use_config_max_sale_qty']))) {
             $item->setData('use_config_max_sale_qty', false);
         }
+
         if (isset($stock['backorders']) && !is_null($stock['backorders'])
             && (!isset($stock['use_config_backorders']) || is_null($stock['use_config_backorders']))) {
             $item->setData('use_config_backorders', false);
         }
+
         if (isset($stock['notify_stock_qty']) && !is_null($stock['notify_stock_qty'])
             && (!isset($stock['use_config_notify_stock_qty']) || is_null($stock['use_config_notify_stock_qty']))) {
             $item->setData('use_config_notify_stock_qty', false);
         }
+
         if (isset($stock['original_inventory_qty']) && !is_null($stock['original_inventory_qty'])
             && strlen($stock['original_inventory_qty']) > 0) {
             $item->setQtyCorrection($item->getQty() - $stock['original_inventory_qty']);
         }
+
         if (isset($stock['enable_qty_increments']) && !is_null($stock['enable_qty_increments'])
             && (!isset($stock['use_config_enable_qty_inc']) || is_null($stock['use_config_enable_qty_inc']))) {
             $item->setData('use_config_enable_qty_inc', false);
         }
+
         if (isset($stock['qty_increments']) && !is_null($stock['qty_increments'])
             && (!isset($stock['use_config_qty_increments']) || is_null($stock['use_config_qty_increments']))) {
             $item->setData('use_config_qty_increments', false);
@@ -157,12 +168,17 @@ class IWD_OrderManager_Model_Observer_Cataloginventory
         $stockOrder->updateStockOrder($orderId, $assigned, $ordered);
     }
 
+    /**
+     * @param $creditmemo
+     * @return int
+     */
     protected function getCreditmemoQty($creditmemo)
     {
         $qty = 0;
         foreach ($creditmemo->getAllItems() as $item) {
             $qty += $item->getQty();
         }
+
         return $qty;
     }
 
@@ -186,11 +202,12 @@ class IWD_OrderManager_Model_Observer_Cataloginventory
 
     /**
      * @param Varien_Event_Observer $observer
+     * @return $this
      */
     public function cancelOrderItem(Varien_Event_Observer $observer)
     {
         if (!Mage::helper('iwd_ordermanager')->isMultiInventoryEnable()) {
-            return;
+            return $this;
         }
 
         $item = $observer->getEvent()->getItem();
@@ -203,7 +220,7 @@ class IWD_OrderManager_Model_Observer_Cataloginventory
             foreach ($assignedItems as $assigned) {
                 $stockItem = Mage::getModel('cataloginventory/stock_item')->getCollection()
                     ->addFieldToFilter('product_id', $assigned['product_id'])
-                    ->addFieldToFilter('stock_id',  $assigned['stock_id'])
+                    ->addFieldToFilter('stock_id', $assigned['stock_id'])
                     ->getFirstItem();
 
                 if ($stockItem) {
@@ -212,6 +229,8 @@ class IWD_OrderManager_Model_Observer_Cataloginventory
                 }
             }
         }
+
+        return $this;
     }
 
     /**

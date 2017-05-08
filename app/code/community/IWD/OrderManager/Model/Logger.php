@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Logger
+ */
 class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstract
 {
     const CONFIG_XML_PATH_CONFIRM_STATUS_CANCEL = 'iwd_ordermanager/edit/confirm_cancel_status';
     const CONFIG_XML_PATH_CONFIRM_STATUS_SUCCESS = 'iwd_ordermanager/edit/confirm_success_status';
     const CONFIG_XML_PATH_CONFIRM_STATUS_WAIT = 'iwd_ordermanager/edit/confirm_wait_status';
+    const CONFIG_XPATH_IS_COMMENT_VISIBLE = 'iwd_ordermanager/edit/is_visible_comment_on_front';
 
     /**
      * @param $orderId
@@ -14,12 +18,12 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
     public function addCommentToOrderHistory($orderId, $status = false, $isCustomerNotified = false)
     {
         $this->getLogOutput($orderId);
-        if (empty($this->log_output)) {
+        if (empty($this->logOutput)) {
             return;
         }
 
         $isCustomerNotified = Mage::app()->getRequest()->getParam('notify', null) ? true : false;
-        $this->addOrderStatusHistoryComment($this->log_output, $orderId, $status, $isCustomerNotified);
+        $this->addOrderStatusHistoryComment($this->logOutput, $orderId, $status, $isCustomerNotified);
     }
 
     /**
@@ -48,6 +52,9 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
      */
     protected function addOrderStatusHistoryComment($comment, $orderId, $status = false, $isCustomerNotified = false)
     {
+        /**
+         * @var $order Mage_Sales_Model_Order
+         */
         $order = Mage::getModel('sales/order')->load($orderId);
 
         if ($status === 'wait') {
@@ -66,7 +73,7 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
             $orderStatus = $order->getStatus();
         }
 
-        $isVisibleOnFront = Mage::getStoreConfig('iwd_ordermanager/edit/is_visible_comment_on_front', Mage::app()->getStore());
+        $isVisibleOnFront = Mage::getStoreConfig(self::CONFIG_XPATH_IS_COMMENT_VISIBLE, Mage::app()->getStore());
 
         $order->addStatusHistoryComment($comment, $orderStatus)
             ->setIsCustomerNotified($isCustomerNotified)
@@ -84,7 +91,7 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
     public function addLogToLogTable($type, $orderId, $params = null)
     {
         $this->getLogOutput($orderId);
-        if (empty($this->log_output)) {
+        if (empty($this->logOutput)) {
             return;
         }
 
@@ -99,9 +106,9 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
     public function updateLogs($type, $orderId, $params = null)
     {
         if (empty($params)) {
-            $this->getConfirmLogger()->addOperationToLog($type, $this->log_output, $orderId);
+            $this->getConfirmLogger()->addOperationToLog($type, $this->logOutput, $orderId);
         } else {
-            $this->getConfirmLogger()->addOperationForConfirm($type, $this->log_output, $params, $orderId);
+            $this->getConfirmLogger()->addOperationForConfirm($type, $this->logOutput, $params, $orderId);
         }
     }
 
@@ -117,7 +124,7 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
      * @param $message
      * @param bool|false $sessionError
      */
-    public static function log($message, $sessionError=false)
+    public static function log($message, $sessionError = false)
     {
         Mage::log($message, null, 'iwd_order_manager.log');
 
@@ -140,17 +147,17 @@ class IWD_OrderManager_Model_Logger extends IWD_OrderManager_Model_Logger_Abstra
     public function addCommentToOrderHistoryInGrid($orderId, $statusId, $isCustomerNotified = false)
     {
         $this->getLogOutput($orderId);
-        if(empty($this->log_output)){
+        if (empty($this->logOutput)) {
             return;
         }
 
-        $isVisibleOnFront = Mage::getStoreConfig('iwd_ordermanager/edit/is_visible_comment_on_front', Mage::app()->getStore());
+        $isVisibleOnFront = Mage::getStoreConfig(self::CONFIG_XPATH_IS_COMMENT_VISIBLE, Mage::app()->getStore());
         /**
          * @var $order Mage_Sales_Model_Order
          */
         $order = Mage::getModel('sales/order')->load($orderId);
 
-        $order->addStatusHistoryComment($this->log_output, $statusId)
+        $order->addStatusHistoryComment($this->logOutput, $statusId)
             ->setIsCustomerNotified($isCustomerNotified)
             ->setIsVisibleOnFront($isVisibleOnFront)
             ->save();

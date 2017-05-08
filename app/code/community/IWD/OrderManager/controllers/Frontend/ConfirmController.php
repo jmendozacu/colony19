@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Frontend_ConfirmController
+ */
 class IWD_OrderManager_Frontend_ConfirmController extends Mage_Core_Controller_Front_Action
 {
     /** http://site.com/iwd_order_manager/confirm/edit/action/confirm/pid/000000000000000 **/
@@ -15,6 +18,9 @@ class IWD_OrderManager_Frontend_ConfirmController extends Mage_Core_Controller_F
         $this->renderLayout();
     }
 
+    /**
+     * @return mixed
+     */
     protected function _confirm()
     {
         $action = $this->getRequest()->getParam('action');
@@ -26,14 +32,15 @@ class IWD_OrderManager_Frontend_ConfirmController extends Mage_Core_Controller_F
         if (empty($action) || empty($pid)) {
             return $cmsBlock->setBlockId('iwd_ordermanager_confirm_error');
         }
-        /** confirm **/
+
         if ($action == 'confirm') {
+            /** confirm **/
             $status = Mage::getModel('iwd_ordermanager/confirm_operations')->confirmByPid($pid);
             if ($status) {
                 return $cmsBlock->setBlockId('iwd_ordermanager_confirm_success');
             }
-        } /** cancel **/
-        else if ($action == 'cancel') {
+        } else if ($action == 'cancel') {
+            /** cancel **/
             $status = Mage::getModel('iwd_ordermanager/confirm_operations')->cancelConfirmByPid($pid);
             if ($status) {
                 return $cmsBlock->setBlockId('iwd_ordermanager_confirm_cancel');

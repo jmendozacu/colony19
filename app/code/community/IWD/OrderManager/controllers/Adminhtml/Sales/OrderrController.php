@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Sales_OrderrController
+ */
 class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager_Controller_Abstract
 {
-    /* edit: edit form */
+    /**
+     * edit: edit form
+     */
     public function editOrderedItemsFormAction()
     {
         $result = array('status' => 1);
@@ -28,12 +33,17 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         $this->prepareResponse($result);
     }
 
-    /* edit: edit ordered items */
+    /**
+     * edit: edit ordered items
+     */
     public function editOrderedItemsAction()
     {
         $result = array('status' => 1);
 
-        Mage::dispatchEvent('iwd_ordermanager_update_order_before', array('order_id' => $this->getRequest()->getParam('order_id', 0)));
+        Mage::dispatchEvent(
+            'iwd_ordermanager_update_order_before',
+            array('order_id' => $this->getRequest()->getParam('order_id', 0))
+        );
 
         try {
             $params = $this->getRequest()->getParams();
@@ -51,11 +61,18 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             $result = array('status' => 0, 'error' => $e->getMessage());
         }
 
-        Mage::dispatchEvent('iwd_ordermanager_update_order_after', array('order_id' => $this->getRequest()->getParam('order_id', 0)));
+        Mage::dispatchEvent(
+            'iwd_ordermanager_update_order_after',
+            array('order_id' => $this->getRequest()->getParam('order_id', 0))
+        );
 
         $this->prepareResponse($result);
     }
 
+    /**
+     * @param $needUpdateStock
+     * @return bool
+     */
     protected function logicAfterEditOrderItems($needUpdateStock)
     {
         if ($needUpdateStock) {
@@ -72,7 +89,9 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         }
     }
 
-    /* add: search items form */
+    /**
+     * add: search items form
+     */
     public function addOrderedItemsFormAction()
     {
         try {
@@ -89,7 +108,8 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
                 ->createBlock('adminhtml/catalog_product_composite_configure')
                 ->toHtml();
 
-            $result['url_configure_js'] = Mage::helper('core/js')->getJsUrl('mage/adminhtml/product/composite/configure.js');
+            $result['url_configure_js'] = Mage::helper('core/js')
+                ->getJsUrl('mage/adminhtml/product/composite/configure.js');
 
             $result['status'] = 1;
         } catch (Exception $e) {
@@ -100,7 +120,9 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         $this->prepareResponse($result);
     }
 
-    /* add: add new items */
+    /**
+     * add: add new items
+     */
     public function addOrderedItemsAction()
     {
         try {
@@ -111,7 +133,8 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             $orderId = $this->getRequest()->getParam('order_id');
             $selectedItems = $this->_parseProductsConfig($items, $options);
 
-            $quoteItems = Mage::getModel('iwd_ordermanager/order_converter')->createNewQuoteItems($orderId, $selectedItems);
+            $quoteItems = Mage::getModel('iwd_ordermanager/order_converter')
+                ->createNewQuoteItems($orderId, $selectedItems);
             $result['form'] = $this->getLayout()
                 ->createBlock('iwd_ordermanager/adminhtml_sales_order_items_form')
                 ->setTemplate('iwd/ordermanager/items/new_items.phtml')
@@ -128,7 +151,9 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         $this->prepareResponse($result);
     }
 
-    /* edit order items options */
+    /**
+     * edit order items options
+     */
     public function editOrderedItemsOptionsAction()
     {
         try {
@@ -136,26 +161,33 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             $itemId = $this->getRequest()->getParam('item_id');
 
             $orderItem = Mage::getModel('iwd_ordermanager/order_converter')->createNewOrderItem($itemId, $params);
-            $result['price'] = $orderItem->getData('base_price');
-            $result['name'] = $orderItem->getData('name');
-            $result['sku'] = $orderItem->getData('sku');
-            $result['product_options'] = $orderItem->getData('product_options');
-            $result['options_html'] = $this->getLayout()
+            $optionsHtml = $this->getLayout()
                 ->createBlock('iwd_ordermanager/adminhtml_sales_order_items_form')
                 ->setTemplate('iwd/ordermanager/items/options.phtml')
                 ->setData('new_order_item', $orderItem)
                 ->toHtml();
+
+            $result = array(
+                'price' => $orderItem->getData('base_price'),
+                'name' => $orderItem->getData('name'),
+                'sku' => $orderItem->getData('sku'),
+                'product_options' => $orderItem->getData('product_options'),
+                'options_html' => $optionsHtml
+            );
 
             $result['status'] = 1;
         } catch (Exception $e) {
             IWD_OrderManager_Model_Logger::log($e->getMessage());
             $result = array('status' => 0, 'error_message' => $e->getMessage());
         }
+
         $this->getResponse()->setHeader('Content-type', 'application/json', true);
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
     }
 
-    /* add: Loading page block (for pagination in search form) */
+    /**
+     * add: Loading page block (for pagination in search form)
+     */
     public function loadBlockAction()
     {
         $request = $this->getRequest();
@@ -180,6 +212,7 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
                 $update->addHandle('adminhtml_sales_order_create_load_block_' . $block);
             }
         }
+
         $this->loadLayoutUpdates()->generateLayoutXml()->generateLayoutBlocks();
         $result = $this->getLayout()->getBlock('content')->toHtml();
         if ($request->getParam('as_js_varname')) {
@@ -190,6 +223,9 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         }
     }
 
+    /**
+     * @return $this
+     */
     public function configureProductAction()
     {
         $result = array('status' => 1);
@@ -205,6 +241,7 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             if (!$orderItem->getId()) {
                 Mage::throwException($this->__('Order item is not loaded.'));
             }
+
             $order = Mage::getModel('sales/order')->load($orderItem->getOrderId());
 
             $buyRequest = $orderItem->getBuyRequest();
@@ -222,14 +259,19 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         }
 
         // Render page
-        /* @var $helper IWD_OrderManager_Helper_Composite */
+        /** @var $helper IWD_OrderManager_Helper_Composite */
         $helper = Mage::helper('iwd_ordermanager/composite');
         Mage::helper('catalog/product')->setSkipSaleableCheck(true);
         $helper->renderConfigureResult($this, $configureResult);
         return $this;
     }
 
-
+    /**
+     * @param $options
+     * @param $productId
+     * @param $type
+     * @return array
+     */
     private function _parseProductConfig($options, $productId, $type)
     {
         $optionsArray = array();
@@ -250,9 +292,15 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
                 }
             }
         }
+
         return $optionsArray;
     }
 
+    /**
+     * @param $items
+     * @param $options
+     * @return array
+     */
     private function _parseProductsConfig($items, $options)
     {
         $selectedItems = array();
@@ -297,12 +345,16 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
                     }
                 }
             }
+
             $selectedItems[$id] = $optionsArray;
         }
 
         return $selectedItems;
     }
 
+    /**
+     * @param $orderId
+     */
     public function _setQuoteSession($orderId)
     {
         $order = Mage::getModel('sales/order')->load($orderId);
@@ -324,6 +376,9 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
         $quoteSession->setStoreId($order->getStoreId());
     }
 
+    /**
+     * @return $this|Mage_Core_Controller_Varien_Action
+     */
     public function pdfordersAction()
     {
         $orderIds = $this->getRequest()->getPost('order_ids');
@@ -331,27 +386,39 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             foreach ($orderIds as $orderId) {
                 $order = Mage::getModel('sales/order')->load($orderId);
                 $order->setOrder($order);
-                if (!isset($pdf)){
+                if (!isset($pdf)) {
                     $pdf = Mage::getModel('iwd_ordermanager/order_pdf_order')->getPdf(array($order));
                 } else {
                     $pages = Mage::getModel('iwd_ordermanager/order_pdf_order')->getPdf(array($order));
-                    $pdf->pages = array_merge ($pdf->pages, $pages->pages);
+                    $pdf->pages = array_merge($pdf->pages, $pages->pages);
                 }
             }
-            return $this->_prepareDownloadResponse('order'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(), 'application/pdf');
+
+            return $this->_prepareDownloadResponse(
+                'order' . Mage::getSingleton('core/date')->date('Y-m-d_H-i-s') . '.pdf',
+                $pdf->render(),
+                'application/pdf'
+            );
         }
 
         return $this->_redirect('*/*/');
     }
 
 
+    /**
+     * @return $this|Mage_Core_Controller_Varien_Action
+     */
     public function printAction()
     {
         $order = $this->_initOrder();
         if (!empty($order)) {
             $order->setOrder($order);
             $pdf = Mage::getModel('iwd_ordermanager/order_pdf_order')->getPdf(array($order));
-            return $this->_prepareDownloadResponse('order'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(), 'application/pdf');
+            return $this->_prepareDownloadResponse(
+                'order' . Mage::getSingleton('core/date')->date('Y-m-d_H-i-s') . '.pdf',
+                $pdf->render(),
+                'application/pdf'
+            );
         }
 
         return $this->_redirect('*/*/');
@@ -371,12 +438,16 @@ class IWD_OrderManager_Adminhtml_Sales_OrderrController extends IWD_OrderManager
             $this->setFlag('', self::FLAG_NO_DISPATCH, true);
             return false;
         }
+
         Mage::register('sales_order', $order);
         Mage::register('current_order', $order);
 
         return $order;
     }
 
+    /**
+     * @return bool
+     */
     protected function _isAllowed()
     {
         return true;

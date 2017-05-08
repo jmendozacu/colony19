@@ -1,20 +1,31 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Payment_Payment
+ */
 class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
 {
     const IS_REAUTHORIZATION_ENABLED = true;
 
     protected $params;
+
     protected $_realTransactionIdKey = 'real_transaction_id';
 
+    /**
+     * @param $params
+     */
     protected function init($params)
     {
         if (!isset($params['order_id'])) {
-            throw new Exception("Order id is not defined");
+            Mage::throwException("Order id is not defined");
         }
+
         $this->params = $params;
     }
 
+    /**
+     * @param $params
+     */
     public function updateOrderPayment($params)
     {
         $this->init($params);
@@ -28,6 +39,11 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         }
     }
 
+    /**
+     * @param $paymentData
+     * @param $orderId
+     * @return bool
+     */
     public function execUpdatePaymentMethod($paymentData, $orderId)
     {
         $this->editPaymentMethod($paymentData, $orderId);
@@ -35,6 +51,11 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return true;
     }
 
+    /**
+     * @param $paymentData
+     * @param $orderId
+     * @return int
+     */
     protected function editPaymentMethod($paymentData, $orderId)
     {
         try {
@@ -69,7 +90,15 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
                     $payment = $order->getPayment();
                     $payment->addData($paymentData)->save();
                     $method = $payment->getMethodInstance();
-                    $method->prepareSave()->assignData($paymentData);
+                    if ($order->getPayment()->getMethod() == 'braintree') {
+                        $objData = new Varien_Object();
+                        $objData->setData($paymentData);
+                        $method->prepareSave()->assignData($objData);
+                    } else {
+                        $method->prepareSave()->assignData($paymentData);
+                    }
+
+
                     $order->getPayment()->save();
                     $order->getPayment()->getOrder()->save();
 
@@ -78,7 +107,13 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
                     $payment->addData($paymentData)->save();
                     $payment->unsMethodInstance();
                     $method = $payment->getMethodInstance();
-                    $method->prepareSave()->assignData($paymentData);
+                    if ($order->getPayment()->getMethod() == 'braintree') {
+                        $objData = new Varien_Object();
+                        $objData->setData($paymentData);
+                        $method->prepareSave()->assignData($objData);
+                    } else {
+                        $method->prepareSave()->assignData($paymentData);
+                    }
 
                     if ($order->getPayment()->getMethod() == "iwd_authorizecim") {
                         $cardId = $order->getPayment()->getIwdAuthorizecimCardId();
@@ -90,8 +125,13 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
 
                     $order->getPayment()->save();
                     $order->getPayment()->getOrder()->save();
-                    $newPayment = Mage::getModel('sales/order')->load($orderId)->getPayment()->getMethodInstance()->getTitle();
-                    Mage::getSingleton('iwd_ordermanager/logger')->addChangesToLog("payment_method", $oldPayment, $newPayment);
+                    $newPayment = Mage::getModel('sales/order')->load($orderId)
+                        ->getPayment()
+                        ->getMethodInstance()
+                        ->getTitle();
+
+                    Mage::getSingleton('iwd_ordermanager/logger')
+                        ->addChangesToLog("payment_method", $oldPayment, $newPayment);
 
                     return 1;
                 }
@@ -130,20 +170,32 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
     {
         $this->estimatePaymentMethod($this->params['order_id'], $this->params['payment']);
 
-        Mage::getSingleton('iwd_ordermanager/logger')->addLogToLogTable(IWD_OrderManager_Model_Confirm_Options_Type::PAYMENT, $this->params['order_id'], $this->params);
+        Mage::getSingleton('iwd_ordermanager/logger')->addLogToLogTable(
+            IWD_OrderManager_Model_Confirm_Options_Type::PAYMENT,
+            $this->params['order_id'],
+            $this->params
+        );
 
-        $message = Mage::helper('iwd_ordermanager')
-            ->__('Order update not yet applied. Customer has been sent an email with a confirmation link. Updates will be applied after confirmation.');
+        $message = Mage::helper('iwd_ordermanager')->__(
+            'Order update not yet applied. Customer has been sent an email with a confirmation link. Updates will be applied after confirmation.'
+        );
 
         Mage::getSingleton('adminhtml/session')->addNotice($message);
     }
 
 
+    /**
+     * @return mixed
+     */
     public function isAllowEditPayment()
     {
         return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/edit_payment');
     }
 
+    /**
+     * @param $order
+     * @return bool
+     */
     public function isPaymentAllowedForReauthorize($order)
     {
         $payment = $order->getPayment();
@@ -152,7 +204,7 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return in_array(
             $orderMethod,
             array(
-                'authorizenet',
+                'authnetcim',
                 'iwd_authorizecim',
                 'iwd_authorizecim_echeck',
                 Mage_Paypal_Model_Config::METHOD_PAYFLOWPRO
@@ -160,6 +212,11 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         );
     }
 
+    /**
+     * @param $orderId
+     * @param $oldOrder
+     * @return int
+     */
     public function reauthorizePayment($orderId, $oldOrder)
     {
         if (self::IS_REAUTHORIZATION_ENABLED == false) {
@@ -174,36 +231,57 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
             $oldAmountAuthorize = $payment->getBaseAmountAuthorized();
             $amount = $order->getBaseGrandTotal();
 
-            // authorized (but do not captured) more then we need now (authorized $100, need $80)
+            /**
+             * Authorized (but do not captured) more then we need now (authorized $100, need $80)
+             */
             if (!$order->hasInvoices() && $oldAmountAuthorize >= $amount) {
                 return 1;
             }
 
             switch ($orderMethod) {
+                /**
+                 * Offline payment methods
+                 */
                 case 'free':
                 case 'checkmo':
                 case 'purchaseorder':
                     return 1;
 
+                /**
+                 * Magento Authorize.net
+                 *
+                 * Please, use IWD Authorize.net CIM for re-authorization instead of this method
+                 * IWD Authorize.net CIM is PCI compliance
+                 */
                 case 'authorizenet':
-                    return $this->reauthorizeAuthorizeNet($order, $oldOrder);
+                    return 1;
 
+                /**
+                 * IWD Authorize.net CIM and eCheck
+                 */
                 case 'iwd_authorizecim':
                 case 'iwd_authorizecim_echeck':
                     return $this->reauthorizeIWDAuthorizeNetCIM($order, $oldOrder);
 
+                /**
+                 * Magento PayPal Payflow Pro
+                 */
                 case Mage_Paypal_Model_Config::METHOD_PAYFLOWPRO:
                     return $this->reauthorizePayPalPayflowPro($order);
 
-
-                /* *
+                /**
                  * Paradox Labs Authorize.net CIM
-                 * Please, do not uncomment this code. It will not enable re-authorization via Paradox Labs Authorize.net CIM.
-                 * You need add changes to Paradox Labs Authorize.net CIM extension for correct work of Order Manager
-                 * */
-                /*case 'authnetcim':
-                    return $this->reauthorizeParadoxAuthorizeNetCIM($order, $oldOrder);*/
+                 *
+                 * Maybe need some changes in Paradox Labs Authorize.net CIM extension
+                 * for correct work with Order Manager. Please, do not enable it without tests.
+                 * The algorithm can be invalid for some versions of Authorize.net CIM extension
+                 */
+                case 'authnetcim':
+                    return $this->reauthorizeParadoxAuthorizeNetCIM($order, $oldOrder);
 
+                /**
+                 * Another payments
+                 */
                 default:
                     return 1;
             }
@@ -214,192 +292,67 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         }
     }
 
-
-    /* * * * Authorize.net * * * */
-    protected function reauthorizeAuthorizeNet($order, $oldOrder)
-    {
-        /* @var $paymentAuthorizenet IWD_OrderManager_Model_Payment_Authorizenet */
-        /* @var $oldOrder Mage_Sales_Model_Order */
-        /* @var $order Mage_Sales_Model_Order */
-
-        $amount = $order->getGrandTotal();
-        $payment = $order->getPayment();
-        $authorized = $payment->getBaseAmountAuthorized();
-
-        $paymentAuthorizenet = Mage::getModel('iwd_ordermanager/payment_authorizenet');
-
-        // authorized (but do not captured) more then we need now (authorized $100, need $80)
-        if (!$order->hasInvoices() && $authorized < $amount) {
-            // void + authorize
-            $paymentAuthorizenet->voidAuthorizeNet($order);
-            return $paymentAuthorizenet->authorizeAuthorizeNet($order, $amount);
-        }
-
-        $new_total = $order->getGrandTotal() - $order->getBaseTotalRefunded();
-        $old_total = $oldOrder->getGrandTotal() - $oldOrder->getBaseTotalRefunded();
-
-        if ($old_total > $new_total) {
-            // amount was decreased (-)
-            $refund_amount = $old_total - $new_total;
-            return $this->refundAuthorizenetLogic($order, $refund_amount);
-        } else {
-            // amount was increased (+)
-            $additional_amount = $new_total - $old_total;
-            return $paymentAuthorizenet->captureAuthorizeNet($order, $additional_amount);
-        }
-    }
-
-    protected function refundAuthorizenetLogic($order, $refund_amount)
-    {
-        $transactions = $this->preparePaymentTransactions($order);
-
-        /* @var $paymentAuthorizenet IWD_OrderManager_Model_Payment_Authorizenet */
-        $paymentAuthorizenet = Mage::getModel('iwd_ordermanager/payment_authorizenet');
-
-        $captured = array_sum($transactions['captured']);
-        $settled = array_sum($transactions['settled']);
-
-        if ($captured > $refund_amount) {
-            foreach ($transactions['captured'] as $trx_id => $trx_amount) {
-                $paymentAuthorizenet->voidAuthorizeNetTransaction($order, $trx_id);
-
-                $refund_amount -= $trx_amount;
-                if ($refund_amount == 0) {
-                    return 1;
-                }
-                if ($refund_amount < 0) {
-                    $capture_amount = abs($refund_amount);
-                    return $paymentAuthorizenet->captureAuthorizeNet($order, $capture_amount);
-                }
-            }
-
-            throw new Exception("We can not refund more than captured");
-        } else {
-            if ($captured + $settled > $refund_amount) {
-                // VOID ALL CAPTURED TRANSACTIONS
-                foreach ($transactions['captured'] as $trx_id => $trx_amount) {
-                    if ($refund_amount == 0) {
-                        return 1;
-                    }
-
-                    $result = $paymentAuthorizenet->voidAuthorizeNetTransaction($order, $trx_id);
-                    if (is_string($result)) {
-                        Mage::getSingleton('adminhtml/session')->addError($result);
-                    }
-                    $refund_amount -= $trx_amount;
-                }
-
-                // REFUND SETTLED TRANSACTIONS
-                foreach ($transactions['settled'] as $trx_id => $trx_amount) {
-                    if ($refund_amount == 0) {
-                        return 1;
-                    }
-
-                    if ($refund_amount < $trx_amount) {
-                        $refund = $refund_amount;
-                        $refund_amount = 0;
-                    } else {
-                        $refund = $trx_amount;
-                        $refund_amount -= $trx_amount;
-                    }
-
-                    $result = $paymentAuthorizenet->refundAuthorizeNet($order, $trx_id, $refund);
-                    if (is_string($result)) {
-                        Mage::getSingleton('adminhtml/session')->addError($result);
-                    }
-                }
-
-                return 0;
-            } else {
-                throw new Exception("We can not refund more than captured");
-            }
-        }
-    }
-
-    protected function preparePaymentTransactions($order)
-    {
-        $transactions = Mage::getModel('sales/order_payment_transaction')->getCollection()
-            ->addFieldToFilter('order_id', $order->getId());
-
-        /* @var $paymentAuthorizenet IWD_OrderManager_Model_Payment_Authorizenet */
-        $paymentAuthorizenet = Mage::getModel('iwd_ordermanager/payment_authorizenet');
-
-        $transactionsCaptured = array();
-        $transactionsSettled = array();
-        foreach ($transactions as $transaction) {
-            $trxInfo = $paymentAuthorizenet->fetchTrxInfo($transaction->getTransactionId());
-            $id = $trxInfo->getData('transaction_id');
-
-            $information = $trxInfo->getData('additional_information');
-            $status = false;
-            if (isset($information["raw_details_info"]["transaction_status"])) {
-                $status = $information["raw_details_info"]["transaction_status"];
-            }
-            $auth_amount = 0;
-            if (isset($information["raw_details_info"]["auth_amount"])) {
-                $auth_amount = $information["raw_details_info"]["auth_amount"];
-            }
-
-            if ($status == "capturedPendingSettlement") {
-                $transactionsCaptured[$id] = $auth_amount;
-            }
-
-            if ($status == "settledSuccessfully" && $transaction->getTxnType() == 'capture') {
-                $transactionsSettled[$id] = $auth_amount;
-            }
-        }
-
-        return array(
-            'captured' => $transactionsCaptured,
-            'settled' => $transactionsSettled,
-        );
-    }
-
-
     /* * * * IWD Authorize.net CIM * * * */
+    /**
+     * @param $order Mage_Sales_Model_Order
+     * @param $oldOrder Mage_Sales_Model_Order
+     * @return int
+     */
     protected function reauthorizeIWDAuthorizeNetCIM($order, $oldOrder)
     {
-        /* @var $oldOrder Mage_Sales_Model_Order */
-        /* @var $order Mage_Sales_Model_Order */
         $amount = $order->getGrandTotal();
         $payment = $order->getPayment();
         $authorized = $payment->getBaseAmountAuthorized();
+
+        /** @var $paymentAuthorizenet IWD_AuthorizeCIM_Model_Method */
         $paymentAuthorizenet = $payment->getMethodInstance();
-        $new_total = $order->getGrandTotal() - $order->getBaseTotalRefunded();
-        $old_total = $oldOrder->getGrandTotal() - $oldOrder->getBaseTotalRefunded();
+        $newTotal = $order->getGrandTotal() - $order->getBaseTotalRefunded();
+        $oldTotal = $oldOrder->getGrandTotal() - $oldOrder->getBaseTotalRefunded();
 
         // authorized (but do not captured) more then we need now (authorized $100, need $80)
         if (!$order->hasInvoices() && $authorized < $amount) {
-            $additional_amount = $new_total - $old_total;
-            if (!$paymentAuthorizenet->authorize($payment, $additional_amount)) {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment."));
+            $additionalAmount = $newTotal - $oldTotal;
+            if (!$paymentAuthorizenet->authorize($payment, $additionalAmount)) {
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment.")
+                );
                 return 0;
             }
+
             $this->savePayment($payment);
             return 1;
         }
 
-        if ($old_total > $new_total) {
+        if ($oldTotal > $newTotal) {
             // amount was decreased (-)
-            $refund_amount = $old_total - $new_total;
-            return $this->refundAuthorizenetNetCIMLogic($order, $refund_amount);
+            $refundAmount = $oldTotal - $newTotal;
+            return $this->refundAuthorizenetNetCIMLogic($order, $refundAmount);
         } else {
             // amount was increased (+)
             Mage::register('iwd_order_manager_authorize', true);
-            $additional_amount = $new_total - $old_total;
-            $paymentAuthorizenet->capture($payment, $additional_amount, true);
+            $additionalAmount = $newTotal - $oldTotal;
+            $paymentAuthorizenet->capture($payment, $additionalAmount, true);
             $this->savePayment($payment);
             return 1;
         }
     }
 
+    /**
+     * @param $payment
+     */
     protected function savePayment($payment)
     {
         $payment->getOrder()->save();
         $payment->save();
     }
 
-    protected function refundAuthorizenetNetCIMLogic($order, $refund_amount)
+
+    /**
+     * @param $order
+     * @param $refundAmount
+     * @return int
+     */
+    protected function refundAuthorizenetNetCIMLogic($order, $refundAmount)
     {
         $transactions = $this->preparePaymentNetCIMTransactions($order);
         $payment = $order->getPayment();
@@ -408,52 +361,53 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         $captured = array_sum($transactions['captured']);
         $settled = array_sum($transactions['settled']);
 
-        if ($captured > $refund_amount) {
-            foreach ($transactions['captured'] as $trx_id => $trx_amount) {
-                $paymentAuthorizenet->void($payment, $trx_id);
+        if ($captured > $refundAmount) {
+            foreach ($transactions['captured'] as $trxId => $trxAmount) {
+                $paymentAuthorizenet->void($payment, $trxId);
 
-                $refund_amount -= $trx_amount;
-                if ($refund_amount == 0) {
+                $refundAmount -= $trxAmount;
+                if ($refundAmount == 0) {
                     $this->savePayment($payment);
                     return 1;
                 }
-                if ($refund_amount < 0) {
-                    $capture_amount = abs($refund_amount);
-                    $paymentAuthorizenet->capture($payment, $capture_amount, true);
+
+                if ($refundAmount < 0) {
+                    $captureAmount = abs($refundAmount);
+                    $paymentAuthorizenet->capture($payment, $captureAmount, true);
                     $this->savePayment($payment);
                     return 1;
                 }
             }
 
-            throw new Exception("We can not refund more than captured");
+            Mage::throwException("We can not refund more than captured");
         } else {
-            if ($captured + $settled > $refund_amount) {
+            if ($captured + $settled > $refundAmount) {
                 // VOID ALL CAPTURED TRANSACTIONS
-                foreach ($transactions['captured'] as $trx_id => $trx_amount) {
-                    if ($refund_amount == 0) {
+                foreach ($transactions['captured'] as $trxId => $trxAmount) {
+                    if ($refundAmount == 0) {
                         return 1;
                     }
 
-                    $paymentAuthorizenet->void($payment, $trx_id);
-                    $refund_amount -= $trx_amount;
+                    $paymentAuthorizenet->void($payment, $trxId);
+                    $refundAmount -= $trxAmount;
                 }
 
                 // REFUND SETTLED TRANSACTIONS
-                foreach ($transactions['settled'] as $trx_id => $trx_amount) {
-                    if ($refund_amount == 0) {
+                foreach ($transactions['settled'] as $trxId => $trxAmount) {
+                    if ($refundAmount == 0) {
                         $this->savePayment($payment);
                         return 1;
                     }
 
-                    if ($refund_amount < $trx_amount) {
-                        $refund = $refund_amount;
-                        $refund_amount = 0;
+                    if ($refundAmount < $trxAmount) {
+                        $refund = $refundAmount;
+                        $refundAmount = 0;
                     } else {
-                        $refund = $trx_amount;
-                        $refund_amount -= $trx_amount;
+                        $refund = $trxAmount;
+                        $refundAmount -= $trxAmount;
                     }
 
-                    $result = $paymentAuthorizenet->refund($payment, $refund, $trx_id);
+                    $result = $paymentAuthorizenet->refund($payment, $refund, $trxId);
                     if (is_string($result)) {
                         Mage::getSingleton('adminhtml/session')->addError($result);
                     }
@@ -462,11 +416,17 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
                 $this->savePayment($payment);
                 return 1;
             } else {
-                throw new Exception("We can not refund more than captured");
+                Mage::throwException("We can not refund more than captured");
             }
         }
+
+        return 0;
     }
 
+    /**
+     * @param $order
+     * @return array
+     */
     protected function preparePaymentNetCIMTransactions($order)
     {
         $payment = $order->getPayment();
@@ -474,7 +434,7 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         $transactions = Mage::getModel('sales/order_payment_transaction')->getCollection()
             ->addFieldToFilter('order_id', $order->getId());
 
-        /* @var $paymentAuthorizenet IWD_OrderManager_Model_Payment_Authorizenet */
+        /** @var $paymentAuthorizenet IWD_OrderManager_Model_Payment_Authorizenet */
         $paymentAuthorizenet = $payment->getMethodInstance()->gateway();
 
         $transactionsCaptured = array();
@@ -494,9 +454,11 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
             if (isset($trxInfo['transaction']["transactionStatus"])) {
                 $status = $trxInfo['transaction']["transactionStatus"];
             }
+
             if ($status == "capturedPendingSettlement") {
                 $transactionsCaptured[$id] = $trxInfo['transaction']["authAmount"];
             }
+
             if ($status == "settledSuccessfully" && $transaction->getTxnType() == 'capture') {
                 $transactionsSettled[$id] = $trxInfo['transaction']["settleAmount"];
             }
@@ -509,16 +471,22 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
     }
 
     /* * * * PayPal Payflow Pro Gateway * * * */
+    /**
+     * @param $order
+     * @return int
+     */
     protected function reauthorizePayPalPayflowPro($order)
     {
         $payment = $order->getPayment();
         $amount = $order->getGrandTotal();
 
-        /* @var $method IWD_OrderManager_Model_Payment_Paypal_Payflowpro */
+        /** @var $method IWD_OrderManager_Model_Payment_Paypal_Payflowpro */
         $method = $payment->getMethodInstance()->setStore($order->getStoreId());
 
         if (!$method->reauthorize($payment, $amount)) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment."));
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment.")
+            );
             return -1;
         }
 
@@ -527,12 +495,18 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
     }
 
 
+    /**
+     * @return array
+     */
     public function GetActivePaymentMethods()
     {
         $payments = Mage::getModel('payment/config')->getActiveMethods();
         return $this->getMethodsTitle($payments);
     }
 
+    /**
+     * @return array
+     */
     public function getActivePaymentMethodsArray()
     {
         $payments = Mage::getSingleton('payment/config')->getActiveMethods();
@@ -548,13 +522,20 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return $methods;
     }
 
+    /**
+     * @return array
+     */
     public function GetAllPaymentMethods()
     {
         $payments = Mage::getModel('payment/config')->getAllMethods();
         return $this->getMethodsTitle($payments);
     }
 
-    private function getMethodsTitle($payments)
+    /**
+     * @param $payments
+     * @return array
+     */
+    protected function getMethodsTitle($payments)
     {
         $methods = array();
 
@@ -565,6 +546,9 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return $methods;
     }
 
+    /**
+     * @return array
+     */
     public function GetPaymentMethods()
     {
         $resource = Mage::getSingleton('core/resource')->getConnection('core_read');
@@ -581,7 +565,10 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return $methods;
     }
 
-
+    /**
+     * @param $orderId
+     * @return bool
+     */
     public function canUpdatePaymentMethod($orderId)
     {
         $order = Mage::getModel('sales/order')->load($orderId);
@@ -592,6 +579,10 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         return !$order->hasInvoices();
     }
 
+    /**
+     * @param $orderId
+     * @param $paymentData
+     */
     public function estimatePaymentMethod($orderId, $paymentData)
     {
         $order = Mage::getModel('sales/order')->load($orderId);
@@ -610,9 +601,25 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
         $log->addCommentToOrderHistory($orderId, 'wait');
     }
 
-    /* * * * Paradox Lab Authorize.net CIM * * * */
+    /**
+     * Paradox Lab Authorize.net CIM
+     * Maybe need some changes in Paradox Labs Authorize.net CIM extension
+     * for correct work with Order Manager. Please, do not enable it without tests.
+     * The algorithm can be invalid for some versions of Authorize.net CIM extension
+     *
+     * @param $order
+     * @param $oldOrder
+     * @return int
+     */
     protected function reauthorizeParadoxAuthorizeNetCIM($order, $oldOrder)
     {
+        /**
+         * Remove this if and test how it works before push live.
+         */
+        if (true) {
+            return 1;
+        }
+
         $payment = $order->getPayment();
 
         $taxAmount = $order->getTaxAmount();
@@ -639,8 +646,8 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
             $baseTotalDue = $order->getBaseGrandTotal() - $order->getBaseTotalRefunded() - $payment->getBaseAmountPaid();
         }
 
-        // capture
         if ($baseTotalDue > 0) {
+            // capture
             $newTaxAmount = $newTaxAmount > 0 ? $newTaxAmount : 0;
             $payment->getOrder()->setTaxAmount($newTaxAmount);
 
@@ -659,7 +666,9 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
             Mage::register('iwd_order_manager_authorize', true);
 
             if (!$payment->authorize(1, $baseTotalDue)) {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment."));
+                Mage::getSingleton('adminhtml/session')->addError(
+                    Mage::helper('iwd_ordermanager')->__("Error in re-authorizing payment.")
+                );
                 return -1;
             }
 
@@ -675,10 +684,9 @@ class IWD_OrderManager_Model_Payment_Payment extends Mage_Core_Model_Abstract
                 $payment->setAmountAuthorized($oldAmountAuthorize + $totalDue);
                 $payment->setBaseAmountAuthorized($oldBaseAmountAuthorize + $baseTotalDue);
             }
-        } // refund
-        else if ($baseTotalDue < 0 && $payment->getOrder()->getBaseTotalPaid() > 0) {
+        } else if ($baseTotalDue < 0 && $payment->getOrder()->getBaseTotalPaid() > 0) {
+            // refund
             Mage::register('iwd_order_manager_authorize', true);
-
             $refund = abs($baseTotalDue);
             $payment->getMethodInstance()->refund($payment, $refund);
         }

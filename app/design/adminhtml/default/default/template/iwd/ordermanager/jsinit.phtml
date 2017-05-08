@@ -24,34 +24,7 @@
                     <h4 class="om-iwd-modal-title"></h4>
                 </div>
                 <div class="om-iwd-modal-body">
-                    <div id="iwd_om_popup_form">
-                        <form>
-                            <div class="iwd-om-notification">
-                                <div>
-                                    <label><?php echo $helper->__('Notify by email(s)'); ?> <span class="required">*</span></label>
-                                    <input type="text" name="comment_email" value="<?php echo $email; ?>" required="required"/>
-                                    <span class="note"><?php echo $helper->__('Comma separated'); ?></span>
-                                </div>
-                                <div>
-                                    <label><?php echo $helper->__('Comment'); ?></label>
-                                    <textarea name="comment_text"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="iwd-om-modal-controls">
-                        <button class="scalable" type="button"
-                                onclick="IWD.OrderManager.Popup.cancelModal()"
-                                title="<?php echo $helper->__("Cancel"); ?>">
-                            <?php echo $helper->__("Cancel"); ?>
-                        </button>
-                        <button class="scalable right" type="button"
-                                onclick="IWD.OrderManager.Popup.updateModal()"
-                                title="<?php echo $helper->__("Update"); ?>">
-                            <?php echo $helper->__("Update"); ?>
-                        </button>
-                    </div>
+                    <!-- content -->
                 </div>
                 <div class="iwd-om-preloader-wrapper">
                     <div class="iwd-om-preloader"></div>
@@ -60,8 +33,8 @@
         </div>
     </div>
 </div>
-
 <div id="iwd_om_popup-window-mask" class="popup-window-mask" style="display:none;"></div>
+
 <div id="iwd_om_product_composite_configure" class="product-configure-popup" style="display:none;">
     <iframe name="product_composite_configure_iframe" id="iwd_om_product_composite_configure_iframe" src="#" style="width:0; height:0; border:0px solid #fff; position:absolute; top:-1000px; left:-1000px" onload="window.productConfigureIWDOMEdit && productConfigureIWDOMEdit.onLoadIFrame()"></iframe>
     <form action="" method="post" id="iwd_om_product_composite_configure_form" enctype="multipart/form-data" onsubmit="productConfigureIWDOMEdit.onConfirmBtn(); return false;" target="product_composite_configure_iframe">
@@ -90,11 +63,10 @@
     </script>
 </div>
 
-
 <script type="text/javascript">
     if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
     $ji(document).ready(function () {
-        IWD.OrderManager.Popup.popupTitles = {
+        IWD.OrderManager.NotifyPopup.popupTitles = {
             "account":"<?php echo $helper->__("Notify About Account Information Changes"); ?>",
             "shipping":"<?php echo $helper->__("Notify About Shipping Information Changes"); ?>",
             "payment":"<?php echo $helper->__("Notify About Payment Information Changes"); ?>",
@@ -103,6 +75,31 @@
             "info":"<?php echo $helper->__("Notify About General Order Information Changes"); ?>",
             "items":"<?php echo $helper->__("Notify About Ordered Items Changes"); ?>"
         };
+
+        IWD.OrderManager.NotifyPopup.content =
+            '<div id="iwd_om_popup_form">' +
+            '   <form>' +
+            '       <div class="iwd-om-notification">' +
+            '           <div>' +
+            '               <label><?php echo $helper->__('Notify by email(s)'); ?> <span class="required">*</span></label>' +
+            '               <input type="text" name="comment_email" value="<?php echo $email; ?>" required="required"/>' +
+            '               <span class="note"><?php echo $helper->__('Comma separated'); ?></span>' +
+            '           </div>' +
+            '           <div>' +
+            '               <label><?php echo $helper->__('Comment'); ?></label>' +
+            '               <textarea name="comment_text"></textarea>' +
+            '           </div>' +
+            '       </div>' +
+            '   </form>' +
+            '</div>' +
+            '<div class="iwd-om-modal-controls">' +
+            '   <button class="scalable" type="button" onclick="IWD.OrderManager.NotifyPopup.cancelModal()" title="<?php echo $helper->__("Cancel"); ?>">' +
+            '       <?php echo $helper->__("Cancel"); ?>' +
+            '   </button>' +
+            '   <button class="scalable right" type="button" onclick="IWD.OrderManager.NotifyPopup.updateModal()" title="<?php echo $helper->__("Update"); ?>">' +
+            '       <?php echo $helper->__("Update"); ?>' +
+            '   </button>' +
+            '</div>';
 
         IWD.OrderManager.lang = "<?php echo $lang; ?>";
         IWD.OrderManager.is_archive = "<?php echo (int)$isArchive; ?>";
@@ -177,5 +174,9 @@
         IWD.OrderManager.Comments.urlEditCommentSubmit = "<?php echo $helper->getUrl('*/sales_comment/update');?>?isAjax=true";
         IWD.OrderManager.Comments.urlEditCommentForm = "<?php echo $helper->getUrl('*/sales_comment/getComment');?>?isAjax=true";
         IWD.OrderManager.Comments.confirmText = "<?php echo $helper->__('Are you sure?'); ?>";
+
+        IWD.OrderManager.OrderedItemProductInfo.init();
+
+        IWD.OrderManager.SalesGrids.init();
     });
 </script>

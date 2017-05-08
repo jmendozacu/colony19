@@ -171,7 +171,7 @@ class IWD_OrderManager_Model_Order extends Mage_Sales_Model_Order
 
     public function deleteDownloadable()
     {
-        if(!Mage::getStoreConfig(self::XML_PATH_DELETE_DOWNLOADABLE)){
+        if (!Mage::getStoreConfig(self::XML_PATH_DELETE_DOWNLOADABLE)){
             return;
         }
 
@@ -195,26 +195,26 @@ class IWD_OrderManager_Model_Order extends Mage_Sales_Model_Order
     public function isArchived($order = null){
         $orderId = null;
 
-        if(empty($order)){
+        if (empty($order)) {
             $orderId = $this->getEntityId();
-        }else if(is_object($order)){
+        } elseif (is_object($order)) {
             $orderId = $order->getEntityId();
-        }else if(is_numeric($order) ){
+        } elseif (is_numeric($order) ) {
             $orderId = $order;
-        }else if(is_string($order) ){
+        } elseif (is_string($order) ) {
             $orderId = (int)$order;
         }
 
         $origin = Mage::getResourceModel('sales/order_grid_collection')
             ->addFieldToFilter('entity_id', $orderId)->getSize();
-        if($origin <= 0){
-            if(Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()){
+        if ($origin <= 0) {
+            if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) {
                 return false;
             } else {
                 $omArchiveSize = Mage::getModel('iwd_ordermanager/archive_order')
                     ->getCollection()->addFieldToFilter('entity_id', $orderId)
                     ->getSize();
-                if($omArchiveSize > 0){
+                if ($omArchiveSize > 0) {
                     return true;
                 }
             }

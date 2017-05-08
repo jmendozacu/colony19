@@ -37,7 +37,8 @@ class IWD_OrderManager_Block_Adminhtml_Customer_Order_Recent extends Mage_Adminh
         $script = '<script type="text/javascript">
                     if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
                     if($ji("#customer_view_orders_grid_table").length) {
-                        IWD.OrderManager.Grid.ColorGridRow();
+                        IWD.OrderManager.Grid.colorGridRow();
+                        IWD.OrderManager.Grid.initGridColumnWidth();
                         if($ji.isFunction($ji.fn.stickyTableHeaders)){$ji("#customer_view_orders_grid_table").stickyTableHeaders();}
                     }
                  </script>';

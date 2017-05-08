@@ -95,7 +95,7 @@ class IWD_OrderManager_Model_Notify_Notification extends Mage_Core_Model_Abstrac
         /** bcc **/
         if ($copyToEmails && $copyMethod == 'bcc') {
             foreach ($copyToEmails as $email) {
-                if(!empty($email)) {
+                if (!empty($email)) {
                     $emailInfo->addBcc($email);
                 }
             }
@@ -105,7 +105,7 @@ class IWD_OrderManager_Model_Notify_Notification extends Mage_Core_Model_Abstrac
         /** copy **/
         if ($copyToEmails && $copyMethod == 'copy') {
             foreach ($copyToEmails as $email) {
-                if(!empty($email)) {
+                if (!empty($email)) {
                     $emailInfo = Mage::getModel('core/email_info');
                     $emailInfo->addTo($email);
                     $mailer->addEmailInfo($emailInfo);

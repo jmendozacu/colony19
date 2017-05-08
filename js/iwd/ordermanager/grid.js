@@ -9,12 +9,15 @@ IWD.OrderManager.Grid = {
     iwdViewOrderedItems: "",
     iwdViewProductItems: "",
     statusColors: "",
+    columnWidth: {},
 
     init: function(){
         if(this.singleton == 1) {
             return;
         }
         var self = this;
+
+        this.initGridColumnWidth();
         this.imageZoom();
         this.initCellsWithLongString();
 
@@ -53,11 +56,79 @@ IWD.OrderManager.Grid = {
 
         if (self.isFixGridHeader) {
             $ji("#sales_order_grid_table").stickyTableHeaders({ fixedOffset: $(".header") });
+            self.reInitFixHeader();
+            $ji(window).resize(function(){self.reInitFixHeader();});
         }
 
-        this.ColorGridRow();
+        this.colorGridRow();
+        this.rowMouseOver();
+        this.initComplexFilterInput();
+        this.initComplexFilterSelect();
+        
+        this.initHorizontalScrolling();
 
         this.singleton = 1;
+    },
+
+    reInitFixHeader:function () {
+        $ji('.tableFloatingHeaderOriginal th').each(function(i){
+            $ji($ji('.tableFloatingHeader th')[i])
+                .css("width", $ji(this).width())
+                .css("min-width", $ji(this))
+                .css("max-width", $ji(this).width());
+        });
+    },
+
+    initGridColumnWidth:function(){
+        var self = this;
+
+        try {
+            if (typeof self.columnWidth != "object") {
+                self.columnWidth = self.columnWidth
+                    .replace(/\\+/g, '\\')
+                    .replace(/\\'/g, "'")
+                    .replace(/\\"/g, '"')
+                    .replace(/[\u0000-\u001F]+/g, "");
+                self.columnWidth = JSON.parse(self.columnWidth);
+            }
+        } catch (e) {
+            self.columnWidth = {};
+        }
+
+        $ji.each(self.columnWidth, function(gridId, columns) {
+            gridId = self.getGridId(gridId);
+            if (gridId != '') {
+                $ji.each(columns, function (columnId, width) {
+                    var column = $ji('#' + gridId + ' th.iwd_om_' + columnId);
+                    if (typeof width != "undefined") {
+                        var min = (typeof width['min'] != "undefined") ? width['min'] - 10 : 0;
+                        var max = (typeof width['max'] != "undefined") ? width['max'] - 10 : 0;
+                        if (min > 0) {
+                            $ji(column).css('min-width', min + 'px');
+                            $ji(column).css('width', min + 'px');
+                        }
+                        if (max > 0) {
+                            $ji(column).css('max-width', max + 'px');
+                            if (min < 0) {
+                                $ji(column).css('width', max + 'px');
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    },
+
+    getGridId: function(gridId) {
+        if (gridId == 'row_iwd_ordermanager_grid_order_columns') {
+            return 'sales_order_grid_table';
+        } else if (gridId == 'row_iwd_ordermanager_customer_orders_orders_grid_columns') {
+            return 'customer_orders_grid_table';
+        } else if (gridId == 'row_iwd_ordermanager_customer_orders_resent_orders_grid_columns') {
+            return 'customer_view_orders_grid_table';
+        }
+
+        return '';
     },
 
     initCellsWithLongString: function(){
@@ -113,7 +184,7 @@ IWD.OrderManager.Grid = {
         });
     },
 
-    ColorGridRow: function () {
+    colorGridRow: function () {
         function unserialize(stringData) {
             var parts = stringData.split(";");
             var a = {};
@@ -142,7 +213,6 @@ IWD.OrderManager.Grid = {
                     var key = $ji.trim($ji(this).html());
                     var color = statusColorsArray[key];
                     if (color) {
-                    console.log(color);
                         $ji(this).parent('tr').find('.empty-flag .fa-flag').css('color', '#' + color);
                         $ji(this).parent('tr').css('background-color', '#' + color);
 
@@ -204,6 +274,63 @@ IWD.OrderManager.Grid = {
 
         $ji(document).on('mouseleave', '.iwd_om_prod_image', function() {
             $ji('.iwd_om_prod_zoom').remove();
+        });
+    },
+
+    rowMouseOver: function() {
+        var self = this;
+        var tables = '#sales_order_grid_table tr,' +
+            ' #sales_order_archive_grid_table tr,' +
+            ' #customer_view_orders_grid_table tr,' +
+            ' #customer_orders_grid_table tr';
+
+        $ji(document).on('mouseenter', tables, function(){
+            self.setAlpha(this, 0.75);
+        });
+        $ji(document).on('mouseleave', tables, function(){
+            self.setAlpha(this, 1);
+        });
+    },
+
+    setAlpha: function(item, newAlpha) {
+        var bg = $ji(item).css('backgroundColor');
+        var rgb = bg.replace(/^(rgb|rgba)\(/,'').replace(/\)$/,'').replace(/\s/g,'').split(',');
+        var newBg = 'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+newAlpha+')';
+        $ji(item).css('backgroundColor',newBg);
+    },
+
+    initComplexFilterInput: function() {
+        var inputs = 'th.complex-filter input';
+
+        $ji(document).on('focus', inputs, function () {
+            if ($ji(this).width() < 190) {
+                $ji(this).closest('div').css('width', '200px').css('position', 'absolute').css('z-index', '3');
+                if ($ji(this).closest('div').offset().left + 200 > $ji('#sales_order_grid').offset().left + $ji('#sales_order_grid').width()) {
+                    $ji(this).closest('div').css('right', '0');
+                }
+            }
+        }).on('focusout', inputs, function () {
+            $ji(this).closest('div').removeAttr('style');
+        }).on('keypress change', inputs, function(e) {
+            if (e.which == 13) {
+                $ji(this).closest('div').removeAttr('style');
+            }
+        });
+    },
+
+    initComplexFilterSelect: function(){
+        $ji('th.complex-filter-select select').each(function () {
+            $ji(this).SumoSelect({'placeholder':'Select','selectAll':true});
+        });
+    },
+
+    initHorizontalScrolling: function () {
+        $ji(document).on('click', '#sales_order_grid', function (e) {
+            if (e.pageX < 27) {
+                $ji('#sales_order_grid .hor-scroll').scrollLeft($ji('#sales_order_grid .hor-scroll').scrollLeft() - 300);
+            } else if (e.pageX > $ji(this).width() + 27) {
+                $ji('#sales_order_grid .hor-scroll').scrollLeft($ji('#sales_order_grid .hor-scroll').scrollLeft() + 300);
+            }
         });
     }
 };

@@ -5,6 +5,7 @@ IWD.OrderManager.Stock = {
     iwdAssignStockUrl: "",
     reloadAfterAssign: false,
     isAllStocksAssigned: true,
+    changed: false,
 
     init: function()
     {
@@ -49,7 +50,7 @@ IWD.OrderManager.Stock = {
     {
         var self = this;
         var data = "form_key=" + FORM_KEY + "&order_id=" + orderId;
-
+        IWD.OrderManager.Stock.changed = false;
         this.postRequest(data, this.iwdAssignStockFormUrl, function(result){
             $ji('#iwd_om_popup_stocks_form').html(result.form);
 
@@ -187,7 +188,19 @@ IWD.OrderManager.Stock = {
         var inStock = $ji('input[name="stock_item[' + productId + '][' + stockId + ']"]');
 
         var qtyInStock = parseFloat($ji(inStock).val());
+        IWD.OrderManager.Stock.changed = IWD.OrderManager.Stock.changed ? IWD.OrderManager.Stock.changed : (value != preValue);
+        this.disableEnableButton();
+
         $ji(inStock).val(qtyInStock + preValue - value);
+    },
+
+    disableEnableButton:function()
+    {
+        if (this.changed) {
+            $ji('.assign-stock-table .actions button').removeClass('disabled').removeAttr('disabled');
+        } else {
+            $ji('.assign-stock-table .actions button').addClass('disabled').attr('disabled', 'disabled');
+        }
     },
 
     changeProductMarker:function(item, assigned)
@@ -267,7 +280,7 @@ IWD.OrderManager.Stock.Order = {
     showAssignStockForm: function(orderId)
     {
         var data = "form_key=" + FORM_KEY + "&order_id=" + orderId + "&order_view=1";
-
+        IWD.OrderManager.Stock.changed = false;
         IWD.OrderManager.Stock.postRequest(data, IWD.OrderManager.Stock.Order.iwdAssignStockFormUrl, function(result){
             IWD.OrderManager.Stock.Order.displayAssignStockForm(result.form);
         });

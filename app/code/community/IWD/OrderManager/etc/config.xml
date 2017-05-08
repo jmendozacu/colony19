@@ -2,7 +2,7 @@
 <config>
     <modules>
         <IWD_OrderManager>
-            <version>1.8.4.1</version>
+            <version>1.8.7.0</version>
         </IWD_OrderManager>
     </modules>
 
@@ -34,18 +34,17 @@
                     <sales_order_creditmemo_create_items>IWD_OrderManager_Block_Adminhtml_Sales_Order_Creditmemo_Create_Items</sales_order_creditmemo_create_items>
                 </rewrite>
             </adminhtml>
-            <paygate>
-                <rewrite>
-                    <authorizenet_info_cc>IWD_OrderManager_Block_Adminhtml_Sales_Order_Payment_Authorizenet_Info_Cc</authorizenet_info_cc>
-                </rewrite>
-            </paygate>
             <sales>
                 <rewrite>
                     <order_view>IWD_OrderManager_Block_Frontend_Sales_Order_View</order_view>
                 </rewrite>
             </sales>
+            <braintree_payments>
+                <rewrite>
+                    <creditcard_form>IWD_OrderManager_Block_Braintree_Creditcard_Form</creditcard_form>
+                </rewrite>
+            </braintree_payments>
         </blocks>
-
         <helpers>
             <iwd_ordermanager>
                 <class>IWD_OrderManager_Helper</class>
@@ -104,11 +103,6 @@
                     </flags_autoapply>
                 </entities>
             </iwd_ordermanager_mysql4>
-            <paygate>
-                <rewrite>
-                    <authorizenet>IWD_OrderManager_Model_Payment_Authorizenet</authorizenet>
-                </rewrite>
-            </paygate>
             <paypal>
                 <rewrite>
                     <payflowpro>IWD_OrderManager_Model_Payment_Paypal_Payflowpro</payflowpro>
@@ -212,10 +206,10 @@
             </order_cancel_after>
             <sales_order_item_cancel>
                 <observers>
-                    <inventory>
+                    <ordermanager_inventory>
                         <class>iwd_ordermanager/observer_cataloginventory</class>
                         <method>cancelOrderItem</method>
-                    </inventory>
+                    </ordermanager_inventory>
                 </observers>
             </sales_order_item_cancel>
             <sales_order_creditmemo_refund>
@@ -244,45 +238,45 @@
             </iwd_ordermanager_sales_order_edit_after>
             <sales_order_payment_transaction_save_after>
                 <observers>
-                    <update_transaction_data>
+                    <ordermanager_update_transaction_data>
                         <type>singleton</type>
                         <class>iwd_ordermanager/observer_settlementreport</class>
                         <method>updateTransactionAmount</method>
-                    </update_transaction_data>
+                    </ordermanager_update_transaction_data>
                 </observers>
             </sales_order_payment_transaction_save_after>
 
             <iwd_ordermanager_sales_order_edit_before>
                 <observers>
-                    <backup_order_before_edit>
+                    <ordermanager_backup_order_edit_before_edit>
                         <type>singleton</type>
                         <class>iwd_ordermanager/observer_sales</class>
                         <method>backupOrderBeforeEdit</method>
-                    </backup_order_before_edit>
+                    </ordermanager_backup_order_edit_before_edit>
                 </observers>
             </iwd_ordermanager_sales_order_edit_before>
             <iwd_ordermanager_update_order_amount_before>
                 <observers>
-                    <backup_order_before_edit>
+                    <ordermanager_backup_order_amount_before_edit>
                         <type>singleton</type>
                         <class>iwd_ordermanager/observer_sales</class>
                         <method>backupOrderBeforeEdit</method>
-                    </backup_order_before_edit>
+                    </ordermanager_backup_order_amount_before_edit>
                 </observers>
             </iwd_ordermanager_update_order_amount_before>
 
             <sales_order_status_history_save_before>
                 <observers>
-                    <add_admin_to_order_comment>
+                    <ordermanager_add_admin_to_order_comment>
                         <type>singleton</type>
                         <class>iwd_ordermanager/observer_history</class>
                         <method>addAdminToOrderComment</method>
-                    </add_admin_to_order_comment>
-                    <cnahe_new_line_to_br>
+                    </ordermanager_add_admin_to_order_comment>
+                    <ordermanager_cnahe_new_line_to_br>
                         <type>singleton</type>
                         <class>iwd_ordermanager/observer_history</class>
                         <method>changeNewLinesToBr</method>
-                    </cnahe_new_line_to_br>
+                    </ordermanager_cnahe_new_line_to_br>
                 </observers>
             </sales_order_status_history_save_before>
 
@@ -302,6 +296,24 @@
                     </ordermanager_order_assign_flag>
                 </observers>
             </sales_order_save_after>
+
+            <sales_order_payment_save_before>
+                <observers>
+                    <ordermanager_payment_before_save>
+                        <class>iwd_ordermanager/observer_payment</class>
+                        <method>beforeOrderPaymentSave</method>
+                    </ordermanager_payment_before_save>
+                </observers>
+            </sales_order_payment_save_before>
+
+            <sales_quote_address_collect_totals_after>
+                <observers>
+                    <ordermanager_payment_before_save>
+                        <class>iwd_ordermanager/observer_tax</class>
+                        <method>restoreCustomFeeTax</method>
+                    </ordermanager_payment_before_save>
+                </observers>
+            </sales_quote_address_collect_totals_after>
         </events>
 
         <sales>
@@ -312,6 +324,11 @@
                         <after>discount</after>
                         <before>grand_total</before>
                     </iwd_om_fee>
+                    <iwd_om_fee_incl>
+                        <class>iwd_ordermanager/sales_quote_address_total_feeincl</class>
+                        <after>discount</after>
+                        <before>grand_total</before>
+                    </iwd_om_fee_incl>
                 </totals>
             </quote>
             <order_invoice>
@@ -349,8 +366,11 @@
         <fieldsets>
             <sales_convert_quote_address>
                 <iwd_om_fee_amount><to_order>*</to_order></iwd_om_fee_amount>
+                <iwd_om_fee_amount_incl_tax><to_order>*</to_order></iwd_om_fee_amount_incl_tax>
                 <iwd_om_fee_base_amount><to_order>*</to_order></iwd_om_fee_base_amount>
+                <iwd_om_fee_base_amount_incl_tax><to_order>*</to_order></iwd_om_fee_base_amount_incl_tax>
                 <iwd_om_fee_description><to_order>*</to_order></iwd_om_fee_description>
+                <iwd_om_fee_tax_percent><to_order>*</to_order></iwd_om_fee_tax_percent>
             </sales_convert_quote_address>
         </fieldsets>
     </global>
@@ -393,9 +413,36 @@
                 </iwd_ordermanager>
             </updates>
         </layout>
+        <events>
+            <sales_order_collection_load_before>
+                <observers>
+                    <ordermanager_check_related>
+                        <type>singleton</type>
+                        <class>iwd_ordermanager/observer_OrderCollection</class>
+                        <method>hideOrdersOnFront</method>
+                    </ordermanager_check_related>
+                </observers>
+            </sales_order_collection_load_before>
+            <sales_order_load_after>
+                <observers>
+                    <ordermanager_check_related>
+                        <type>singleton</type>
+                        <class>iwd_ordermanager/observer_OrderCollection</class>
+                        <method>hideOrderOnFront</method>
+                    </ordermanager_check_related>
+                </observers>
+            </sales_order_load_after>
+        </events>
     </frontend>
 
     <adminhtml>
+        <blocks>
+            <braintree_payments>
+                <rewrite>
+                    <creditcard_form>IWD_OrderManager_Block_Braintree_Creditcard_Form</creditcard_form>
+                </rewrite>
+            </braintree_payments>
+        </blocks>
         <translate>
             <modules>
                 <translations>
@@ -537,19 +584,24 @@
         <iwd_ordermanager>
             <iwd_delete_orders>
                 <allow_del_orders>1</allow_del_orders>
+                <double_confirmation>1</double_confirmation>
             </iwd_delete_orders>
             <iwd_delete_invoices>
                 <allow_del_invoices>1</allow_del_invoices>
+                <double_confirmation>1</double_confirmation>
             </iwd_delete_invoices>
             <iwd_delete_creditmemos>
                 <allow_del_creditmemos>1</allow_del_creditmemos>
+                <double_confirmation>1</double_confirmation>
             </iwd_delete_creditmemos>
             <iwd_delete_shipments>
                 <allow_del_shipments>1</allow_del_shipments>
+                <double_confirmation>1</double_confirmation>
                 <allow_del_related_cm_for_invoices>0</allow_del_related_cm_for_invoices>
             </iwd_delete_shipments>
             <grid_order>
                 <enable>1</enable>
+                <save_grid_params>1</save_grid_params>
                 <columns>real_order_id,ordered_products,inventory,store_id,created_at,billing_name,shipping_name,base_grand_total,grand_total,status,action</columns>
                 <fix_table_header>1</fix_table_header>
                 <status_color>canceled:f3c7c7;complete:7edcab;holded:ede185;closed:d5e8c3;processing:b5c4f5;pending:aaeb6a;pending_payment:aaeb6a;pending_paypal:aaeb6a;fraud:ff7f7f;payment_review:79d1c7</status_color>
@@ -578,12 +630,16 @@
                 <confirm_cancel_status>false</confirm_cancel_status>
                 <is_visible_comment_on_front>0</is_visible_comment_on_front>
                 <validate_inventory>1</validate_inventory>
-                <is_checkout_progress_block_flag>0</is_checkout_progress_block_flag>
                 <deferred_re_authorization>1</deferred_re_authorization>
                 <enable_edit_coupon>1</enable_edit_coupon>
                 <enable_custom_amount>1</enable_custom_amount>
                 <enable_custom_amount_new>1</enable_custom_amount_new>
+                <manage_custom_amount_tax>1</manage_custom_amount_tax>
+                <display_custom_amount>3</display_custom_amount>
             </edit>
+            <order_options>
+                <hide>1</hide>
+            </order_options>
             <archive>
                 <enable>0</enable>
                 <order_statuses>canceled,complete,closed</order_statuses>

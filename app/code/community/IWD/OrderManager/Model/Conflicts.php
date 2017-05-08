@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Model_Conflicts
+ */
 class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
 {
+    /**
+     * @var array
+     */
     protected $rewritesModules = array();
 
+    /**
+     * @return array
+     */
     public function getTypes()
     {
         return array(
@@ -13,6 +22,9 @@ class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
         );
     }
 
+    /**
+     * @return array
+     */
     public function getRewritesClasses()
     {
         $this->rewritesModules = array();
@@ -31,9 +43,14 @@ class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
                 }
             }
         }
+
         return $this->rewritesModules;
     }
 
+    /**
+     * @param $type
+     * @return array
+     */
     protected function _collectRewrites($type)
     {
         $rewritesModules = array();
@@ -41,12 +58,12 @@ class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
         $moduleConfig = Mage::getModel('core/config_base');
 
         $modules = Mage::getConfig()->getNode('modules')->children();
-        foreach ($modules as $module_name => $moduleSettings) {
+        foreach ($modules as $moduleName => $moduleSettings) {
             if (!$moduleSettings->is('active')) {
                 continue;
             }
 
-            $configFile = Mage::getConfig()->getModuleDir('etc', $module_name) . DS . 'config.xml';
+            $configFile = Mage::getConfig()->getModuleDir('etc', $moduleName) . DS . 'config.xml';
             $moduleConfigBase->loadFile($configFile);
 
             $moduleConfig->loadString('<config/>');
@@ -65,7 +82,9 @@ class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
                 if ($rewrites) {
                     foreach ($rewrites->children() as $class => $new_class) {
                         $baseClass = $this->_getClassName($type, $nodeName, $class);
-                        if (!isset($rewritesModules[$baseClass]) || (isset($rewritesModules[$baseClass]) && !in_array($new_class, $rewritesModules[$baseClass]))) {
+                        if (!isset($rewritesModules[$baseClass])
+                            || (isset($rewritesModules[$baseClass]) && !in_array($new_class, $rewritesModules[$baseClass]))
+                        ) {
                             if (strpos($new_class, 'IWD_All') === 0 || strpos($new_class, 'IWD_POS') === 0) {
                                 continue;
                             }
@@ -75,9 +94,16 @@ class IWD_OrderManager_Model_Conflicts extends Mage_Core_Model_Abstract
                 }
             }
         }
+
         return $rewritesModules;
     }
 
+    /**
+     * @param $type
+     * @param $group
+     * @param $class
+     * @return string
+     */
     protected function _getClassName($type, $group, $class)
     {
         $config = Mage::getConfig()->getNode()->global->{$type . 's'}->{$group};

@@ -1,4 +1,9 @@
 #sales_order_grid {position:relative;}
+#sales_order_grid:before, #sales_order_grid:after {content: ''; position:absolute; width:27px; height: 100%; top:30px;}
+#sales_order_grid:before {left:-27px; cursor:w-resize;}
+#sales_order_grid:after {right:-27px; cursor:e-resize;}
+
+#sales_order_grid .grid table td.empty-text {height:100px; vertical-align:middle;}
 
 .grid .order_product_table {width:200px; border-collapse:collapse; border:none; background-color:inherit;}
 .grid .order_product_table_img {width:50px;}
@@ -51,6 +56,41 @@
 
 #customer_orders_grid_table td.empty-text {width:200%;}
 
+#iwd-manage-massaction {cursor:pointer; right:-7px; position:relative; float:left;}
+#sales_order_grid_massaction-form .field-row {position:relative;}
+#iwd-manage-massaction-list {display:none; position:absolute; z-index:10; background:#ffffff; right:5px; top:0; border:1px solid #cccccc;}
+#iwd-manage-massaction-list.show {display: block;}
+#iwd-manage-massaction-list ul {max-height:200px; overflow-y:scroll;}
+#iwd-manage-massaction-list li {}
+#iwd-manage-massaction-list li:hover {background:#eeeeee;}
+#iwd-manage-massaction-list li.ui-state-highlight {background:#F8DC77; height:20px; line-height:20px;}
+#iwd-manage-massaction-list li label {width:100%; display:inline-block; margin:0; cursor:pointer; }
+#iwd-manage-massaction-list li label input {margin:0 5px}
+#iwd-manage-massaction-list .actions {margin:5px}
+#iwd-manage-massaction-list .actions button:first-child {float:left;}
+#iwd-manage-massaction-list .actions button:last-child {float:right;}
+#iwd-manage-massaction-list .loader {display:none; background:#000000; opacity:0.1; width:100%; height:100%; position:absolute; top:0; left:0}
+#iwd-manage-massaction-list .fa-spinner {display:none; position:absolute; top:44%; left:38%;}
+
+#sales_order_grid_table a, #sales_order_archive_grid_table a,
+#customer_view_orders_grid_table a, #customer_orders_grid_table a {color:#000000;}
+
+#sales_order_grid_table a:hover, #sales_order_archive_grid_table a:hover,
+#customer_view_orders_grid_table a:hover, #customer_orders_grid_table a:hover {color:#ea7601;}
+
+th.complex-filter {position:relative;}
+th.complex-filter div {display:inline-block; position:relative; z-index:2; min-width:20px; width:auto;}
+th.complex-filter div:hover:before {top:20px; left:0; content:"enter comma separated values"; position:absolute; z-index:99; font-size:9px; line-height:10px; color:#555; }
+th.complex-filter:after {content:""; display:block; min-width:86px; height:0; background:transparent;}
+th.complex-filter-select select {height: 20px}
+
 a.inherit {text-transform:inherit; color:inherit; text-decoration:inherit;}
 .no-display {display:none;}
 .clear {clear:both;}
+
+table .nowrap, table .nobr {overflow: hidden;}
+
+.iwd_order_massaction_comments {width:105px; height:12px; resize:none; overflow:hidden;}
+.iwd_order_massaction_comments-fix {width:111px; height:12px; position:relative; float:right;}
+.iwd_order_massaction_comments.big-textarea {position:absolute; width:200px; height:50px; top:0; right:5px; z-index:100;}
+#sales_order_grid_massaction .massaction .entry-edit .field-row label {margin-right:5px; float: left;}

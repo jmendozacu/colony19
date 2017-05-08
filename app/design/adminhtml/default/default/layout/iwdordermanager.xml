@@ -22,6 +22,10 @@
             <action method="addCss"><name>iwd/ordermanager/stock.css</name></action>
             <action method="addCss"><name>iwd/ordermanager/style.css</name></action>
             <action method="addCss"><name>iwd/ordermanager/fee.css</name></action>
+            <!-- START: iwd braintree integration -->
+            <!--<action method="addJs"><file>iwd/braintree/braintree.js</file></action>
+            <action method="addJs"><file>iwd/braintree/braintree-utils.js</file></action>-->
+            <!-- END: iwd braintree integration -->
         </reference>
         <reference name="js">
             <block type="adminhtml/template" template="iwd/ordermanager/jsinit.phtml" name="create-js"/>
@@ -41,13 +45,17 @@
             <action method="addJs"><file>iwd/ordermanager/jquery-ui-1.10.3.min.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/stickytableheaders.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/jquery.nicescroll.js</file></action>
-            <action method="addJs"><script>iwd/all/modal.js</script></action>
+            <action method="addJs"><file>iwd/ordermanager/jquery.sumoselect.min.js</file></action>
+            <action method="addJs"><file>iwd/all/modal.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/grid.js</file></action>
+            <action method="addJs"><file>iwd/ordermanager/massaction.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/stock.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/flags-order-grid.js</file></action>
             <action method="addCss"><name>iwd/ordermanager/order_grid.css</name></action>
+            <action method="addCss"><name>iwd/ordermanager/sumoselect.css</name></action>
             <action method="addCss"><name>iwd/ordermanager/stock.css</name></action>
             <action method="addCss"><name>iwd/ordermanager/popup.css</name></action>
+            <action method="addItem" ifconfig="iwd_ordermanager/iwd_delete_orders/double_confirmation"><type>js</type><name>iwd/ordermanager/mage/adminhtml/grid.js</name></action>
         </reference>
         <reference name="content">
             <block type="core/template" name="grid-init" template="iwd/ordermanager/grid/init.phtml"/>
@@ -110,6 +118,7 @@
             <action method="addJs"><file>varien/configurable.js</file></action>
             <action method="addJs"><file>mage/adminhtml/giftoptions/tooltip.js</file></action>
             <action method="addJs"><file>iwd/ordermanager/configure.js</file></action>
+            <action method="addJs"><file>mage/directpost.js</file></action>
             <block type="adminhtml/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml"/>
         </reference>
         <reference name="order_history">
@@ -155,16 +164,6 @@
     <adminhtml_sales_order_addcomment>
         <block type="adminhtml/sales_order_view_history" name="order_history" template="iwd/ordermanager/history/order.phtml" output="toHtml"/>
     </adminhtml_sales_order_addcomment>
-    <adminhtml_sales_order_create_index>
-        <reference name="head">
-            <action method="addJs"><script>iwd/ordermanager/init.js</script></action>
-            <action method="addJs"><script>iwd/ordermanager/fee.js</script></action>
-            <action method="addCss"><name>iwd/ordermanager/fee.css</name></action>
-        </reference>
-        <reference name="data">
-            <block type="iwd_ordermanager/adminhtml_sales_order_create_fee" name="iwd_om_custom_fee" template="iwd/ordermanager/custom/fee.phtml"/>
-        </reference>
-    </adminhtml_sales_order_create_index>
 
     <!-- invoice -->
     <ordermanager_invoice_fee_total_handle>
@@ -195,6 +194,11 @@
     <adminhtml_sales_order_invoice_updateqty>
         <update handle="ordermanager_invoice_fee_total_handle" />
     </adminhtml_sales_order_invoice_updateqty>
+    <adminhtml_sales_invoice_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="iwd_ordermanager/iwd_delete_invoices/double_confirmation"><type>js</type><name>iwd/ordermanager/mage/adminhtml/grid.js</name></action>
+        </reference>
+    </adminhtml_sales_invoice_index>
 
     <!-- shipment -->
     <adminhtml_sales_order_shipment_view>
@@ -215,6 +219,11 @@
             <block type="adminhtml/sales_order_comments_view" name="order_comments" template="iwd/ordermanager/history/comments.phtml"/>
         </block>
     </adminhtml_sales_order_shipment_addcomment>
+    <adminhtml_sales_order_shipment_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="iwd_ordermanager/iwd_delete_shipments/double_confirmation"><type>js</type><name>iwd/ordermanager/mage/adminhtml/grid.js</name></action>
+        </reference>
+    </adminhtml_sales_order_shipment_index>
 
     <!-- credit memo -->
     <ordermanager_creditmemo_fee_total_handle>
@@ -243,6 +252,11 @@
             <block type="adminhtml/sales_order_comments_view" name="order_comments" template="iwd/ordermanager/history/comments.phtml"/>
         </block>
     </adminhtml_sales_order_creditmemo_addcomment>
+    <adminhtml_sales_order_creditmemo_index>
+        <reference name="head">
+            <action method="addItem" ifconfig="iwd_ordermanager/iwd_delete_creditmemos/double_confirmation"><type>js</type><name>iwd/ordermanager/mage/adminhtml/grid.js</name></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_index>
 
     <!-- customer orders -->
     <adminhtml_customer_edit>
@@ -307,8 +321,11 @@
 
     <adminhtml_sales_order_create_index>
         <reference name="head">
+            <action method="addJs"><script>iwd/ordermanager/init.js</script></action>
             <action method="addItem" ifconfig="iwd_ordermanager/crate_process/enable"><type>skin_css</type><name>iwd/ordermanager/create.css</name><params/></action>
             <action method="addItem" ifconfig="iwd_ordermanager/crate_process/enable"><type>js</type><name>iwd/ordermanager/mage/adminhtml/sales.js</name></action>
+            <action method="addItem" ifconfig="iwd_ordermanager/edit/enable_custom_amount_new"><type>skin_css</type><name>iwd/ordermanager/fee.css</name><params/></action>
+            <action method="addItem" ifconfig="iwd_ordermanager/edit/enable_custom_amount_new"><type>js</type><name>iwd/ordermanager/fee.js</name></action>
         </reference>
         <reference name="form">
             <block type="iwd_ordermanager/adminhtml_sales_order_create_top" template="iwd/ordermanager/create/top.phtml" name="top_actions">
@@ -316,6 +333,9 @@
                     <action method="setStoreVarName"><var_name>store_ids</var_name></action>
                 </block>
             </block>
+        </reference>
+        <reference name="data">
+            <block type="iwd_ordermanager/adminhtml_sales_order_create_fee" name="iwd_om_custom_fee" template="iwd/ordermanager/custom/fee.phtml"/>
         </reference>
     </adminhtml_sales_order_create_index>
 

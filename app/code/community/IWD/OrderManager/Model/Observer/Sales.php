@@ -21,13 +21,13 @@ class IWD_OrderManager_Model_Observer_Sales
 
         if ($customerId) {
             $quoteAddress = $quote->getShippingAddress();
-            if($customerId != $quoteAddress->getCustomerId()) {
+            if ($customerId != $quoteAddress->getCustomerId()) {
                 $defaultAddress = $customer->getDefaultShippingAddress();
                 $this->updateQuoteAddress($quoteAddress, $defaultAddress);
             }
 
             $quoteAddress = $quote->getBillingAddress();
-            if($customerId != $quoteAddress->getCustomerId()) {
+            if ($customerId != $quoteAddress->getCustomerId()) {
                 $defaultAddress = $customer->getDefaultBillingAddress();
                 $this->updateQuoteAddress($quoteAddress, $defaultAddress);
             }
@@ -41,7 +41,7 @@ class IWD_OrderManager_Model_Observer_Sales
         if ($quoteAddress && $quoteAddress->getId() && $defaultAddress && $defaultAddress->getId()) {
             $customerId = $quoteAddress->getCustomerId();
             $customerAddressId = $quoteAddress->getCustomerAddressId();
-            if(empty($customerAddressId) || $customerAddressId != $defaultAddress->getId()){
+            if (empty($customerAddressId) || $customerAddressId != $defaultAddress->getId()) {
                 $quoteAddress->setCustomerAddressId($defaultAddress->getId())->setCustomerId($customerId);
                 $quoteAddress->addData($defaultAddress->getData());
                 $quoteAddress->save();
@@ -120,41 +120,56 @@ class IWD_OrderManager_Model_Observer_Sales
     {
         $request = $observer->getEvent()->getRequest();
 
-        if (isset($request['iwd_om_fee_amount']) && isset($request['iwd_om_fee_description'])) {
-            $quote = $observer->getEvent()->getOrderCreateModel()->getQuote();
+        $quote = $observer->getEvent()->getOrderCreateModel()->getQuote();
 
+        if (isset($request['iwd_om_fee_amount'])) {
             $feeAmount = $request['iwd_om_fee_amount'];
             $baseFeeAmount = $this->convertToBaseAmount($feeAmount, $quote);
-            $description = $request['iwd_om_fee_description'];
+            $quote->setIwdOmFeeAmount($feeAmount)->setIwdOmFeeBaseAmount($baseFeeAmount);
+        }
 
-            try {
-                $quote->setIwdOmFeeAmount($feeAmount)
-                    ->setIwdOmFeeBaseAmount($baseFeeAmount)
-                    ->setIwdOmFeeDescription($description)
-                    ->save();
-            } catch (Mage_Core_Exception $e) {
-                Mage::getSingleton('adminhtml/session_quote')->addError(
-                    $e->getMessage()
-                );
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session_quote')->addException(
-                    $e, Mage::helper('opc')->__('Cannot apply custom amount')
-                );
-            }
+        if (isset($request['iwd_om_fee_amount_incl_tax'])) {
+            $feeAmountInclTax = $request['iwd_om_fee_amount_incl_tax'];
+            $baseFeeAmountInclTax = $this->convertToBaseAmount($feeAmountInclTax, $quote);
+            $quote->setIwdOmFeeAmountInclTax($feeAmountInclTax)->setIwdOmFeeBaseAmountInclTax($baseFeeAmountInclTax);
+        }
+
+        if (isset($request['iwd_om_fee_description'])) {
+            $description = $request['iwd_om_fee_description'];
+            $quote->setIwdOmFeeDescription($description);
+        }
+
+        if (isset($request['iwd_om_fee_tax_percent'])) {
+            $taxPercent = $request['iwd_om_fee_tax_percent'];
+            $quote->setIwdOmFeeTaxPercent($taxPercent);
+        }
+
+        try {
+            $quote->save();
+        } catch (Mage_Core_Exception $e) {
+            Mage::getSingleton('adminhtml/session_quote')->addError($e->getMessage());
+        } catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session_quote')->addException(
+                $e, Mage::helper('opc')->__('Cannot apply custom amount')
+            );
         }
 
         return $this;
     }
 
+    /**
+     * @param $feeAmount
+     * @param $quote
+     * @return float
+     */
     protected function convertToBaseAmount($feeAmount, $quote)
     {
         $baseCurrencyCode = $quote->getStore()->getBaseCurrencyCode();
         $currentCurrencyCode = $quote->getStore()->getCurrentCurrencyCode();
 
-        $baseFeeAmount = $feeAmount;
-        if ($baseCurrencyCode != $currentCurrencyCode) {
-            $baseFeeAmount = Mage::helper('directory')->currencyConvert($feeAmount, $currentCurrencyCode, $baseCurrencyCode);
-        }
+        $baseFeeAmount = ($baseCurrencyCode != $currentCurrencyCode)
+            ? Mage::helper('directory')->currencyConvert($feeAmount, $currentCurrencyCode, $baseCurrencyCode)
+            : $feeAmount;
 
         return round($baseFeeAmount, 2);
     }

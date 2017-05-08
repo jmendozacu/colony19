@@ -42,7 +42,7 @@
                 </span>
             </label>
             <span class="iwd_om_tooltip" title="<?php echo $helper->__('Customize email list and message.'); ?>">
-                <span class="notify_customize" <?php if(!$helper->isNotifyCustomerCheckedDefault()): ?>style="display:none"<?php endif; ?> onclick="IWD.OrderManager.Popup.showModal('<?php echo $block; ?>');" title="">
+                <span class="notify_customize" <?php if(!$helper->isNotifyCustomerCheckedDefault()): ?>style="display:none"<?php endif; ?> onclick="IWD.OrderManager.NotifyPopup.showModal('<?php echo $block; ?>');" title="">
                     [<?php echo Mage::helper('customer')->__("customize"); ?>]
                 </span>
             </span>

@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Class IWD_OrderManager_Adminhtml_Flags_OrderController
+ */
 class IWD_OrderManager_Adminhtml_Flags_OrderController extends IWD_OrderManager_Controller_Abstract
 {
+    /**
+     * @return $this|Mage_Core_Controller_Varien_Action
+     */
     public function massApplyFlagAction()
     {
         try {
@@ -29,6 +35,9 @@ class IWD_OrderManager_Adminhtml_Flags_OrderController extends IWD_OrderManager_
     }
 
 
+    /**
+     * @return void
+     */
     public function applyFlagAction()
     {
         try {
@@ -46,6 +55,9 @@ class IWD_OrderManager_Adminhtml_Flags_OrderController extends IWD_OrderManager_
         $this->prepareResponse($result);
     }
 
+    /**
+     * @return mixed
+     */
     protected function getFlagHtml()
     {
         $flagId = $this->getFlagId();
@@ -61,7 +73,7 @@ class IWD_OrderManager_Adminhtml_Flags_OrderController extends IWD_OrderManager_
     {
         $flag = $this->getRequest()->getParam('flag_id', 0);
         if (empty($flag)) {
-            throw new Exception('Incorrect param flag');
+            Mage::throwException('Incorrect param flag');
         }
 
         return $flag;
@@ -75,12 +87,15 @@ class IWD_OrderManager_Adminhtml_Flags_OrderController extends IWD_OrderManager_
     {
         $type = $this->getRequest()->getParam('type_id', 0);
         if (empty($type)) {
-            throw new Exception('Incorrect param type');
+            Mage::throwException('Incorrect param type');
         }
 
         return $type;
     }
 
+    /**
+     * @return mixed
+     */
     protected function _isAllowed()
     {
         return Mage::getSingleton('admin/session')->isAllowed('iwd_ordermanager/order/actions/assign_flags');

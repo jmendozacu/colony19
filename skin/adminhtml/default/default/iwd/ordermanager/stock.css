@@ -27,7 +27,7 @@
 .stocks-assign .assign-stock-table .products-table td.product-name {text-align:left; padding:0 5px 0 10px;}
 .stocks-assign .assign-stock-table .stocks-table {overflow-x:scroll;}
 .stocks-assign .assign-stock-table .stocks-table table {border-right:1px solid #b7b7b7;}
-.stocks-assign .assign-stock-table .stocks-table th {max-width:80px; overflow:hidden; min-width:80px; width:80px;}
+.stocks-assign .assign-stock-table .stocks-table th {max-width:80px; overflow:hidden; min-width:80px; width:80px; text-overflow:ellipsis;}
 
 .stocks-assign .assign-stock-table .footer-actions {clear:both; width:100%; text-transform:capitalize; }
 .stocks-assign .assign-stock-table .footer-actions .actions {float:right; margin-top:25px;}
@@ -49,7 +49,7 @@
 
 .stocks-assign tr.headings {background:url(img/sort_row_bg.gif) 0 50% repeat-x;}
 .stocks-assign .header-werehouse {font-weight:900; margin-left:198px; line-height:24px; width:600px; background:url(img/sort_row_bg.gif) 0 50% repeat-x; text-align: center; font-size:11px; height:23px; border:1px solid #b7b7b7; border-bottom:none}
-.stocks-assign .overflow {overflow:hidden; display:block; height:100%;}
+.stocks-assign .overflow {overflow:hidden; display:block; height:100%; text-overflow:ellipsis;}
 
 .iwd_om_stock_tooltip {position:relative;}
 .iwd_om_stock_tooltip:hover:after {left:103%; width:auto; background:#333; background:rgba(0,0,0,.8); border-radius:5px; bottom:0; color:#fff; content:attr(title); padding:0 4px; position:absolute; z-index:98;}
@@ -61,6 +61,7 @@
     left:140%; width:auto; height:40px; line-height:40px; border:5px solid rgba(0,0,0,0.05); background:#ffffff; top:0; color:#000000; word-wrap:normal;
     white-space:nowrap; padding:0 10px; position:absolute; z-index:98; -webkit-background-clip: padding-box; background-clip:padding-box; display:block;
 }
+.last-column .iwd_om_stock_tooltip2:hover .hint {right:140%; left:inherit;}
 
 .om-iwd-modal-content.warehouses-3 .footer-actions .legend ul:first-child {margin-bottom:15px;}
 .om-iwd-modal-content.warehouses-3 .footer-actions .legend {max-width: 300px;}

@@ -15,7 +15,16 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Create_Fee extends Mage_Admin
         if (is_null($this->_quote)) {
             $this->_quote = Mage::getSingleton('adminhtml/session_quote')->getQuote();
         }
+
         return $this->_quote;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isManageTax()
+    {
+        return Mage::helper('iwd_ordermanager')->isManageTaxForCustomFee();
     }
 
     /**
@@ -33,7 +42,44 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Create_Fee extends Mage_Admin
                     : 0
                 ));
 
-        return empty($amount) ? '' : (string)number_format($amount, 2);
+        return empty($amount) ? '' : (string)number_format($amount, 2, '.', '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalAmountInclTax()
+    {
+        $amount = (!$this->getQuote())
+            ? 0
+            : ($this->getQuote()->getShippingAddress()->getIwdOmFeeAmountInclTax()
+                ? $this->getQuote()->getShippingAddress()->getIwdOmFeeAmountInclTax()
+                : (
+                $this->getQuote()->getBillingAddress()->getIwdOmFeeAmountInclTax()
+                    ? $this->getQuote()->getBillingAddress()->getIwdOmFeeAmountInclTax()
+                    : 0
+                ));
+
+        return empty($amount) ? '' : (string)number_format($amount, 2, '.', '');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTaxPercent()
+    {
+        $amount = (!$this->getQuote())
+            ? 0
+            : ($this->getQuote()->getShippingAddress()->getIwdOmFeeTaxPercent()
+                ? $this->getQuote()->getShippingAddress()->getIwdOmFeeTaxPercent()
+                : (
+                $this->getQuote()->getBillingAddress()->getIwdOmFeeTaxPercent()
+                    ? $this->getQuote()->getBillingAddress()->getIwdOmFeeTaxPercent()
+                    : 0
+                ));
+
+        return empty($amount) ? '0.00' : (string)number_format($amount, 2, '.', '');
     }
 
     /**

@@ -10,7 +10,8 @@ class IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Renderer_Sku extends IWD
         $items = array();
 
         foreach ($orderItemCollection as $item) {
-            $items[] = $item->getSku();
+            $url = Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id' => $item->getProductId()));
+            $items[] = '<a href="' . $url . '" target="_blank">' . $item->getSku() . '</a>';
         }
 
         return $items;
