@@ -32,7 +32,7 @@ class Agentom_Video_ProductController extends Mage_Catalog_ProductController
             } else {
                 return parent::viewAction();
             }
-        } else {
+        } elseif($isHidden) {
             Mage::getSingleton('core/session')->addError($this->__('Si vous avez accès au pack vidéo, veuillez-vous connecter.'));
             $this->_redirect('video/index/index');
         }
