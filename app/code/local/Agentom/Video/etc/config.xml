@@ -16,13 +16,6 @@
                           <view><to>video/catalog_category/view</to></view>
                       </actions>
                   </category>
-                  <!--<product>-->
-                      <!--<to>/video/catalog_product</to>-->
-                      <!--<override_action>true</override_action>-->
-                      <!--<actions>-->
-                          <!--<view><to>video/catalog_product/view</to></view>-->
-                      <!--</actions>-->
-                  <!--</product>-->
               </rewrite>
           </catalog>
       </routers>
@@ -31,6 +24,11 @@
         <class>Agentom_Video_Helper</class>
       </video>
     </helpers>
+	  <blocks>
+		  <video>
+			  <class>Agentom_Video_Block</class>
+		  </video>
+	  </blocks>
 	<models>
 	  <video>
 		<class>Agentom_Video_Model</class>
@@ -110,6 +108,13 @@
 				</args>
 			</catalog>
         </routers>
+		<layout>
+			<updates>
+				<video>
+					<file>video.xml</file>
+				</video>
+			</updates>
+		</layout>
     </frontend>
   <admin>
 	<routers>

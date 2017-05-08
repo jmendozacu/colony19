@@ -10,12 +10,12 @@ class Agentom_Video_Catalog_CategoryController extends Mage_Catalog_CategoryCont
             $authorizedIds = explode(",",$customerData->getAllowedCategoryIds());
             if(!in_array($category->getId(),$authorizedIds)){
                 Mage::getSingleton('core/session')->addError($this->__('Accès réservé aux personnes ayant acheté le pack vidéo.'));
-                $this->_redirect('customer/account/login');
+                $this->_redirect('video/index/index');
                 return false;
             }
         }elseif($category->getHiddenFromCustomer()){
             Mage::getSingleton('core/session')->addError($this->__('Si vous avez accès au pack vidéo, veuillez-vous connecter.'));
-            $this->_redirect('customer/account/login');
+            $this->_redirect('video/index/index');
             return false;
         }
 
