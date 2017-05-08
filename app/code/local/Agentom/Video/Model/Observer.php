@@ -20,7 +20,12 @@ class Agentom_Video_Model_Observer
                     $customerId = $order->getCustomerId();
                     $customer = Mage::getModel('customer/customer')->load($customerId);
                     $previousIds = explode(",",$customer->getAllowedCategoryIds());
-                    $customer->setAllowedCategoryIds(implode(",",array_merge($previousIds,$authorizedId)));
+                    if(count($previousIds)){
+                        $customer->setAllowedCategoryIds(implode(",",array_merge($previousIds,$authorizedId)));
+                    }else{
+                        $customer->setAllowedCategoryIds(implode(",",$authorizedId));
+                    }
+                    
                     $customer->save();
                 }
 
