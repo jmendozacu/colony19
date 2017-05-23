@@ -113,9 +113,16 @@ endforeach;
                                     </div>
                                 </div>
                                 <div class="product-shop-wrap product-shop-title">
+                                    <?php
+                                    $cats = $_product->getCategoryIds();
+                                    foreach ($cats as $category_id) {
+                                        $_cat = Mage::getModel('catalog/category')->load($category_id) ;
+                                        $catName = $_cat->getName();
+                                    }
+                                    ?>
                                     <div class="product-name">
                                         <h1 itemprop="name"
-                                            class="product-name-h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                                            class="product-name-h1"><?php echo $catName . ' ' . $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                                     </div>
                                     <div class="row product-rating-sku">
                                         <div class="col-sm-24">
