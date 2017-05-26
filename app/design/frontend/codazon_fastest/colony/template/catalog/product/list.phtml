@@ -214,7 +214,7 @@
                             <div class="cdz-buttons-container">
                                 <div class="cdz-buttons-inner actions">
 									<?php echo $_nameAfterChildHtml; ?>
-                                    <?php if($_product->isSaleable()): ?>
+                                    <?php if($_product->isSaleable() && (bool)$currentCategory->getHiddenFromCustomer() !== true): ?>
                                         <img src="<?php echo $this->getSkinUrl('images/agentom-addtocart-list.png'); ?>"
                                              alt="<?php echo $this->__('Add to cart'); ?>"
                                              class="agentom-addtocart-list btn-cart"
