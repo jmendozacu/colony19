@@ -88,7 +88,7 @@ endforeach;
                                                     </a>
                                                 </li>
                                                 <li class="pinterest">
-                                                    <a onclick='window.open("https://www.pinterest.com/pin/create/button/?url=<?php echo $_product->getProductUrl(); ?>&media=<?php echo $_product->getImage() ?>&description=<?php echo $_product->getDescription() ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")'
+                                                    <a onclick='window.open("https://www.pinterest.com/pin/create/button/?url=<?php echo $_product->getProductUrl(); ?>&media=<?php echo $_product->getImage() ?>&description=<?php echo urlencode($_product->getDescription()) ?>&pubid=ra-5469982e19f36f4c&ct=1&pco=tbxnj-1.0","","menubar=1,resizable=1,width=700,height=600")'
                                                        rel="nofollow" title="" href="javascript:void(0)"
                                                        class="trasition-all" data-placement="top" data-toggle="tooltip"
                                                        data-original-title="<?php echo $this->__('Pin this') ?>"><i
