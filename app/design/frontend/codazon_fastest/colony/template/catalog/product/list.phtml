@@ -236,15 +236,9 @@
                 </li>
             <?php endforeach ?>
             </ul>
-        </div>
-        <div class="pager-bottom">
-            <?php
-//            $pager = new Mage_Page_Block_Html_Pager();
-//            $pager->setLimit(100)->setCollection($this->getLoadedProductCollection());
-//            $this->setChild('pager_bottom', $pager);
-
-            echo $this->getChildHtml('product_list_toolbar_pager');
-            ?>
+            <div class="toolbar-bottom">
+                <?php echo $this->getToolbarHtml() ?>
+            </div>
         </div>
         <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
     <?php endif; ?>
