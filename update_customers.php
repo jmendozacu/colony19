@@ -8,6 +8,7 @@
 require_once 'app/Mage.php';
 Mage::app();
 try{
+    $resource = Mage::getSingleton('core/resource');
     $readConnection = $resource->getConnection('core_read');
     $query ="SELECT so.customer_id FROM mgt_sales_flat_order as so
     INNER JOIN mgt_sales_flat_order_item as si ON si.order_id = so.entity_id AND (si.product_id = 5360 || si.product_id = 5357)
