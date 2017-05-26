@@ -69,7 +69,7 @@
 }
 
 /** CATEGORY **/
-.category-products > .toolbar-bottom:first-child{
+.toolbar-bottom:first-child{
     margin-top: -69px !important;
     width: 53% !important;
 }
