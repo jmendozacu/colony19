@@ -239,11 +239,11 @@
         </div>
         <div class="pager-bottom">
             <?php
-            $pager = new Mage_Page_Block_Html_Pager();
-            $pager->setLimit(100)->setCollection($this->getLoadedProductCollection());
-            $this->setChild('pager_bottom', $pager);
+//            $pager = new Mage_Page_Block_Html_Pager();
+//            $pager->setLimit(100)->setCollection($this->getLoadedProductCollection());
+//            $this->setChild('pager_bottom', $pager);
 
-            echo $this->getChildHtml('pager_bottom');
+            echo $this->getChildHtml('product_list_toolbar_pager');
             ?>
         </div>
         <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
