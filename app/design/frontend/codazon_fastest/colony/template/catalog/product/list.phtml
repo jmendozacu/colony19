@@ -190,10 +190,9 @@
                         ?>
                         <div class="desc product-item-description"><?php echo $desc; ?></div>
                         <?php endif ?>
-                        <?php if((bool)$currentCategory->getHiddenFromCustomer() != true): ?>
+                        <?php if((bool)$currentCategory->getHiddenFromCustomer() !== true): ?>
                             <?php echo $this->getPriceHtml($_product, true) ?>
                         <?php endif; ?>
-                        <?php echo $currentCategory->getHiddenFromCustomer() . "----------------------"; ?>
                         <?php
 							$_nameAfterChildHtml = '';
 							if ($this->getChild('name.after')) {
