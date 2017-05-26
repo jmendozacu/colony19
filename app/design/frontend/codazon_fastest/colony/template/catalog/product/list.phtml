@@ -193,7 +193,7 @@
                         <?php if($currentCategory->getHiddenFromCustomer() !== true): ?>
                             <?php echo $this->getPriceHtml($_product, true) ?>
                         <?php endif; ?>
-                        
+                        <?php echo $currentCategory->getHiddenFromCustomer() . "----------------------"; ?>
                         <?php
 							$_nameAfterChildHtml = '';
 							if ($this->getChild('name.after')) {
